@@ -13,7 +13,7 @@ namespace CodeninModel.Quiz
         public int ExpectedTime { get; set; }
         public virtual Module Module { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
-        public virtual ICollection<MaterialUpload> MaterialUploads { get; set; }
+        public virtual ICollection<TopicMaterialUpload> MaterialUploads { get; set; }
         public virtual ICollection<TopicAssignment> TopicAssignments { get; set; }
         public virtual ICollection<SubmitAssignment> SubmitAssignments { get; set; }
         public virtual ICollection<StudentTestLog> StudentTestLogs { get; set; }

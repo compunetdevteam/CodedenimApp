@@ -10,48 +10,48 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using CodedenimWebApp.Models;
-using CodeninModel;
+using CodeninModel.Quiz;
 
 namespace CodedenimWebApp.Controllers.Api
 {
-    public class ModulesController : ApiController
+    public class TopicsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/Modules
-        public IEnumerable<Module> GetModules()
+        // GET: api/Topics
+        public IEnumerable<Topic> GetTopics()
         {
-            return db.Modules.ToList();
+            return db.Topics.ToList();
         }
 
-        // GET: api/Modules/5
-        [ResponseType(typeof(Module))]
-        public async Task<IHttpActionResult> GetModule(int id)
+        // GET: api/Topics/5
+        [ResponseType(typeof(Topic))]
+        public async Task<IHttpActionResult> GetTopic(int id)
         {
-            Module module = await db.Modules.FindAsync(id);
-            if (module == null)
+            Topic topic = await db.Topics.FindAsync(id);
+            if (topic == null)
             {
                 return NotFound();
             }
 
-            return Ok(module);
+            return Ok(topic);
         }
 
-        // PUT: api/Modules/5
+        // PUT: api/Topics/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutModule(int id, Module module)
+        public async Task<IHttpActionResult> PutTopic(int id, Topic topic)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != module.ModuleId)
+            if (id != topic.TopicId)
             {
                 return BadRequest();
             }
 
-            db.Entry(module).State = EntityState.Modified;
+            db.Entry(topic).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +59,7 @@ namespace CodedenimWebApp.Controllers.Api
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ModuleExists(id))
+                if (!TopicExists(id))
                 {
                     return NotFound();
                 }
@@ -72,35 +72,35 @@ namespace CodedenimWebApp.Controllers.Api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Modules
-        [ResponseType(typeof(Module))]
-        public async Task<IHttpActionResult> PostModule(Module module)
+        // POST: api/Topics
+        [ResponseType(typeof(Topic))]
+        public async Task<IHttpActionResult> PostTopic(Topic topic)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Modules.Add(module);
+            db.Topics.Add(topic);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = module.ModuleId }, module);
+            return CreatedAtRoute("DefaultApi", new { id = topic.TopicId }, topic);
         }
 
-        // DELETE: api/Modules/5
-        [ResponseType(typeof(Module))]
-        public async Task<IHttpActionResult> DeleteModule(int id)
+        // DELETE: api/Topics/5
+        [ResponseType(typeof(Topic))]
+        public async Task<IHttpActionResult> DeleteTopic(int id)
         {
-            Module module = await db.Modules.FindAsync(id);
-            if (module == null)
+            Topic topic = await db.Topics.FindAsync(id);
+            if (topic == null)
             {
                 return NotFound();
             }
 
-            db.Modules.Remove(module);
+            db.Topics.Remove(topic);
             await db.SaveChangesAsync();
 
-            return Ok(module);
+            return Ok(topic);
         }
 
         protected override void Dispose(bool disposing)
@@ -112,9 +112,9 @@ namespace CodedenimWebApp.Controllers.Api
             base.Dispose(disposing);
         }
 
-        private bool ModuleExists(int id)
+        private bool TopicExists(int id)
         {
-            return db.Modules.Count(e => e.ModuleId == id) > 0;
+            return db.Topics.Count(e => e.TopicId == id) > 0;
         }
     }
 }

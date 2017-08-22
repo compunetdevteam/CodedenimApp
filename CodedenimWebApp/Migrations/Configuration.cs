@@ -9,8 +9,7 @@ namespace CodedenimWebApp.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            ContextKey = "CodedenimWebApp.Models.ApplicationDbContext";
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(CodedenimWebApp.Models.ApplicationDbContext context)

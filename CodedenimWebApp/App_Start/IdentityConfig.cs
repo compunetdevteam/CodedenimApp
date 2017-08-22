@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -11,16 +13,33 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using CodedenimWebApp.Models;
+using CodedenimWebApp.Service;
 
 namespace CodedenimWebApp
 {
     public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
+        public async Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
-        }
+            string schoolName = ConfigurationManager.AppSettings["CODEDENIM"];
+            string emailsetting = ConfigurationManager.AppSettings["GmailUserName"];
+            MailMessage email = new MailMessage(new MailAddress($"noreply{emailsetting}", "(Codedenin Registration, do not reply)"),
+                new MailAddress(message.Destination));
+
+            email.Subject = message.Subject;
+            email.Body = message.Body;
+
+            email.IsBodyHtml = true;
+
+            using (var mailClient = new EmailSetUpServices())
+            {
+                //In order to use the original from email address, uncomment this line:
+                email.From = new MailAddress(mailClient.UserName, $"(do not reply)@{schoolName}");
+
+                await mailClient.SendMailAsync(email);
+            }
+        }   
     }
 
     public class SmsService : IIdentityMessageService
@@ -98,9 +117,11 @@ namespace CodedenimWebApp
 
         //public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
         //{
+      
         //    return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
         //}
 
+       
         public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
         {
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);

@@ -206,17 +206,20 @@
     <Compile Include="Controllers\Api\CourseCategoriesController.cs" />
     <Compile Include="Controllers\Api\CoursesController.cs" />
     <Compile Include="Controllers\Api\ModulesController.cs" />
+    <Compile Include="Controllers\Api\TopicsController.cs" />
     <Compile Include="Controllers\CourseCategoriesController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
+    <Compile Include="Controllers\TopicMaterialUploadsController.cs" />
+    <Compile Include="Controllers\TopicsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708201833221_InitialCreate.cs" />
-    <Compile Include="Migrations\201708201833221_InitialCreate.Designer.cs">
-      <DependentUpon>201708201833221_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201708212040264_initalMigration.cs" />
+    <Compile Include="Migrations\201708212040264_initalMigration.Designer.cs">
+      <DependentUpon>201708212040264_initalMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -225,6 +228,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="Service\EmailSetupServices.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -299,9 +303,23 @@
     <Content Include="Views\Modules\Details.cshtml" />
     <Content Include="Views\Modules\Edit.cshtml" />
     <Content Include="Views\Modules\Index.cshtml" />
+    <Content Include="Views\Topics\Create.cshtml" />
+    <Content Include="Views\Topics\Delete.cshtml" />
+    <Content Include="Views\Topics\Details.cshtml" />
+    <Content Include="Views\Topics\Edit.cshtml" />
+    <Content Include="Views\Topics\Index.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\Create.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\Delete.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\Details.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\Edit.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\Index.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\Upload.cshtml" />
+    <Content Include="Views\Account\ConfirmRegistration.cshtml" />
+    <Content Include="Views\Account\SendEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -325,8 +343,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708201833221_InitialCreate.resx">
-      <DependentUpon>201708201833221_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708212040264_initalMigration.resx">
+      <DependentUpon>201708212040264_initalMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

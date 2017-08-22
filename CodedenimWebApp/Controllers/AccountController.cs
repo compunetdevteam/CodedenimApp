@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -9,6 +11,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CodedenimWebApp.Models;
+using CodedenimWebApp.Service;
+using Microsoft.Ajax.Utilities;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -155,8 +159,19 @@ namespace CodedenimWebApp.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
+                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your student account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                    ViewBag.Link = callbackUrl;
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your student account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                    ViewBag.Link = callbackUrl;
+                    TempData["UserMessage"] = $"Registration is Successful for {user.UserName}, Please Confirm Your Email to Login.";
+                    return View("ConfirmRegistration");
+
+                    // await this.UserManager.AddToRoleAsync(user.Id, "Admin");
+                    // await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -170,6 +185,50 @@ namespace CodedenimWebApp.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        [AllowAnonymous]
+        public async Task<ActionResult> SendEmail()
+        {
+            var message = new IdentityMessage
+            {
+                Subject = "Confirm Email",
+                Destination = "davidzagi93@gmail.com",
+                Body = "this is to Confirm Password",
+
+            };
+
+            var send =  new EmailService();
+            await send.SendAsync(message);
+            ViewBag.Success = "Success";
+            return View();
+
+            // return await message;
+        }
+
+
+
+        [AllowAnonymous]
+        public async Task SendAsync(EmailSender message)
+        {
+            // Plug in your email service here to send an email.
+            string schoolName = ConfigurationManager.AppSettings["CODEDENIM"];
+            string emailsetting = ConfigurationManager.AppSettings["GmailUserName"];
+            MailMessage email = new MailMessage(new MailAddress($"noreply{emailsetting}", "(Codedenin Registration, do not reply)"),
+                new MailAddress(message.Destination));
+
+            email.Subject = message.Subject;
+            email.Body = message.Body;
+
+            email.IsBodyHtml = true;
+
+            using (var mailClient = new EmailSetUpServices())
+            {
+                //In order to use the original from email address, uncomment this line:
+                email.From = new MailAddress(mailClient.UserName, $"(do not reply)@{schoolName}");
+
+                await mailClient.SendMailAsync(email);
+            }
         }
 
         //
@@ -481,5 +540,14 @@ namespace CodedenimWebApp.Controllers
             }
         }
         #endregion
+    }
+
+    public class EmailSender
+    {
+        //public string Sender { get; set; }
+        public string Destination { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
+    
     }
 }
