@@ -1,19 +1,15 @@
-﻿using System;
-using System.Configuration;
-using System.Data.Entity;
-using System.Globalization;
-using System.Linq;
-using System.Net.Mail;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
+﻿using CodedenimWebApp.Models;
+using CodedenimWebApp.Service;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using CodedenimWebApp.Models;
-using CodedenimWebApp.Service;
-using Microsoft.Ajax.Utilities;
+using System.Configuration;
+using System.Data.Entity;
+using System.Linq;
+using System.Net.Mail;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -22,16 +18,18 @@ namespace CodedenimWebApp.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private ApplicationDbContext db;
+        private ApplicationDbContext _db;
 
         public AccountController()
         {
+            _db = new ApplicationDbContext();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationDbContext db)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            this._db = db;
         }
 
         public ApplicationSignInManager SignInManager
@@ -40,9 +38,9 @@ namespace CodedenimWebApp.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -76,14 +74,14 @@ namespace CodedenimWebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model); 
+                return View(model);
             }
 
 
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: 
-            var user = await db.Users.AsNoTracking().FirstOrDefaultAsync(c => c.Email.ToUpper().Equals(model.Email.ToUpper())
+            var user = await _db.Users.AsNoTracking().FirstOrDefaultAsync(c => c.Email.ToUpper().Equals(model.Email.ToUpper())
                                                                                 );
 
             if (user == null)
@@ -140,7 +138,7 @@ namespace CodedenimWebApp.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -214,7 +212,7 @@ namespace CodedenimWebApp.Controllers
 
             };
 
-            var send =  new EmailService();
+            var send = new EmailService();
             await send.SendAsync(message);
             ViewBag.Success = "Success";
             return View();
@@ -564,6 +562,6 @@ namespace CodedenimWebApp.Controllers
         public string Destination { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
-    
+
     }
 }
