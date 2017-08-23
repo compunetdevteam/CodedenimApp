@@ -1,7 +1,12 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using System;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using CodeninModel;
+using CodeninModel.Quiz;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CodedenimWebApp.Models
 {
@@ -10,7 +15,7 @@ namespace CodedenimWebApp.Models
     {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {
-            if (authenticationType == "")
+            if (String.IsNullOrEmpty(authenticationType))
             {
                 var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
                 return userIdentity;
@@ -41,14 +46,48 @@ namespace CodedenimWebApp.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<CodeninModel.CourseCategory> CourseCategories { get; set; }
+        public DbSet<CourseCategory> CourseCategories { get; set; }
 
-        public System.Data.Entity.DbSet<CodeninModel.Course> Courses { get; set; }
+        public DbSet<Course> Courses { get; set; }
 
-        public System.Data.Entity.DbSet<CodeninModel.Module> Modules { get; set; }
+        public DbSet<Module> Modules { get; set; }
 
-        public System.Data.Entity.DbSet<CodeninModel.Quiz.Topic> Topics { get; set; }
+        public DbSet<Topic> Topics { get; set; }
 
-        public System.Data.Entity.DbSet<CodeninModel.TopicMaterialUpload> TopicMaterialUploads { get; set; }
+        public DbSet<TopicMaterialUpload> TopicMaterialUploads { get; set; }
+        public DbSet<File> Files { get; set; }
+
+        public System.Data.Entity.DbSet<CodeninModel.Tutor> Tutors { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
+
+        public System.Data.Entity.DbSet<CodeninModel.Student> Students { get; set; }
+
+        //public override int SaveChanges()
+        //{
+        //    try
+        //    {
+        //        // Your code...
+        //        // Could also be before try if you know the exception occurs in SaveChanges
+
+        //        base.SaveChanges();
+        //    }
+        //    catch (DbEntityValidationException e)
+        //    {
+        //        foreach (var eve in e.EntityValidationErrors)
+        //        {
+        //            Console.WriteLine(
+        //                "Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+        //                eve.Entry.Entity.GetType().Name, eve.Entry.State);
+        //            foreach (var ve in eve.ValidationErrors)
+        //            {
+        //                Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+        //                    ve.PropertyName, ve.ErrorMessage);
+        //            }
+        //        }
+        //        throw;
+
+        //    }
+        //    return 0;
+        //}
     }
 }

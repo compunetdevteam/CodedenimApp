@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using CodeninModel.Assesment;
 
 namespace CodeninModel
@@ -13,7 +14,11 @@ namespace CodeninModel
         public string CourseDescription { get; set; }
         public int ExpectedTime { get; set; }
         public DateTime? DateAdded { get; set; }
+        [Range(0, 5)]
+        public int Points { get; set; }
         public virtual CourseCategory CourseCategory { get; set; }
+        public virtual ICollection<Enrollment> Enrollments { get; set; }
+        public virtual ICollection<Tutor> Instructors { get; set; }
         public virtual ICollection<Module> Modules { get; set; }
         public virtual ICollection<AssesmentQuestionAnswer> AssesmentQuestionAnswers { get; set; }
     }

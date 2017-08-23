@@ -89,7 +89,7 @@ namespace CodedenimWebApp.Controllers
                 ViewBag.Message = "Incorrect UserName or Password, Please try again!!!";
                 return View(model);
             }
-            var result = await SignInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(user.Email, model.Password, model.RememberMe, shouldLockout: false);
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true

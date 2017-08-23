@@ -3,7 +3,7 @@ namespace CodedenimWebApp.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initalMigration : DbMigration
+    public partial class added_fileUpload : DbMigration
     {
         public override void Up()
         {
@@ -27,6 +27,7 @@ namespace CodedenimWebApp.Migrations
                         CourseDescription = c.String(),
                         ExpectedTime = c.Int(nullable: false),
                         DateAdded = c.DateTime(),
+                        Points = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.CourseId)
                 .ForeignKey("dbo.CourseCategories", t => t.CourseCategoryId, cascadeDelete: true)
@@ -55,165 +56,20 @@ namespace CodedenimWebApp.Migrations
                 .Index(t => t.CourseId);
             
             CreateTable(
-                "dbo.Modules",
+                "dbo.Enrollments",
                 c => new
                     {
-                        ModuleId = c.Int(nullable: false, identity: true),
-                        CourseId = c.Int(nullable: false),
-                        ModuleName = c.String(),
-                        ModuleDescription = c.String(),
-                        ExpectedTime = c.Int(nullable: false),
+                        EnrollmentID = c.Int(nullable: false, identity: true),
+                        CourseID = c.Int(nullable: false),
+                        StudentID = c.Int(nullable: false),
+                        Grade = c.Int(),
+                        Student_StudentId = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.ModuleId)
-                .ForeignKey("dbo.Courses", t => t.CourseId, cascadeDelete: true)
-                .Index(t => t.CourseId);
-            
-            CreateTable(
-                "dbo.Topics",
-                c => new
-                    {
-                        TopicId = c.Int(nullable: false, identity: true),
-                        ModuleId = c.Int(nullable: false),
-                        TopicName = c.String(),
-                        ExpectedTime = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.TopicId)
-                .ForeignKey("dbo.Modules", t => t.ModuleId, cascadeDelete: true)
-                .Index(t => t.ModuleId);
-            
-            CreateTable(
-                "dbo.TopicMaterialUploads",
-                c => new
-                    {
-                        TopicMaterialUploadId = c.Int(nullable: false, identity: true),
-                        TopicId = c.Int(nullable: false),
-                        Tutor = c.Int(nullable: false),
-                        FileType = c.Int(nullable: false),
-                        Name = c.String(nullable: false),
-                        Description = c.String(),
-                        FileLocation = c.String(),
-                        MaterialByTutor_TutorId = c.String(maxLength: 128),
-                    })
-                .PrimaryKey(t => t.TopicMaterialUploadId)
-                .ForeignKey("dbo.Topics", t => t.TopicId, cascadeDelete: true)
-                .ForeignKey("dbo.Tutors", t => t.MaterialByTutor_TutorId)
-                .Index(t => t.TopicId)
-                .Index(t => t.MaterialByTutor_TutorId);
-            
-            CreateTable(
-                "dbo.Tutors",
-                c => new
-                    {
-                        TutorId = c.String(nullable: false, maxLength: 128),
-                        Designation = c.String(),
-                        MaritalStatus = c.String(),
-                        IsActiveTutor = c.Boolean(nullable: false),
-                        ActiveStatus = c.String(),
-                        StaffRole = c.String(),
-                        FirstName = c.String(maxLength: 50),
-                        MiddleName = c.String(maxLength: 50),
-                        LastName = c.String(maxLength: 50),
-                        Gender = c.String(),
-                        Email = c.String(),
-                        PhoneNumber = c.String(),
-                        TownOfBirth = c.String(),
-                        StateOfOrigin = c.String(),
-                        Nationality = c.String(),
-                        CountryOfBirth = c.String(),
-                        IsAcctive = c.Boolean(nullable: false),
-                        DateOfBirth = c.DateTime(),
-                        Age = c.Int(nullable: false),
-                        Passport = c.Binary(),
-                    })
-                .PrimaryKey(t => t.TutorId);
-            
-            CreateTable(
-                "dbo.Posts",
-                c => new
-                    {
-                        PostId = c.Int(nullable: false, identity: true),
-                        Title = c.String(),
-                        DateTime = c.DateTime(nullable: false),
-                        Body = c.String(),
-                        TopicId = c.Int(nullable: false),
-                        TutorId = c.String(maxLength: 128),
-                    })
-                .PrimaryKey(t => t.PostId)
-                .ForeignKey("dbo.Topics", t => t.TopicId, cascadeDelete: true)
-                .ForeignKey("dbo.Tutors", t => t.TutorId)
-                .Index(t => t.TopicId)
-                .Index(t => t.TutorId);
-            
-            CreateTable(
-                "dbo.Comments",
-                c => new
-                    {
-                        CommentId = c.Int(nullable: false, identity: true),
-                        PostId = c.Int(nullable: false),
-                        DateTime = c.DateTime(nullable: false),
-                        Name = c.String(),
-                        Email = c.String(),
-                        Body = c.String(),
-                    })
-                .PrimaryKey(t => t.CommentId)
-                .ForeignKey("dbo.Posts", t => t.PostId, cascadeDelete: true)
-                .Index(t => t.PostId);
-            
-            CreateTable(
-                "dbo.Tags",
-                c => new
-                    {
-                        TagId = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                    })
-                .PrimaryKey(t => t.TagId);
-            
-            CreateTable(
-                "dbo.QuizRules",
-                c => new
-                    {
-                        QuizRuleId = c.Int(nullable: false, identity: true),
-                        TopicId = c.Int(nullable: false),
-                        ScorePerQuestion = c.Double(nullable: false),
-                        TotalQuestion = c.Int(nullable: false),
-                        MaximumTime = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.QuizRuleId)
-                .ForeignKey("dbo.Topics", t => t.TopicId, cascadeDelete: true)
-                .Index(t => t.TopicId);
-            
-            CreateTable(
-                "dbo.StudentQuestions",
-                c => new
-                    {
-                        StudentQuestionId = c.Int(nullable: false, identity: true),
-                        StudentId = c.String(maxLength: 128),
-                        TopicId = c.Int(nullable: false),
-                        Question = c.String(),
-                        Option1 = c.String(),
-                        Option2 = c.String(),
-                        Option3 = c.String(),
-                        Option4 = c.String(),
-                        Check1 = c.Boolean(nullable: false),
-                        Check2 = c.Boolean(nullable: false),
-                        Check3 = c.Boolean(nullable: false),
-                        Check4 = c.Boolean(nullable: false),
-                        FilledAnswer = c.String(),
-                        Answer = c.String(),
-                        QuestionHint = c.String(),
-                        QuestionNumber = c.Int(nullable: false),
-                        IsCorrect = c.Boolean(nullable: false),
-                        IsFillInTheGag = c.Boolean(nullable: false),
-                        IsMultiChoiceAnswer = c.Boolean(nullable: false),
-                        SelectedAnswer = c.String(),
-                        TotalQuestion = c.Int(nullable: false),
-                        ExamTime = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.StudentQuestionId)
-                .ForeignKey("dbo.Students", t => t.StudentId)
-                .ForeignKey("dbo.Topics", t => t.TopicId, cascadeDelete: true)
-                .Index(t => t.StudentId)
-                .Index(t => t.TopicId);
+                .PrimaryKey(t => t.EnrollmentID)
+                .ForeignKey("dbo.Courses", t => t.CourseID, cascadeDelete: true)
+                .ForeignKey("dbo.Students", t => t.Student_StudentId)
+                .Index(t => t.CourseID)
+                .Index(t => t.Student_StudentId);
             
             CreateTable(
                 "dbo.Students",
@@ -257,6 +113,198 @@ namespace CodedenimWebApp.Migrations
                 .ForeignKey("dbo.Students", t => t.StudentId)
                 .Index(t => t.StudentId)
                 .Index(t => t.Course_CourseId);
+            
+            CreateTable(
+                "dbo.StudentQuestions",
+                c => new
+                    {
+                        StudentQuestionId = c.Int(nullable: false, identity: true),
+                        StudentId = c.String(maxLength: 128),
+                        TopicId = c.Int(nullable: false),
+                        Question = c.String(),
+                        Option1 = c.String(),
+                        Option2 = c.String(),
+                        Option3 = c.String(),
+                        Option4 = c.String(),
+                        Check1 = c.Boolean(nullable: false),
+                        Check2 = c.Boolean(nullable: false),
+                        Check3 = c.Boolean(nullable: false),
+                        Check4 = c.Boolean(nullable: false),
+                        FilledAnswer = c.String(),
+                        Answer = c.String(),
+                        QuestionHint = c.String(),
+                        QuestionNumber = c.Int(nullable: false),
+                        IsCorrect = c.Boolean(nullable: false),
+                        IsFillInTheGag = c.Boolean(nullable: false),
+                        IsMultiChoiceAnswer = c.Boolean(nullable: false),
+                        SelectedAnswer = c.String(),
+                        TotalQuestion = c.Int(nullable: false),
+                        ExamTime = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.StudentQuestionId)
+                .ForeignKey("dbo.Students", t => t.StudentId)
+                .ForeignKey("dbo.Topics", t => t.TopicId, cascadeDelete: true)
+                .Index(t => t.StudentId)
+                .Index(t => t.TopicId);
+            
+            CreateTable(
+                "dbo.Topics",
+                c => new
+                    {
+                        TopicId = c.Int(nullable: false, identity: true),
+                        ModuleId = c.Int(nullable: false),
+                        TopicName = c.String(),
+                        ExpectedTime = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.TopicId)
+                .ForeignKey("dbo.Modules", t => t.ModuleId, cascadeDelete: true)
+                .Index(t => t.ModuleId);
+            
+            CreateTable(
+                "dbo.TopicMaterialUploads",
+                c => new
+                    {
+                        TopicMaterialUploadId = c.Int(nullable: false, identity: true),
+                        TopicId = c.Int(nullable: false),
+                        Tutor = c.Int(nullable: false),
+                        FileType = c.Int(nullable: false),
+                        Name = c.String(nullable: false),
+                        Description = c.String(),
+                        FileLocation = c.String(),
+                        MaterialByTutor_TutorId = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.TopicMaterialUploadId)
+                .ForeignKey("dbo.Topics", t => t.TopicId, cascadeDelete: true)
+                .ForeignKey("dbo.Tutors", t => t.MaterialByTutor_TutorId)
+                .Index(t => t.TopicId)
+                .Index(t => t.MaterialByTutor_TutorId);
+            
+            CreateTable(
+                "dbo.Tutors",
+                c => new
+                    {
+                        TutorId = c.String(nullable: false, maxLength: 128),
+                        Designation = c.String(),
+                        MaritalStatus = c.String(),
+                        IsActiveTutor = c.Boolean(nullable: false),
+                        ActiveStatus = c.String(),
+                        StaffRole = c.String(),
+                        FileType = c.Int(nullable: false),
+                        FirstName = c.String(maxLength: 50),
+                        MiddleName = c.String(maxLength: 50),
+                        LastName = c.String(maxLength: 50),
+                        Gender = c.String(),
+                        Email = c.String(),
+                        PhoneNumber = c.String(),
+                        TownOfBirth = c.String(),
+                        StateOfOrigin = c.String(),
+                        Nationality = c.String(),
+                        CountryOfBirth = c.String(),
+                        IsAcctive = c.Boolean(nullable: false),
+                        DateOfBirth = c.DateTime(),
+                        Age = c.Int(nullable: false),
+                        Passport = c.Binary(),
+                    })
+                .PrimaryKey(t => t.TutorId);
+            
+            CreateTable(
+                "dbo.FilePaths",
+                c => new
+                    {
+                        FilePathId = c.Int(nullable: false, identity: true),
+                        FileName = c.String(maxLength: 255),
+                        FileType = c.Int(nullable: false),
+                        TutorId = c.Int(nullable: false),
+                        Tutor_TutorId = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.FilePathId)
+                .ForeignKey("dbo.Tutors", t => t.Tutor_TutorId)
+                .Index(t => t.Tutor_TutorId);
+            
+            CreateTable(
+                "dbo.Files",
+                c => new
+                    {
+                        FileId = c.Int(nullable: false, identity: true),
+                        FileName = c.String(maxLength: 255),
+                        ContentType = c.String(maxLength: 100),
+                        Content = c.Binary(),
+                        FileType = c.Int(nullable: false),
+                        TutorId = c.Int(nullable: false),
+                        Tutor_TutorId = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.FileId)
+                .ForeignKey("dbo.Tutors", t => t.Tutor_TutorId)
+                .Index(t => t.Tutor_TutorId);
+            
+            CreateTable(
+                "dbo.Posts",
+                c => new
+                    {
+                        PostId = c.Int(nullable: false, identity: true),
+                        Title = c.String(),
+                        DateTime = c.DateTime(nullable: false),
+                        Body = c.String(),
+                        TopicId = c.Int(nullable: false),
+                        TutorId = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.PostId)
+                .ForeignKey("dbo.Topics", t => t.TopicId, cascadeDelete: true)
+                .ForeignKey("dbo.Tutors", t => t.TutorId)
+                .Index(t => t.TopicId)
+                .Index(t => t.TutorId);
+            
+            CreateTable(
+                "dbo.Comments",
+                c => new
+                    {
+                        CommentId = c.Int(nullable: false, identity: true),
+                        PostId = c.Int(nullable: false),
+                        DateTime = c.DateTime(nullable: false),
+                        Name = c.String(),
+                        Email = c.String(),
+                        Body = c.String(),
+                    })
+                .PrimaryKey(t => t.CommentId)
+                .ForeignKey("dbo.Posts", t => t.PostId, cascadeDelete: true)
+                .Index(t => t.PostId);
+            
+            CreateTable(
+                "dbo.Tags",
+                c => new
+                    {
+                        TagId = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.TagId);
+            
+            CreateTable(
+                "dbo.Modules",
+                c => new
+                    {
+                        ModuleId = c.Int(nullable: false, identity: true),
+                        CourseId = c.Int(nullable: false),
+                        ModuleName = c.String(),
+                        ModuleDescription = c.String(),
+                        ExpectedTime = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ModuleId)
+                .ForeignKey("dbo.Courses", t => t.CourseId, cascadeDelete: true)
+                .Index(t => t.CourseId);
+            
+            CreateTable(
+                "dbo.QuizRules",
+                c => new
+                    {
+                        QuizRuleId = c.Int(nullable: false, identity: true),
+                        TopicId = c.Int(nullable: false),
+                        ScorePerQuestion = c.Double(nullable: false),
+                        TotalQuestion = c.Int(nullable: false),
+                        MaximumTime = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.QuizRuleId)
+                .ForeignKey("dbo.Topics", t => t.TopicId, cascadeDelete: true)
+                .Index(t => t.TopicId);
             
             CreateTable(
                 "dbo.StudentTestLogs",
@@ -409,6 +457,19 @@ namespace CodedenimWebApp.Migrations
                 .Index(t => t.UserId);
             
             CreateTable(
+                "dbo.TutorCourses",
+                c => new
+                    {
+                        Tutor_TutorId = c.String(nullable: false, maxLength: 128),
+                        Course_CourseId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.Tutor_TutorId, t.Course_CourseId })
+                .ForeignKey("dbo.Tutors", t => t.Tutor_TutorId, cascadeDelete: true)
+                .ForeignKey("dbo.Courses", t => t.Course_CourseId, cascadeDelete: true)
+                .Index(t => t.Tutor_TutorId)
+                .Index(t => t.Course_CourseId);
+            
+            CreateTable(
                 "dbo.TagPosts",
                 c => new
                     {
@@ -431,31 +492,37 @@ namespace CodedenimWebApp.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.TopicQuizs", "TopicId", "dbo.Topics");
             DropForeignKey("dbo.TopicAssignments", "TopicId", "dbo.Topics");
-            DropForeignKey("dbo.StudentQuestions", "TopicId", "dbo.Topics");
             DropForeignKey("dbo.SubmitAssignments", "TopicId", "dbo.Topics");
             DropForeignKey("dbo.SubmitAssignments", "StudentId", "dbo.Students");
             DropForeignKey("dbo.AssignmentReviews", "SubmitAssignmentId", "dbo.SubmitAssignments");
             DropForeignKey("dbo.StudentTestLogs", "TopicId", "dbo.Topics");
             DropForeignKey("dbo.StudentTestLogs", "StudentId", "dbo.Students");
-            DropForeignKey("dbo.StudentQuestions", "StudentId", "dbo.Students");
-            DropForeignKey("dbo.StudentAssesments", "StudentId", "dbo.Students");
-            DropForeignKey("dbo.StudentAssesments", "Course_CourseId", "dbo.Courses");
+            DropForeignKey("dbo.StudentQuestions", "TopicId", "dbo.Topics");
             DropForeignKey("dbo.QuizRules", "TopicId", "dbo.Topics");
             DropForeignKey("dbo.Topics", "ModuleId", "dbo.Modules");
+            DropForeignKey("dbo.Modules", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.TopicMaterialUploads", "MaterialByTutor_TutorId", "dbo.Tutors");
             DropForeignKey("dbo.Posts", "TutorId", "dbo.Tutors");
             DropForeignKey("dbo.Posts", "TopicId", "dbo.Topics");
             DropForeignKey("dbo.TagPosts", "Post_PostId", "dbo.Posts");
             DropForeignKey("dbo.TagPosts", "Tag_TagId", "dbo.Tags");
             DropForeignKey("dbo.Comments", "PostId", "dbo.Posts");
+            DropForeignKey("dbo.Files", "Tutor_TutorId", "dbo.Tutors");
+            DropForeignKey("dbo.FilePaths", "Tutor_TutorId", "dbo.Tutors");
+            DropForeignKey("dbo.TutorCourses", "Course_CourseId", "dbo.Courses");
+            DropForeignKey("dbo.TutorCourses", "Tutor_TutorId", "dbo.Tutors");
             DropForeignKey("dbo.TopicMaterialUploads", "TopicId", "dbo.Topics");
-            DropForeignKey("dbo.Modules", "CourseId", "dbo.Courses");
+            DropForeignKey("dbo.StudentQuestions", "StudentId", "dbo.Students");
+            DropForeignKey("dbo.StudentAssesments", "StudentId", "dbo.Students");
+            DropForeignKey("dbo.StudentAssesments", "Course_CourseId", "dbo.Courses");
+            DropForeignKey("dbo.Enrollments", "Student_StudentId", "dbo.Students");
+            DropForeignKey("dbo.Enrollments", "CourseID", "dbo.Courses");
             DropForeignKey("dbo.Courses", "CourseCategoryId", "dbo.CourseCategories");
             DropForeignKey("dbo.AssesmentQuestionAnswers", "CourseId", "dbo.Courses");
-
-
             DropIndex("dbo.TagPosts", new[] { "Post_PostId" });
             DropIndex("dbo.TagPosts", new[] { "Tag_TagId" });
+            DropIndex("dbo.TutorCourses", new[] { "Course_CourseId" });
+            DropIndex("dbo.TutorCourses", new[] { "Tutor_TutorId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
@@ -469,24 +536,26 @@ namespace CodedenimWebApp.Migrations
             DropIndex("dbo.SubmitAssignments", new[] { "TopicId" });
             DropIndex("dbo.StudentTestLogs", new[] { "TopicId" });
             DropIndex("dbo.StudentTestLogs", new[] { "StudentId" });
-            DropIndex("dbo.StudentAssesments", new[] { "Course_CourseId" });
-            DropIndex("dbo.StudentAssesments", new[] { "StudentId" });
-            DropIndex("dbo.StudentQuestions", new[] { "TopicId" });
-            DropIndex("dbo.StudentQuestions", new[] { "StudentId" });
             DropIndex("dbo.QuizRules", new[] { "TopicId" });
+            DropIndex("dbo.Modules", new[] { "CourseId" });
             DropIndex("dbo.Comments", new[] { "PostId" });
             DropIndex("dbo.Posts", new[] { "TutorId" });
             DropIndex("dbo.Posts", new[] { "TopicId" });
+            DropIndex("dbo.Files", new[] { "Tutor_TutorId" });
+            DropIndex("dbo.FilePaths", new[] { "Tutor_TutorId" });
             DropIndex("dbo.TopicMaterialUploads", new[] { "MaterialByTutor_TutorId" });
             DropIndex("dbo.TopicMaterialUploads", new[] { "TopicId" });
             DropIndex("dbo.Topics", new[] { "ModuleId" });
-            DropIndex("dbo.Modules", new[] { "CourseId" });
+            DropIndex("dbo.StudentQuestions", new[] { "TopicId" });
+            DropIndex("dbo.StudentQuestions", new[] { "StudentId" });
+            DropIndex("dbo.StudentAssesments", new[] { "Course_CourseId" });
+            DropIndex("dbo.StudentAssesments", new[] { "StudentId" });
+            DropIndex("dbo.Enrollments", new[] { "Student_StudentId" });
+            DropIndex("dbo.Enrollments", new[] { "CourseID" });
             DropIndex("dbo.AssesmentQuestionAnswers", new[] { "CourseId" });
             DropIndex("dbo.Courses", new[] { "CourseCategoryId" });
-
-
-
             DropTable("dbo.TagPosts");
+            DropTable("dbo.TutorCourses");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
@@ -497,17 +566,20 @@ namespace CodedenimWebApp.Migrations
             DropTable("dbo.AssignmentReviews");
             DropTable("dbo.SubmitAssignments");
             DropTable("dbo.StudentTestLogs");
-            DropTable("dbo.StudentAssesments");
-            DropTable("dbo.Students");
-            DropTable("dbo.StudentQuestions");
             DropTable("dbo.QuizRules");
+            DropTable("dbo.Modules");
             DropTable("dbo.Tags");
             DropTable("dbo.Comments");
             DropTable("dbo.Posts");
+            DropTable("dbo.Files");
+            DropTable("dbo.FilePaths");
             DropTable("dbo.Tutors");
             DropTable("dbo.TopicMaterialUploads");
             DropTable("dbo.Topics");
-            DropTable("dbo.Modules");
+            DropTable("dbo.StudentQuestions");
+            DropTable("dbo.StudentAssesments");
+            DropTable("dbo.Students");
+            DropTable("dbo.Enrollments");
             DropTable("dbo.AssesmentQuestionAnswers");
             DropTable("dbo.Courses");
             DropTable("dbo.CourseCategories");
