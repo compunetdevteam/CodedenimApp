@@ -108,7 +108,7 @@ namespace CodedenimWebApp.Controllers
 
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Student student, HttpPostedFileBase upload)
         {
             try
