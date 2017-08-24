@@ -1,9 +1,9 @@
 body {
     background-color: white;
     font-family: open sans, sans-serif;
-    color: #fff;
+    
 }
-.form-header {
+.form-header{
     background-color: #093 !important;
 }
 .grey-skin .navbar {
@@ -12,4 +12,10 @@ body {
 }
 a {
     color: #fff !important;
+}
+.white-skin .side-nav {
+    background: #000;
+}
+.i.btn-default {
+    background-color: #093 !important;
 }

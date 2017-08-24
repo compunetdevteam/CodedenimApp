@@ -1,9 +1,9 @@
 ﻿@{
-    ViewBag.Title = "Code-Denim Homepage";
+    ViewBag.Title = "Codedenim Home";
     Layout = "~/Views/Shared/_LayoutCodeDenim.cshtml";
 }
 <body class="grey-skin intro-page creative-lp">
-<body class="grey-skin intro-page creative-lp">
+
 <!--Navigation & Intro-->
 <header>
         
@@ -24,13 +24,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                    
                 <!--Links-->
-                <ul class="navbar-nav mr-auto smooth-scroll">
+                <ul class="navbar-nav mr-auto">
                    
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("SignIn","Account")" data-offset="100">Login</a>
+                        <a class="nav-link" href="@Url.Action("Login","Account")" data-offset="100">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("SignIn","Account")" data-offset="100">Register</a>
+                        <a class="nav-link" href="@Url.Action("Register","Account")" data-offset="100">Register</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Contact","Home")" data-offset="100">Contact Us</a>
@@ -58,7 +58,7 @@
     <!--Video-->
     <div class="intro-video view" id="home">
         <video poster="" playsinline autoplay muted loop>
-            <source src="~/Content/Videos/Ipad.mp4" type="video/mp4">
+            <source src="~/Content/Videos/Ipad.mp4"  type="video/mp4">
         </video>
         <div class="hm-gradient">
             <div class="full-bg-img flex-center">
@@ -81,4 +81,4 @@
 
 </header>
 <!--/Navigation & Intro-->
-        
+</body>       

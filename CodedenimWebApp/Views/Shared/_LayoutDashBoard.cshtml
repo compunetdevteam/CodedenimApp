@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>@ViewBag.Title</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/Css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="~/Content/Css/mdb.css" rel="stylesheet">
+
+    <!-- Customizer -->
+    <link rel="stylesheet" href="~/Content/Css/customizer.min.css">
+
+    <!-- Your custom styles (optional) -->
+    <link href="~/Content/Css/style.css" rel="stylesheet">
+
+</head>
+
+@RenderBody()
+
+<!-- SCRIPTS -->
+
+<!-- JQuery -->
+<script type="text/javascript" src="~/Scripts/jquery-3.1.1.min.js"></script>
+
+<script>
+    $("#navigation").load("components/navigation.html");
+</script>
+
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="~/Scripts/tether.min.js"></script>
+
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="~/Scripts/mdb.min.js"></script>
+    
+<!-- Customizer -->
+<script type="text/javascript" src="~/Scripts/customizer.min.js"></script>
+
+<script>
+    $(function() {
+        var data = {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(0,0,0,.15)",
+                data: [65, 59, 80, 81, 56, 55, 40],
+                backgroundColor: "#4CAF50"
+            }, {
+                label: "My Second dataset",
+                fillColor: "rgba(255,255,255,.25)",
+                strokeColor: "rgba(255,255,255,.75)",
+                pointColor: "#fff",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(0,0,0,.15)",
+                data: [28, 48, 40, 19, 86, 27, 90]
+            }]
+        };
+
+
+        var dataPie = [{
+            value: 300,
+            color: "#F7464A",
+            highlight: "#FF5A5E",
+            label: "Red"
+        }, {
+            value: 50,
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: "Green"
+        }, {
+            value: 100,
+            color: "#FDB45C",
+            highlight: "#FFC870",
+            label: "Yellow"
+        }]
+
+        var option = {
+            responsive: true,
+            // set font color
+            scaleFontColor: "#fff",
+            // font family
+            defaultFontFamily: "'Roboto', sans-serif",
+            // background grid lines color
+            scaleGridLineColor: "rgba(255,255,255,.1)",
+            // hide vertical lines
+            scaleShowVerticalLines: false,
+        };
+
+        // Get the context of the canvas element we want to select
+        var ctx = document.getElementById("sales").getContext('2d');
+        var myLineChart = new Chart(ctx).Line(data, option); //'Line' defines type of the chart.
+    });
+</script>
+
+<script>
+    $(function() {
+        $('.min-chart#chart-sales').easyPieChart({
+            barColor: "#4caf50",
+            onStep: function(from, to, percent) {
+                $(this.el).find('.percent').text(Math.round(percent));
+            }
+        });
+    });
+</script>
+
+<script>
+    // Data Picker Initialization
+    $('.datepicker').pickadate();
+
+
+    // Material Select Initialization
+    $(document).ready(function() {
+        $('.mdb-select').material_select();
+    });
+
+    // Sidenav Initialization
+    $(".button-collapse").sideNav();
+
+    // Tooltips Initialization
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+        $('#toggle').tooltip('show');
+    })
+</script>
+

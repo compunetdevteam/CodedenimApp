@@ -53,20 +53,20 @@ namespace CodedenimWebApp.Controllers
         }
 
         //
-        // GET: /Account/SignIn
+        // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult SignIn(string returnUrl)
+        public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         //
-        // POST: /Account/SignIn
+        // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SignIn(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -325,7 +325,7 @@ namespace CodedenimWebApp.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
-                return RedirectToAction("SignIn");
+                return RedirectToAction("Login");
             }
 
             // Sign in the user with this external login provider if the user already has a login

@@ -10950,8 +10950,9 @@ button.toast-close-button {
     background-color: #797979; }
   .white-skin .double-nav a {
     color: #424242; }
-  .white-skin .side-nav {
-    background-color: #F9F9F9; }
+    /*.white-skin .side-nav {
+        background-color: green !important;
+    }*/
     .white-skin .side-nav .logo-wrapper > div {
       background-color: transparent !important; }
     .white-skin .side-nav .sn-avatar-wrapper img {

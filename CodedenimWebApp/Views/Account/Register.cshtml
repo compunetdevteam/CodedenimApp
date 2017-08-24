@@ -1,41 +1,58 @@
-﻿@model CodedenimWebApp.Models.RegisterViewModel
-@{
+﻿@{
     ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayoutWeb.cshtml";
 }
+<body>
+    <div class="row">
+        <div class="col-md-6 col-lg-5 login-form mx-auto float-none">
 
-<h2>@ViewBag.Title.</h2>
+            <!--Form with header-->
+            <div class="card">
+                <div class="card-block">
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
-}
+                    <!--Header-->
+                    <!--Header-->
+                    <div class="form-header">
+                        <h3><i class="fa fa-user"></i><a href="@Url.Action("Index","Home")">CodeDenim</a></h3>
+                    </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+                    <!--Body-->
+                    <form action="@Href("")" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="md-form">
+                            <i class="fa fa-user prefix"></i>
+                            <input type="text" id="form1" class="form-control">
+                            <label for="form1">First name</label>
+                        </div>
+
+                        <div class="md-form">
+                            <i class="fa fa-user prefix"></i>
+                            <input type="text" id="form2" class="form-control">
+                            <label for="form2">Last name</label>
+                        </div>
+
+                        <div class="md-form">
+                            <i class="fa fa-envelope prefix"></i>
+                            <input type="text" id="form3" class="form-control">
+                            <label for="form2">Your email</label>
+                        </div>
+
+                        <div class="md-form">
+                            <i class="fa fa-lock prefix"></i>
+                            <input type="password" id="form4" class="form-control">
+                            <label for="form4">Your password</label>
+                        </div>
+
+                        <div class="text-center">
+                            <button class="btn btn-default">Sign up</button>
+                        </div>
+                    </form>
+                </div>
+</div>
+        </div>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</body>
+
