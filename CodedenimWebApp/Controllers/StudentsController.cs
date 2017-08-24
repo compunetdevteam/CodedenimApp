@@ -9,6 +9,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CodedenimWebApp.Models;
+using CodedenimWebApp.ViewModels;
 using CodeninModel;
 using PagedList;
 
@@ -105,6 +106,42 @@ namespace CodedenimWebApp.Controllers
         //    return View(student);
 
         //}
+
+
+        [Authorize]
+        public ActionResult AssignedCourseView()
+        {
+            var student = new Student();
+            student.Enrollments = new List<Enrollment>();
+            PopulateAssignedCourseData(student);
+            return View();
+        }
+
+
+
+
+
+        /// <summary>
+        /// Method to map the assigned courses to the student
+        /// </summary>
+        /// <param name="student"></param>
+        private void PopulateAssignedCourseData(Student student)
+        {
+            var allCourses = db.Courses;
+            var studentCourses = new HashSet<int>(student.Enrollments.Select(c => c.CourseID));
+            var viewModel = new List<AssignedCourses>();
+            foreach (var course in allCourses)
+            {
+                viewModel.Add(new AssignedCourses
+                {
+                    CourseId = course.CourseId,
+                    CourseName = course.CourseName,
+                    Assigned = studentCourses.Contains(course.CourseId)
+                });
+            }
+            ViewBag.Courses = viewModel;
+        }
+
 
 
         [HttpPost]

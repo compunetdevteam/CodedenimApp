@@ -242,6 +242,10 @@
     <Compile Include="Migrations\201708230945204_StudentPhotoUpload.Designer.cs">
       <DependentUpon>201708230945204_StudentPhotoUpload.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708241217270_Roles.cs" />
+    <Compile Include="Migrations\201708241217270_Roles.Designer.cs">
+      <DependentUpon>201708241217270_Roles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -351,6 +355,7 @@
     <Content Include="Views\Students\Details.cshtml" />
     <Content Include="Views\Students\Edit.cshtml" />
     <Content Include="Views\Students\Index.cshtml" />
+    <Content Include="Views\Students\AssignedCourseView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -383,6 +388,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708230945204_StudentPhotoUpload.resx">
       <DependentUpon>201708230945204_StudentPhotoUpload.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708241217270_Roles.resx">
+      <DependentUpon>201708241217270_Roles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
