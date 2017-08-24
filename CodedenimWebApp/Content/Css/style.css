@@ -1,0 +1,15 @@
+body {
+    background-color: white;
+    font-family: open sans, sans-serif;
+    color: #fff;
+}
+.form-header {
+    background-color: #093 !important;
+}
+.grey-skin .navbar {
+    background-color: #093 !important;
+    color: #fff;
+}
+a {
+    color: #fff !important;
+}

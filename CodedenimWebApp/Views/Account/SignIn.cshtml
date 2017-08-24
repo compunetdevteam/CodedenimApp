@@ -1,0 +1,58 @@
+﻿ @{
+     ViewBag.Title = "SignIn";
+     Layout = "~/Views/Shared/_LayoutWeb.cshtml";
+ }
+<body>
+<div class="row">
+    <div class="col-md-6 col-lg-5 login-form mx-auto float-none">
+
+        <!--Form with header-->
+        <div class="card">
+            <div class="card-block">
+
+                <!--Header-->
+                <!--Header-->
+                <div class="form-header">
+                    <h3><i class="fa fa-user"></i><a href="@Url.Action("CodeDenim","Home")">CodeDenim</a></h3>
+                </div>
+
+                <!--Body-->
+                <form action="@Href("~/Account/Dashboard")" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="md-form">
+                        <i class="fa fa-envelope prefix"></i>
+                        <input type="text" id="Email" name="Email" class="form-control" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required.">
+                        <label for="Email">Your email</label>
+                        <span class="field-validation-valid text-danger" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                    </div>
+
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix"></i>
+                        <input type="password" id="Password" name="Password" class="form-control" data-val="true" data-val-Password="The Password field is required." data-val-required="The Password field is required.">
+                        <label for="Password">Your password</label>
+                        <span class="field-validation-valid text-danger" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                    </div>
+
+                    <fieldset class="form-group">
+                        &nbsp;<input type="checkbox" id="RememberMe" name="RememberMe">
+                        <label for="RememberMe"> &nbsp;Remember Me</label>
+                    </fieldset>
+
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-default" value="Login" />
+                    </div>
+                </form>
+            </div>
+
+
+            <!--Footer-->
+            <div class="modal-footer text-center">
+                <a href="@Url.Action("ForgotPassword", "Account")"><b style="color: #093">Forgot Password?</b></a>
+            </div>
+        </div>
+        <!--/Form with header-->
+
+    </div>
+</div>
+</body>
+

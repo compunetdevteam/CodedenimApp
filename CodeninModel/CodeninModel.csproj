@@ -69,6 +69,7 @@
     <Compile Include="Classroom.cs" />
     <Compile Include="Course.cs" />
     <Compile Include="CourseCategory.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MaterialUpload.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Person.cs" />
