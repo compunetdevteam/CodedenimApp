@@ -19,9 +19,9 @@ namespace CodedenimWebApp.Controllers.Api
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Modules
-        public IQueryable<Module> GetModules()
+        public IEnumerable<Module> GetModules()
         {
-            return db.Modules;
+            return db.Modules.ToList();
         }
 
         // GET: api/Modules/5

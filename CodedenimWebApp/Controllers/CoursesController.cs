@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CodedenimWebApp.Models;
+using CodedenimWebApp.ViewModels;
 using CodeninModel;
 
 namespace CodedenimWebApp.Controllers
@@ -15,13 +16,21 @@ namespace CodedenimWebApp.Controllers
     public class CoursesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
         // GET: Courses
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int? SelectedCategory)
         {
-            var courses = db.Courses.Include(c => c.CourseCategory);
-            return View(await courses.ToListAsync());
+            var categories = await db.CourseCategories.OrderBy(c => c.CategoryName).ToListAsync();
+            ViewBag.SelectedCategory = new SelectList(categories, "CourseCategoryId", "CategoryName", SelectedCategory);
+            int categoryId = SelectedCategory.GetValueOrDefault();
+
+            IEnumerable<Course> courses = db.Courses
+                .Where(c => !SelectedCategory.HasValue || c.CourseCategoryId == categoryId)
+                .OrderBy(d => d.CourseId)
+                .Include(d => d.CourseCategory);
+            //var courses = db.Courses.Include(c => c.CourseCategory);
+            return View(courses.ToList());
         }
+
 
         // GET: Courses/Details/5
         public async Task<ActionResult> Details(int? id)
@@ -38,9 +47,13 @@ namespace CodedenimWebApp.Controllers
             return View(course);
         }
 
+
+      
         // GET: Courses/Create
         public ActionResult Create()
         {
+
+            
             ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName");
             return View();
         }
@@ -50,7 +63,7 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded")] Course course)
+        public async Task<ActionResult> Create([Bind(Include = "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")] Course course)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +97,7 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded")] Course course)
+        public async Task<ActionResult> Edit([Bind(Include = "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")] Course course)
         {
             if (ModelState.IsValid)
             {

@@ -57,7 +57,7 @@
 
     public enum FileType
     {
-        MP4 = 1, MP3, PDF, DOC, PPT, XLS
+        MP4 = 1, MP3, PDF, DOC, PPT, XLS,Photo
     }
 
     public enum State

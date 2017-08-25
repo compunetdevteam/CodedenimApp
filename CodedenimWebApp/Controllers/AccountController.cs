@@ -1,14 +1,15 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
+﻿using CodedenimWebApp.Models;
+using CodedenimWebApp.Service;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using CodedenimWebApp.Models;
+using System.Configuration;
+using System.Data.Entity;
+using System.Linq;
+using System.Net.Mail;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -17,15 +18,18 @@ namespace CodedenimWebApp.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _db;
 
         public AccountController()
         {
+            _db = new ApplicationDbContext();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationDbContext db)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            this._db = db;
         }
 
         public ApplicationSignInManager SignInManager
@@ -34,9 +38,9 @@ namespace CodedenimWebApp.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -73,9 +77,23 @@ namespace CodedenimWebApp.Controllers
                 return View(model);
             }
 
+
+
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, change to shouldLockout: 
+            var user = await _db.Users.AsNoTracking().FirstOrDefaultAsync(c => c.Email.ToUpper().Equals(model.Email.ToUpper())
+                                                                                );
+
+            if (user == null)
+            {
+                ViewBag.Message = "Incorrect UserName or Password, Please try again!!!";
+                return View(model);
+            }
+            var result = await SignInManager.PasswordSignInAsync(user.Email, model.Password, model.RememberMe, shouldLockout: false);
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            //  var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -120,7 +138,7 @@ namespace CodedenimWebApp.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -155,8 +173,19 @@ namespace CodedenimWebApp.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
+                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your student account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                    ViewBag.Link = callbackUrl;
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your student account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                    ViewBag.Link = callbackUrl;
+                    TempData["UserMessage"] = $"Registration is Successful for {user.UserName}, Please Confirm Your Email to Login.";
+                    return View("ConfirmRegistration");
+
+                    // await this.UserManager.AddToRoleAsync(user.Id, "Admin");
+                    // await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -170,6 +199,50 @@ namespace CodedenimWebApp.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        [AllowAnonymous]
+        public async Task<ActionResult> SendEmail()
+        {
+            var message = new IdentityMessage
+            {
+                Subject = "Confirm Email",
+                Destination = "davidzagi93@gmail.com",
+                Body = "this is to Confirm Password",
+
+            };
+
+            var send = new EmailService();
+            await send.SendAsync(message);
+            ViewBag.Success = "Success";
+            return View();
+
+            // return await message;
+        }
+
+
+
+        [AllowAnonymous]
+        public async Task SendAsync(EmailSender message)
+        {
+            // Plug in your email service here to send an email.
+            string schoolName = ConfigurationManager.AppSettings["CODEDENIM"];
+            string emailsetting = ConfigurationManager.AppSettings["GmailUserName"];
+            MailMessage email = new MailMessage(new MailAddress($"noreply{emailsetting}", "(Codedenin Registration, do not reply)"),
+                new MailAddress(message.Destination));
+
+            email.Subject = message.Subject;
+            email.Body = message.Body;
+
+            email.IsBodyHtml = true;
+
+            using (var mailClient = new EmailSetUpServices())
+            {
+                //In order to use the original from email address, uncomment this line:
+                email.From = new MailAddress(mailClient.UserName, $"(do not reply)@{schoolName}");
+
+                await mailClient.SendMailAsync(email);
+            }
         }
 
         //
@@ -481,5 +554,14 @@ namespace CodedenimWebApp.Controllers
             }
         }
         #endregion
+    }
+
+    public class EmailSender
+    {
+        //public string Sender { get; set; }
+        public string Destination { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
+
     }
 }

@@ -7,13 +7,13 @@ namespace CodedenimWebApp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class InitialCreate : IMigrationMetadata
+    public sealed partial class StudentPhotoUpload : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(StudentPhotoUpload));
         
         string IMigrationMetadata.Id
         {
-            get { return "201708201833221_InitialCreate"; }
+            get { return "201708230945204_StudentPhotoUpload"; }
         }
         
         string IMigrationMetadata.Source

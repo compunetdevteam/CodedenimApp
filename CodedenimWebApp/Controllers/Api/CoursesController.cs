@@ -19,9 +19,9 @@ namespace CodedenimWebApp.Controllers.Api
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Courses
-        public IQueryable<Course> GetCourses()
+        public IEnumerable<Course> GetCourses()
         {
-            return db.Courses;
+            return db.Courses.ToList();
         }
 
         // GET: api/Courses/5

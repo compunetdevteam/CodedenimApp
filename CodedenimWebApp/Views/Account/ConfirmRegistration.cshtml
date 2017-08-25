@@ -1,0 +1,46 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = "Send Email";
+    //Layout = "~/Views/Shared/_LayoutWebSite2.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var schoolImage = @System.Configuration.ConfigurationManager.AppSettings["SchoolImage"];
+
+}
+<br />
+<br />
+<br /><br />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-lg-5 login-form mx-auto float-none">
+
+            <!--Form with header-->
+            <div class="card">
+                <div class="card-block">
+
+                    <!--Header-->
+                    <div class="form-header">
+                        <h3>
+                            <img class="img-responsive" src="~/Content/Images/@schoolImage" />
+                            @*<i class="fa fa-lock"></i>*@
+                        </h3>
+                    </div>
+
+                    <!--Body-->
+                    <p>
+                        <h2><b>You have Registered Successfully, </b>
+                            <br/>
+                            Kindly Click on the Activation link sent to your Email to complete the registration</h2>
+ 
+                    </p>
+                </div>
+
+
+
+            </div>
+            <!--/Form with header-->
+
+        </div>
+    </div>
+</div>
+

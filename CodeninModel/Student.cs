@@ -16,13 +16,13 @@ namespace CodeninModel
         [Display(Name = "Enrollment Date")]
         public DateTime? EnrollmentDate { get; set; }
 
-        public int? ProgrammeId { get; set; }
-
         // public string GuardianEmail { get; set; }
 
         public bool Active { get; set; }
 
         public bool IsGraduated { get; set; }
+        public virtual ICollection<Enrollment> Enrollments { get; set; }
+        public virtual ICollection<File> Files { get; set; }
 
         public virtual ICollection<SubmitAssignment> SubmitAssignments { get; set; }
         public virtual ICollection<StudentTestLog> StudentTestLogs { get; set; }
