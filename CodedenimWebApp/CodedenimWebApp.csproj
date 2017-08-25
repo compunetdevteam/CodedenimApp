@@ -244,6 +244,7 @@
     <Content Include="Content\img\flags\it.png" />
     <Content Include="Content\img\flags\pl.png" />
     <Content Include="Content\img\flags\us.png" />
+    <Content Include="Content\img\Sebig.png" />
     <Content Include="Content\Videos\Ipad.mp4" />
     <Content Include="Content\Videos\Lines.mp4" />
     <Content Include="Content\img\overlays\01.png" />
