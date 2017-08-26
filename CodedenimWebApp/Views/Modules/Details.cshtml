@@ -1,50 +1,54 @@
 ﻿@model CodeninModel.Module
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Module Details";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
 }
+<br /><br /><br /><br /><br />
+<div class="container">
 
-<h2>Details</h2>
+    <h2>Details</h2>
 
-<div>
-    <h4>Module</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Course.CourseCode)
-        </dt>
+    <div>
+        <h4>Module</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Course.CourseCode)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Course.CourseCode)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Course.CourseCode)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ModuleName)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.ModuleName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ModuleName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.ModuleName)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ModuleDescription)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.ModuleDescription)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ModuleDescription)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.ModuleDescription)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ExpectedTime)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.ExpectedTime)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ExpectedTime)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.ExpectedTime)
+            </dd>
 
-    </dl>
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ModuleId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ModuleId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

@@ -1,33 +1,37 @@
 ﻿@model IEnumerable<CodeninModel.CourseCategory>
-
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Course Category";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
 }
 
-<h2>Index</h2>
+<br /><br /><br /><br /><br />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </th>
-        <th></th>
-    </tr>
+<div class="container">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CategoryName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CourseCategoryId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.CourseCategoryId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CourseCategoryId })
-        </td>
-    </tr>
-}
+    <p>
+        @Html.ActionLink("CREATE CATEGORIES", "Create", null, new { @class = "my-class" })
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th></th>
+        </tr>
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CourseCategoryId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.CourseCategoryId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CourseCategoryId })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

@@ -1,14 +1,16 @@
 ﻿@model IEnumerable<CodeninModel.TopicMaterialUpload>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Topic Materials";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<br /><br /><br /><br /><br />
+<div class="container">
+    <h2>Topic Materials</h2>
+<br/>
+    <p>
+        @Html.ActionLink("CREATE TOPIC MATERIAL", "Create",null, new{@class = "my-class"})
+    </p>
 <table class="table">
     <tr>
         <th>
@@ -32,32 +34,34 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Course.TopicName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tutor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FileType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FileLocation)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TopicMaterialUploadId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TopicMaterialUploadId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TopicMaterialUploadId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course.TopicName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tutor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FileType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FileLocation)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.TopicMaterialUploadId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.TopicMaterialUploadId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.TopicMaterialUploadId })
+            </td>
+        </tr>
+    }
 
 </table>
+    </div>

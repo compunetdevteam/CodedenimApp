@@ -1,31 +1,84 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Codedenim Home";
+    Layout = "~/Views/Shared/_LayoutCodeDenim.cshtml";
 }
+<body class="grey-skin intro-page creative-lp">
 
-<div class="jumbotron">
-    <h1>Codedenim</h1>
-    <p class="lead">Activate your account as a tutor</p>
-    <p><a href="@Url.Action("Register","Account")" class="btn btn-primary btn-lg">Tutor activation Link</a></p>
-</div>
+<!--Navigation & Intro-->
+<header>
+        
+    <!--Navbar-->
+    <nav class="navbar fixed-top navbar-toggleable-md navbar-dark scrolling-navbar">
+           
+        <div class="container">
+               
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+                
+            <a class="navbar-brand" href="@Url.Action("Index","Home")">
+                <img src="~/Content/img/CodeDemin.png"  height="50" width="50"/>
+                <strong>Codedenim</strong>
+            </a>
+                
+            <div class="collapse navbar-collapse" id="navbarNav">
+                   
+                <!--Links-->
+                <ul class="navbar-nav mr-auto">
+                   
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Login","Account")" data-offset="100">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Register","Account")" data-offset="100">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Contact","Home")" data-offset="100">Contact Us</a>
+                    </li>
+                </ul>
+                    
+                <!--Social Icons-->
+                <ul class="navbar-nav nav-flex-icons">
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="fa fa-instagram"></i></a>
+                    </li>
+                </ul>
+                    
+            </div>
+        </div>
+    </nav>
+    <!--/Navbar-->
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <!--Video-->
+    <div class="intro-video view" id="home">
+        <video poster="" playsinline autoplay muted loop>
+            <source src="~/Content/Videos/Ipad.mp4"  type="video/mp4">
+        </video>
+        <div class="hm-gradient">
+            <div class="full-bg-img flex-center">
+                <div class="container smooth-scroll">
+                    <div class="row">
+                        <div class="col-md-12 white-text text-center smooth-scroll">
+                            <div class="wow fadeInDown" data-wow-delay="0.2s">
+                                <h3 class="brand-name font-bold white-text mb-2" style="color: #000 !important;">Welcome To CODE-DENIM</h3>
+                                <hr class="hr-light">
+                                <h4 class="subtext-header mt-2 mb-2"></h4>
+                            </div>
+                            <a href="#about" data-offset="90" class="btn btn-rounded btn-light-green-2 wow fadeInUp" data-wow-delay="0.2s"><i class="fa fa-home"></i> Visit us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+    <!--/Video-->
+
+</header>
+<!--/Navigation & Intro-->
+</body>       
