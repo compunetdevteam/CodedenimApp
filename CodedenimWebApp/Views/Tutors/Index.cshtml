@@ -1,120 +1,121 @@
 ﻿@model CodedenimWebApp.ViewModels.TutorsIndexVm
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Tutor";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>Last Name</th>
-        <th>First Name</th>
-        <th>Courses</th>
-        <th></th>
-    </tr>
-
-
-@foreach (var item in Model.Tutors)
-{
-   
-    string selectedRow = "";
-    if (item.TutorId == ViewBag.TutorId)
-    {
-    selectedRow = "success";
-    }
-    <tr class="@selectedRow">
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        
-        <td>
-            @{
-                foreach (var course in item.Courses)
-                {
-                    @course.CourseId @:  @course.CourseName <br />
-                }
-            }
-        </td>
-
-        <td>
-            @Html.ActionLink("Select", "Index", new { id = item.TutorId }) |
-            @Html.ActionLink("Edit", "Edit", new {id = item.TutorId}) |
-            @Html.ActionLink("Details", "Details", new {id = item.TutorId}) |
-            @Html.ActionLink("Delete", "Delete", new {id = item.TutorId})
-        </td>
-    </tr>
-}
-
-</table>
-
-@if (Model.Courses != null)
-{
-    <h3>Courses Taught by Selected Instructor</h3>
+<br /><br /><br /><br /><br />
+<div class="container">
+    <h2>Tutor</h2>
+<br/>
+    <p>
+        @Html.ActionLink("CREATE TUTOR", "Create",null, new{@class = "my-class"})
+    </p>
     <table class="table">
         <tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Courses</th>
             <th></th>
-            <th>Course Code</th>
-            <th>Title</th>
-            <th>Department</th>
         </tr>
 
-        @foreach (var item in Model.Courses)
+
+        @foreach (var item in Model.Tutors)
         {
+
             string selectedRow = "";
-            if (item.CourseId == ViewBag.CourseID)
+            if (item.TutorId == ViewBag.TutorId)
             {
                 selectedRow = "success";
             }
             <tr class="@selectedRow">
                 <td>
-                    @Html.ActionLink("Select", "Index", new {courseID = item.CourseId})
+                    @Html.DisplayFor(modelItem => item.LastName)
                 </td>
                 <td>
-                    @item.CourseId
+                    @Html.DisplayFor(modelItem => item.FirstName)
                 </td>
+
                 <td>
-                    @item.CourseName
+                    @{    foreach (var course in item.Courses)
+                        {
+                            @course.CourseId @:  @course.CourseName <br />
+                }
+                    }
                 </td>
+
                 <td>
-                    @item.CourseCategory.CategoryName
+                    @Html.ActionLink("Select", "Index", new { id = item.TutorId }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.TutorId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.TutorId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.TutorId })
                 </td>
-            </tr>
-        }
+            </tr>    }
 
     </table>
-}
 
-
-
-@if (Model.Enrollments != null)
-{
-    <h3>
-        Students Enrolled in Selected Course
-    </h3>
-    <table class="table">
-        <tr>
-            <th>Name</th>
-            <th>Grade</th>
-        </tr>
-        @foreach (var item in Model.Enrollments)
-        {
+    @if (Model.Courses != null)
+    {
+        <h3>Courses Taught by Selected Instructor</h3>
+        <table class="table">
             <tr>
-                <td>
-                    @item.Student.FullName
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Grade)
-                </td>
+                <th></th>
+                <th>Course Code</th>
+                <th>Title</th>
+                <th>Department</th>
             </tr>
-        }
 
-
-    </table>
+            @foreach (var item in Model.Courses)
+            {
+                string selectedRow = "";
+                if (item.CourseId == ViewBag.CourseID)
+                {
+                    selectedRow = "success";
+                }
+                <tr class="@selectedRow">
+                    <td>
+                        @Html.ActionLink("Select", "Index", new { courseID = item.CourseId })
+                    </td>
+                    <td>
+                        @item.CourseId
+                    </td>
+                    <td>
+                        @item.CourseName
+                    </td>
+                    <td>
+                        @item.CourseCategory.CategoryName
+                    </td>
+                </tr>
 }
+
+        </table>
+    }
+
+
+
+    @if (Model.Enrollments != null)
+    {
+        <h3>
+            Students Enrolled in Selected Course
+        </h3>
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Grade</th>
+            </tr>
+            @foreach (var item in Model.Enrollments)
+            {
+                <tr>
+                    <td>
+                        @item.Student.FullName
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Grade)
+                    </td>
+                </tr>
+}
+
+
+        </table>
+    }
+    </div>

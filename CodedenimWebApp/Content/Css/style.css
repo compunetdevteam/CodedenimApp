@@ -1,6 +1,6 @@
 body {
     background-color: white;
-    font-family: open sans, sans-serif;
+    font-family: open sans, sans-serif; 
     
 }
 .form-header{
@@ -19,3 +19,8 @@ a {
 .i.btn-default {
     background-color: #093 !important;
 }
+a.my-class {
+    color: #333333 !important;
+}
+
+   

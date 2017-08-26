@@ -24,7 +24,7 @@ namespace CodedenimWebApp.ViewModels
     public string StateOfOrigin { get; set; }
     public string Nationality { get; set; }
     public string CountryOfBirth { get; set; }
-    public bool IsAcctive { get; set; }
+    public bool IsActive { get; set; }
         public DateTime DateOfBirth { get; set; }
         public byte[] Passport { get; set; }
 }
