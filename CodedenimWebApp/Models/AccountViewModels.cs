@@ -2,6 +2,8 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Http.Batch;
+using CodeninModel;
 
 
 namespace CodedenimWebApp.Models
@@ -110,10 +112,26 @@ namespace CodedenimWebApp.Models
 
     public class RegisterViewModel
     {
+        //[Required]
+        //[Display(Name = "Tutor Identity")]
+        //public string TutorId { get; set; }
+
+        //[Required]    
+        //[Display(Name = "First Name")]
+        //public string FirstName { get; set; }
+
+        ////[Required]
+        //[Display(Name = "Last Name")]
+        //public string LastName { get; set; }
+
+
+        //public string MobileNumber { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -125,6 +143,24 @@ namespace CodedenimWebApp.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        //public ICollection<Course> TutorsCourses { get; set; }
+
+        //[Required]
+        //[EmailAddress]
+        //[Display(Name = "Email")]
+        //public string Email { get; set; }
+
+        //[Required]
+        //[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        //[DataType(DataType.Password)]
+        //[Display(Name = "Password")]
+        //public string Password { get; set; }
+
+        //[DataType(DataType.Password)]
+        //[Display(Name = "Confirm password")]
+        //[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        //public string ConfirmPassword { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -205,6 +241,57 @@ namespace CodedenimWebApp.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class RegisterCorperModel
+    {
+        public string Title { get;set;}
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string Gender { get; set; }
+        public string MobileNumber { get; set; }
+        public string Email { get; set; }
+        public State NyscState { get; set; }
+        public Batch NyscBatch { get; set; }
+        public string CallUpNumber { get; set; }
+        public string Institution { get; set; }
+        public string Discpline { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "New password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+    }
+
+    public class RegisterStudentModel
+    {
+        public string AdmissionNumber { get; set; }
+        public Title Title { get; set; }
+        public string FirstName { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string LastName { get; set; }
+        public string Gender { get; set; }
+        public string MobileNumber { get; set; }
+        public string Email { get; set; }
+        public string Institution { get; set; }
+        public string Discpline { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "New password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+    }
 
     //custom model for Registration of Course Instructor
 

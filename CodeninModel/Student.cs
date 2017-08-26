@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using CodeninModel.Assesment;
 using CodeninModel.CBTE;
 
@@ -19,8 +20,13 @@ namespace CodeninModel
         // public string GuardianEmail { get; set; }
 
         public bool Active { get; set; }
+        public Title Title { get; set; }
 
         public bool IsGraduated { get; set; }
+        public string Institution { get; set; }
+        public State StateOfService { get; set; }
+        public Batch Batch { get; set; }
+        public string Discpline { get; set; }
         public virtual ICollection<Enrollment> Enrollments { get; set; }
         public virtual ICollection<File> Files { get; set; }
 

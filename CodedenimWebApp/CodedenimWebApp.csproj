@@ -222,6 +222,7 @@
     <Compile Include="Controllers\Api\CoursesController.cs" />
     <Compile Include="Controllers\Api\ModulesController.cs" />
     <Compile Include="Controllers\Api\TopicsController.cs" />
+    <Compile Include="Controllers\Api\TutorsController.cs" />
     <Compile Include="Controllers\CourseCategoriesController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -257,6 +258,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AssignedCourses.cs" />
     <Compile Include="ViewModels\TutorCreateVm.cs" />
+    <Compile Include="ViewModels\TutorRegistrationVm.cs" />
     <Compile Include="ViewModels\TutorsIndexVm.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -272,6 +274,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\codedenim - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -356,6 +359,10 @@
     <Content Include="Views\Students\Edit.cshtml" />
     <Content Include="Views\Students\Index.cshtml" />
     <Content Include="Views\Students\AssignedCourseView.cshtml" />
+    <Content Include="Views\Account\TutorRegistration.cshtml" />
+    <Content Include="Views\Account\ConfirmTutorReg.cshtml" />
+    <Content Include="Views\Account\_tutorCourses.cshtml" />
+    <Content Include="Views\Tutors\ConfirmTutor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

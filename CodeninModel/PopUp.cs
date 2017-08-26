@@ -101,4 +101,14 @@
     {
         Lecturer = 1, None_Teaching
     }
+
+    public enum Batch
+    {
+        A,B
+    }
+
+    public enum Title
+    {
+        Mr, Mrs , Arch, Bar, Dr, Engr, Miss, Pharm
+    }
 }

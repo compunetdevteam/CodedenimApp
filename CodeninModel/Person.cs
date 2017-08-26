@@ -53,11 +53,11 @@ namespace CodeninModel
         [DataType(DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
 
-        public int Age
+        public int? Age
         {
             get
             {
-                var t = DateTime.Now - DateTime.Parse(DateOfBirth.ToString());
+               var t = DateTime.Now - DateTime.Parse(DateOfBirth.ToString());
                 return Age = (int)t.Days / 365;
             }
             set { }

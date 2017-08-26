@@ -6,10 +6,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
+using Microsoft.AspNet.Identity;
+
 using System.Web.Mvc;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -80,6 +83,7 @@ namespace CodedenimWebApp.Controllers
         public ActionResult Create()
         {
             var tutor = new Tutor();
+            ViewBag.Roles = new SelectList(db.Roles.ToList(), "Id", "Name");
             tutor.Courses = new List<Course>();
             PopulateAssignedCourseData(tutor);
             return View();
@@ -111,32 +115,65 @@ namespace CodedenimWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Tutor tutor, string[] selectedCourses, HttpPostedFileBase upload)
         {
+
+            var store = new UserStore<ApplicationUser>(db);
+            var manager = new UserManager<ApplicationUser>(store);
+
+
             if (selectedCourses != null)
             {
                 tutor.Courses = new List<Course>();
                 foreach (var course in selectedCourses)
                 {
                     var courseToAdd = db.Courses.Find(int.Parse(course));
+                    if (courseToAdd == null) throw new ArgumentNullException(nameof(courseToAdd));
                     tutor.Courses.Add(courseToAdd);
                 }
             }
             if (ModelState.IsValid)
             {
+                var user = new ApplicationUser
+                {
+                    Id = tutor.TutorId,
+                    UserName = tutor.FirstName + " " + tutor.LastName,
+                    Email = tutor.Email,
+                    PhoneNumber = tutor.PhoneNumber
+
+                };
+               
+                manager.Create(user,tutor.TutorId);
+
                 if (upload != null && upload.ContentLength > 0)
                 {
-                    var photo = new FilePath
+                    var photo = new File
                     {
                         FileName = System.IO.Path.GetFileName(upload.FileName),
                         FileType = FileType.Photo
                     };
-                    tutor.FilePaths = new List<FilePath>();
-                    tutor.FilePaths.Add(photo);
+                    using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                    {
+                        photo.Content = reader.ReadBytes(upload.ContentLength);
+                    }
+                    tutor.Files = new List<File>{photo};
+                   // tutor.FilePaths.Add(photo);
                 }
+
                 db.Tutors.Add(tutor);
                 await db.SaveChangesAsync();
+                ViewBag.Success = "The Tutor was create successful";
                 return RedirectToAction("Index");
             }
 
+            return View(tutor);
+        }
+
+        public async Task<ActionResult> ConfirmTutor(string tutorId)
+        {
+           // bool tutorIsExist = false;
+            if (tutorId == null)
+            {    
+            }
+            Tutor tutor = await db.Tutors.FindAsync(tutorId);
             return View(tutor);
         }
 

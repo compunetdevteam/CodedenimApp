@@ -1,15 +1,20 @@
-﻿using CodedenimWebApp.Models;
+﻿using System;
+using System.Collections.Generic;
+using CodedenimWebApp.Models;
 using CodedenimWebApp.Service;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Configuration;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using CodedenimWebApp.ViewModels;
+using CodeninModel;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -152,11 +157,119 @@ namespace CodedenimWebApp.Controllers
             }
         }
 
+
+        //Confirm if the tutor has been registered
+        // GET: /Account/Register
+        [AllowAnonymous]
+        public ActionResult ConfirmTutorReg()
+        {
+            //  var tutor = new ConfirmTutorVm();
+           // var tutor = ConfirmTutor(id);
+            return View();
+        }
+
         //
+        // Post: /Account/Register
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public ActionResult ConfirmTutorReg(string id)
+        //{
+        //    //  var tutor = new ConfirmTutorVm();
+        //    var tutor = ConfirmTutor(id);
+        //    return View(tutor);
+        //}
+
+
+        //method to confirm if a tutor Id exist
+        //private RegisterViewModel ConfirmTutor(string id)
+        //{
+
+        //    var tutorDetail = new RegisterViewModel();
+        //    var tutor = _db.Tutors.Where(t => t.TutorId.Equals(id)).Select(t => new
+        //    {
+        //        t.FirstName,
+        //        t.LastName,
+        //        t.Email,
+        //        t.Courses
+
+        //    }).FirstOrDefault();
+
+        //   // Debug.Assert(tutor != null, "tutor != null");
+        //    tutorDetail.FirstName = tutor.FirstName;
+        //    tutorDetail.LastName = tutor.LastName;
+        //    tutorDetail.Email = tutor.Email;
+        //    tutorDetail.TutorsCourses = tutor.Courses;
+
+
+        //   // my.FirstName = tutor.FirstName;
+
+        //    return tutorDetail;
+        //}
+
+
+
+        //private void SendEmail(string mail, string subject, string body)
+        //{
+
+        //    SmtpClient ss = new SmtpClient("smtp.gmail.com", 587);
+        //    ss.EnableSsl = true;
+        //    ss.Timeout = 10000;
+        //    ss.DeliveryMethod = SmtpDeliveryMethod.Network;
+        //    ss.UseDefaultCredentials = true;
+        //    ss.Credentials = new System.Net.NetworkCredential("davidzagi93@gmail.com", "19920107");
+
+
+        //    MailMessage message = new MailMessage();
+        //    //Setting From , To
+        //    message.From = new MailAddress("Codedenim@gmail.com", "Course");
+        //    message.To.Add(new MailAddress(mail));
+        //    message.Subject = subject;
+        //    message.Body = body;
+
+        //    ss.Send(message);
+
+        //}
+
+
+        //private void SendEmailConfirmation(string to, string username, string confirmationToken)
+        //{
+        //    string link = Url.Action("RegisterConfirmation", "Account", new { Id = confirmationToken }, "http");
+        //    SendEmail(to, "Confrimation of Registration", link);
+        //}
+
+        //private bool ConfirmAccount(string confirmationToken)
+        //{
+        //    ApplicationUser user = _db.Users.First(u => u.ConfirmationToken == confirmationToken);
+        //    if (user != null)
+        //    {
+        //        user.IsConfirmed = true;
+        //        DbSet<ApplicationUser> dbSet = _db.Set<ApplicationUser>();
+        //        dbSet.Attach(user);
+        //        _db.Entry(user).State = EntityState.Modified;
+        //        _db.SaveChanges();
+
+        //        return true;
+        //    }
+        //    return false;
+        //}
+
+        //[AllowAnonymous]
+        //public ActionResult RegisterConfirmation(string Id)
+        //{
+        //    if (ConfirmAccount(Id))
+        //    {
+        //        return RedirectToAction("Login");
+        //    }
+        //    return RedirectToAction("Login");
+        //}
+
+
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
         {
+            //  var tutor = new ConfirmTutorVm();
+           // var tutor = ConfirmTutor(id);
             return View();
         }
 
@@ -169,17 +282,22 @@ namespace CodedenimWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var user = new ApplicationUser { UserName = model.Email + model.Email };
+                // var result = await UserManager.CreateAsync(user, model.Password);
+
+                // create a tutor from admin without a password
+                var result = await UserManager.CreateAsync(user,model.Password);
                 if (result.Succeeded)
                 {
 
+                    await this.UserManager.AddToRoleAsync(user.Id, "Tutor");
+
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your student account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your Tutor account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
                     ViewBag.Link = callbackUrl;
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your student account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
-                    ViewBag.Link = callbackUrl;
+                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your Tutor account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                    //ViewBag.Link = callbackUrl;
                     TempData["UserMessage"] = $"Registration is Successful for {user.UserName}, Please Confirm Your Email to Login.";
                     return View("ConfirmRegistration");
 
@@ -200,6 +318,54 @@ namespace CodedenimWebApp.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult TutorRegistration()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> TutorRegistration(Tutor model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser
+                {
+                    Id = model.TutorId,
+                    
+                    UserName = model.FirstName + model.LastName,
+                    //Email = model.Email.Trim(),
+                    PhoneNumber = model.PhoneNumber.Trim(),
+                  
+                };
+
+                var result = await UserManager.CreateAsync(user);
+                if (result.Succeeded)
+                {
+                    var tutor = new Tutor()
+                    {
+                        TutorId = model.TutorId,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        PhoneNumber = model.PhoneNumber
+                    };
+                    _db.Tutors.Add(tutor);
+                    await _db.SaveChangesAsync();
+                    await this.UserManager.AddToRoleAsync(user.Id, "Tutor");
+                    RedirectToAction("Index", "Tutors");
+
+                } /// return RedirectToAction("Index", "Home");
+                AddErrors(result);
+            }
+                return View(model);
+        }
+
+
 
         [AllowAnonymous]
         public async Task<ActionResult> SendEmail()

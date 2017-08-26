@@ -1,0 +1,39 @@
+﻿
+
+@if (Model.TutorsCourses != null)
+{
+    <h3>Courses Taught by Selected Instructor</h3>
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Course Code</th>
+            <th>Title</th>
+            <th>Category</th>
+        </tr>
+
+        @foreach (var item in Model.TutorsCourses)
+        {
+            string selectedRow = "";
+            if (item.CourseId == ViewBag.CourseID)
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                @*<td>
+                        @Html.ActionLink("Select", "Index", new {courseID = item.CourseId})
+                    </td>*@
+                <td>
+                    @item.CourseId
+                </td>
+                <td>
+                    @item.CourseName
+                </td>
+                <td>
+                    @item.CourseCategory.CategoryName
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+

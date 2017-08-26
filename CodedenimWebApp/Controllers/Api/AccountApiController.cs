@@ -9,6 +9,7 @@ using System.Web.Http;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.Providers;
 using CodedenimWebApp.Results;
+using CodeninModel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -24,9 +25,11 @@ namespace CodedenimWebApp.Controllers.Api
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        private readonly ApplicationDbContext _db;
 
         public AccountApiController()
         {
+            _db = new ApplicationDbContext();
         }
 
         public AccountApiController(ApplicationUserManager userManager,
@@ -339,6 +342,95 @@ namespace CodedenimWebApp.Controllers.Api
 
             return Ok();
         }
+
+
+
+        // POST api/Account/RegisterStudent
+        [System.Web.Http.AllowAnonymous]
+        [System.Web.Http.Route("RegisterCorper")]
+        public async Task<IHttpActionResult> RegisterCorper([FromBody] RegisterCorperModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = new ApplicationUser()
+            {
+                UserName = model.Email,
+                Email = model.Email
+            };
+
+
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            //Persisting the  Student Redord 
+            var corper = new Student
+            {
+                StudentId = model.CallUpNumber,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
+                Gender = model.Gender,
+                Email = model.Email,
+                PhoneNumber = model.MobileNumber,
+                StateOfService = model.NyscState,
+               Institution = model.Institution,
+               Batch = model.NyscBatch,
+               Discpline = model.Discpline
+            };
+            _db.Students.Add(corper);
+            await _db.SaveChangesAsync();
+            await this.UserManager.AddToRoleAsync(user.Id, "Corper");
+
+            return Ok();
+        }
+
+
+
+        // POST api/Account/RegisterCorper
+        [System.Web.Http.AllowAnonymous]
+        [System.Web.Http.Route("RegisterUnderGraduate")]
+        public async Task<IHttpActionResult> RegisterUnderGraduate([FromBody] RegisterStudentModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            var student = new Student
+            {
+                StudentId = model.AdmissionNumber,
+                Title = model.Title,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
+                Gender = model.Gender,
+                PhoneNumber = model.MobileNumber,
+                Institution = model.Institution,
+                Discpline = model.Discpline
+
+            };
+            _db.Students.Add(student);
+            await _db.SaveChangesAsync();
+            await this.UserManager.AddToRoleAsync(user.Id, "UnderGraduate");
+            return Ok();
+        }
+
 
         //my custom Registration controller
         // POST api/Account/InstructorRegister

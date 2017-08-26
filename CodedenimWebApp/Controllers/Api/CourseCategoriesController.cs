@@ -21,7 +21,7 @@ namespace CodedenimWebApp.Controllers.Api
         // GET: api/CourseCategories
         public IEnumerable<CourseCategory> GetCourseCategories()
         {
-            return db.CourseCategories.ToList();
+            return db.CourseCategories.Include(c => c.Courses).ToList();
         }
 
         // GET: api/CourseCategories/5
