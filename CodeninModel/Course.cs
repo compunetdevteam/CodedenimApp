@@ -16,6 +16,7 @@ namespace CodeninModel
         public DateTime? DateAdded { get; set; }
         [Range(0, 5)]
         public int Points { get; set; }
+        public byte[] CourseImage { get; set; }
         public virtual CourseCategory CourseCategory { get; set; }
         public virtual ICollection<Enrollment> Enrollments { get; set; }
         public virtual ICollection<Tutor> Instructors { get; set; }

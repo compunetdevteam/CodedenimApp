@@ -292,14 +292,19 @@ namespace CodedenimWebApp.Controllers
 
                     await this.UserManager.AddToRoleAsync(user.Id, "Tutor");
 
-                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your Tutor account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
-                    ViewBag.Link = callbackUrl;
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                  
+
+
+                    //var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your Tutor account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
                     //ViewBag.Link = callbackUrl;
-                    TempData["UserMessage"] = $"Registration is Successful for {user.UserName}, Please Confirm Your Email to Login.";
-                    return View("ConfirmRegistration");
+                    ////await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your Tutor account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                    ////ViewBag.Link = callbackUrl;
+                    //TempData["UserMessage"] = $"Registration is Successful for {user.UserName}, Please Confirm Your Email to Login.";
+                    //return View("ConfirmRegistration");
 
                     // await this.UserManager.AddToRoleAsync(user.Id, "Admin");
                     // await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -309,8 +314,8 @@ namespace CodedenimWebApp.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                   return RedirectToAction("Index", "Home");
 
-                    return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
@@ -330,7 +335,7 @@ namespace CodedenimWebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> TutorRegistration(Tutor model)
+        public async Task<ActionResult> TutorRegistration(TutorCreateVm model)
         {
             if (ModelState.IsValid)
             {
@@ -352,7 +357,9 @@ namespace CodedenimWebApp.Controllers
                         TutorId = model.TutorId,
                         FirstName = model.FirstName,
                         LastName = model.LastName,
-                        PhoneNumber = model.PhoneNumber
+                        DateOfBirth = model.DateOfBirth,
+                        PhoneNumber = model.PhoneNumber,
+                       TutorPassport =model.TutorPassport
                     };
                     _db.Tutors.Add(tutor);
                     await _db.SaveChangesAsync();

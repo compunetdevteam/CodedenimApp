@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
@@ -13,6 +14,7 @@ using CodedenimWebApp.Models;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
 using Microsoft.AspNet.Identity.EntityFramework;
+using File = CodeninModel.File;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -62,6 +64,20 @@ namespace CodedenimWebApp.Controllers
             return View(viewModel);
         }
 
+
+
+        /// <summary>
+        /// This Method Get the Details of the Current logged in Tutors Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
+        public async Task<ActionResult> TutorDashboard()
+        {
+            var tutorId = User.Identity.GetUserId();
+            Tutor tutor = db.Tutors.FirstOrDefault(t => t.TutorId == tutorId);
+            return View();
+        }
 
         // GET: Tutors/Details/5
         public async Task<ActionResult> Details(string id)
@@ -145,6 +161,8 @@ namespace CodedenimWebApp.Controllers
 
                 if (upload != null && upload.ContentLength > 0)
                 {
+
+                    //string filePath = Path.Combine(Server.MapPath("~/Content/TutorFiles"));
                     var photo = new File
                     {
                         FileName = System.IO.Path.GetFileName(upload.FileName),

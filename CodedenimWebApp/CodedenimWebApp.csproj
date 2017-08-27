@@ -463,8 +463,12 @@
     <Content Include="Views\Home\GeneralDashboard.cshtml" />
     <Content Include="Views\Home\Index1.cshtml" />
     <Content Include="Views\Home\StudentDashboard.cshtml" />
+    <Content Include="Views\Account\TutorRegistration.cshtml" />
+    <Content Include="Views\Tutors\ConfirmTutor.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\StudentFiles\" />
+    <Folder Include="Content\TutorFiles\" />
     <Folder Include="uploads\" />
   </ItemGroup>
   <ItemGroup>

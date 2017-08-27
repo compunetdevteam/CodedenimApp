@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using CodeninModel;
@@ -8,6 +9,7 @@ namespace CodedenimWebApp.ViewModels
 {
     public class TutorCreateVm
     {
+        public string TutorId { get; set; }
         public string Designation { get; set; }
         public string MaritalStatus { get; set; }
         public string IsActiveTutor { get; set; }
@@ -26,6 +28,33 @@ namespace CodedenimWebApp.ViewModels
     public string CountryOfBirth { get; set; }
     public bool IsActive { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public byte[] Passport { get; set; }
-}
+        public byte[] TutorPassport { get; set; }
+
+        public HttpPostedFileBase File
+        {
+            get
+            {
+                return null;
+            }
+
+            set
+            {
+                try
+                {
+                    MemoryStream target = new MemoryStream();
+
+                    if (value.InputStream == null)
+                        return;
+
+                    value.InputStream.CopyTo(target);
+                    TutorPassport = target.ToArray();
+                }
+                catch (Exception)
+                {
+                    //logger.Error(ex.Message);
+                    //logger.Error(ex.StackTrace);
+                }
+            }
+        }
+    }
 }
