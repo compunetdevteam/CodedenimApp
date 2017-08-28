@@ -28,7 +28,7 @@ namespace CodeninModel
         public Batch Batch { get; set; }
         public string Discpline { get; set; }
         public virtual ICollection<Enrollment> Enrollments { get; set; }
-        public virtual ICollection<File> Files { get; set; }
+      //  public virtual ICollection<File> Files { get; set; }
 
         public virtual ICollection<SubmitAssignment> SubmitAssignments { get; set; }
         public virtual ICollection<StudentTestLog> StudentTestLogs { get; set; }

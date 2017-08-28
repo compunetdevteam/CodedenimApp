@@ -1,5 +1,5 @@
-﻿
-@model CodedenimWebApp.ViewModels.TutorCreateVm
+﻿@using CodedenimWebApp.Extensions
+@model CodeninModel.Tutor
 
 @{
 
@@ -8,9 +8,9 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm("TutorRegistration", "Account", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Tutors", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 
-{
+{   
     @Html.AntiForgeryToken()
 
 
@@ -101,18 +101,14 @@
             </div>
         </div>*@
         
-        <div class="card-block text-center">
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.File, htmlAttributes: new { @class = "control-label col-md-2" })*@
 
-            <img id="output" alt="School Logo" class="rounded-circle contact-avatar my-2 mx-auto" />
-
-            <p class="text-muted">
-                <small>photo will be changed automatically</small>
-            </p>
-
-            <input id="File" type="file" accept="image/*" name="File" onchange="loadFile(event)" style="display: none">
-            <label for="File" class="btn btn-primary btn-block">Upload Photo</label>
-
-
+            <div class="editor-field">
+                <input type="file" name="file" Id="File" />
+                @*@Html.FileFor(model => model.File)*@
+                @*@Html.ValidationMessageFor(model => model.File)*@
+            </div>
         </div>
 
         <div class="form-group">
@@ -129,19 +125,28 @@
                             {
                                 @:</tr><tr>
                             }
-                            @:<td>
-                            <input type="checkbox"
+                            @*@:<td>
+                            <input type="checkbox" 
                                    name="selectedCourses"
                                    value="@course.CourseId"
                                    @(Html.Raw(course.Assigned ? "checked=\"checked\"" : "")) />
                             @course.CourseId @:  @course.CourseName
-                            @:</td>
+                            @:</td>*@
+
+                          
+                                <input type="checkbox" id="@course.CourseId" name="selectedCourses" value="@course.CourseId">
+                                <label for="@course.CourseId">@course.CourseId:  @course.CourseName</label> 
+                          
+
+
                         }
                         @:</tr>
                     }
                 </table>
             </div>
         </div>
+        
+     
                             
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

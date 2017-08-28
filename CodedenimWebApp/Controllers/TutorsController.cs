@@ -79,19 +79,36 @@ namespace CodedenimWebApp.Controllers
             return View();
         }
 
+        public async Task<ActionResult> RenderImage(string TutorId)
+        {
+            var tutor = await db.Tutors.FindAsync(TutorId);
+
+            byte[] photoBack = tutor.Passport;
+
+            return File(photoBack, "image/png");
+        }
+
         // GET: Tutors/Details/5
         public async Task<ActionResult> Details(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Tutor tutor =   db.Tutors.Include(s => s.Files).SingleOrDefault(s => s.TutorId == id);
-           // Tutor tutor = await db.Tutors.FindAsync(id);
+           // var username = User.Identity.GetUserId();
+            //var user = await Db.Users.AsNoTracking().Where(c => c.Id.Equals(username)).Select(c => c.Email).FirstOrDefaultAsync();
+            //if (id == null)
+            //{
+            //    id = username;
+            //}
+
+            Tutor tutor = await db.Tutors.FindAsync(id);
             if (tutor == null)
             {
                 return HttpNotFound();
             }
+            // Tutor tutor =   db.Tutors.Include(s => s.Files).SingleOrDefault(s => s.TutorId == id);
+            // Tutor tutor = await db.Tutors.FindAsync(id);
+            //if (tutor == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(tutor);
         }
 
@@ -129,7 +146,7 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Tutor tutor, string[] selectedCourses, HttpPostedFileBase upload)
+        public async Task<ActionResult> Create(Tutor tutor, string[] selectedCourses)
         {
 
             var store = new UserStore<ApplicationUser>(db);
@@ -158,27 +175,20 @@ namespace CodedenimWebApp.Controllers
                 };
                
                 manager.Create(user,tutor.TutorId);
-
-                if (upload != null && upload.ContentLength > 0)
+                tutor = new Tutor
                 {
+                    TutorId = tutor.TutorId,
+                    FirstName = tutor.FirstName,
+                    LastName = tutor.LastName,
+                    DateOfBirth = tutor.DateOfBirth,
+                    Passport = tutor.Passport,
 
-                    //string filePath = Path.Combine(Server.MapPath("~/Content/TutorFiles"));
-                    var photo = new File
-                    {
-                        FileName = System.IO.Path.GetFileName(upload.FileName),
-                        FileType = FileType.Photo
-                    };
-                    using (var reader = new System.IO.BinaryReader(upload.InputStream))
-                    {
-                        photo.Content = reader.ReadBytes(upload.ContentLength);
-                    }
-                    tutor.Files = new List<File>{photo};
-                   // tutor.FilePaths.Add(photo);
-                }
+                    
+                };
 
                 db.Tutors.Add(tutor);
                 await db.SaveChangesAsync();
-                ViewBag.Success = "The Tutor was create successful";
+              
                 return RedirectToAction("Index");
             }
 

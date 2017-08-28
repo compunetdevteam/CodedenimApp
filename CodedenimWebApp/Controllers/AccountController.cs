@@ -329,8 +329,32 @@ namespace CodedenimWebApp.Controllers
         [AllowAnonymous]
         public ActionResult TutorRegistration()
         {
+            var tutor = new Tutor();
+            ViewBag.Roles = new SelectList(_db.Roles.ToList(), "Id", "Name");
+            tutor.Courses = new List<Course>();
+            PopulateAssignedCourseData(tutor);
             return View();
         }
+
+
+        //method to populate the assigned course in the the create view
+        private void PopulateAssignedCourseData(Tutor tutor)
+        {
+            var allCourses = _db.Courses;
+            var instructorCourses = new HashSet<int>(tutor.Courses.Select(c => c.CourseId));
+            var viewModel = new List<AssignedCourses>();
+            foreach (var course in allCourses)
+            {
+                viewModel.Add(new AssignedCourses
+                {
+                    CourseId = course.CourseId,
+                    CourseName = course.CourseName,
+                    Assigned = instructorCourses.Contains(course.CourseId)
+                });
+            }
+            ViewBag.Courses = viewModel;
+        }
+
 
         [HttpPost]
         [AllowAnonymous]
@@ -359,7 +383,7 @@ namespace CodedenimWebApp.Controllers
                         LastName = model.LastName,
                         DateOfBirth = model.DateOfBirth,
                         PhoneNumber = model.PhoneNumber,
-                       TutorPassport =model.TutorPassport
+                        Passport = model.TutorPassport
                     };
                     _db.Tutors.Add(tutor);
                     await _db.SaveChangesAsync();

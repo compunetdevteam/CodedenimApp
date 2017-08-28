@@ -14,11 +14,11 @@ namespace CodeninModel
         public bool IsActiveTutor { get; set; }
         public string ActiveStatus { get; set; } 
         public string StaffRole { get; set; }
-        public byte[] TutorPassport { get; set; }
-        public FileType FileType { get; set; }
+       // public byte[] TutorPassport { get; set; }
+      //  public FileType FileType { get; set; }
         public virtual ICollection<Course> Courses { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
-        public virtual ICollection<File> Files { get; set; }
-        public virtual ICollection<FilePath> FilePaths { get; set; }
+        //public virtual ICollection<File> Files { get; set; }
+        //public virtual ICollection<FilePath> FilePaths { get; set; }
     }
 }
