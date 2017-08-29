@@ -93,6 +93,7 @@
     <Compile Include="Student.cs" />
     <Compile Include="Syllabus.cs" />
     <Compile Include="Tutor.cs" />
+    <Compile Include="TutorCourses.cs" />
     <Compile Include="ValidateFileAttribute.cs" />
   </ItemGroup>
   <ItemGroup>

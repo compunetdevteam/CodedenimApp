@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
+using System.Web;
 using CodeninModel.Assesment;
 
 namespace CodeninModel
@@ -17,6 +20,36 @@ namespace CodeninModel
         [Range(0, 5)]
         public int Points { get; set; }
         public byte[] CourseImage { get; set; }
+
+        [Display(Name = "Upload A Passport/Picture")]
+        [ValidateFile(ErrorMessage = "Please select a PNG/JPEG image smaller than 20kb")]
+        [NotMapped]
+        public HttpPostedFileBase File
+        {
+            get
+            {
+                return null;
+            }
+
+            set
+            {
+                try
+                {
+                    var target = new MemoryStream();
+
+                    if (value.InputStream == null)
+                        return;
+
+                    value.InputStream.CopyTo(target);
+                    CourseImage = target.ToArray();
+                }
+                catch (Exception ex)
+                {
+                    var message = ex.Message;
+                }
+            }
+        }
+
         public virtual CourseCategory CourseCategory { get; set; }
         public virtual ICollection<Enrollment> Enrollments { get; set; }
         public virtual ICollection<Tutor> Instructors { get; set; }

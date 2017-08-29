@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -16,10 +17,23 @@ namespace CodedenimWebApp.ViewModels
         public string ActiveStatus { get; set; }
         public string StaffRole { get; set; }
         public FileType FileType { get; set; }
+
+        [Display(Name = "First Name")]
+        [Required(ErrorMessage = "Your First Name is required")]
+        [StringLength(50, ErrorMessage = "Your First Name is too long")]
         public string FirstName { get; set; }
+
+        [Display(Name = "Middle Name")]
         public string MiddleName { get; set; }
+
+        [Display(Name = "Last Name")]
+        [Required(ErrorMessage = "Your Last Name is required")]
+        [StringLength(50, ErrorMessage = "Your Last Name is too long")]
         public string LastName { get; set; }
+
+
     public string Gender { get; set; }
+    [Required]
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
     public string TownOfBirth { get; set; }

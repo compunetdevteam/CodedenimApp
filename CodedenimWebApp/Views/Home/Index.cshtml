@@ -24,7 +24,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                    
                 <!--Links-->
-                <ul class="navbar-nav mr-auto">
+                @*<ul class="navbar-nav mr-auto">
                    
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Login","Account")" data-offset="100">Login</a>
@@ -35,8 +35,33 @@
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Contact","Home")" data-offset="100">Contact Us</a>
                     </li>
-                </ul>
+                </ul>*@
                     
+                
+                
+                @using Microsoft.AspNet.Identity
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                            </li>
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                        </ul>
+                    }
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("Register Tutor", "Create", "Tutors", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                    </ul>
+                }
+
                 <!--Social Icons-->
                 <ul class="navbar-nav nav-flex-icons">
                     <li class="nav-item">

@@ -87,14 +87,15 @@ namespace CodedenimWebApp.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: 
             var user = await _db.Users.AsNoTracking().FirstOrDefaultAsync(c => c.Email.ToUpper().Equals(model.Email.ToUpper())
-                                                                                );
+                                                                               || c.UserName.ToUpper().Equals(model.Email.ToUpper())
+                                                                               || c.Id.Equals(model.Email));
 
             if (user == null)
             {
                 ViewBag.Message = "Incorrect UserName or Password, Please try again!!!";
                 return View(model);
             }
-            var result = await SignInManager.PasswordSignInAsync(user.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, shouldLockout: false);
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -102,7 +103,7 @@ namespace CodedenimWebApp.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("CustomDashborad", new { username = user.UserName });
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -113,6 +114,54 @@ namespace CodedenimWebApp.Controllers
                     return View(model);
             }
         }
+
+
+        public ActionResult CustomDashborad(string username)
+        {
+            if (User.IsInRole(RoleName.Admin))
+            {
+                TempData["UserMessage"] = $"Login Successful, Welcome {username}";
+                TempData["Title"] = "Success.";
+                return RedirectToAction("AdminDashBoard", "Home");
+                // return RedirectToAction("AdminDashboard", "Home");
+            }
+
+            if (User.IsInRole(RoleName.Student))
+            {
+                //var model = await Db.Students.Where(x => x.StudentId.Equals(username)).FirstOrDefaultAsync();
+                //model.IsLogin = true;
+                //Db.Entry(model).State = EntityState.Modified;
+                //await Db.SaveChangesAsync();
+
+                //IdentityResult result = await UserManager.UpdateAsync(model);
+                TempData["UserMessage"] = $"Login Successful, Welcome {username}";
+                TempData["Title"] = "Success.";
+                return RedirectToAction("Dashboard", "Students");
+            }
+            if (User.IsInRole(RoleName.Teacher))
+            {
+                TempData["UserMessage"] = $"Login Successful, Welcome {username}";
+                TempData["Title"] = "Success.";
+                return RedirectToAction("TeacherDashboard", "Corper");
+            }
+
+            if (User.IsInRole(RoleName.FormTeacher))
+            {
+                TempData["UserMessage"] = $"Login Successful, Welcome {username}";
+                TempData["Title"] = "Success.";
+                return RedirectToAction("TutorDashboard", "Tutors");
+            }
+
+            if (User.IsInRole(RoleName.SuperAdmin))
+            {
+                TempData["UserMessage"] = $"Login Successful, Welcome {username}";
+                TempData["Title"] = "Success.";
+                return RedirectToAction("GeneralDashboard", "Home");
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+
 
         //
         // GET: /Account/VerifyCode
@@ -329,10 +378,10 @@ namespace CodedenimWebApp.Controllers
         [AllowAnonymous]
         public ActionResult TutorRegistration()
         {
-            var tutor = new Tutor();
-            ViewBag.Roles = new SelectList(_db.Roles.ToList(), "Id", "Name");
-            tutor.Courses = new List<Course>();
-            PopulateAssignedCourseData(tutor);
+            //var tutor = new Tutor();
+            //ViewBag.Roles = new SelectList(_db.Roles.ToList(), "Id", "Name");
+            //tutor.Courses = new List<Course>();
+            //PopulateAssignedCourseData(tutor);
             return View();
         }
 
@@ -359,41 +408,58 @@ namespace CodedenimWebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> TutorRegistration(TutorCreateVm model)
+        public async Task<ActionResult> TutorRegistration(TutorRegisterVm model)
         {
+            var tutorInDb = _db.Tutors.Find(model.TutorId);
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
                 {
                     Id = model.TutorId,
-                    
-                    UserName = model.FirstName + model.LastName,
-                    //Email = model.Email.Trim(),
+                    UserName = model.FirstName + " " + model.LastName,
+                    Email = model.Email,
+                  
                     PhoneNumber = model.PhoneNumber.Trim(),
                   
                 };
 
-                var result = await UserManager.CreateAsync(user);
-                if (result.Succeeded)
+                var result = await UserManager.CreateAsync(user,model.Password);
+                   
+                if (result.Succeeded && (tutorInDb != null))
                 {
-                    var tutor = new Tutor()
-                    {
-                        TutorId = model.TutorId,
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        DateOfBirth = model.DateOfBirth,
-                        PhoneNumber = model.PhoneNumber,
-                        Passport = model.TutorPassport
-                    };
-                    _db.Tutors.Add(tutor);
+                  
+                
+                    tutorInDb.Email = model.Email;
+
+                    tutorInDb.DateOfBirth = model.DateOfBirth;
+                    tutorInDb.PhoneNumber = model.PhoneNumber;
+                  
+                    _db.Entry(tutorInDb).State = EntityState.Modified;
+                   
                     await _db.SaveChangesAsync();
                     await this.UserManager.AddToRoleAsync(user.Id, "Tutor");
+
+                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your Tutor account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                    ViewBag.Link = callbackUrl;
+                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your Tutor account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                    //ViewBag.Link = callbackUrl;
+                    TempData["UserMessage"] = $"Registration is Successful for {user.UserName}, Please Confirm Your Email to Login.";
+                    return View("ConfirmRegistration");
+
                     RedirectToAction("Index", "Tutors");
 
-                } /// return RedirectToAction("Index", "Home");
+                   
+                };
+                   
+                 
+
+     
                 AddErrors(result);
             }
-                return View(model);
+                return View();
         }
 
 

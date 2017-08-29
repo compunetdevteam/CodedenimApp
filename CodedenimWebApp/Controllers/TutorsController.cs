@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
+using System.Web.Http.Results;
 using Microsoft.AspNet.Identity;
 
 using System.Web.Mvc;
@@ -88,6 +89,28 @@ namespace CodedenimWebApp.Controllers
             return File(photoBack, "image/png");
         }
 
+
+        /// <summary>
+        /// this method is to assign  subjects to
+        /// the Various tutors.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
+        public async Task<ActionResult> AssignCourseToTutor(string tutorId, string[] courses)
+        {
+            var tutorCourses = new TutorCourses
+            {
+               
+            };
+           
+             
+            //var tutors = new HashSet<string>(courses);
+          
+            return View();
+        }
+
+
         // GET: Tutors/Details/5
         public async Task<ActionResult> Details(string id)
         {
@@ -103,6 +126,9 @@ namespace CodedenimWebApp.Controllers
             {
                 return HttpNotFound();
             }
+
+
+
             // Tutor tutor =   db.Tutors.Include(s => s.Files).SingleOrDefault(s => s.TutorId == id);
             // Tutor tutor = await db.Tutors.FindAsync(id);
             //if (tutor == null)
@@ -112,33 +138,29 @@ namespace CodedenimWebApp.Controllers
             return View(tutor);
         }
 
-        // GET: Tutors/Create
+        //GET: Tutors/Create
         public ActionResult Create()
         {
-            var tutor = new Tutor();
-            ViewBag.Roles = new SelectList(db.Roles.ToList(), "Id", "Name");
-            tutor.Courses = new List<Course>();
-            PopulateAssignedCourseData(tutor);
             return View();
         }
 
         //method to populate the assigned course in the the create view
-        private void PopulateAssignedCourseData(Tutor tutor)
-        {
-            var allCourses = db.Courses;
-            var instructorCourses = new HashSet<int>(tutor.Courses.Select(c => c.CourseId));
-            var viewModel = new List<AssignedCourses>();
-            foreach (var course in allCourses)
-            {
-                viewModel.Add(new AssignedCourses
-                {
-                    CourseId = course.CourseId,
-                    CourseName = course.CourseName,
-                    Assigned = instructorCourses.Contains(course.CourseId)
-                });
-            }
-            ViewBag.Courses = viewModel;
-        }
+        //private void PopulateAssignedCourseData(Tutor tutor)
+        //{
+        //    var allCourses = db.Courses;
+        //    var instructorCourses = new HashSet<int>(tutor.Courses.Select(c => c.CourseId));
+        //    var viewModel = new List<AssignedCourses>();
+        //    foreach (var course in allCourses)
+        //    {
+        //        viewModel.Add(new AssignedCourses
+        //        {
+        //            CourseId = course.CourseId,
+        //            CourseName = course.CourseName,
+        //            Assigned = instructorCourses.Contains(course.CourseId)
+        //        });
+        //    }
+        //    ViewBag.Courses = viewModel;
+        //}
 
 
         // POST: Tutors/Create
@@ -146,35 +168,21 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Tutor tutor, string[] selectedCourses)
+        public async Task<ActionResult> Create(Tutor tutor)
         {
 
-            var store = new UserStore<ApplicationUser>(db);
-            var manager = new UserManager<ApplicationUser>(store);
-
-
-            if (selectedCourses != null)
-            {
-                tutor.Courses = new List<Course>();
-                foreach (var course in selectedCourses)
-                {
-                    var courseToAdd = db.Courses.Find(int.Parse(course));
-                    if (courseToAdd == null) throw new ArgumentNullException(nameof(courseToAdd));
-                    tutor.Courses.Add(courseToAdd);
-                }
-            }
+            //if (selectedCourses != null)
+            //{
+            //    tutor.Courses = new List<Course>();
+            //    foreach (var course in selectedCourses)
+            //    {
+            //        var courseToAdd = db.Courses.Find(int.Parse(course));
+            //        if (courseToAdd == null) throw new ArgumentNullException(nameof(courseToAdd));
+            //        tutor.Courses.Add(courseToAdd);
+            //    }
+            //}
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser
-                {
-                    Id = tutor.TutorId,
-                    UserName = tutor.FirstName + " " + tutor.LastName,
-                    Email = tutor.Email,
-                    PhoneNumber = tutor.PhoneNumber
-
-                };
-               
-                manager.Create(user,tutor.TutorId);
                 tutor = new Tutor
                 {
                     TutorId = tutor.TutorId,
@@ -195,14 +203,34 @@ namespace CodedenimWebApp.Controllers
             return View(tutor);
         }
 
+        public async Task<ActionResult> ConfirmTutor()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public async Task<ActionResult> ConfirmTutor(string tutorId)
         {
            // bool tutorIsExist = false;
             if (tutorId == null)
-            {    
+            {
+                
             }
-            Tutor tutor = await db.Tutors.FindAsync(tutorId);
-            return View(tutor);
+
+            
+           var tutor = db.Tutors.AsNoTracking( )
+            .FirstOrDefault(t => t.TutorId.Equals(tutorId));
+
+            if (tutor == null)
+            {
+                ViewBag.Message = "This Id Does Not Exist";
+                return View();
+            }
+            var tutorVm = new TutorRegisterVm();
+            tutorVm.FirstName = tutor.FirstName ;
+            tutorVm.TutorId = tutor.TutorId;
+            tutorVm.LastName = tutor.LastName;
+            return View("info", tutorVm);
         }
 
         // GET: Tutors/Edit/5
