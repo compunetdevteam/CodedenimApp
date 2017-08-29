@@ -21,7 +21,7 @@ namespace CodedenimWebApp.Controllers
 		{
 			return View();
 		}
-		public ActionResult CorpsDashboard()
+		public ActionResult MyDashboard()
 		{
 			return View();
 		}

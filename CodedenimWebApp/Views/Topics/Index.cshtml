@@ -2,48 +2,50 @@
 
 @{
     ViewBag.Title = "Topics";
-    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
 }
-<br /><br /><br /><br /><br />
-<div class="container">
-    <h2>Topics</h2>
-<br/>
-    <p>
-        @Html.ActionLink("CREATE TOPICS", "Create", null, new{@class = "my-class"})
-    </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Module.ModuleName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TopicName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ExpectedTime)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Module.ModuleName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TopicName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpectedTime)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.TopicId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.TopicId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.TopicId })
-            </td>
-        </tr>
-    }
+    <div class="container-fluid">
+        <h2>Topics</h2>
+        <br/>
+        <p>
+            @Html.ActionLink("CREATE TOPICS", "Create", null, new{@class = "my-class"})
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Module.ModuleName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TopicName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ExpectedTime)
+                </th>
+                <th></th>
+            </tr>
 
-</table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Module.ModuleName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TopicName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ExpectedTime)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.TopicId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.TopicId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.TopicId })
+                    </td>
+                </tr>
+            }
+
+        </table>
     </div>
+
+

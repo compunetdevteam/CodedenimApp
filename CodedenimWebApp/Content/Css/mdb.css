@@ -9193,7 +9193,8 @@ button, html [type="button"], [type="reset"], [type="submit"] {
     -ms-transform: translateX(100%);
     transform: translateX(100%); }
   .side-nav .collapsible {
-    margin: 0; }
+    margin: 0;s
+  }
     .side-nav .collapsible > li {
       padding-right: 1rem;
       padding-left: 1rem;
@@ -10987,7 +10988,7 @@ button.toast-close-button {
       background-color: transparent; }
       .white-skin .side-nav .collapsible li a {
         font-weight: 400;
-        color: #424242;
+        color: #424242 !important;
         -webkit-transition: all 0.3s linear;
         -moz-transition: all 0.3s linear;
         -o-transition: all 0.3s linear;
@@ -10997,9 +10998,9 @@ button.toast-close-button {
           background-color: rgba(0, 0, 0, 0.05); }
         .white-skin .side-nav .collapsible li a.active {
           font-weight: 500;
-          color: #4285F4; }
+          color: #093; }
           .white-skin .side-nav .collapsible li a.active .fa {
-            color: #4285F4;
+            color: #093;
             -webkit-transition: color 0.3s linear;
             -moz-transition: color 0.3s linear;
             -o-transition: color 0.3s linear;
@@ -11013,9 +11014,10 @@ button.toast-close-button {
       -ms-transition: color 0.3s linear;
       transition: color 0.3s linear; }
     .white-skin .side-nav .sidenav-bg:after, .white-skin .side-nav .sidenav-bg.mask-strong:after {
-      background: rgba(255, 255, 255, 0.9); }
+        background: #fff !important;
+    }
     .white-skin .side-nav .sidenav-bg.mask-light:after {
-      background: rgba(255, 255, 255, 0.65); }
+      background: #f0e68c !important; }
     .white-skin .side-nav .sidenav-bg.mask-slight:after {
       background: rgba(255, 255, 255, 0.5); }
   .white-skin .navbar .navbar-nav .dropdown .dropdown-primary .dropdown-item:hover {

@@ -2,10 +2,10 @@
 
 @{
     ViewBag.Title = "Category Details";
-    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
 }
-<br /><br /><br /><br /><br />
-<div class="container">
+
+<div class="container-fluid">
 
     <h2>Details</h2>
 
@@ -23,8 +23,9 @@
 
         </dl>
     </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CourseCategoryId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
-    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.CourseCategoryId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>
+   

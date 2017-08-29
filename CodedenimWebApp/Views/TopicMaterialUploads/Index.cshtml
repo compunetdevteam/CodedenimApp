@@ -2,66 +2,66 @@
 
 @{
     ViewBag.Title = "Topic Materials";
-    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
 }
-<br /><br /><br /><br /><br />
-<div class="container">
+
+<div class="container-fluid">
     <h2>Topic Materials</h2>
-<br/>
+    <br />
     <p>
-        @Html.ActionLink("CREATE TOPIC MATERIAL", "Create",null, new{@class = "my-class"})
+        @Html.ActionLink("CREATE TOPIC MATERIAL", "Create", null, new { @class = "my-class" })
     </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Course.TopicName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tutor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FileType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FileLocation)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Course.TopicName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tutor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FileType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FileLocation)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.TopicMaterialUploadId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.TopicMaterialUploadId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.TopicMaterialUploadId })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Course.TopicName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tutor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileLocation)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
-    </div>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.TopicName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tutor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileLocation)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.TopicMaterialUploadId }, new { @class = "my-class" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.TopicMaterialUploadId }, new { @class = "my-class" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.TopicMaterialUploadId }, new { @class = "my-class" })
+                </td>
+            </tr>}
+
+    </table>
+</div>
+

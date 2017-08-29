@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<CodeninModel.CourseCategory>
 @{
     ViewBag.Title = "Course Category";
-    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
 }
 
-<br /><br /><br /><br /><br />
 
-<div class="container">
-
+<div class="container-fluid">
+    <h2>COURSE CATEGORIES</h2>
+    <br />
     <p>
         @Html.ActionLink("CREATE CATEGORIES", "Create", null, new { @class = "my-class" })
     </p>
@@ -26,12 +26,12 @@
                     @Html.DisplayFor(modelItem => item.CategoryName)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.CourseCategoryId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.CourseCategoryId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.CourseCategoryId })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CourseCategoryId }, new { @class = "my-class" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.CourseCategoryId }, new { @class = "my-class" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CourseCategoryId }, new { @class = "my-class" })
                 </td>
-            </tr>
-        }
+            </tr>}
 
     </table>
 </div>
+   

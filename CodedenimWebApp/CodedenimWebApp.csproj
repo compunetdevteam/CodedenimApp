@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -273,6 +274,7 @@
     </Content>
     <Content Include="bin\CodedenimWebApp.dll" />
     <Content Include="bin\CodedenimWebApp.pdb" />
+    <Content Include="Content\animate.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -287,6 +289,10 @@
     <Content Include="Content\Css\mdb.min.css" />
     <Content Include="Content\Css\Site.css" />
     <Content Include="Content\Css\style.css" />
+    <Content Include="Content\Demo.css" />
+    <Content Include="Content\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="Content\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\img\CodeDemin.png" />
     <Content Include="Content\img\flags\cn.png" />
     <Content Include="Content\img\flags\in.png" />
@@ -306,9 +312,12 @@
     <Content Include="Content\img\svg\arrow_left.svg" />
     <Content Include="Content\img\svg\arrow_right.svg" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\paper-dashboard.css" />
+    <Content Include="Content\themify-icons.css" />
     <Content Include="Content\Videos\animation-intro.mp4" />
     <Content Include="Content\Videos\animation.mp4" />
     <Content Include="Content\Videos\Beach-Ball.mp4" />
+    <Content Include="Content\Videos\CodeDenimVD.MP4" />
     <Content Include="Content\Videos\Ipad.mp4" />
     <Content Include="Content\Videos\Lines.mp4" />
     <Content Include="favicon.ico" />
@@ -317,15 +326,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\Css\bootstrap-theme.css.map" />
-    <Content Include="Content\Css\bootstrap-theme.min.css.map" />
-    <Content Include="Content\Css\bootstrap.css.map" />
-    <Content Include="Content\Css\bootstrap.min.css.map" />
-    <Content Include="Content\img\overlays\Thumbs.db" />
     <Content Include="fonts\roboto\Roboto-Bold.eot" />
     <Content Include="fonts\roboto\Roboto-Bold.ttf" />
     <Content Include="fonts\roboto\Roboto-Bold.woff" />
@@ -356,6 +356,50 @@
     <Content Include="Scripts\compiled.min.js" />
     <Content Include="Scripts\customizer.min.js" />
     <Content Include="Scripts\jarallax.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\Css\bootstrap-theme.css.map" />
+    <Content Include="Content\Css\bootstrap-theme.min.css.map" />
+    <Content Include="Content\Css\bootstrap.css.map" />
+    <Content Include="Content\Css\bootstrap.min.css.map" />
+    <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\core.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\list.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\path.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="Content\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_variables.scss" />
+    <Content Include="Content\img\overlays\Thumbs.db" />
+    <Content Include="Content\.DS_Store" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1-vsdoc.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
@@ -372,6 +416,13 @@
     <Content Include="Scripts\mdb.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\paper\bootstrap-checkbox-radio.js" />
+    <Content Include="Scripts\paper\bootstrap-notify.js" />
+    <Content Include="Scripts\paper\bootstrap.min.js" />
+    <Content Include="Scripts\paper\chartist.min.js" />
+    <Content Include="Scripts\paper\demo.js" />
+    <Content Include="Scripts\paper\jquery-1.10.2.js" />
+    <Content Include="Scripts\paper\paper-dashboard.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -459,10 +510,11 @@
     <Content Include="Views\Shared\_LayoutWeb.cshtml" />
     <Content Include="Views\Account\Login1.cshtml" />
     <Content Include="Views\Account\Register2.cshtml" />
-    <Content Include="Views\Home\CorpsDashboard.cshtml" />
+    <Content Include="Views\Home\MyDashboard.cshtml" />
     <Content Include="Views\Home\GeneralDashboard.cshtml" />
     <Content Include="Views\Home\Index1.cshtml" />
     <Content Include="Views\Home\StudentDashboard.cshtml" />
+    <Content Include="Views\Shared\_LayoutBoard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="uploads\" />

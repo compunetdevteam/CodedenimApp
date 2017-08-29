@@ -1,8 +1,8 @@
 body {
-    background-color: white;
-    font-family: open sans, sans-serif; 
+    color: #66615b;
+    font-size: 14px;
+    font-family: 'Muli', Arial, sans-serif; }
     
-}
 .form-header{
     background-color: #093 !important;
 }
@@ -23,4 +23,18 @@ a.my-class {
     color: #333333 !important;
 }
 
-   
+ a.my-link {
+     color: #fff !important;
+ }
+.myVideo {
+    object-fit: fill;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: auto;
+    width: 100%;
+    overflow: hidden;
+}
+ span.nav-link {
+     color: white !important;
+ }

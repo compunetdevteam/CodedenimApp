@@ -2,14 +2,14 @@
 
 @{
     ViewBag.Title = "Tutor";
-    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
 }
-<br /><br /><br /><br /><br />
-<div class="container">
+
+<div class="container-fluid">
     <h2>Tutor</h2>
-<br/>
+    <br />
     <p>
-        @Html.ActionLink("CREATE TUTOR", "Create",null, new{@class = "my-class"})
+        @Html.ActionLink("CREATE TUTOR", "Create", null, new { @class = "my-class" })
     </p>
     <table class="table">
         <tr>
@@ -38,17 +38,17 @@
 
                 <td>
                     @{    foreach (var course in item.Courses)
-                        {
-                            @course.CourseId @:  @course.CourseName <br />
-                }
+                          {
+                              @course.CourseId @:  @course.CourseName <br />
+                          }
                     }
                 </td>
 
                 <td>
-                    @Html.ActionLink("Select", "Index", new { id = item.TutorId }) |
-                    @Html.ActionLink("Edit", "Edit", new { id = item.TutorId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.TutorId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.TutorId })
+                    @Html.ActionLink("Select", "Index", new { id = item.TutorId }, new { @class = "my-class" }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.TutorId }, new { @class = "my-class" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.TutorId }, new { @class = "my-class" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.TutorId }, new { @class = "my-class" })
                 </td>
             </tr>    }
 
@@ -86,7 +86,7 @@
                         @item.CourseCategory.CategoryName
                     </td>
                 </tr>
-}
+            }
 
         </table>
     }
@@ -113,9 +113,10 @@
                         @Html.DisplayFor(modelItem => item.Grade)
                     </td>
                 </tr>
-}
+            }
 
 
         </table>
     }
-    </div>
+</div>
+
