@@ -47,60 +47,52 @@
 
         <div class="sidebar-wrapper">
             <div class="logo">
-                <a href="@Url.Action("MyDashboard", "Home")" class="simple-text">
-                    <img src="~/Content/img/CodeDemin.png" height="50" width="50" />
-                    
+                <a href="@Url.Action("AdminDashboard", "Home")" class="simple-text">
+                    <img src="~/Content/img/CodeDemin.png" height="50" width="50"/>
+
                     Code-Denim
                 </a>
             </div>
 
             <ul class="nav">
-                <li class="active">
-                    <a href="@Url.Action("MyDashBoard","Home")">
+                <li @ViewBag.Dashboard>
+                    <a href="@Url.Action("AdminDashBoard","Home")">
                         <i class="fa fa-home"></i>
                         <p>My DashBoard</p>
                     </a>
                 </li>
-                <li>
-                    <a href="user.html">
-                        <i class="fa fa-user"></i>
-                        <p>My Account</p>
-                    </a>
-                </li>
-               
-
-                <li>
+                <li @ViewBag.Courses>
                     <a href="@Url.Action("Index","Courses")">
                         <i class="fa fa-book"></i>
                         <p>Courses</p>
                     </a>
                 </li> 
                
-                <li>
+                <li @ViewBag.Topics>
                     <a href="@Url.Action("Index","Topics")">
                         <i class="fa fa-pencil"></i>
                         <p>Topics</p>
                     </a>
                 </li>
-                <li>
+                <li @ViewBag.Category>
                     <a href="@Url.Action("Index","CourseCategories")">
                         <i class="fa fa-file"></i>
                         <p>Course Category</p>
                     </a>
                 </li>
-                <li>
+                <li @ViewBag.Materials>
                     <a href="@Url.Action("Index","TopicMaterialUploads")">
                         <i class="fa fa-th"></i>
-                        <p>Topic Materials</p>
+                        <p>Materials</p>
                     </a>
                 </li> 
-                <li>
+                <li @ViewBag.Modules>
                     <a href="@Url.Action("Index","Modules")">
                         <i class="fa fa-list"></i>
                         <p>Modules</p>
                     </a>
                 </li>
-                <li>
+                <li @ViewBag.Tutor>
                     <a href="@Url.Action("Index","Tutors")">
                         <i class="fa fa-users"></i>
                         <p>Tutors</p>
@@ -131,29 +123,17 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-graduation-cap"></i>
-                            <p>My Students</p>
+                            <i class="fa fa-users"></i>
+                            <p>Users</p>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("Index","Tutors")">Tutors</a></li>
                             <li><a href="@Url.Action("Index","Students")">Undergraduates</a></li>
                             <li><a href="#">Corps Members</a></li>
 
                         </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-bell"></i>
-                            <p class="notification">5</p>
-                            <p>Notifications</p>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Notification 1</a></li>
-                            <li><a href="#">Notification 2</a></li>
-                            
-                        </ul>
-                    </li>
+                    </li>          
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
                             <i class="fa fa-user"></i>
@@ -162,7 +142,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="#">My Profile</a></li>
-                            <li><a href="@Url.Action("Index","Home")">LogOut</a></li>
+                            <li><a href="@Url.Action("LogOff","Account")">LogOut</a></li>
                             
                         </ul>
                     </li>

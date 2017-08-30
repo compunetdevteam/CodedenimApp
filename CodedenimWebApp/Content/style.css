@@ -1,5 +1,5 @@
 body {
-    color: #66615b;
+    color: #000;
     font-size: 14px;
     font-family: 'Muli', Arial, sans-serif; }
     
@@ -38,3 +38,18 @@ a.my-class {
  span.nav-link {
      color: white !important;
  }
+ .white-skin .btn-default {
+     background-color: #093 !important;
+ }
+ .fa-user :after {
+     color: #093 !important;
+ }
+.btn {
+    border-radius: 7px;
+    color: #093 !important;
+    background-color: transparent !important;
+    box-shadow: 2px 0px 7px #093;
+}
+i.prefix:active {
+    color: #093 !important;
+}

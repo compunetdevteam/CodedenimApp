@@ -7,29 +7,30 @@
     <div class="col-md-6 col-lg-5 login-form mx-auto float-none">
 
         <!--Form with header-->
-        <div class="card">
+        <div class="card" style="width: 75%; margin-left:10%">
             <div class="card-block">
                 
                 <!--Header-->
                 <!--Header-->
-                <div class="form-header">
-                    <h3><i class="fa fa-user"></i><a href="@Url.Action("Index","Home")">CodeDenim</a></h3>
+                <div class="form-header" style="height: 120px !important; padding:5px;">
+                    <h3>
+                        <a href="@Url.Action("Index","Home")"><img src="~/Content/img/CodeDemin.png" width="60" height="50" style="margin-left:45%"/>Code-Denim</a></h3>
                 </div>
 
                 <!--Body-->
-                <form action="@Href("~/Home/GeneralDashboard")" method="post">
+                <form action="" method="post">
                     @Html.AntiForgeryToken()
                     <div class="md-form">
                         <i class="fa fa-envelope prefix"></i>
                         <input type="text" id="Email" name="Email" class="form-control" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required.">
-                        <label for="Email">Your email</label>
+                        <label for="Email">Your Email</label>
                         <span class="field-validation-valid text-danger" data-valmsg-for="Email" data-valmsg-replace="true"></span>
                     </div>
 
                     <div class="md-form">
                         <i class="fa fa-lock prefix"></i>
                         <input type="password" id="Password" name="Password" class="form-control" data-val="true" data-val-Password="The Password field is required." data-val-required="The Password field is required.">
-                        <label for="Password">Your password</label>
+                        <label for="Password">Your Password</label>
                         <span class="field-validation-valid text-danger" data-valmsg-for="Password" data-valmsg-replace="true"></span>
                     </div>
 
@@ -39,15 +40,21 @@
                     </fieldset>
 
                     <div class="text-center">
-                        <button class="btn btn-default">Sign up</button>
+                        <button class="btn btn-default" style="background-color: #093 !important">Login</button>
+                    </div>                   
+                    <div class="modal-footer text-center">
+                        <a href="@Url.Action("ForgotPassword", "Account")"><b style="color: #093">Forgot Password?</b></a>
                     </div>
+
+                @*<div class="row my-3 d-flex justify-content-center">
+                    <!--Facebook-->
+                    <button type="button" class="btn btn grey btn-rounded mr-md-3 z-depth-1a"><i class="fa fa-facebook blue-text text-center"></i></button>
+                    <!--Twitter-->
+                    <button type="button" class="btn btn-white btn-rounded mr-md-3 z-depth-1a"><i class="fa fa-twitter blue-text"></i></button>
+                    <!--Google +-->
+                    <button type="button" class="btn btn-white btn-rounded z-depth-1a"><i class="fa fa-google-plus blue-text"></i></button>
+                </div>*@
                 </form>
-            </div>
-
-
-            <!--Footer-->
-            <div class="modal-footer text-center">
-                <a href="@Url.Action("ForgotPassword", "Account")"><b style="color: #093">Forgot Password?</b></a>
             </div>
         </div>
         <!--/Form with header-->

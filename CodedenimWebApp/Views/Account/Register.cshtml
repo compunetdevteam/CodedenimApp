@@ -2,18 +2,17 @@
     ViewBag.Title = "Register";
     Layout = "~/Views/Shared/_LayoutWeb.cshtml";
 }
-<body>
+
     <div class="row">
         <div class="col-md-6 col-lg-5 login-form mx-auto float-none">
 
             <!--Form with header-->
-            <div class="card">
+            <div class="card" style="width: 75%; margin-left:10%">
                 <div class="card-block">
-
+ 
                     <!--Header-->
-                    <!--Header-->
-                    <div class="form-header">
-                        <h3><i class="fa fa-user"></i><a href="@Url.Action("Index","Home")">CodeDenim</a></h3>
+                    <div class="form-header" style="height: 100px !important; padding:5px;">
+                        <h3><i></i><a href="@Url.Action("Index","Home")"><img src="~/Content/img/CodeDemin.png" width="50" height="50" style="margin-left:45%"/>Code-Denim</a></h3>
                     </div>
 
                     <!--Body-->
@@ -22,29 +21,29 @@
                         <div class="md-form">
                             <i class="fa fa-user prefix"></i>
                             <input type="text" id="form1" class="form-control">
-                            <label for="form1">First name</label>
+                            <label for="form1">First Name</label>
                         </div>
 
                         <div class="md-form">
                             <i class="fa fa-user prefix"></i>
                             <input type="text" id="form2" class="form-control">
-                            <label for="form2">Last name</label>
+                            <label for="form2">Last Name</label>
                         </div>
 
                         <div class="md-form">
                             <i class="fa fa-envelope prefix"></i>
                             <input type="text" id="form3" class="form-control">
-                            <label for="form2">Your email</label>
+                            <label for="form2">Your Email</label>
                         </div>
 
                         <div class="md-form">
                             <i class="fa fa-lock prefix"></i>
                             <input type="password" id="form4" class="form-control">
-                            <label for="form4">Your password</label>
+                            <label for="form4">Your Password</label>
                         </div>
 
                         <div class="text-center">
-                            <button class="btn btn-default">Sign up</button>
+                            <button class="btn btn-indigo"  style="background-color: #093 !important">Register <i class="fa fa-paper-plane-o ml-1"></i></button>
                         </div>
                     </form>
                 </div>
@@ -54,5 +53,5 @@
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
-</body>
+
 

@@ -1,5 +1,6 @@
 ﻿@{
-    ViewBag.Title = "My DashBoard";
+    ViewBag.Title = "DashBoard";
+    ViewBag.DashBoard = "class = active";
     Layout = "~/Views/Shared/_LayoutBoard.cshtml";
 }
 <div class="content">
@@ -16,7 +17,7 @@
                             </div>
                             <div class="col-xs-7">
                                 <div class="numbers">
-                                    <p>MY COURSES</p>
+                                    <p>COURSES</p>
                                     5+
                                 </div>
                             </div>
@@ -24,37 +25,13 @@
                         <div class="footer">
                             <hr />
                             <div class="stats">
-                                <i class="fa fa-hand-o-right"></i> VIEW MORE...
+                                <i class="fa fa-hand-o-right"></i> <a href="@Url.Action("Index","Courses")">VIEW MORE...</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card mycard">
-                    <div class="content">
-                        <div class="row">
-                            <div class="col-xs-5">
-                                <div class="icon-big icon-success text-center">
-                                    <i class="fa fa-user"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-7">
-                                <div class="numbers">
-                                    <p>STUDENTS</p>
-                                   20+
-                                </div>
-                            </div>
-                        </div>
-                        <div class="footer">
-                            <hr />
-                            <div class="stats">
-                                <i class="fa fa-hand-o-right"></i> VIEW LIST
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
             <div class="col-lg-3 col-sm-6">
                 <div class="card mycard">
                     <div class="content">
@@ -74,7 +51,32 @@
                         <div class="footer">
                             <hr />
                             <div class="stats">
-                                <i class="fa fa-hand-o-right"></i> MY TOPICS
+                                <i class="fa fa-hand-o-right"></i> <a href="@Url.Action("Index","Topics")">VIEW TOPICS...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card mycard">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big icon-success text-center">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>STUDENTS</p>
+                                    20+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr />
+                            <div class="stats">
+                                <i class="fa fa-hand-o-right"></i> <a href="@Url.Action("Index","Students")">VIEW LIST...</a>
                             </div>
                         </div>
                     </div>
@@ -86,12 +88,12 @@
                         <div class="row">
                             <div class="col-xs-5">
                                 <div class="icon-big icon-info text-center">
-                                    <i class="glyphicon glyphicon-question-sign"></i>
+                                    <i class="fa fa-graduation-cap"></i>
                                 </div>
                             </div>
                             <div class="col-xs-7">
                                 <div class="numbers">
-                                    <p>FAQ HUB</p>
+                                    <p>TUTORS</p>
                                     +45
                                 </div>
                             </div>
@@ -99,7 +101,7 @@
                         <div class="footer">
                             <hr />
                             <div class="stats">
-                                <i class="fa fa-hand-o-right"></i> VIEW FAQ
+                                <i class="fa fa-hand-o-right"></i> <a href="@Url.Action("Details","Tutors")">VIEW TUTORS...</a>
                             </div>
                         </div>
                     </div>
@@ -116,8 +118,8 @@
                     </div>
                     <div class="content">
                         <div id="chartHours">
-                            <video height="550" width="1000" poster="" controls="controls">
-                                <source src="~/Content/Videos/Beach-Ball.mp4" type="video/mp4" />
+                            <video height="550" width="1000" poster="" controls >
+                                <source src="~/Content/Videos/Beach-Ball.mp4" type="video/mp4"  media="all"/>
                             </video></div>
                     </div>
                         <div class="footer">

@@ -12,45 +12,47 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
 
     <!-- Bootstrap core CSS -->
-    <link href="~/Content/Css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="~/Content/bootstrap1.min.css" rel="stylesheet">
+ 
     <!-- Material Design Bootstrap -->
-    <link href="~/Content/Css/mdb.css" rel="stylesheet">
+    <link href="~/Content/mdb.css" rel="stylesheet">
 
     <!-- Your custom styles (optional) -->
-    <link href="~/Content/Css/style.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet">
     
 </head>
+<body>
+<div class="container-default">
+    @RenderBody();
+</div>
+    <!-- JQuery -->
+    <script src="~/Scripts/jquery-3.1.1.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="~/Scripts/tether.min.js"></script>
 
-@RenderBody() 
-<!-- JQuery -->
-<script src="~/Scripts/jquery-3.1.1.js"></script>
-<!-- Bootstrap tooltips -->
-<script type="text/javascript" src="~/Scripts/tether.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
 
-<!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="~/Scripts/mdb.min.js"></script>
 
-<!-- MDB core JavaScript -->
-<script type="text/javascript" src="~/Scripts/mdb.min.js"></script>
+    <script>
+        //Animation init
+        new WOW().init();
 
-<script>
-    //Animation init
-    new WOW().init();
-        
-    //Modal
-    $('#myModal').on('shown.bs.modal', function () {
-        $('#myInput').focus()
-    })
-        
-    // Material Select Initialization
-    $(document).ready(function() {
-        $('.mdb-select').material_select();
-    });
+        //Modal
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').focus()
+        })
 
-</script>
-    
+        // Material Select Initialization
+        $(document).ready(function () {
+            $('.mdb-select').material_select();
+        });
 
+    </script>
+
+</body>
 
 <!-- Mirrored from mdbootstrap.com/live/_MDB/templates/Landing-Page/creative-landing-page.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 14 Jul 2017 19:04:01 GMT -->
 </html>

@@ -2,11 +2,12 @@
 
 @{
     ViewBag.Title = "Courses";
+    ViewBag.Courses = "class = active";
     Layout = "~/Views/Shared/_LayoutBoard.cshtml";
 }
 
     <div class="container-fluid">
-        <h2>Courses</h2><hr/>
+        <h2>Courses</h2>
 
         <p>
             @Html.ActionLink("CREATE COURSES", "Create", null, new { @class = "my-class" })
@@ -70,7 +71,7 @@
                         @Html.DisplayFor(modelItem => item.Points)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id=item.CourseId }, new{@class = "my-class"}) |@Html.ActionLink("Details", "Details", new { id=item.CourseId },new { @class = "my-class" }) |
+                        @Html.ActionLink("Edit", "Edit", new { id=item.CourseId }, new{@class = "my-class"}) | @Html.ActionLink("Details", "Details", new { id=item.CourseId },new { @class = "my-class" }) |
                         @Html.ActionLink("Delete", "Delete", new { id=item.CourseId }, new { @class = "my-class" })
                     </td>
                 </tr>

@@ -13,15 +13,15 @@ namespace CodedenimWebApp.Controllers
 		{
 			return View();
 		}
-		public ActionResult GeneralDashboard()
-		{
-			return View();
-		}
-		public ActionResult StudentDashboard()
-		{
-			return View();
-		}
-		public ActionResult MyDashboard()
+		//public ActionResult TutorDashboard()
+		//{
+		//	return View();
+		//}
+		//public ActionResult UserDashboard()
+		//{
+		//	return View();
+		//}
+		public ActionResult AdminDashboard()
 		{
 			return View();
 		}
