@@ -1,5 +1,4 @@
-﻿@using CodeninModel
-@model CodeninModel.Tutor
+﻿@model CodeninModel.Tutor
 
 @{
     ViewBag.Title = "Details";
@@ -11,29 +10,7 @@
     <h4>Tutor</h4>
     <hr />
     <dl class="dl-horizontal">
-       
-            <dd>
-                <img src="@Url.Action("RenderImage", new { studentId = Model.TutorId})" alt="avatar" />
-            </dd>
-     
         
-        
-        @*<img src="@Url.Content()" alt="avatar" />*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Designation)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Designation)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MaritalStatus)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MaritalStatus)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.IsActiveTutor)
@@ -51,13 +28,7 @@
             @Html.DisplayFor(model => model.ActiveStatus)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StaffRole)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StaffRole)
-        </dd>
+       
 
         <dt>
             @Html.DisplayNameFor(model => model.FirstName)
@@ -107,38 +78,7 @@
             @Html.DisplayFor(model => model.PhoneNumber)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TownOfBirth)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TownOfBirth)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StateOfOrigin)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StateOfOrigin)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Nationality)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nationality)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CountryOfBirth)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CountryOfBirth)
-        </dd>
-
+        
         <dt>
             @Html.DisplayNameFor(model => model.IsAcctive)
         </dt>
@@ -155,13 +95,7 @@
             @Html.DisplayFor(model => model.DateOfBirth)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Age)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Age)
-        </dd>
+       
 
         <dt>
             @Html.DisplayNameFor(model => model.Passport)
@@ -172,11 +106,23 @@
         </dd>
 
     </dl>
+    <table>
+        <tr>
+            <th>Cousre Code</th>
+            <th>COurse Name</th>
+        </tr>
+        @foreach(var course in Model.TutorCourses)
+    {
+        <tr>
+            <td>@course.Courses.CourseCode</td>
+            <td>@course.Courses.CourseName</td>
+        </tr>
+    }
+    </table>
+    
+ 
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.TutorId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
-
-
-

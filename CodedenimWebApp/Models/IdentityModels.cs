@@ -62,6 +62,8 @@ namespace CodedenimWebApp.Models
 
         public System.Data.Entity.DbSet<CodeninModel.Student> Students { get; set; }
 
+        public System.Data.Entity.DbSet<CodeninModel.TutorCourses> TutorCourses { get; set; }
+
         //public override int SaveChanges()
         //{
         //    try

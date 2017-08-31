@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 using System.Linq;
 using System.Web;
+using CodeninModel;
 
 namespace CodedenimWebApp.ViewModels
 {
@@ -15,5 +19,8 @@ namespace CodedenimWebApp.ViewModels
         public string Email { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
+        public byte[] Passport { get; set; }
+
+       
     }
 }

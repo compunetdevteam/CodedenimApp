@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -7,7 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
-using System.Web.Mvc;
+    using System.Web.Hosting;
+    using System.Web.Mvc;
 using CodedenimWebApp.Models;
 using CodeninModel;
 
@@ -72,11 +73,28 @@ namespace CodedenimWebApp.Controllers
 		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> Create([Bind(Include = "TopicMaterialUploadId,TopicId,Tutor,FileType,Name,Description,FileLocation")] TopicMaterialUpload topicMaterialUpload)
+		public async Task<ActionResult> Create(TopicMaterialUpload topicMaterialUpload, HttpPostedFileBase File)
 		{
 			if (ModelState.IsValid)
 			{
-				db.TopicMaterialUploads.Add(topicMaterialUpload);
+
+			    string _FileName = String.Empty;
+			    if (File.ContentLength > 0)
+			    {
+			        _FileName = Path.GetFileName(File.FileName);
+			        string path = HostingEnvironment.MapPath("~/MaterialUpload/") + _FileName;
+			        topicMaterialUpload.FileLocation = path;
+			        var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/MaterialUpload/"));
+			        if (directory.Exists == false)
+			        {
+			            directory.Create();
+			        }
+			        File.SaveAs(path);
+			    }
+			    topicMaterialUpload.FileLocation = _FileName;
+
+
+                db.TopicMaterialUploads.Add(topicMaterialUpload);
 				await db.SaveChangesAsync();
 				return RedirectToAction("Index");
 			}

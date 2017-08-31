@@ -387,22 +387,23 @@ namespace CodedenimWebApp.Controllers
 
 
         //method to populate the assigned course in the the create view
-        private void PopulateAssignedCourseData(Tutor tutor)
-        {
-            var allCourses = _db.Courses;
-            var instructorCourses = new HashSet<int>(tutor.Courses.Select(c => c.CourseId));
-            var viewModel = new List<AssignedCourses>();
-            foreach (var course in allCourses)
-            {
-                viewModel.Add(new AssignedCourses
-                {
-                    CourseId = course.CourseId,
-                    CourseName = course.CourseName,
-                    Assigned = instructorCourses.Contains(course.CourseId)
-                });
-            }
-            ViewBag.Courses = viewModel;
-        }
+        //private void PopulateAssignedCourseData(TutorCourses tutor)
+        //{
+        //    var allCourses = _db.Courses;
+        //    var instructorCourses = new HashSet<int>(tutor.Where())
+        //   // var instructorCourses = new HashSet<int>(tutor.Courses.Select(c => c.CourseId));
+        //    var viewModel = new List<AssignedCourses>();
+        //    foreach (var course in allCourses)
+        //    {
+        //        viewModel.Add(new AssignedCourses
+        //        {
+        //            CourseId = course.CourseId,
+        //            CourseName = course.CourseName,
+        //            Assigned = instructorCourses.Contains(course.CourseId)
+        //        });
+        //    }
+        //    ViewBag.Courses = viewModel;
+        //}
 
 
         [HttpPost]
@@ -428,7 +429,7 @@ namespace CodedenimWebApp.Controllers
                    
                 if (result.Succeeded && (tutorInDb != null))
                 {
-                  
+                 
                 
                     tutorInDb.Email = model.Email;
 
@@ -448,6 +449,8 @@ namespace CodedenimWebApp.Controllers
                     //ViewBag.Link = callbackUrl;
                     TempData["UserMessage"] = $"Registration is Successful for {user.UserName}, Please Confirm Your Email to Login.";
                     return View("ConfirmRegistration");
+
+                  
 
                     RedirectToAction("Index", "Tutors");
 

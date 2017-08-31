@@ -20,6 +20,7 @@ namespace CodeninModel
         [Range(0, 5)]
         public int Points { get; set; }
         public byte[] CourseImage { get; set; }
+        public string FileLocation { get; set; }
 
         [Display(Name = "Upload A Passport/Picture")]
         [ValidateFile(ErrorMessage = "Please select a PNG/JPEG image smaller than 20kb")]
@@ -52,7 +53,8 @@ namespace CodeninModel
 
         public virtual CourseCategory CourseCategory { get; set; }
         public virtual ICollection<Enrollment> Enrollments { get; set; }
-        public virtual ICollection<Tutor> Instructors { get; set; }
+        //public virtual Tutor Instructors { get; set; }
+        public virtual ICollection<TutorCourses> TutorCourses { get; set; }
         public virtual ICollection<Module> Modules { get; set; }
         public virtual ICollection<AssesmentQuestionAnswer> AssesmentQuestionAnswers { get; set; }
     }

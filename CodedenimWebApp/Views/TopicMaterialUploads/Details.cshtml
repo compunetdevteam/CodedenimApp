@@ -1,4 +1,5 @@
-﻿@model CodeninModel.TopicMaterialUpload
+﻿@using CodeninModel
+@model CodeninModel.TopicMaterialUpload
 
 @{
     ViewBag.Title = "Topic Material Details";
@@ -60,11 +61,73 @@
             <dd>
                 @Html.DisplayFor(model => model.FileLocation)
             </dd>
+            
+
 
         </dl>
     </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.TopicMaterialUploadId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>
+
+
+
+<div>
+    @if (Model.FileType == FileType.MP4)
+    {
+        <div style="text-align:center">
+            <button onclick="playPause()">Play/Pause</button>
+            <button onclick="makeBig()">Big</button>
+            <button onclick="makeSmall()">Small</button>
+            <button onclick="makeNormal()">Normal</button>
+            <br><br>
+            @*<video controls="controls">
+                <source src="~/TopicMaterials/How%20to%20Use%20our%20Learning%20Management%20System.mp4" type="video/mp4" />
+            </video>*@
+            <video controls="controls" id="video1" width="420">
+                <source src="~/MaterialUpload/@Model.FileLocation" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+        </div>
+    }
+    else if (Model.FileType == FileType.PDF)
+    {
+        @*<iframe src="~/TopicMaterials/@Model.FileLocation" style="width: 100%;height: 100%;border: none;"></iframe>*@
+        <object data="~/MaterialUpload/@Model.FileLocation" type="application/pdf">
+            @*<embed src="~/TopicMaterials/@Model.FileLocation" width="500" height="375" type='application/pdf'></embed>*@
+            <iframe src="~/MaterialUpload/@Model.FileLocation" style="width: 100%;height: 100%;border: none;"></iframe>
+
+
+        </object>
+       
+    }
+</div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.TopicMaterialUploadId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
-    </div>
+<script>
+
+    var myVideo = document.getElementById("video1");
+
+    function playPause() {
+        if (myVideo.paused)
+            myVideo.play();
+        else
+            myVideo.pause();
+    }
+
+    function makeBig() {
+        myVideo.width = 560;
+    }
+
+    function makeSmall() {
+        myVideo.width = 320;
+    }
+
+    function makeNormal() {
+        myVideo.width = 420;
+    }
+</script>

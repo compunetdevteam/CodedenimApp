@@ -16,14 +16,15 @@ namespace CodedenimWebApp.Controllers
         {
             var viewModel = new TutorsIndexVm();
 
-            viewModel.Tutors = db.Tutors
-                .Include(i => i.Courses.Select(c => c.CourseCategory))
-                .OrderBy(i => i.LastName);
+         //   viewModel = db.TutorCourses.Include(tc => tc.Courses.Any(c => c.CourseCategory))
+            //viewModel.Tutors = db.Tutors
+            //    .Include(i => i.Courses.Select(c => c.CourseCategory))
+            //    .OrderBy(i => i.LastName);
 
             if (!String.IsNullOrEmpty(id))
             {
                 ViewBag.TutorId = id;
-                viewModel.Courses = viewModel.Tutors.Single(i => i.TutorId == id).Courses;
+               // viewModel.Courses = viewModel.Tutors.Single(i => i.TutorId == id).Courses;
             }
             return View();
         }

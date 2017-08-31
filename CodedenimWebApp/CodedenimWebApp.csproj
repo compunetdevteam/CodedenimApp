@@ -127,10 +127,12 @@
     <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -147,10 +149,6 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
@@ -235,26 +233,11 @@
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\TopicMaterialUploadsController.cs" />
     <Compile Include="Controllers\TopicsController.cs" />
+    <Compile Include="Controllers\TutorCoursesController.cs" />
     <Compile Include="Controllers\TutorsController.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708230840393_added_fileUpload.cs" />
-    <Compile Include="Migrations\201708230840393_added_fileUpload.Designer.cs">
-      <DependentUpon>201708230840393_added_fileUpload.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708230945204_StudentPhotoUpload.cs" />
-    <Compile Include="Migrations\201708230945204_StudentPhotoUpload.Designer.cs">
-      <DependentUpon>201708230945204_StudentPhotoUpload.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708241217270_Roles.cs" />
-    <Compile Include="Migrations\201708241217270_Roles.Designer.cs">
-      <DependentUpon>201708241217270_Roles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708281254472_tutorCoursesJunctionTable.cs" />
-    <Compile Include="Migrations\201708281254472_tutorCoursesJunctionTable.Designer.cs">
-      <DependentUpon>201708281254472_tutorCoursesJunctionTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -276,10 +259,6 @@
     <Compile Include="ViewModels\TutorsIndexVm.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-CodedenimWebApp-20170820064523.mdf" />
-    <Content Include="App_Data\aspnet-CodedenimWebApp-20170820064523_log.ldf">
-      <DependentUpon>aspnet-CodedenimWebApp-20170820064523.mdf</DependentUpon>
-    </Content>
     <Content Include="bin\CodedenimWebApp.dll" />
     <Content Include="bin\CodedenimWebApp.pdb" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -683,11 +662,6 @@
     <Content Include="Views\TopicMaterialUploads\Upload.cshtml" />
     <Content Include="Views\Account\ConfirmRegistration.cshtml" />
     <Content Include="Views\Account\SendEmail.cshtml" />
-    <Content Include="Views\Tutors\Create.cshtml" />
-    <Content Include="Views\Tutors\Delete.cshtml" />
-    <Content Include="Views\Tutors\Details.cshtml" />
-    <Content Include="Views\Tutors\Edit.cshtml" />
-    <Content Include="Views\Tutors\Index.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />
     <Content Include="Views\Courses\Delete.cshtml" />
     <Content Include="Views\Courses\Details.cshtml" />
@@ -708,15 +682,25 @@
     <Content Include="Views\Home\GeneralDashboard.cshtml" />
     <Content Include="Views\Home\Index1.cshtml" />
     <Content Include="Views\Home\StudentDashboard.cshtml" />
-    <Content Include="Views\Tutors\ConfirmTutor.cshtml" />
     <Content Include="Views\Account\_tutorCourses.cshtml" />
     <Content Include="Views\Account\ConfirmTutorReg.cshtml" />
     <Content Include="Views\Account\TutorRegistration.cshtml" />
-    <Content Include="Views\Tutors\info.cshtml" />
+    <Content Include="Views\Tutors\Create.cshtml" />
+    <Content Include="Views\Tutors\Delete.cshtml" />
+    <Content Include="Views\Tutors\Details.cshtml" />
+    <Content Include="Views\Tutors\Edit.cshtml" />
+    <Content Include="Views\Tutors\Index.cshtml" />
+    <Content Include="Views\TutorCourses\Create.cshtml" />
+    <Content Include="Views\TutorCourses\Delete.cshtml" />
+    <Content Include="Views\TutorCourses\Details.cshtml" />
+    <Content Include="Views\TutorCourses\Edit.cshtml" />
+    <Content Include="Views\TutorCourses\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Content\StudentFiles\" />
     <Folder Include="Content\TutorFiles\" />
+    <Folder Include="MaterialUpload\" />
     <Folder Include="uploads\" />
   </ItemGroup>
   <ItemGroup>
@@ -736,20 +720,6 @@
       <Project>{c751165f-d7d4-4278-9f2a-e4c42448fde0}</Project>
       <Name>CodeninModel</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708230840393_added_fileUpload.resx">
-      <DependentUpon>201708230840393_added_fileUpload.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708230945204_StudentPhotoUpload.resx">
-      <DependentUpon>201708230945204_StudentPhotoUpload.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708241217270_Roles.resx">
-      <DependentUpon>201708241217270_Roles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708281254472_tutorCoursesJunctionTable.resx">
-      <DependentUpon>201708281254472_tutorCoursesJunctionTable.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.1.min.map" />

@@ -11,10 +11,10 @@ namespace CodeninModel
     {
         [Key]
         public int TutorCoursesId { get; set; }
-        public string TutorName { get; set; }
-        public string Course { get; set; }
+        public string TutorId { get; set; }
+        public int CourseId { get; set; }
         public virtual  Tutor Tutor { get; set; }
-        public virtual ICollection<Course> Courses { get; set; }
+        public virtual Course Courses { get; set; }
     }
 
 }

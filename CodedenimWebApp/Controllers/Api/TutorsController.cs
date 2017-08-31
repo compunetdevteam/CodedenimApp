@@ -19,9 +19,9 @@ namespace CodedenimWebApp.Controllers.Api
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Tutors
-        public IEnumerable<Tutor> GetTutors()
+        public IEnumerable<TutorCourses> GetTutors()
         {
-            return db.Tutors.Include(t => t.Courses).ToList();
+            return db.TutorCourses.Include(t => t.Courses).ToList();
         }
 
         // GET: api/Tutors/5

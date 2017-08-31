@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.ViewModels;
@@ -63,10 +65,27 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")] Course course)
+        public async Task<ActionResult> Create([Bind(Include = "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")] Course course, HttpPostedFileBase File)
         {
             if (ModelState.IsValid)
             {
+
+                string _FileName = String.Empty;
+                if (File.ContentLength > 0)
+                {
+                    _FileName = Path.GetFileName(File.FileName);
+                    string path = HostingEnvironment.MapPath("~/MaterialUpload/") + _FileName;
+                    course.FileLocation = path;
+                    var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/MaterialUpload/"));
+                    if (directory.Exists == false)
+                    {
+                        directory.Create();
+                    }
+                    File.SaveAs(path);
+                }
+                course.FileLocation = _FileName;
+
+
                 db.Courses.Add(course);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
