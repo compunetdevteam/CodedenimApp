@@ -98,6 +98,8 @@
     <Compile Include="File.cs" />
     <Compile Include="FilePath.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Quiz\QuizLog.cs" />
+    <Compile Include="Quiz\QuizLogVm.cs" />
     <Compile Include="TopicMaterialUpload.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Person.cs" />

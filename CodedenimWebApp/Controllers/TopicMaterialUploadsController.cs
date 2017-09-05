@@ -11,6 +11,7 @@ using System.Web;
     using System.Web.Mvc;
 using CodedenimWebApp.Models;
 using CodeninModel;
+    using Microsoft.AspNet.Identity;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -77,6 +78,7 @@ namespace CodedenimWebApp.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+			    var tutorId = User.Identity.GetUserId();
 
 			    string _FileName = String.Empty;
 			    if (File.ContentLength > 0)

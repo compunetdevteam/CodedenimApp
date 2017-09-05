@@ -60,10 +60,16 @@ namespace CodedenimWebApp.Models
         public System.Data.Entity.DbSet<CodeninModel.Tutor> Tutors { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
 
-        public System.Data.Entity.DbSet<CodeninModel.Student> Students { get; set; }
+        public DbSet<Student> Students { get; set; }
 
-        public System.Data.Entity.DbSet<CodeninModel.TutorCourses> TutorCourses { get; set; }
+        public DbSet<TutorCourses> TutorCourses { get; set; }
 
+        public DbSet<CodeninModel.CBTE.QuizRule> QuizRules { get; set; }
+
+        public DbSet<TopicQuiz> TopicQuizs { get; set; }
+
+        public System.Data.Entity.DbSet<StudentTopicQuiz> StudentTopicQuizs { get; set; }
+        public DbSet<QuizLog> QuizLogs { get; set; }
         //public override int SaveChanges()
         //{
         //    try

@@ -223,6 +223,7 @@
     <Compile Include="Controllers\Api\CourseCategoriesController.cs" />
     <Compile Include="Controllers\Api\CoursesController.cs" />
     <Compile Include="Controllers\Api\ModulesController.cs" />
+    <Compile Include="Controllers\Api\TopicMaterialUploadsController.cs" />
     <Compile Include="Controllers\Api\TopicsController.cs" />
     <Compile Include="Controllers\Api\TutorsController.cs" />
     <Compile Include="Controllers\CourseCategoriesController.cs" />
@@ -230,7 +231,11 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
+    <Compile Include="Controllers\Quiz\QuizRulesController.cs" />
+    <Compile Include="Controllers\Quiz\StudentTopicQuizsController.cs" />
+    <Compile Include="Controllers\Quiz\TopicQuizsController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
+    <Compile Include="Controllers\Quiz\TakeQuizController.cs" />
     <Compile Include="Controllers\TopicMaterialUploadsController.cs" />
     <Compile Include="Controllers\TopicsController.cs" />
     <Compile Include="Controllers\TutorCoursesController.cs" />
@@ -251,9 +256,11 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Service\EmailSetupServices.cs" />
+    <Compile Include="Service\MultipleButtonAttributeController.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AssignedCourses.cs" />
     <Compile Include="ViewModels\CourseVm.cs" />
+    <Compile Include="ViewModels\DisplayQuestionViewModel.cs" />
     <Compile Include="ViewModels\TutorCreateVm.cs" />
     <Compile Include="ViewModels\TutorRegisterVm.cs" />
     <Compile Include="ViewModels\TutorsIndexVm.cs" />
@@ -695,6 +702,32 @@
     <Content Include="Views\TutorCourses\Details.cshtml" />
     <Content Include="Views\TutorCourses\Edit.cshtml" />
     <Content Include="Views\TutorCourses\Index.cshtml" />
+    <Content Include="Views\Tutors\info.cshtml" />
+    <Content Include="Views\Tutors\ConfirmTutor.cshtml" />
+    <Content Include="Views\QuizRules\Create.cshtml" />
+    <Content Include="Views\QuizRules\Delete.cshtml" />
+    <Content Include="Views\QuizRules\Details.cshtml" />
+    <Content Include="Views\QuizRules\Edit.cshtml" />
+    <Content Include="Views\QuizRules\Index.cshtml" />
+    <Content Include="Views\TopicQuizs\Create.cshtml" />
+    <Content Include="Views\TopicQuizs\Delete.cshtml" />
+    <Content Include="Views\TopicQuizs\Details.cshtml" />
+    <Content Include="Views\TopicQuizs\Edit.cshtml" />
+    <Content Include="Views\TopicQuizs\Index.cshtml" />
+    <Content Include="Views\StudentTopicQuizs\Create.cshtml" />
+    <Content Include="Views\StudentTopicQuizs\Delete.cshtml" />
+    <Content Include="Views\StudentTopicQuizs\Details.cshtml" />
+    <Content Include="Views\StudentTopicQuizs\Edit.cshtml" />
+    <Content Include="Views\StudentTopicQuizs\Index.cshtml" />
+    <Content Include="Views\TakeQuiz\Exam.cshtml" />
+    <Content Include="Views\TakeQuiz\ExamIndex.cshtml" />
+    <Content Include="Views\TakeQuiz\FinishExam.cshtml" />
+    <Content Include="Views\TakeQuiz\MainExam.cshtml" />
+    <Content Include="Views\TakeQuiz\Menu.cshtml" />
+    <Content Include="Views\TakeQuiz\SelectExamIndex.cshtml" />
+    <Content Include="Views\TakeQuiz\SelectSubject.cshtml" />
+    <Content Include="Views\TakeQuiz\ShowNumbers.cshtml" />
+    <Content Include="Views\TakeQuiz\_Exam.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -702,6 +735,7 @@
     <Folder Include="Content\TutorFiles\" />
     <Folder Include="MaterialUpload\" />
     <Folder Include="uploads\" />
+    <Folder Include="Views\MultipleButtonAttribute\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

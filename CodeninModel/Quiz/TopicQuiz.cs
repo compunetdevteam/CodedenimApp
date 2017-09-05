@@ -4,9 +4,11 @@ namespace CodeninModel.Quiz
 {
     public class TopicQuiz
     {
+     
         public int TopicQuizId { get; set; }
 
-        [Display(Name = "Topic Name")]
+
+     [Display(Name = "Topic Name")]
         [Required(ErrorMessage = "Topic Name is required")]
         public int TopicId { get; set; }
 
@@ -85,6 +87,7 @@ namespace CodeninModel.Quiz
             }
             private set { }
         }
+
 
         public virtual Topic Topic { get; set; }
     }

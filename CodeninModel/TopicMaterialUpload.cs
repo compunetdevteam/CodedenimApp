@@ -10,7 +10,7 @@ namespace CodeninModel
        
         public int TopicMaterialUploadId { get; set; }
         public int TopicId { get; set; }
-        public int Tutor { get; set; }
+        public string Tutor { get; set; }
         public FileType FileType { get; set; }
 
         [Display(Name = "Material Name")]

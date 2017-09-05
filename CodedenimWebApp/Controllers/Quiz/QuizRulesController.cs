@@ -8,143 +8,116 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CodedenimWebApp.Models;
-using CodedenimWebApp.ViewModels;
-using CodeninModel;
+using CodeninModel.CBTE;
 
-namespace CodedenimWebApp.Controllers
+namespace CodedenimWebApp.Controllers.Quiz
 {
-    public class TutorsController : Controller
+    public class QuizRulesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Tutors
+        // GET: QuizRules
         public async Task<ActionResult> Index()
         {
-            return View(await db.Tutors.ToListAsync());
+            var quizRules = db.QuizRules.Include(q => q.Topic);
+            return View(await quizRules.ToListAsync());
         }
 
-        // GET: Tutors/Details/5
-        public async Task<ActionResult> Details(string id)
+        // GET: QuizRules/Details/5
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tutor tutor = await db.Tutors.Include(i => i.TutorCourses).Where(x => x.TutorId.Equals(id))
-                .FirstOrDefaultAsync();
-            if (tutor == null)
+            QuizRule quizRule = await db.QuizRules.FindAsync(id);
+            if (quizRule == null)
             {
                 return HttpNotFound();
             }
-            return View(tutor);
+            return View(quizRule);
         }
 
-        // GET: Tutors/Create
+        // GET: QuizRules/Create
         public ActionResult Create()
         {
+            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName");
             return View();
         }
 
-        // POST: Tutors/Create
+        // POST: QuizRules/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Tutor tutor)
+        public async Task<ActionResult> Create([Bind(Include = "QuizRuleId,TopicId,ScorePerQuestion,TotalQuestion,MaximumTime")] QuizRule quizRule)
         {
             if (ModelState.IsValid)
             {
-                db.Tutors.Add(tutor);
+                db.QuizRules.Add(quizRule);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(tutor);
+            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", quizRule.TopicId);
+            return View(quizRule);
         }
 
-        public async Task<ActionResult> ConfirmTutor()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> ConfirmTutor(string tutorId)
-        {
-            // bool tutorIsExist = false;
-            if (tutorId == null)
-            {
-
-            }
-
-
-            var tutor = db.Tutors.AsNoTracking()
-                .FirstOrDefault(t => t.TutorId.Equals(tutorId));
-
-            if (tutor == null)
-            {
-                ViewBag.Message = "This Id Does Not Exist";
-                return View();
-            }
-            var tutorVm = new TutorRegisterVm();
-            tutorVm.FirstName = tutor.FirstName;
-            tutorVm.TutorId = tutor.TutorId;
-            tutorVm.LastName = tutor.LastName;
-            return View("info", tutorVm);
-        }
-
-        // GET: Tutors/Edit/5
-        public async Task<ActionResult> Edit(string id)
+        // GET: QuizRules/Edit/5
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tutor tutor = await db.Tutors.FindAsync(id);
-            if (tutor == null)
+            QuizRule quizRule = await db.QuizRules.FindAsync(id);
+            if (quizRule == null)
             {
                 return HttpNotFound();
             }
-            return View(tutor);
+            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", quizRule.TopicId);
+            return View(quizRule);
         }
 
-        // POST: Tutors/Edit/5
+        // POST: QuizRules/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(Tutor tutor)
+        public async Task<ActionResult> Edit([Bind(Include = "QuizRuleId,TopicId,ScorePerQuestion,TotalQuestion,MaximumTime")] QuizRule quizRule)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tutor).State = EntityState.Modified;
+                db.Entry(quizRule).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(tutor);
+            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", quizRule.TopicId);
+            return View(quizRule);
         }
 
-        // GET: Tutors/Delete/5
-        public async Task<ActionResult> Delete(string id)
+        // GET: QuizRules/Delete/5
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tutor tutor = await db.Tutors.FindAsync(id);
-            if (tutor == null)
+            QuizRule quizRule = await db.QuizRules.FindAsync(id);
+            if (quizRule == null)
             {
                 return HttpNotFound();
             }
-            return View(tutor);
+            return View(quizRule);
         }
 
-        // POST: Tutors/Delete/5
+        // POST: QuizRules/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(string id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Tutor tutor = await db.Tutors.FindAsync(id);
-            db.Tutors.Remove(tutor);
+            QuizRule quizRule = await db.QuizRules.FindAsync(id);
+            db.QuizRules.Remove(quizRule);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
