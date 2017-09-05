@@ -41,5 +41,10 @@ namespace CodedenimWebApp.Controllers
 
             return View();
         }
+
+        public ActionResult GeneralDashboard()
+        {
+            return View();
+        }
     }
 }

@@ -252,10 +252,15 @@
     <Compile Include="Migrations\201708241217270_Roles.Designer.cs">
       <DependentUpon>201708241217270_Roles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709051015516_Created_the_Seed_Methods.cs" />
+    <Compile Include="Migrations\201709051015516_Created_the_Seed_Methods.Designer.cs">
+      <DependentUpon>201709051015516_Created_the_Seed_Methods.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RoleName.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
@@ -266,13 +271,10 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AssignedCourses.cs" />
     <Compile Include="ViewModels\TutorCreateVm.cs" />
+    <Compile Include="ViewModels\TutorRegistrationVm.cs" />
     <Compile Include="ViewModels\TutorsIndexVm.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-CodedenimWebApp-20170820064523.mdf" />
-    <Content Include="App_Data\aspnet-CodedenimWebApp-20170820064523_log.ldf">
-      <DependentUpon>aspnet-CodedenimWebApp-20170820064523.mdf</DependentUpon>
-    </Content>
     <Content Include="bin\CodedenimWebApp.dll" />
     <Content Include="bin\CodedenimWebApp.pdb" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -471,9 +473,11 @@
     <Content Include="Views\Account\ConfirmTutorReg.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Content\StudentFiles\" />
     <Folder Include="Content\TutorFiles\" />
     <Folder Include="uploads\" />
+    <Folder Include="Views\MultipleButtonAttribute\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -502,6 +506,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708241217270_Roles.resx">
       <DependentUpon>201708241217270_Roles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709051015516_Created_the_Seed_Methods.resx">
+      <DependentUpon>201709051015516_Created_the_Seed_Methods.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
