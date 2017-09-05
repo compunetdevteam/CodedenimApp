@@ -146,23 +146,23 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Tutor tutor, string[] selectedCourses)
+        public async Task<ActionResult> Create(Tutor tutor)
         {
 
             var store = new UserStore<ApplicationUser>(db);
             var manager = new UserManager<ApplicationUser>(store);
 
 
-            if (selectedCourses != null)
-            {
-                tutor.Courses = new List<Course>();
-                foreach (var course in selectedCourses)
-                {
-                    var courseToAdd = db.Courses.Find(int.Parse(course));
-                    if (courseToAdd == null) throw new ArgumentNullException(nameof(courseToAdd));
-                    tutor.Courses.Add(courseToAdd);
-                }
-            }
+            //if (selectedCourses != null)
+            //{
+            //    tutor.Courses = new List<Course>();
+            //    foreach (var course in selectedCourses)
+            //    {
+            //        var courseToAdd = db.Courses.Find(int.Parse(course));
+            //        if (courseToAdd == null) throw new ArgumentNullException(nameof(courseToAdd));
+            //        tutor.Courses.Add(courseToAdd);
+            //    }
+            //}
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser

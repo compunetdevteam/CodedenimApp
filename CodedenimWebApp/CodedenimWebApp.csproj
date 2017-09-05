@@ -257,6 +257,7 @@
     <Compile Include="Controllers\TopicMaterialUploadsController.cs" />
     <Compile Include="Controllers\TopicsController.cs" />
     <Compile Include="Controllers\TutorsController.cs" />
+    <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -276,6 +277,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RoleName.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
@@ -289,10 +291,6 @@
     <Compile Include="ViewModels\TutorsIndexVm.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-CodedenimWebApp-20170820064523.mdf" />
-    <Content Include="App_Data\aspnet-CodedenimWebApp-20170820064523_log.ldf">
-      <DependentUpon>aspnet-CodedenimWebApp-20170820064523.mdf</DependentUpon>
-    </Content>
     <Content Include="bin\CodedenimWebApp.dll" />
     <Content Include="bin\CodedenimWebApp.pdb" />
     <Content Include="Content\animate.min.css" />
@@ -529,8 +527,10 @@
     <Content Include="Views\Shared\_LayoutCodeDenim.cshtml" />
     <Content Include="Views\Shared\_LayoutTutor.cshtml" />
     <Content Include="Views\Home\TutorDashboard.cshtml" />
+    <Content Include="Views\Tutors\ConfirmTutor.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="uploads\" />
   </ItemGroup>
   <ItemGroup>
