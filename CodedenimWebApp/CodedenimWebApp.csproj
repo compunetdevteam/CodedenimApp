@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.2.3.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.3.1\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -25,6 +26,8 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
+    <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,6 +50,24 @@
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Fonlow.DocComment, Version=1.0.1.0, Culture=neutral, PublicKeyToken=cf59ce9d94b04b8a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fonlow.WebApiClientGen.2.2.5\lib\net452\Fonlow.DocComment.dll</HintPath>
+    </Reference>
+    <Reference Include="Fonlow.Poco2Ts, Version=1.8.2.0, Culture=neutral, PublicKeyToken=cf59ce9d94b04b8a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fonlow.Poco2Ts.1.8.2\lib\net452\Fonlow.Poco2Ts.dll</HintPath>
+    </Reference>
+    <Reference Include="Fonlow.TypeScriptCodeDom, Version=1.8.1.0, Culture=neutral, PublicKeyToken=cf59ce9d94b04b8a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fonlow.TypeScriptCodeDOM.1.8.1\lib\net452\Fonlow.TypeScriptCodeDom.dll</HintPath>
+    </Reference>
+    <Reference Include="Fonlow.Web.Meta, Version=1.1.1.0, Culture=neutral, PublicKeyToken=cf59ce9d94b04b8a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fonlow.WebApiClientGen.2.2.5\lib\net452\Fonlow.Web.Meta.dll</HintPath>
+    </Reference>
+    <Reference Include="Fonlow.Web.MetaTransform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cf59ce9d94b04b8a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fonlow.WebApiClientGen.2.2.5\lib\net452\Fonlow.Web.MetaTransform.dll</HintPath>
+    </Reference>
+    <Reference Include="Fonlow.WebApiClientGen, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cf59ce9d94b04b8a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fonlow.WebApiClientGen.2.2.5\lib\net452\Fonlow.WebApiClientGen.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
@@ -226,7 +247,7 @@
     <Compile Include="Controllers\Api\CoursesController.cs" />
     <Compile Include="Controllers\Api\ModulesController.cs" />
     <Compile Include="Controllers\Api\TopicsController.cs" />
-    <Compile Include="Controllers\Api\TutorsController.cs" />
+    <Compile Include="Controllers\CodeGenController.cs" />
     <Compile Include="Controllers\CourseCategoriesController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -236,7 +257,6 @@
     <Compile Include="Controllers\TopicMaterialUploadsController.cs" />
     <Compile Include="Controllers\TopicsController.cs" />
     <Compile Include="Controllers\TutorsController.cs" />
-    <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -252,15 +272,10 @@
     <Compile Include="Migrations\201708241217270_Roles.Designer.cs">
       <DependentUpon>201708241217270_Roles.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709051015516_Created_the_Seed_Methods.cs" />
-    <Compile Include="Migrations\201709051015516_Created_the_Seed_Methods.Designer.cs">
-      <DependentUpon>201709051015516_Created_the_Seed_Methods.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\RoleName.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
@@ -271,26 +286,31 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AssignedCourses.cs" />
     <Compile Include="ViewModels\TutorCreateVm.cs" />
-    <Compile Include="ViewModels\TutorRegistrationVm.cs" />
     <Compile Include="ViewModels\TutorsIndexVm.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-CodedenimWebApp-20170820064523.mdf" />
+    <Content Include="App_Data\aspnet-CodedenimWebApp-20170820064523_log.ldf">
+      <DependentUpon>aspnet-CodedenimWebApp-20170820064523.mdf</DependentUpon>
+    </Content>
     <Content Include="bin\CodedenimWebApp.dll" />
     <Content Include="bin\CodedenimWebApp.pdb" />
+    <Content Include="Content\animate.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Css\bootstrap-theme.css" />
-    <Content Include="Content\Css\bootstrap-theme.min.css" />
-    <Content Include="Content\Css\bootstrap.css" />
-    <Content Include="Content\Css\bootstrap.min.css" />
-    <Content Include="Content\Css\compiled.min.css" />
-    <Content Include="Content\Css\customizer.min.css" />
-    <Content Include="Content\Css\mdb.css" />
-    <Content Include="Content\Css\mdb.min.css" />
-    <Content Include="Content\Css\Site.css" />
-    <Content Include="Content\Css\style.css" />
+    <Content Include="Content\bootstrap1.min.css" />
+    <Content Include="Content\compiled.min.css" />
+    <Content Include="Content\customizer.min.css" />
+    <Content Include="Content\mdb.css" />
+    <Content Include="Content\mdb.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\Demo.css" />
+    <Content Include="Content\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="Content\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\img\CodeDemin.png" />
     <Content Include="Content\img\flags\cn.png" />
     <Content Include="Content\img\flags\in.png" />
@@ -310,9 +330,12 @@
     <Content Include="Content\img\svg\arrow_left.svg" />
     <Content Include="Content\img\svg\arrow_right.svg" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\paper-dashboard.css" />
+    <Content Include="Content\themify-icons.css" />
     <Content Include="Content\Videos\animation-intro.mp4" />
     <Content Include="Content\Videos\animation.mp4" />
     <Content Include="Content\Videos\Beach-Ball.mp4" />
+    <Content Include="Content\Videos\CodeDenimVD.MP4" />
     <Content Include="Content\Videos\Ipad.mp4" />
     <Content Include="Content\Videos\Lines.mp4" />
     <Content Include="favicon.ico" />
@@ -321,15 +344,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\Css\bootstrap-theme.css.map" />
-    <Content Include="Content\Css\bootstrap-theme.min.css.map" />
-    <Content Include="Content\Css\bootstrap.css.map" />
-    <Content Include="Content\Css\bootstrap.min.css.map" />
-    <Content Include="Content\img\overlays\Thumbs.db" />
     <Content Include="fonts\roboto\Roboto-Bold.eot" />
     <Content Include="fonts\roboto\Roboto-Bold.ttf" />
     <Content Include="fonts\roboto\Roboto-Bold.woff" />
@@ -360,6 +374,46 @@
     <Content Include="Scripts\compiled.min.js" />
     <Content Include="Scripts\customizer.min.js" />
     <Content Include="Scripts\jarallax.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\core.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\list.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\path.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="Content\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="Content\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="Content\font-awesome-4.7.0\scss\_variables.scss" />
+    <Content Include="Content\img\overlays\Thumbs.db" />
+    <Content Include="Content\.DS_Store" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1-vsdoc.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
@@ -376,6 +430,14 @@
     <Content Include="Scripts\mdb.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\paper\bootstrap-checkbox-radio.js" />
+    <Content Include="Scripts\paper\bootstrap-notify.js" />
+    <Content Include="Scripts\paper\bootstrap.min.js" />
+    <Content Include="Scripts\paper\chartist.min.js" />
+    <Content Include="Scripts\paper\codedenim.js" />
+    <Content Include="Scripts\paper\demo.js" />
+    <Content Include="Scripts\paper\jquery-1.10.2.js" />
+    <Content Include="Scripts\paper\paper-dashboard.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -458,26 +520,18 @@
     <Content Include="Views\Students\Edit.cshtml" />
     <Content Include="Views\Students\Index.cshtml" />
     <Content Include="Views\Students\AssignedCourseView.cshtml" />
-    <Content Include="Views\Shared\_LayoutCodeDenim.cshtml" />
-    <Content Include="Views\Shared\_LayoutDashBoard.cshtml" />
     <Content Include="Views\Shared\_LayoutWeb.cshtml" />
     <Content Include="Views\Account\Login1.cshtml" />
     <Content Include="Views\Account\Register2.cshtml" />
-    <Content Include="Views\Home\CorpsDashboard.cshtml" />
-    <Content Include="Views\Home\GeneralDashboard.cshtml" />
+    <Content Include="Views\Home\AdminDashboard.cshtml" />
     <Content Include="Views\Home\Index1.cshtml" />
-    <Content Include="Views\Home\StudentDashboard.cshtml" />
-    <Content Include="Views\Account\TutorRegistration.cshtml" />
-    <Content Include="Views\Tutors\ConfirmTutor.cshtml" />
-    <Content Include="Views\Account\_tutorCourses.cshtml" />
-    <Content Include="Views\Account\ConfirmTutorReg.cshtml" />
+    <Content Include="Views\Shared\_LayoutBoard.cshtml" />
+    <Content Include="Views\Shared\_LayoutCodeDenim.cshtml" />
+    <Content Include="Views\Shared\_LayoutTutor.cshtml" />
+    <Content Include="Views\Home\TutorDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Content\StudentFiles\" />
-    <Folder Include="Content\TutorFiles\" />
     <Folder Include="uploads\" />
-    <Folder Include="Views\MultipleButtonAttribute\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -507,19 +561,25 @@
     <EmbeddedResource Include="Migrations\201708241217270_Roles.resx">
       <DependentUpon>201708241217270_Roles.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709051015516_Created_the_Seed_Methods.resx">
-      <DependentUpon>201709051015516_Created_the_Seed_Methods.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\ClientApi\HttpClient.ts" />
+    <TypeScriptCompile Include="Scripts\ClientApi\WebApiClientAuto.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
