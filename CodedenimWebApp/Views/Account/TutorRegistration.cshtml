@@ -1,21 +1,12 @@
-﻿@using CodedenimWebApp.Extensions
-@model CodeninModel.Tutor
+﻿@model CodedenimWebApp.ViewModels.TutorCreateVm
 
-@{
 
-    ViewBag.Title = "Create";
-}
-
-<h2>Create</h2>
-
-@using (Html.BeginForm("Create", "Tutors", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-
-{   
+@using (Html.BeginForm("TutorRegistration", "Account", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     @Html.AntiForgeryToken()
+    
 
-
-
-    <div class="form-horizontal">
+<div class="form-horizontal">
         <h4>Instructor</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -62,21 +53,21 @@
             </div>*@
 
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
         </div>
+    </div>
 
         @*<div class="form-group">
                 @Html.LabelFor(model => model., htmlAttributes: new { @class = "control-label col-md-2" })
@@ -101,30 +92,34 @@
             </div>
         </div>*@
         
-        <div class="form-group">
-            @*@Html.LabelFor(model => model.File, htmlAttributes: new { @class = "control-label col-md-2" })*@
+    <div class="card-block text-center">
 
-            <div class="editor-field">
-                <input type="file" name="file" Id="File" />
-                @*@Html.FileFor(model => model.File)*@
-                @*@Html.ValidationMessageFor(model => model.File)*@
-            </div>
-        </div>
+        <img id="output" alt="Passport" class="rounded-circle contact-avatar my-2 mx-auto" />
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <table>
-                    <tr>
-                    @{
-                        int cnt = 0;
-                        List<CodedenimWebApp.ViewModels.AssignedCourses> courses = ViewBag.Courses;
+        <p class="text-muted">
+            <small>photo will be changed automatically</small>
+        </p>
 
-                        foreach (var course in courses)
+        <input id="File" type="file" accept="image/*" name="File" onchange="loadFile(event)" style="display: none">
+        <label for="File" class="btn btn-primary btn-block">Upload Photo</label>
+
+
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <table>
+                <tr>
+                @{
+                    int cnt = 0;
+                    List<CodedenimWebApp.ViewModels.AssignedCourses> courses = ViewBag.Courses;
+
+                    foreach (var course in courses)
+                    {
+                        if (cnt++ % 3 == 0)
                         {
-                            if (cnt++ % 3 == 0)
-                            {
-                                @:</tr><tr>
-                            }
+                            @:</tr><tr>
+                        }
                             @*@:<td>
                             <input type="checkbox" 
                                    name="selectedCourses"
@@ -134,27 +129,27 @@
                             @:</td>*@
 
                           
-                                <input type="checkbox" id="@course.CourseId" name="selectedCourses" value="@course.CourseId">
-                                <label for="@course.CourseId">@course.CourseId:  @course.CourseName</label> 
+                        <input type="checkbox" id="@course.CourseId" name="selectedCourses" value="@course.CourseId">
+                        <label for="@course.CourseId">@course.CourseId:  @course.CourseName</label> 
                           
 
 
-                        }
-                        @:</tr>
                     }
-                </table>
-            </div>
+                    @:</tr>
+                }
+            </table>
         </div>
+    </div>
         
      
                             
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
         </div>
+    </div>
     </div>
 }
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index","Tutors")
 </div>

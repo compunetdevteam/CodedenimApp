@@ -21,7 +21,7 @@ namespace CodedenimWebApp.Controllers.Api
         // GET: api/Topics
         public IEnumerable<Topic> GetTopics()
         {
-            return db.Topics.ToList();
+            return db.Topics.Include(t => t.MaterialUploads).ToList();
         }
 
         // GET: api/Topics/5

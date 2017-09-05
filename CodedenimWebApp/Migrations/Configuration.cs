@@ -1,3 +1,4 @@
+    using CodedenimWebApp.Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -57,6 +58,15 @@ namespace CodedenimWebApp.Migrations
                 manager.Create(role);
             }
 
+            if (!context.Users.Any(u => u.UserName == "Admin@Codedenim.com"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                var user = new ApplicationUser { UserName = "Admin@Codedenim.com", Email = "Admin@Codedenim.com" };
+
+                manager.Create(user, "admin12345");
+                manager.AddToRole(user.Id, "Admin");
+            }
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 

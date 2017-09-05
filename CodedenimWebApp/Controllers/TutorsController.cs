@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
+using Microsoft.AspNet.Identity;
+
 using System.Web.Mvc;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
+using Microsoft.AspNet.Identity.EntityFramework;
+using File = CodeninModel.File;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -60,19 +65,50 @@ namespace CodedenimWebApp.Controllers
         }
 
 
+
+        /// <summary>
+        /// This Method Get the Details of the Current logged in Tutors Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
+        public async Task<ActionResult> TutorDashboard()
+        {
+            var tutorId = User.Identity.GetUserId();
+            Tutor tutor = db.Tutors.FirstOrDefault(t => t.TutorId == tutorId);
+            return View();
+        }
+
+        public async Task<ActionResult> RenderImage(string TutorId)
+        {
+            var tutor = await db.Tutors.FindAsync(TutorId);
+
+            byte[] photoBack = tutor.Passport;
+
+            return File(photoBack, "image/png");
+        }
+
         // GET: Tutors/Details/5
         public async Task<ActionResult> Details(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Tutor tutor =   db.Tutors.Include(s => s.Files).SingleOrDefault(s => s.TutorId == id);
-           // Tutor tutor = await db.Tutors.FindAsync(id);
+           // var username = User.Identity.GetUserId();
+            //var user = await Db.Users.AsNoTracking().Where(c => c.Id.Equals(username)).Select(c => c.Email).FirstOrDefaultAsync();
+            //if (id == null)
+            //{
+            //    id = username;
+            //}
+
+            Tutor tutor = await db.Tutors.FindAsync(id);
             if (tutor == null)
             {
                 return HttpNotFound();
             }
+            // Tutor tutor =   db.Tutors.Include(s => s.Files).SingleOrDefault(s => s.TutorId == id);
+            // Tutor tutor = await db.Tutors.FindAsync(id);
+            //if (tutor == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(tutor);
         }
 
@@ -80,6 +116,7 @@ namespace CodedenimWebApp.Controllers
         public ActionResult Create()
         {
             var tutor = new Tutor();
+            ViewBag.Roles = new SelectList(db.Roles.ToList(), "Id", "Name");
             tutor.Courses = new List<Course>();
             PopulateAssignedCourseData(tutor);
             return View();
@@ -109,34 +146,62 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Tutor tutor, string[] selectedCourses, HttpPostedFileBase upload)
+        public async Task<ActionResult> Create(Tutor tutor, string[] selectedCourses)
         {
+
+            var store = new UserStore<ApplicationUser>(db);
+            var manager = new UserManager<ApplicationUser>(store);
+
+
             if (selectedCourses != null)
             {
                 tutor.Courses = new List<Course>();
                 foreach (var course in selectedCourses)
                 {
                     var courseToAdd = db.Courses.Find(int.Parse(course));
+                    if (courseToAdd == null) throw new ArgumentNullException(nameof(courseToAdd));
                     tutor.Courses.Add(courseToAdd);
                 }
             }
             if (ModelState.IsValid)
             {
-                if (upload != null && upload.ContentLength > 0)
+                var user = new ApplicationUser
                 {
-                    var photo = new FilePath
-                    {
-                        FileName = System.IO.Path.GetFileName(upload.FileName),
-                        FileType = FileType.Photo
-                    };
-                    tutor.FilePaths = new List<FilePath>();
-                    tutor.FilePaths.Add(photo);
-                }
+                    Id = tutor.TutorId,
+                    UserName = tutor.FirstName + " " + tutor.LastName,
+                    Email = tutor.Email,
+                    PhoneNumber = tutor.PhoneNumber
+
+                };
+               
+                manager.Create(user,tutor.TutorId);
+                tutor = new Tutor
+                {
+                    TutorId = tutor.TutorId,
+                    FirstName = tutor.FirstName,
+                    LastName = tutor.LastName,
+                    DateOfBirth = tutor.DateOfBirth,
+                    Passport = tutor.Passport,
+
+                    
+                };
+
                 db.Tutors.Add(tutor);
                 await db.SaveChangesAsync();
+              
                 return RedirectToAction("Index");
             }
 
+            return View(tutor);
+        }
+
+        public async Task<ActionResult> ConfirmTutor(string tutorId)
+        {
+           // bool tutorIsExist = false;
+            if (tutorId == null)
+            {    
+            }
+            Tutor tutor = await db.Tutors.FindAsync(tutorId);
             return View(tutor);
         }
 

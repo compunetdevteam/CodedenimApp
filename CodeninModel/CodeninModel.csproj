@@ -79,6 +79,7 @@
     <Compile Include="Enrollment.cs" />
     <Compile Include="File.cs" />
     <Compile Include="FilePath.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="TopicMaterialUpload.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Person.cs" />

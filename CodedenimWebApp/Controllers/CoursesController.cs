@@ -63,7 +63,7 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")] Course course)
+        public async Task<ActionResult> Create([Bind(Include = "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")] Course course, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {
