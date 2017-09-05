@@ -1,6 +1,7 @@
 ﻿@{
-    ViewBag.Title = "DashBoard";
-    ViewBag.DashBoard = "class = active";
+    ViewBag.Title = "Administrator";
+    ViewBag.Role = "ADMIN";
+    ViewBag.Administrator = "class = active";
     Layout = "~/Views/Shared/_LayoutBoard.cshtml";
 }
 <div class="content">
@@ -101,7 +102,7 @@
                         <div class="footer">
                             <hr />
                             <div class="stats">
-                                <i class="fa fa-hand-o-right"></i> <a href="@Url.Action("Details","Tutors")">VIEW TUTORS...</a>
+                                <i class="fa fa-hand-o-right"></i> <a href="@Url.Action("Index","Tutors")">VIEW TUTORS...</a>
                             </div>
                         </div>
                     </div>

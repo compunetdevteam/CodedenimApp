@@ -52,10 +52,12 @@
 
                     Code-Denim
                 </a>
+                <p>@ViewBag.Role</p> 
+                <img src="~/Content/img/Sebig.png" height="50" width="50" class="img-fluid rounded-circle" style="border-radius: 50%; display: block;">
             </div>
 
             <ul class="nav">
-                <li @ViewBag.Dashboard>
+                <li @ViewBag.Administrator>
                     <a href="@Url.Action("AdminDashBoard","Home")">
                         <i class="fa fa-home"></i>
                         <p>My DashBoard</p>

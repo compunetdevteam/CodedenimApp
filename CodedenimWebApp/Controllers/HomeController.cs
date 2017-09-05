@@ -8,19 +8,18 @@ namespace CodedenimWebApp.Controllers
 {
 	public class HomeController : Controller
 	{
-
+		//CodeDenim/
 		public ActionResult Index()
 		{
 			return View();
 		}
-		//public ActionResult TutorDashboard()
-		//{
-		//	return View();
-		//}
-		//public ActionResult UserDashboard()
-		//{
-		//	return View();
-		//}
+		//CodeDenim/TutorDashboard
+		public ActionResult TutorDashboard()
+		{
+			return View();
+		}
+		
+		//CodeDenim/AdminDashboard
 		public ActionResult AdminDashboard()
 		{
 			return View();

@@ -527,6 +527,8 @@
     <Content Include="Views\Home\Index1.cshtml" />
     <Content Include="Views\Shared\_LayoutBoard.cshtml" />
     <Content Include="Views\Shared\_LayoutCodeDenim.cshtml" />
+    <Content Include="Views\Shared\_LayoutTutor.cshtml" />
+    <Content Include="Views\Home\TutorDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="uploads\" />
