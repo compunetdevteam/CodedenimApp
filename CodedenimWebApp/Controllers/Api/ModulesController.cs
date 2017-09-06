@@ -21,7 +21,7 @@ namespace CodedenimWebApp.Controllers.Api
         // GET: api/Modules
         public IEnumerable<Module> GetModules()
         {
-            return db.Modules.ToList();
+            return db.Modules.Include(m => m.Topics).ToList();
         }
 
         // GET: api/Modules/5
