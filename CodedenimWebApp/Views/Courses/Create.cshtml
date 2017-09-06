@@ -1,12 +1,10 @@
 ﻿@model CodeninModel.Course
 @{
     ViewBag.Title = "Create Courses";
-    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
 }
 
-<br /><br /><br /><br /><br />
-
-<div class="container">
+<div class="container-fluid">
 
 
     @using (Html.BeginForm("Create", "Courses", FormMethod.Post, new { enctype = "multipart/form-data" }))

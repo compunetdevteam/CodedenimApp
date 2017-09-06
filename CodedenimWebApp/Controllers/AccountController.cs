@@ -129,7 +129,15 @@ namespace CodedenimWebApp.Controllers
             {
                 TempData["UserMessage"] = $"Login Successful, Welcome {username}";
                 TempData["Title"] = "Success.";
-                return RedirectToAction("GeneralDashBoard", "Home");
+                return RedirectToAction("AdminDashBoard", "Home");
+                // return RedirectToAction("AdminDashboard", "Home");
+            }
+
+            if (User.IsInRole(RoleName.Tutor))
+            {
+                TempData["UserMessage"] = $"Login Successful, Welcome {username}";
+                TempData["Title"] = "Success.";
+                return RedirectToAction("TutorDashboard", "Home");
                 // return RedirectToAction("AdminDashboard", "Home");
             }
 
@@ -143,7 +151,7 @@ namespace CodedenimWebApp.Controllers
                 //IdentityResult result = await UserManager.UpdateAsync(model);
                 TempData["UserMessage"] = $"Login Successful, Welcome {username}";
                 TempData["Title"] = "Success.";
-                return RedirectToAction("Dashboard", "Students");
+                return RedirectToAction("", "Students");
             }
             if (User.IsInRole(RoleName.Corper))
             {
