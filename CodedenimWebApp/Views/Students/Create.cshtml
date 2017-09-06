@@ -1,9 +1,11 @@
 ﻿@model CodeninModel.Student
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Student";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
 }
 
+<div class="container-fluid">
 <h2>Create</h2>
 
 @using (Html.BeginForm()) 
@@ -285,4 +287,5 @@
 
 <div>
     @Html.ActionLink("Back to List", "Index")
+</div>
 </div>
