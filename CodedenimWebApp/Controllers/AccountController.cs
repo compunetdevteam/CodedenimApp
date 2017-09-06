@@ -138,26 +138,7 @@ namespace CodedenimWebApp.Controllers
                 TempData["Title"] = "Success.";
                 return RedirectToAction("Dashboard", "Students");
             }
-            if (User.IsInRole(RoleName.Teacher))
-            {
-                TempData["UserMessage"] = $"Login Successful, Welcome {username}";
-                TempData["Title"] = "Success.";
-                return RedirectToAction("TeacherDashboard", "Corper");
-            }
-
-            if (User.IsInRole(RoleName.FormTeacher))
-            {
-                TempData["UserMessage"] = $"Login Successful, Welcome {username}";
-                TempData["Title"] = "Success.";
-                return RedirectToAction("TutorDashboard", "Tutors");
-            }
-
-            if (User.IsInRole(RoleName.SuperAdmin))
-            {
-                TempData["UserMessage"] = $"Login Successful, Welcome {username}";
-                TempData["Title"] = "Success.";
-                return RedirectToAction("GeneralDashboard", "Home");
-            }
+           
             return RedirectToAction("Index", "Home");
         }
 

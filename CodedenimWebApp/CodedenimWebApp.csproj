@@ -226,6 +226,7 @@
     <Compile Include="Controllers\Api\TopicMaterialUploadsController.cs" />
     <Compile Include="Controllers\Api\TopicsController.cs" />
     <Compile Include="Controllers\Api\TutorsController.cs" />
+    <Compile Include="Controllers\CodeGenController.cs" />
     <Compile Include="Controllers\CourseCategoriesController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -728,6 +729,8 @@
     <Content Include="Views\TakeQuiz\SelectSubject.cshtml" />
     <Content Include="Views\TakeQuiz\ShowNumbers.cshtml" />
     <Content Include="Views\TakeQuiz\_Exam.cshtml" />
+    <Content Include="Views\Shared\_LayoutBoard.cshtml" />
+    <Content Include="Views\Shared\_LayoutTutor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

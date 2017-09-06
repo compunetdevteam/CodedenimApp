@@ -42,6 +42,7 @@ namespace CodedenimWebApp.Controllers
         // GET: Tutors/Create
         public ActionResult Create()
         {
+           // ViewBag.Gender = new SelectList(Enum.GetValues(typeof(Gender), "Gender", "Gender");
             return View();
         }
 
