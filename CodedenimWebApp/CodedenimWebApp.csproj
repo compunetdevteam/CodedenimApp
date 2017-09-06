@@ -528,6 +528,14 @@
     <Content Include="Views\Home\AdminDashboard.cshtml" />
     <Content Include="Views\Home\Index1.cshtml" />
     <Content Include="Views\Home\StudentDashboard.cshtml" />
+    <Content Include="Views\Home\TutorDashBoard.cshtml" />
+    <Content Include="Views\Tutors\ConfirmTutor.cshtml" />
+    <Content Include="Views\Account\_tutorCourses.cshtml" />
+    <Content Include="Views\Account\ConfirmTutorReg.cshtml" />
+    <Content Include="Views\Account\TutorRegistration.cshtml" />
+    <Content Include="Views\Shared\_LayoutBoard.cshtml" />
+    <Content Include="Views\Shared\_LayoutCodeDenim.cshtml" />
+    <Content Include="Views\Shared\_LayoutTutor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
