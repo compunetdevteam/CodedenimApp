@@ -65,8 +65,14 @@ namespace CodedenimWebApp.Controllers
 		// GET: TopicMaterialUploads/Create
 		public ActionResult Create()
 		{
+		   // var user = User.Identity.GetUserName();
+          
+
+
 			ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName");
-			return View();
+		    ViewBag.UserName =  User.Identity.GetUserName();
+
+            return View();
 		}
 
 		// POST: TopicMaterialUploads/Create
@@ -78,7 +84,7 @@ namespace CodedenimWebApp.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-			    var tutorId = User.Identity.GetUserId();
+			   // var tutorId = User.Identity.GetUserId();
 
 			    string _FileName = String.Empty;
 			    if (File.ContentLength > 0)

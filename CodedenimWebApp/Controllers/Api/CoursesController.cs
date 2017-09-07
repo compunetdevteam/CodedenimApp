@@ -29,6 +29,7 @@ namespace CodedenimWebApp.Controllers.Api
         public async Task<IHttpActionResult> GetCourse(int id)
         {
             Course course = await db.Courses.FindAsync(id);
+
             if (course == null)
             {
                 return NotFound();

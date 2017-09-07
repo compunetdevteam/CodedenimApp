@@ -70,6 +70,8 @@ namespace CodedenimWebApp.Models
 
         public System.Data.Entity.DbSet<StudentTopicQuiz> StudentTopicQuizs { get; set; }
         public DbSet<QuizLog> QuizLogs { get; set; }
+
+        public System.Data.Entity.DbSet<CodeninModel.StudentAssignedCourse> StudentAssignedCourses { get; set; }
         //public override int SaveChanges()
         //{
         //    try

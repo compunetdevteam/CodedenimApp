@@ -57,5 +57,6 @@ namespace CodeninModel
         public virtual ICollection<TutorCourses> TutorCourses { get; set; }
         public virtual ICollection<Module> Modules { get; set; }
         public virtual ICollection<AssesmentQuestionAnswer> AssesmentQuestionAnswers { get; set; }
+        public virtual ICollection<StudentAssignedCourse> StudentAssignedCourses {get;set;}
     }
 }

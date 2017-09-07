@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
@@ -10,6 +7,7 @@ using System.Web.Mvc;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
+using Microsoft.AspNet.Identity;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -21,6 +19,18 @@ namespace CodedenimWebApp.Controllers
         public async Task<ActionResult> Index()
         {
             return View(await db.Tutors.ToListAsync());
+        }
+
+        public async Task<ActionResult> TutorDashboard()
+        {
+            var tutor = User.Identity.GetUserId();
+
+
+
+            var tutorCourses = db.TutorCourses.AsNoTracking().Where(t => t.TutorId.Equals(tutor))
+                                                                .Select(c => c.Courses).ToList();
+
+            return View();
         }
 
         // GET: Tutors/Details/5

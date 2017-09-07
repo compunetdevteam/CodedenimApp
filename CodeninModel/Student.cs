@@ -34,5 +34,6 @@ namespace CodeninModel
         public virtual ICollection<StudentTestLog> StudentTestLogs { get; set; }
         public virtual ICollection<StudentQuestion> StudentQuestions { get; set; }
         public virtual ICollection<StudentAssesment> StudentAssesments { get; set; }
+        public virtual ICollection<StudentAssignedCourse> AssignedCourses { get; set; }
     }
 }

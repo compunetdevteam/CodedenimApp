@@ -28,7 +28,14 @@ namespace CodedenimWebApp.Controllers.Api
         [ResponseType(typeof(Module))]
         public async Task<IHttpActionResult> GetModule(int id)
         {
-            Module module = await db.Modules.FindAsync(id);
+            //Module module = await db.Modules.FindAsync(id);
+            var module = await db.Modules.Where(c => c.CourseId.Equals(id))
+                                        .Select(m => new
+                                        {
+                                          m.ModuleName,
+                                          m.ModuleDescription,
+                                          m.ExpectedTime,
+                                        }).ToListAsync();
             if (module == null)
             {
                 return NotFound();

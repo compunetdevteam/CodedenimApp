@@ -223,6 +223,8 @@
     <Compile Include="Controllers\Api\CourseCategoriesController.cs" />
     <Compile Include="Controllers\Api\CoursesController.cs" />
     <Compile Include="Controllers\Api\ModulesController.cs" />
+    <Compile Include="Controllers\Api\StudentAssignedCoursesController.cs" />
+    <Compile Include="Controllers\Api\StudentsController.cs" />
     <Compile Include="Controllers\Api\TopicMaterialUploadsController.cs" />
     <Compile Include="Controllers\Api\TopicsController.cs" />
     <Compile Include="Controllers\Api\TutorsController.cs" />
@@ -613,7 +615,9 @@
     <Content Include="Scripts\vendor\jvectormap\jquery-jvectormap-2.0.3.min.js" />
     <Content Include="Scripts\vendor\jvectormap\jquery-jvectormap-world-mill.js" />
     <Content Include="Scripts\vendor\tinymce\tinymce.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -731,6 +735,8 @@
     <Content Include="Views\TakeQuiz\_Exam.cshtml" />
     <Content Include="Views\Shared\_LayoutBoard.cshtml" />
     <Content Include="Views\Shared\_LayoutTutor.cshtml" />
+    <Content Include="Views\Tutors\TutorDashBoard.cshtml" />
+    <Content Include="Views\Home\AdminDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
