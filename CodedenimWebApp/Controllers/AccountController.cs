@@ -48,7 +48,7 @@ namespace CodedenimWebApp.Controllers
                 _signInManager = value;
             }
         }
-
+        
         public ApplicationUserManager UserManager
         {
             get

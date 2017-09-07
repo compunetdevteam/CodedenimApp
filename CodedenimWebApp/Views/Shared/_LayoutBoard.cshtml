@@ -53,9 +53,13 @@
                         <img src="~/Content/img/CodeDemin.png" height="50" width="50"/>
 
                         Code-Denim
-                    </a>
-                    <p>@ViewBag.Role</p>
-                    <img src="~/Content/img/Sebig.png" height="50" width="50" class="img-fluid rounded-circle" style="border-radius: 50%; display: block;">
+                    </a>              
+                    <img src="~/Content/img/Sebig.png" height="50" width="50" class="img-fluid rounded-circle"
+                         style="border-radius: 50%; display: block; margin-left: 40%;">
+
+                    @Html.ActionLink("" + User.Identity.GetUserName() + "!", "Index", "Manage", null, 
+                   new{style = "color:black;text-shadow:1px 1px 1px #093;padding:5px;"})
+                   
                 </div>
                 
                 @if (User.IsInRole("Admin"))
@@ -107,9 +111,49 @@
                         </li>
                     </ul>
                 }
-                @if (User.IsInRole("Tutor"))
+
+                else if (User.IsInRole("Tutor"))
                 {
-                   <p> Login as Tut</p>
+
+                    <ul class="nav">
+                        <li @ViewBag.Administrator>
+                            <a href="@Url.Action("TutorDashBoard", "Home")">
+                                <i class="fa fa-home"></i>
+                                <p>My DashBoard</p>
+                            </a>
+                        </li>
+                        <li @ViewBag.Courses>
+                            <a href="@Url.Action("Index", "Courses")">
+                                <i class="fa fa-book"></i>
+                                <p>Courses</p>
+                            </a>
+                        </li>
+
+                        <li @ViewBag.Topics>
+                            <a href="@Url.Action("Index", "Topics")">
+                                <i class="fa fa-pencil"></i>
+                                <p>Topics</p>
+                            </a>
+                        </li>
+                        <li @ViewBag.Category>
+                            <a href="@Url.Action("Index", "CourseCategories")">
+                                <i class="fa fa-file"></i>
+                                <p>Course Category</p>
+                            </a>
+                        </li>
+                        <li @ViewBag.Materials>
+                            <a href="@Url.Action("Index", "TopicMaterialUploads")">
+                                <i class="fa fa-th"></i>
+                                <p>Materials</p>
+                            </a>
+                        </li>
+                        <li @ViewBag.Modules>
+                            <a href="@Url.Action("Index", "Modules")">
+                                <i class="fa fa-list"></i>
+                                <p>Modules</p>
+                            </a>
+                        </li>                     
+                    </ul>
                 }
             </div>
      
@@ -155,11 +199,19 @@
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">My Profile</a></li>
-                            <li><a href="@Url.Action("LogOff","Account")">LogOut</a></li>
-                            
+                            <li><a href="#">My Profile</a></li>                           
+                            @using Microsoft.AspNet.Identity
+                            @if (Request.IsAuthenticated)
+                            {
+
+                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", style = "padding:4px;" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <li><a href="javascript:document.getElementById('logoutForm').submit()"><p>Log off</p></a></li>
+                                }
+                            } 
                         </ul>
-                    </li>
+                    </li>                  
                 </ul>
 
             </div>
