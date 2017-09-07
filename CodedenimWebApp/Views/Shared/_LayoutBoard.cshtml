@@ -44,65 +44,77 @@
         Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black"
         Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
         -->
+      
 
-        <div class="sidebar-wrapper">
-            <div class="logo">
-                <a href="@Url.Action("AdminDashboard", "Home")" class="simple-text">
-                    <img src="~/Content/img/CodeDemin.png" height="50" width="50"/>
 
-                    Code-Denim
-                </a>
-                <p>@ViewBag.Role</p> 
-                <img src="~/Content/img/Sebig.png" height="50" width="50" class="img-fluid rounded-circle" style="border-radius: 50%; display: block;">
+            <div class="sidebar-wrapper">
+                <div class="logo">
+                    <a href="@Url.Action("AdminDashboard", "Home")" class="simple-text">
+                        <img src="~/Content/img/CodeDemin.png" height="50" width="50"/>
+
+                        Code-Denim
+                    </a>
+                    <p>@ViewBag.Role</p>
+                    <img src="~/Content/img/Sebig.png" height="50" width="50" class="img-fluid rounded-circle" style="border-radius: 50%; display: block;">
+                </div>
+                
+                @if (User.IsInRole("Admin"))
+                {
+
+                    <ul class="nav">
+                        <li @ViewBag.Administrator>
+                            <a href="@Url.Action("AdminDashBoard", "Home")">
+                                <i class="fa fa-home"></i>
+                                <p>My DashBoard</p>
+                            </a>
+                        </li>
+                        <li @ViewBag.Courses>
+                            <a href="@Url.Action("Index", "Courses")">
+                                <i class="fa fa-book"></i>
+                                <p>Courses</p>
+                            </a>
+                        </li>
+
+                        <li @ViewBag.Topics>
+                            <a href="@Url.Action("Index", "Topics")">
+                                <i class="fa fa-pencil"></i>
+                                <p>Topics</p>
+                            </a>
+                        </li>
+                        <li @ViewBag.Category>
+                            <a href="@Url.Action("Index", "CourseCategories")">
+                                <i class="fa fa-file"></i>
+                                <p>Course Category</p>
+                            </a>
+                        </li>
+                        <li @ViewBag.Materials>
+                            <a href="@Url.Action("Index", "TopicMaterialUploads")">
+                                <i class="fa fa-th"></i>
+                                <p>Materials</p>
+                            </a>
+                        </li>
+                        <li @ViewBag.Modules>
+                            <a href="@Url.Action("Index", "Modules")">
+                                <i class="fa fa-list"></i>
+                                <p>Modules</p>
+                            </a>
+                        </li>
+                        <li @ViewBag.Tutor>
+                            <a href="@Url.Action("Index", "Tutors")">
+                                <i class="fa fa-users"></i>
+                                <p>Tutors</p>
+                            </a>
+                        </li>
+                    </ul>
+                }
+                @if (User.IsInRole("Tutor"))
+                {
+                   <p> Login as Tut</p>
+                }
             </div>
-
-            <ul class="nav">
-                <li @ViewBag.Administrator>
-                    <a href="@Url.Action("AdminDashBoard","Home")">
-                        <i class="fa fa-home"></i>
-                        <p>My DashBoard</p>
-                    </a>
-                </li>
-                <li @ViewBag.Courses>
-                    <a href="@Url.Action("Index","Courses")">
-                        <i class="fa fa-book"></i>
-                        <p>Courses</p>
-                    </a>
-                </li> 
-               
-                <li @ViewBag.Topics>
-                    <a href="@Url.Action("Index","Topics")">
-                        <i class="fa fa-pencil"></i>
-                        <p>Topics</p>
-                    </a>
-                </li>
-                <li @ViewBag.Category>
-                    <a href="@Url.Action("Index","CourseCategories")">
-                        <i class="fa fa-file"></i>
-                        <p>Course Category</p>
-                    </a>
-                </li>
-                <li @ViewBag.Materials>
-                    <a href="@Url.Action("Index","TopicMaterialUploads")">
-                        <i class="fa fa-th"></i>
-                        <p>Materials</p>
-                    </a>
-                </li> 
-                <li @ViewBag.Modules>
-                    <a href="@Url.Action("Index","Modules")">
-                        <i class="fa fa-list"></i>
-                        <p>Modules</p>
-                    </a>
-                </li>
-                <li @ViewBag.Tutor>
-                    <a href="@Url.Action("Index","Tutors")">
-                        <i class="fa fa-users"></i>
-                        <p>Tutors</p>
-                    </a>
-                </li>              
-            </ul>
-        </div>
-    </div> 
+     
+            </div>
+      
 <div class="main-panel">
     <nav class="navbar navbar-default" style="background: #093 !important;">
         <div class="container-fluid">
