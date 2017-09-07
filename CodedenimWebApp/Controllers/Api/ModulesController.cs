@@ -24,6 +24,13 @@ namespace CodedenimWebApp.Controllers.Api
             return db.Modules.Include(m => m.Topics).ToList();
         }
 
+
+/// <summary>
+/// these method takes the id of a course from the android app
+/// and select the specific modules connected to that course
+/// </summary>
+/// <param name="id"></param>
+/// <returns></returns>
         // GET: api/Modules/5
         [ResponseType(typeof(Module))]
         public async Task<IHttpActionResult> GetModule(int id)
@@ -35,6 +42,7 @@ namespace CodedenimWebApp.Controllers.Api
                                           m.ModuleName,
                                           m.ModuleDescription,
                                           m.ExpectedTime,
+                                          m.Topics
                                         }).ToListAsync();
             if (module == null)
             {
@@ -43,6 +51,8 @@ namespace CodedenimWebApp.Controllers.Api
 
             return Ok(module);
         }
+
+
 
         // PUT: api/Modules/5
         [ResponseType(typeof(void))]

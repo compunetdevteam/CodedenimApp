@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CodedenimWebApp.Models;
 
 namespace CodedenimWebApp.Controllers
 {
 	public class HomeController : Controller
 	{
-		//CodeDenim/
-		public ActionResult Index()
+	    private ApplicationDbContext _db;
+
+	    public HomeController()
+	    {
+            _db = new ApplicationDbContext();
+        }
+        //CodeDenim/
+        public ActionResult Index()
 		{
 			return View();
 		}
@@ -22,6 +29,7 @@ namespace CodedenimWebApp.Controllers
 		//CodeDenim/AdminDashboard
 		public ActionResult AdminDashboard()
 		{
+		    ViewBag.TotalCourses = _db.Courses.Count();
 			return View();
 		}
 

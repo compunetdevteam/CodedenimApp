@@ -37,16 +37,16 @@ namespace CodedenimWebApp.Controllers.Api
             return Ok(studentAssignedCourse);
         }
 
-        // PUT: api/StudentAssignedCourses/5
+        // PUT: api/StudentAssignedCourses
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutStudentAssignedCourse(int id, StudentAssignedCourse studentAssignedCourse)
+        public async Task<IHttpActionResult> PutStudentAssignedCourse(StudentAssignedCourse studentAssignedCourse)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != studentAssignedCourse.StudentAssignedCourseId)
+            if (studentAssignedCourse  == null)
             {
                 return BadRequest();
             }
@@ -59,7 +59,7 @@ namespace CodedenimWebApp.Controllers.Api
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StudentAssignedCourseExists(id))
+                if (!StudentAssignedCourseExists(studentAssignedCourse.CourseId))
                 {
                     return NotFound();
                 }

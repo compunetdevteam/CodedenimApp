@@ -29,6 +29,12 @@ namespace CodedenimWebApp.Controllers.Api
         public async Task<IHttpActionResult> GetCourseCategory(int id)
         {
             CourseCategory courseCategory = await db.CourseCategories.FindAsync(id);
+            
+            //var courseCategory = await db.CourseCategories.Where(x => x.CourseCategoryId.Equals(id))
+            //                            .Select(x => new
+            //                            {
+            //                                x.Courses
+            //                            }).ToListAsync();
             if (courseCategory == null)
             {
                 return NotFound();

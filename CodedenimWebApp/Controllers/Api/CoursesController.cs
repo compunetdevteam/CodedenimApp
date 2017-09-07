@@ -28,8 +28,12 @@ namespace CodedenimWebApp.Controllers.Api
         [ResponseType(typeof(Course))]
         public async Task<IHttpActionResult> GetCourse(int id)
         {
-            Course course = await db.Courses.FindAsync(id);
-
+           Course course = await db.Courses.FindAsync(id);
+            //var course = await db.Courses.Include(x => x.Modules).Where(x => x.CourseId.Equals(id))
+            //                                .Select(x => new
+            //                                {
+                                               
+            //                                }).ToListAsync();
             if (course == null)
             {
                 return NotFound();
