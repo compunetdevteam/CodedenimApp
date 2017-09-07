@@ -307,6 +307,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AssignedCourses.cs" />
     <Compile Include="ViewModels\TutorCreateVm.cs" />
+    <Compile Include="ViewModels\TutorRegistrationVm.cs" />
     <Compile Include="ViewModels\TutorsIndexVm.cs" />
   </ItemGroup>
   <ItemGroup>

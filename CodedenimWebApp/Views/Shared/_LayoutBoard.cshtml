@@ -49,7 +49,7 @@
 
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="@Url.Action("AdminDashboard", "Home")" class="simple-text">
+                    <a href="@Url.Action("", "Home")" class="simple-text">
                         <img src="~/Content/img/CodeDemin.png" height="50" width="50"/>
 
                         Code-Denim
@@ -57,12 +57,14 @@
                     <img src="~/Content/img/Sebig.png" height="50" width="50" class="img-fluid rounded-circle"
                          style="border-radius: 50%; display: block; margin-left: 40%;">
 
-                    @Html.ActionLink("" + User.Identity.GetUserName() + "!", "Index", "Manage", null, 
-                   new{style = "color:black;text-shadow:1px 1px 1px #093;padding:5px;"})
+                    @Html.ActionLink("Hello  " + User.Identity.GetUserName() + "!", "Index", "Manage", null, 
+                   new{style = "color:#093;padding:5px;"})
                    
                 </div>
-                
+               
                 @if (User.IsInRole("Admin"))
+                    //The View that only an admin can view and access
+                   
                 {
 
                     <ul class="nav">
@@ -74,14 +76,14 @@
                         </li>
                         <li @ViewBag.Courses>
                             <a href="@Url.Action("Index", "Courses")">
-                                <i class="fa fa-book"></i>
+                                <i class="fa fa-graduation-cap"></i>
                                 <p>Courses</p>
                             </a>
                         </li>
 
                         <li @ViewBag.Topics>
                             <a href="@Url.Action("Index", "Topics")">
-                                <i class="fa fa-pencil"></i>
+                                <i class="fa fa-book"></i>
                                 <p>Topics</p>
                             </a>
                         </li>
@@ -111,7 +113,7 @@
                         </li>
                     </ul>
                 }
-
+                //The View only the Tutor can see and access
                 else if (User.IsInRole("Tutor"))
                 {
 
@@ -131,7 +133,7 @@
 
                         <li @ViewBag.Topics>
                             <a href="@Url.Action("Index", "Topics")">
-                                <i class="fa fa-pencil"></i>
+                                <i class="fa fa-graduation-cap"></i>
                                 <p>Topics</p>
                             </a>
                         </li>
@@ -169,8 +171,58 @@
                     <span class="icon-bar bar2"></span>
                     <span class="icon-bar bar3"></span>
                 </button>
-                <a class="navbar-brand" href="#" style="color: #fff; text-shadow:2px 2px 2px black">@ViewBag.Title</a>
+                <a class="navbar-brand" href="#" style="color: #fff; text-shadow:1px 1px 1px black">@ViewBag.Title</a>
             </div>
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-home"></i>
+                                <p>Home</p>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-users"></i>
+                                <p>Users</p>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("Index","Tutors")">Tutors</a></li>
+                                <li><a href="@Url.Action("Index","Students")">Undergraduates</a></li>
+                                <li><a href="#">Corps Members</a></li>
+
+                            </ul>
+                        </li>          
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                                <i class="fa fa-user"></i>
+                                <p>Profile</p>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">My Profile</a></li>                           
+                                @using Microsoft.AspNet.Identity
+                                @if (Request.IsAuthenticated)
+                                {
+
+                                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", style = "padding:4px;" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a href="javascript:document.getElementById('logoutForm').submit()"><p>Log off</p></a></li>
+                                    }
+                                } 
+                            </ul>
+                        </li>                  
+                    </ul>
+                    
+                   
+                </div>
+            }
+            else if(User.IsInRole("Tutor"))
+            {
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -185,8 +237,7 @@
                             <p>Users</p>
                             <b class="caret"></b>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="@Url.Action("Index","Tutors")">Tutors</a></li>
+                        <ul class="dropdown-menu">                         
                             <li><a href="@Url.Action("Index","Students")">Undergraduates</a></li>
                             <li><a href="#">Corps Members</a></li>
 
@@ -213,8 +264,10 @@
                         </ul>
                     </li>                  
                 </ul>
-
+                }
             </div>
+            }
+
         </div>
     </nav>
         @RenderBody() 

@@ -102,7 +102,7 @@ namespace CodedenimWebApp.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("CustomDashborad", new {username = user.UserName});
+                    return RedirectToAction("CustomDashboard", new {username = user.UserName});
                    // return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -117,19 +117,19 @@ namespace CodedenimWebApp.Controllers
 
 
         /// <summary>
-        /// these method hanle the Various Codenin Custom Login
+        /// these methods handle the Various Codedenim Custom Login
         /// 
         /// 
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        public ActionResult CustomDashborad(string username)
+        public ActionResult CustomDashboard(string username)
         {
             if (User.IsInRole(RoleName.Admin))
             {
                 TempData["UserMessage"] = $"Login Successful, Welcome {username}";
                 TempData["Title"] = "Success.";
-                return RedirectToAction("AdminDashBoard", "Home");
+                return RedirectToAction("AdminDashboard", "Home");
                 // return RedirectToAction("AdminDashboard", "Home");
             }
 
@@ -141,31 +141,31 @@ namespace CodedenimWebApp.Controllers
                 // return RedirectToAction("AdminDashboard", "Home");
             }
 
-            if (User.IsInRole(RoleName.Student))
-            {
-                //var model = await Db.Students.Where(x => x.StudentId.Equals(username)).FirstOrDefaultAsync();
-                //model.IsLogin = true;
-                //Db.Entry(model).State = EntityState.Modified;
-                //await Db.SaveChangesAsync();
+            //if (User.IsInRole(RoleName.Student))
+            //{
+            //    //var model = await Db.Students.Where(x => x.StudentId.Equals(username)).FirstOrDefaultAsync();
+            //    //model.IsLogin = true;
+            //    //Db.Entry(model).State = EntityState.Modified;
+            //    //await Db.SaveChangesAsync();
 
-                //IdentityResult result = await UserManager.UpdateAsync(model);
-                TempData["UserMessage"] = $"Login Successful, Welcome {username}";
-                TempData["Title"] = "Success.";
-                return RedirectToAction("", "Students");
-            }
-            if (User.IsInRole(RoleName.Corper))
-            {
-                TempData["UserMessage"] = $"Login Successful, Welcome {username}";
-                TempData["Title"] = "Success.";
-                return RedirectToAction("CorperDashboard", "Student");
-            }
+            //    //IdentityResult result = await UserManager.UpdateAsync(model);
+            //    TempData["UserMessage"] = $"Login Successful, Welcome {username}";
+            //    TempData["Title"] = "Success.";
+            //    return RedirectToAction("", "Students");
+            //}
+            //if (User.IsInRole(RoleName.Corper))
+            //{
+            //    TempData["UserMessage"] = $"Login Successful, Welcome {username}";
+            //    TempData["Title"] = "Success.";
+            //    return RedirectToAction("CorperDashboard", "Student");
+            //}
 
-            if (User.IsInRole(RoleName.Mentor))
-            {
-                TempData["UserMessage"] = $"Login Successful, Welcome {username}";
-                TempData["Title"] = "Success.";
-                return RedirectToAction("MentorDashboard", "Tutor");
-            }
+            //if (User.IsInRole(RoleName.Mentor))
+            //{
+            //    TempData["UserMessage"] = $"Login Successful, Welcome {username}";
+            //    TempData["Title"] = "Success.";
+            //    return RedirectToAction("MentorDashboard", "Tutor");
+            //}
 
            
             return RedirectToAction("Index", "Home");
