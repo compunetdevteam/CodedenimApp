@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Web;
 using CodeninModel.Assesment;
+using CodeninModel.Forums;
 
 namespace CodeninModel
 {
@@ -58,5 +59,7 @@ namespace CodeninModel
         public virtual ICollection<Module> Modules { get; set; }
         public virtual ICollection<AssesmentQuestionAnswer> AssesmentQuestionAnswers { get; set; }
         public virtual ICollection<StudentAssignedCourse> StudentAssignedCourses {get;set;}
+        public virtual Forum Forum { get; set; }
+      
     }
 }

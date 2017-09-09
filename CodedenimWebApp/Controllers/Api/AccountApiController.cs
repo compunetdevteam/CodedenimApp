@@ -357,6 +357,7 @@ namespace CodedenimWebApp.Controllers.Api
 
             var user = new ApplicationUser()
             {
+                Id = model.CallUpNumber,
                 UserName = model.Email,
                 Email = model.Email
             };

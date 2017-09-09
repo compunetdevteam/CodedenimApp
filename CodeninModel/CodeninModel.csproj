@@ -97,6 +97,14 @@
     <Compile Include="Enrollment.cs" />
     <Compile Include="File.cs" />
     <Compile Include="FilePath.cs" />
+    <Compile Include="Forums\CommentsReply.cs" />
+    <Compile Include="Forums\Forum.cs" />
+    <Compile Include="Forums\ForumAnswer.cs" />
+    <Compile Include="Forums\ForumComments.cs" />
+    <Compile Include="Forums\ForumPost.cs" />
+    <Compile Include="Forums\ForumQuestion.cs" />
+    <Compile Include="Forums\ForumTopic.cs" />
+    <Compile Include="Forums\LatestPost.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Quiz\QuizLog.cs" />
     <Compile Include="Quiz\QuizLogVm.cs" />
@@ -117,9 +125,7 @@
     <Compile Include="TutorCourses.cs" />
     <Compile Include="ValidateFileAttribute.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Forums\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

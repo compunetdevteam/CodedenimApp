@@ -39,10 +39,12 @@ namespace CodedenimWebApp.Controllers.Api
             var module = await db.Modules.Where(c => c.CourseId.Equals(id))
                                         .Select(m => new
                                         {
+                                          m.ModuleId,
                                           m.ModuleName,
                                           m.ModuleDescription,
                                           m.ExpectedTime,
-                                          m.Topics
+                                          m.Topics,
+                                          m.CourseId
                                         }).ToListAsync();
             if (module == null)
             {

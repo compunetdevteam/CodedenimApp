@@ -1,0 +1,92 @@
+﻿@model IEnumerable<CodeninModel.Forums.ForumQuestion>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<p>
+    @*<a href="@Url.Action("Create","ForumAnswers")" id="btnsubmit">Answer Question</a>*@
+    @Html.ActionLink("Answer Question", "Create","ForumAnswers" )
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Forum.ForumName)
+        </th>       
+        <th>
+            @Html.DisplayNameFor(model => model.Students.Institution)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuestionName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Forum.ForumName)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.Students.Institution)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuestionName)
+        </td>
+        <td>
+            @* write logic to show this links dependent on the logged in user *@
+            @*@Html.ActionLink("Answer Question", "Create","ForumAns", new {id = item.ForumQuestionId})*@ 
+            <a href="@Url.Action("Create","ForumAnswers", new {id = item.ForumQuestionId})">Answer Question</a>|
+            <a href="@Url.Action("Index","ForumAnswers", new {id=item.ForumQuestionId})"> View Answers</a>|
+            @Html.ActionLink("Edit", "Edit", new {id = item.ForumQuestionId}) |
+            @Html.ActionLink("Details", "Details", new {id = item.ForumQuestionId}) |
+            @Html.ActionLink("Delete", "Delete", new {id = item.ForumQuestionId})
+        </td>
+    </tr>
+
+}
+
+</table>
+
+
+
+    @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src= "~/Scripts/jquery-3.1.1.min.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //window.alert("ready");
+
+        $("#btnsubmit").click(function () {
+             window.alert("ready");
+
+            $("#loaderDiv").show();
+
+            var data = $("#myform").serialize();
+            debugger
+            $.ajax({
+                type: "POST",
+                url: "/ForumAnswers/Create",
+                data: data,
+                success: function (response) {
+                    $("#loaderDiv").hide();
+                    alertify.success('Student was created Successfully');
+                }
+            });
+        });
+    })
+</script>

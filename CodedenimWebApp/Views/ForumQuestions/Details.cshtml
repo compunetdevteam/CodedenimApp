@@ -1,0 +1,58 @@
+﻿@model CodeninModel.Forums.ForumQuestion
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ForumQuestion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Forum.ForumName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Forum.ForumName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ForumQuestionView.ForumQuestionId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ForumQuestionView.ForumQuestionId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Students.Institution)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Students.Institution)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuestionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuestionName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ForumQuestionId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

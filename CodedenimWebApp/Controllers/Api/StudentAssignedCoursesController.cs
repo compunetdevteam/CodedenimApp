@@ -80,13 +80,16 @@ namespace CodedenimWebApp.Controllers.Api
             {
                 return BadRequest(ModelState);
             }
-        
-
+            var email = studentAssignedCourse.StudentId;
+            var converter = new Convert();
+            studentAssignedCourse.StudentId = converter.ConvertEmailToId(email);
             db.StudentAssignedCourses.Add(studentAssignedCourse);
             await db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = studentAssignedCourse.StudentAssignedCourseId }, studentAssignedCourse);
         }
+
+       
 
         // DELETE: api/StudentAssignedCourses/5
         [ResponseType(typeof(StudentAssignedCourse))]
@@ -116,6 +119,22 @@ namespace CodedenimWebApp.Controllers.Api
         private bool StudentAssignedCourseExists(int id)
         {
             return db.StudentAssignedCourses.Count(e => e.StudentAssignedCourseId == id) > 0;
+        }
+    }
+
+    public class Convert
+    {
+        private ApplicationDbContext _db ;
+
+        public Convert()
+        {
+            _db = new ApplicationDbContext();
+        }
+        public string ConvertEmailToId(string email)
+        {
+            var studentEmail = _db.Students.Where(x => x.Email.Equals(email))
+                                            .Select(x => x.StudentId).FirstOrDefault().ToString();
+            return studentEmail;
         }
     }
 }

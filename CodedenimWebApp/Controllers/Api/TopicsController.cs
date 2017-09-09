@@ -26,12 +26,14 @@ namespace CodedenimWebApp.Controllers.Api
 
         // GET: api/Topics/5
         [ResponseType(typeof(Topic))]
+
         public async Task<IHttpActionResult> GetTopic(int id)
         {
             //Topic topic = await db.Topics.FindAsync(id);
             var topic = await db.Topics.Where(t => t.ModuleId.Equals(id))
                                                 .Select(t => new
                                                 {
+                                                    t.TopicId,
                                                     t.TopicName,
                                                     t.ExpectedTime,
                                                 }).ToListAsync();
