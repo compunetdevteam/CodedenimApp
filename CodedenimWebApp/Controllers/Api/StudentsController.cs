@@ -12,6 +12,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using CodedenimWebApp.Models;
 using CodeninModel;
+using PagedList;
 
 namespace CodedenimWebApp.Controllers.Api
 {
@@ -32,13 +33,22 @@ namespace CodedenimWebApp.Controllers.Api
         [ResponseType(typeof(Student))]
         public async Task<IHttpActionResult> GetStudent(string id)
         {
-            Student student = await db.Students.FindAsync(id);
-            var studentCourses = db.StudentAssignedCourses.Where(x => x.StudentId.Equals(student.StudentId))
-                                                          .Select(s => s.Courses);
-            if (student == null)
-            {
-                return NotFound();
-            }
+           // Student student = await db.Students.FindAsync(id);
+           var email = new Convert();
+           
+            var studentCourses = db.StudentAssignedCourses.Include(x => x.Courses).Where(x => x.Student.Email.Equals(id))
+                                                                                 .Select(x =>new { x.Courses.CourseName,
+                                                                                 x.Courses.CourseDescription, x.Courses.CourseCode,
+                                                                                 x.Courses.ExpectedTime,
+                                                                                 x.CourseId
+                                                                                                
+                                                                                 }).ToList();
+            //var studentCourses = db.StudentAssignedCourses.Where(x => x.StudentId.Equals(student.StudentId))
+            //                                              .Select(s => s.Courses);
+            //if (student == null)
+            //{
+            //    return NotFound();
+            //}
 
             return Ok(studentCourses);
         }
