@@ -46,9 +46,9 @@
                     @Html.DisplayFor(modelItem => item.ExpectedTime)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ModuleId }, new { @class = "my-class" }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ModuleId }, new { @class = "my-class" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ModuleId }, new { @class = "my-class" })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ModuleId }, new { @class = "my-class; btn" })
+                    @Html.ActionLink("Details", "Details", new { id = item.ModuleId }, new { @class = "my-class; btn" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ModuleId }, new { @class = "my-class; btn" })
                 </td>
             </tr>}
 

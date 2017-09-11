@@ -10,7 +10,7 @@
     <h2>COURSE CATEGORIES</h2>
     <br />
     <p>
-        @Html.ActionLink("CREATE CATEGORIES", "Create", null, new { @class = "my-class" })
+        @Html.ActionLink("CREATE CATEGORIES", "Create", null, new { @class = "my-class; btn" })
     </p>
     <table class="table">
         <tr>
@@ -27,9 +27,9 @@
                     @Html.DisplayFor(modelItem => item.CategoryName)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.CourseCategoryId }, new { @class = "my-class" }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.CourseCategoryId }, new { @class = "my-class" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.CourseCategoryId }, new { @class = "my-class" })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CourseCategoryId }, new { @class = "my-class; btn" })
+                    @Html.ActionLink("Details", "Details", new { id = item.CourseCategoryId }, new { @class = "my-class; btn" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CourseCategoryId }, new { @class = "my-class; btn" })
                 </td>
             </tr>}
 

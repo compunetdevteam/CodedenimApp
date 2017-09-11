@@ -56,7 +56,6 @@ namespace CodedenimWebApp.Controllers
         public ActionResult Create()
         {
 
-            
             ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName");
             return View();
         }

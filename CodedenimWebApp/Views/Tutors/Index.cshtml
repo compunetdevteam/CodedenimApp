@@ -10,7 +10,7 @@
     <h2>Tutor</h2>
     <br />
     <p>
-        @Html.ActionLink("CREATE TUTOR", "Create", null, new { @class = "my-class" })
+        @Html.ActionLink("CREATE TUTOR", "Create", null, new { @class = "my-class; btn" })
     </p>
     <table class="table">
         <tr>
@@ -46,10 +46,10 @@
                 </td>
 
                 <td>
-                    @Html.ActionLink("Select", "Index", new { id = item.TutorId }, new { @class = "my-class" }) |
-                    @Html.ActionLink("Edit", "Edit", new { id = item.TutorId }, new { @class = "my-class" }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.TutorId }, new { @class = "my-class" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.TutorId }, new { @class = "my-class" })
+                    @Html.ActionLink("Select", "Index", new { id = item.TutorId }, new { @class = "my-class; btn" })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.TutorId }, new { @class = "my-class; btn" }) 
+                    @Html.ActionLink("Details", "Details", new { id = item.TutorId }, new { @class = "my-class; btn" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.TutorId }, new { @class = "my-class; btn" })
                 </td>
             </tr>    }
 
