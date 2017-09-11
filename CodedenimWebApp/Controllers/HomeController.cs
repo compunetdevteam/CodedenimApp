@@ -13,14 +13,17 @@ namespace CodedenimWebApp.Controllers
 		{
 			return View();
 		}
-		//CodeDenim/TutorDashboard
-		public ActionResult TutorDashboard()
+        //CodeDenim/TutorDashboard
+	    [Authorize(Roles = "Admin")]
+	    [Authorize(Roles = "Tutor")]
+        public ActionResult TutorDashboard()
 		{
 			return View();
 		}
-		
-		//CodeDenim/AdminDashboard
-		public ActionResult AdminDashboard()
+
+        //CodeDenim/AdminDashboard
+	    [Authorize(Roles = "Admin")]
+        public ActionResult AdminDashboard()
 		{
 			return View();
 		}

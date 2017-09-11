@@ -17,6 +17,7 @@ namespace CodedenimWebApp.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Courses
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Index(int? SelectedCategory)
         {
             var categories = await db.CourseCategories.OrderBy(c => c.CategoryName).ToListAsync();
@@ -33,6 +34,7 @@ namespace CodedenimWebApp.Controllers
 
 
         // GET: Courses/Details/5
+       
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -50,6 +52,7 @@ namespace CodedenimWebApp.Controllers
 
       
         // GET: Courses/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
 
@@ -62,6 +65,7 @@ namespace CodedenimWebApp.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")] Course course, HttpPostedFileBase upload)
         {
@@ -77,6 +81,7 @@ namespace CodedenimWebApp.Controllers
         }
 
         // GET: Courses/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -96,6 +101,7 @@ namespace CodedenimWebApp.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")] Course course)
         {
@@ -110,6 +116,7 @@ namespace CodedenimWebApp.Controllers
         }
 
         // GET: Courses/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,6 +133,7 @@ namespace CodedenimWebApp.Controllers
 
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
