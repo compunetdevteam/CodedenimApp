@@ -16,19 +16,38 @@ namespace CodedenimWebApp.Controllers.Api
 {
     public class TopicMaterialUploadsController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         // GET: api/TopicMaterialUploads
-        public IEnumerable<TopicMaterialUpload> GetTopicMaterialUploads()
+        public IQueryable GetTopicMaterialUploads()
         {
-            return db.TopicMaterialUploads.ToList();
+            return _db.TopicMaterialUploads.Select(x => new
+                                            {
+                                                x.Description,
+                                                x.FileLocation,
+                                                x.Name,
+                                                x.TopicMaterialUploadId,
+                                               
+                                                
+                                            });
         }
 
         // GET: api/TopicMaterialUploads/5
         [ResponseType(typeof(TopicMaterialUpload))]
         public async Task<IHttpActionResult> GetTopicMaterialUpload(int id)
         {
-            TopicMaterialUpload topicMaterialUpload = await db.TopicMaterialUploads.FindAsync(id);
+          //  TopicMaterialUpload topicMaterialUpload = await _db.TopicMaterialUploads.FindAsync(id);
+          var topicMaterialUpload = await _db.TopicMaterialUploads.Where(x => x.TopicId.Equals(id))
+                                                                  .Select( x => new
+                                                                    {
+                                                                        x.TopicMaterialUploadId,
+                                                                        x.TopicId,
+                                                                        x.Description,
+                                                                        x.FileLocation,
+                                                                        FileType = x.FileType.ToString(),
+                                                                        x.Course.StudentQuestions,
+                                                                      
+                                                                    }).ToListAsync();
             if (topicMaterialUpload == null)
             {
                 return NotFound();
@@ -51,11 +70,11 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest();
             }
 
-            db.Entry(topicMaterialUpload).State = EntityState.Modified;
+            _db.Entry(topicMaterialUpload).State = EntityState.Modified;
 
             try
             {
-                await db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -81,8 +100,8 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            db.TopicMaterialUploads.Add(topicMaterialUpload);
-            await db.SaveChangesAsync();
+            _db.TopicMaterialUploads.Add(topicMaterialUpload);
+            await _db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = topicMaterialUpload.TopicMaterialUploadId }, topicMaterialUpload);
         }
@@ -91,14 +110,14 @@ namespace CodedenimWebApp.Controllers.Api
         [ResponseType(typeof(TopicMaterialUpload))]
         public async Task<IHttpActionResult> DeleteTopicMaterialUpload(int id)
         {
-            TopicMaterialUpload topicMaterialUpload = await db.TopicMaterialUploads.FindAsync(id);
+            TopicMaterialUpload topicMaterialUpload = await _db.TopicMaterialUploads.FindAsync(id);
             if (topicMaterialUpload == null)
             {
                 return NotFound();
             }
 
-            db.TopicMaterialUploads.Remove(topicMaterialUpload);
-            await db.SaveChangesAsync();
+            _db.TopicMaterialUploads.Remove(topicMaterialUpload);
+            await _db.SaveChangesAsync();
 
             return Ok(topicMaterialUpload);
         }
@@ -107,14 +126,14 @@ namespace CodedenimWebApp.Controllers.Api
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool TopicMaterialUploadExists(int id)
         {
-            return db.TopicMaterialUploads.Count(e => e.TopicMaterialUploadId == id) > 0;
+            return _db.TopicMaterialUploads.Count(e => e.TopicMaterialUploadId == id) > 0;
         }
     }
 }

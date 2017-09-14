@@ -19,12 +19,14 @@ namespace CodedenimWebApp.Controllers.Api
     [System.Web.Http.RoutePrefix("api/Students")]
     public class StudentsController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         // GET: api/Students
         public IEnumerable<Student> GetStudents()
         {
-            return db.Students.ToList();
+            var studentid = RequestContext.Principal;
+            return _db.Students.Where(x => x.StudentId.Equals(studentid));
+            //  return db.Students.ToList();
         }
 
 
@@ -36,11 +38,17 @@ namespace CodedenimWebApp.Controllers.Api
            // Student student = await db.Students.FindAsync(id);
            var email = new Convert();
            
-            var studentCourses = db.StudentAssignedCourses.Include(x => x.Courses).Where(x => x.Student.Email.Equals(id))
-                                                                                 .Select(x =>new { x.Courses.CourseName,
-                                                                                 x.Courses.CourseDescription, x.Courses.CourseCode,
-                                                                                 x.Courses.ExpectedTime,
-                                                                                 x.CourseId
+            var studentCourses = _db.StudentAssignedCourses.Include(x => x.Courses).Where(x => x.Student.Email.Equals(id))
+                                                                                 .Select(x =>new {
+                                                                                    x.CourseId,
+                                                                                    x.Courses.CourseCode,
+                                                                                    x.Courses.CourseName,
+                                                                                     x.Courses.CourseDescription,
+                                                                                     x.Courses.ExpectedTime,
+                                                                                     x.Courses.CourseCategory.CategoryName,
+                                                                                     x.Courses.CourseCategoryId,
+                                                                                     x.Courses.FileLocation
+                                                                                 
                                                                                                 
                                                                                  }).ToList();
             //var studentCourses = db.StudentAssignedCourses.Where(x => x.StudentId.Equals(student.StudentId))
@@ -53,12 +61,43 @@ namespace CodedenimWebApp.Controllers.Api
             return Ok(studentCourses);
         }
 
+        /// <summary>
+        /// method to check if a student exit
+        /// then the android buttton should no show enrolled but Continue Course
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [ResponseType(typeof(Student))]
+        [System.Web.Http.Route("CheckIfStudentIsEnrolled")]
+        public IHttpActionResult CheckIfStudentIsEnrolled(string email, int courseId)
+        {
+            bool Enrolled;
+            var converter = new Convert();
+            var studentId = converter.ConvertEmailToId(email);
+            var isEnrolled = _db.StudentAssignedCourses.Any(x => x.StudentId.Equals(studentId) && x.CourseId.Equals(courseId));
+
+            if(!isEnrolled)
+            {
+                Enrolled = true;
+            }
+            else
+            {
+                Enrolled = false;
+            }
+            return Ok();
+        }
+
+
+
+
         //GET: api/Student
         //[ResponseType(typeof(Student))]
         [System.Web.Http.Route("TopicMaterial")]
         public IHttpActionResult GetTopicMaterial()
         {
-            var location = db.TopicMaterialUploads.FirstOrDefault(x => x.TopicMaterialUploadId.Equals(2));
+            var location = _db.TopicMaterialUploads.FirstOrDefault(x => x.TopicMaterialUploadId.Equals(2));
           //  var topicDetail = HttpContext.Current.Server.MapPath("~/MaterialUpload/Data Management_ What Is Master Data Management (Mdm).mp4");
             return Ok(location);
         }
@@ -77,11 +116,11 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest();
             }
 
-            db.Entry(student).State = EntityState.Modified;
+            _db.Entry(student).State = EntityState.Modified;
 
             try
             {
-                await db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -107,11 +146,11 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            db.Students.Add(student);
+            _db.Students.Add(student);
 
             try
             {
-                await db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
@@ -132,14 +171,14 @@ namespace CodedenimWebApp.Controllers.Api
         [ResponseType(typeof(Student))]
         public async Task<IHttpActionResult> DeleteStudent(string id)
         {
-            Student student = await db.Students.FindAsync(id);
+            Student student = await _db.Students.FindAsync(id);
             if (student == null)
             {
                 return NotFound();
             }
 
-            db.Students.Remove(student);
-            await db.SaveChangesAsync();
+            _db.Students.Remove(student);
+            await _db.SaveChangesAsync();
 
             return Ok(student);
         }
@@ -148,14 +187,14 @@ namespace CodedenimWebApp.Controllers.Api
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool StudentExists(string id)
         {
-            return db.Students.Count(e => e.StudentId == id) > 0;
+            return _db.Students.Count(e => e.StudentId == id) > 0;
         }
     }
 }

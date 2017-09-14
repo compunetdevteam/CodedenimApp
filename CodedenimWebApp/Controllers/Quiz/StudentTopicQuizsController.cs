@@ -41,7 +41,7 @@ namespace CodedenimWebApp.Controllers.Quiz
         // GET: StudentTopicQuizs/Create
         public ActionResult Create()
         {
-            ViewBag.StudentId = new SelectList(db.Students, "StudentId", "Institution");
+            ViewBag.StudentId = new SelectList(db.Students, "StudentId", "FullName");
             ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName");
             return View();
         }

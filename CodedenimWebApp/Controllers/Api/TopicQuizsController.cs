@@ -25,6 +25,7 @@ namespace CodedenimWebApp.Controllers.Api
                                                         {
                                                                x.TopicQuizId,
                                                                x.TopicId,
+                                                                
                                                                x.Question,
                                                                x.Option1,
                                                                x.Option2,

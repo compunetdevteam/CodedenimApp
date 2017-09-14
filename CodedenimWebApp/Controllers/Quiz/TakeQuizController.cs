@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
@@ -22,11 +22,10 @@ namespace CodedenimWebApp.Controllers
     {
 
         private ApplicationDbContext _db = new ApplicationDbContext();
+        private StartQuiz startQuiz = new StartQuiz();
+
         // GET: TakeQuiz
-        public ActionResult Index()
-        {
-            return View();
-        }
+      
 
 
         public async Task<ActionResult> ShowNumbers()
@@ -164,7 +163,7 @@ namespace CodedenimWebApp.Controllers
                 nextQuestion = questionId + 1;
             }
 
-            var questionType = CheckQuestionType(model);
+            var questionType = startQuiz.CheckQuestionType(model);
             if (questionType != null)
             {
 
@@ -172,7 +171,7 @@ namespace CodedenimWebApp.Controllers
                 {
                     if (!String.IsNullOrEmpty(fiiledAnswer))
                     {
-                        await SaveAnswer(model, studentId, questionId, fiiledAnswer);
+                        await startQuiz.SaveAnswer(model, studentId, questionId, fiiledAnswer);
                         return RedirectToAction("Exam", "TakeQuiz",
                             new
                             {
@@ -205,16 +204,16 @@ namespace CodedenimWebApp.Controllers
                     }
                     string value = builder.ToString();
 
-                    string checkedAnswer = SortStringAlphabetically(builder.ToString());
+                    string checkedAnswer = startQuiz.SortStringAlphabetically(builder.ToString());
 
-                    await SaveMultiChoiceAnswer(model, checkedAnswer);
+                    await startQuiz.SaveMultiChoiceAnswer(model, checkedAnswer);
                 }
                 else
                 {
                     if (!String.IsNullOrEmpty(model.SelectedAnswer))
                     {
-                        string answer = CheckAnswerForSingleChoice(model);
-                        await SaveAnswer(model, studentId, questionId, answer);
+                        string answer = startQuiz.CheckAnswerForSingleChoice(model);
+                        await startQuiz.SaveAnswer(model, studentId, questionId, answer);
 
                         return RedirectToAction("Exam", "TakeQuiz",
                             new
@@ -244,14 +243,14 @@ namespace CodedenimWebApp.Controllers
         {
             var studentId = model.StudentId;
             int questionId = model.QuestionNo;
-            var questionType = CheckQuestionType(model);
+            var questionType = startQuiz.CheckQuestionType(model);
             if (questionType != null)
             {
                 if (questionType.IsFillInTheGag)
                 {
                     if (!String.IsNullOrEmpty(fiiledAnswer))
                     {
-                        await SaveAnswer(model, studentId, questionId, fiiledAnswer);
+                        await startQuiz.SaveAnswer(model, studentId, questionId, fiiledAnswer);
                         return RedirectToAction("Exam", "TakeQuiz", new
                         {
                             questionNo = ++questionId,
@@ -283,16 +282,17 @@ namespace CodedenimWebApp.Controllers
                     }
                     string value = builder.ToString();
 
-                    string checkedAnswer = SortStringAlphabetically(builder.ToString());
+                    string checkedAnswer = startQuiz.SortStringAlphabetically(builder.ToString());
 
-                    await SaveMultiChoiceAnswer(model, checkedAnswer);
+                    await startQuiz.SaveMultiChoiceAnswer(model, checkedAnswer);
                 }
                 else
                 {
                     if (!String.IsNullOrEmpty(model.SelectedAnswer))
                     {
-                        string answer = CheckAnswerForSingleChoice(model);
-                        await SaveAnswer(model, studentId, questionId, answer);
+                                
+                        string answer = startQuiz.CheckAnswerForSingleChoice(model);
+                        await startQuiz.SaveAnswer(model, studentId, questionId, answer);
                         return RedirectToAction("Exam", "TakeQuiz",
                             new
                             {
@@ -320,7 +320,7 @@ namespace CodedenimWebApp.Controllers
             var studentId = model.StudentId;
             int questionId = model.QuestionNo;
 
-            var questionType = CheckQuestionType(model);
+            var questionType = startQuiz.CheckQuestionType(model);
             #region Submit Answer
             if (questionType != null)
             {
@@ -328,7 +328,7 @@ namespace CodedenimWebApp.Controllers
                 {
                     if (!String.IsNullOrEmpty(fiiledAnswer))
                     {
-                        await SaveAnswer(model, studentId, questionId, fiiledAnswer);
+                        await startQuiz.SaveAnswer(model, studentId, questionId, fiiledAnswer);
                         //scoreCount = _db.StudentTopicQuizes.Count(x => x.IsCorrect.Equals(true));
                         //return RedirectToAction("ExamIndex", "TakeExam",
                         //    new { score = scoreCount, courseId = model.CourseId, studentid = model.StudentId });
@@ -356,16 +356,16 @@ namespace CodedenimWebApp.Controllers
                     }
                     string value = builder.ToString();
 
-                    string checkedAnswer = SortStringAlphabetically(builder.ToString());
+                    string checkedAnswer = startQuiz.SortStringAlphabetically(builder.ToString());
 
-                    await SaveMultiChoiceAnswer(model, checkedAnswer);
+                    await startQuiz.SaveMultiChoiceAnswer(model, checkedAnswer);
                 }
                 else
                 {
                     if (!String.IsNullOrEmpty(model.SelectedAnswer))
                     {
-                        string answer = CheckAnswerForSingleChoice(model);
-                        await SaveAnswer(model, studentId, questionId, answer);
+                        string answer = startQuiz.CheckAnswerForSingleChoice(model);
+                        await startQuiz.SaveAnswer(model, studentId, questionId, answer);
                         scoreCount = _db.StudentTopicQuizs.Count(x => x.IsCorrect.Equals(true));
                         //return RedirectToAction("ExamIndex", "TakeExam",
                         //    new { score = scoreCount, courseId = model.CourseId, studentid = model.StudentId });
@@ -554,124 +554,124 @@ namespace CodedenimWebApp.Controllers
             //return View(studentList.ToList());
         }
 
-        [ValidateInput(false)]
-        private async Task SaveAnswer(DisplayQuestionViewModel model, string studentId, int questionId, string answer)
-        {
-            var question = await _db.StudentTopicQuizs.AsNoTracking().FirstOrDefaultAsync
-            (s => s.StudentId.Equals(studentId) && s.TopicId.Equals(model.TopicId)
-                  && s.QuestionNumber.Equals(questionId));
-            if (question.Answer.ToUpper().Equals(answer.ToUpper()))
-            {
-                question.IsCorrect = true;
-                question.SelectedAnswer = model.SelectedAnswer;
-                question.Check1 = model.Check1;
-                question.Check2 = model.Check2;
-                question.Check3 = model.Check3;
-                question.Check4 = model.Check4;
-                question.FilledAnswer = answer;
-                _db.Set<StudentTopicQuiz>().AddOrUpdate(question);
-                // _db.Entry(question).State = EntityState.Modified;
-                await _db.SaveChangesAsync();
-            }
-            else
-            {
-                question.IsCorrect = false;
-                question.SelectedAnswer = model.SelectedAnswer;
-                question.Check1 = model.Check1;
-                question.Check2 = model.Check2;
-                question.Check3 = model.Check3;
-                question.Check4 = model.Check4;
-                question.FilledAnswer = answer;
-                _db.Set<StudentTopicQuiz>().AddOrUpdate(question);
-                //_db.Entry(question).State = EntityState.Modified;
-                await _db.SaveChangesAsync();
-            }
-        }
+        //[ValidateInput(false)]
+        //private async Task SaveAnswer(DisplayQuestionViewModel model, string studentId, int questionId, string answer)
+        //{
+        //    var question = await _db.StudentTopicQuizs.AsNoTracking().FirstOrDefaultAsync
+        //    (s => s.StudentId.Equals(studentId) && s.TopicId.Equals(model.TopicId)
+        //          && s.QuestionNumber.Equals(questionId));
+        //    if (question.Answer.ToUpper().Equals(answer.ToUpper()))
+        //    {
+        //        question.IsCorrect = true;
+        //        question.SelectedAnswer = model.SelectedAnswer;
+        //        question.Check1 = model.Check1;
+        //        question.Check2 = model.Check2;
+        //        question.Check3 = model.Check3;
+        //        question.Check4 = model.Check4;
+        //        question.FilledAnswer = answer;
+        //        _db.Set<StudentTopicQuiz>().AddOrUpdate(question);
+        //        // _db.Entry(question).State = EntityState.Modified;
+        //        await _db.SaveChangesAsync();
+        //    }
+        //    else
+        //    {
+        //        question.IsCorrect = false;
+        //        question.SelectedAnswer = model.SelectedAnswer;
+        //        question.Check1 = model.Check1;
+        //        question.Check2 = model.Check2;
+        //        question.Check3 = model.Check3;
+        //        question.Check4 = model.Check4;
+        //        question.FilledAnswer = answer;
+        //        _db.Set<StudentTopicQuiz>().AddOrUpdate(question);
+        //        //_db.Entry(question).State = EntityState.Modified;
+        //        await _db.SaveChangesAsync();
+        //    }
+        //}
 
-        private async Task SaveMultiChoiceAnswer(DisplayQuestionViewModel model, string checkedAnswer)
-        {
-            var question = _db.StudentTopicQuizs.AsNoTracking().FirstOrDefault(s => s.StudentId.Equals(model.StudentId)
-                                                                                     && s.QuestionNumber.Equals(model.QuestionNo)
-                                                                                     && s.TopicId.Equals(model.TopicId));
-            string[] myAnswer = question.Answer.Split(',');
-            StringBuilder answerbuilder = new StringBuilder();
+        //private async Task SaveMultiChoiceAnswer(DisplayQuestionViewModel model, string checkedAnswer)
+        //{
+        //    var question = _db.StudentTopicQuizs.AsNoTracking().FirstOrDefault(s => s.StudentId.Equals(model.StudentId)
+        //                                                                             && s.QuestionNumber.Equals(model.QuestionNo)
+        //                                                                             && s.TopicId.Equals(model.TopicId));
+        //    string[] myAnswer = question.Answer.Split(',');
+        //    StringBuilder answerbuilder = new StringBuilder();
 
-            foreach (var item in myAnswer)
-            {
-                answerbuilder.Append(item);
-            }
+        //    foreach (var item in myAnswer)
+        //    {
+        //        answerbuilder.Append(item);
+        //    }
 
-            string value = answerbuilder.ToString();
-            string answer = SortStringAlphabetically(answerbuilder.ToString());
+        //    string value = answerbuilder.ToString();
+        //    string answer = SortStringAlphabetically(answerbuilder.ToString());
 
 
-            if (answer.ToUpper().Equals(checkedAnswer.ToUpper()))
-            {
-                question.IsCorrect = true;
-                question.SelectedAnswer = model.SelectedAnswer;
-                question.Check1 = model.Check1;
-                question.Check2 = model.Check2;
-                question.Check3 = model.Check3;
-                question.Check4 = model.Check4;
-                _db.Entry(question).State = EntityState.Modified;
-                await _db.SaveChangesAsync();
-            }
-            else
-            {
-                question.IsCorrect = false;
-                question.SelectedAnswer = model.SelectedAnswer;
-                question.Check1 = model.Check1;
-                question.Check2 = model.Check2;
-                question.Check3 = model.Check3;
-                question.Check4 = model.Check4;
-                _db.Entry(question).State = System.Data.Entity.EntityState.Modified;
-                await _db.SaveChangesAsync();
-            }
-        }
+        //    if (answer.ToUpper().Equals(checkedAnswer.ToUpper()))
+        //    {
+        //        question.IsCorrect = true;
+        //        question.SelectedAnswer = model.SelectedAnswer;
+        //        question.Check1 = model.Check1;
+        //        question.Check2 = model.Check2;
+        //        question.Check3 = model.Check3;
+        //        question.Check4 = model.Check4;
+        //        _db.Entry(question).State = EntityState.Modified;
+        //        await _db.SaveChangesAsync();
+        //    }
+        //    else
+        //    {
+        //        question.IsCorrect = false;
+        //        question.SelectedAnswer = model.SelectedAnswer;
+        //        question.Check1 = model.Check1;
+        //        question.Check2 = model.Check2;
+        //        question.Check3 = model.Check3;
+        //        question.Check4 = model.Check4;
+        //        _db.Entry(question).State = System.Data.Entity.EntityState.Modified;
+        //        await _db.SaveChangesAsync();
+        //    }
+        //}
 
-        static string SortStringAlphabetically(string str)
-        {
-            char[] foo = str.ToArray();
-            Array.Sort(foo);
-            return new string(foo);
-        }
+        //static string SortStringAlphabetically(string str)
+        //{
+        //    char[] foo = str.ToArray();
+        //    Array.Sort(foo);
+        //    return new string(foo);
+        //}
 
-        private string CheckAnswerForSingleChoice(DisplayQuestionViewModel model)
-        {
-            if (model.SelectedAnswer.Equals(model.Option1))
-            {
-                return "A";
-            }
-            if (model.SelectedAnswer.Equals(model.Option2))
-            {
-                return "B";
-            }
-            if (model.SelectedAnswer.Equals(model.Option3))
-            {
-                return "C";
-            }
-            if (model.SelectedAnswer.Equals(model.Option4))
-            {
-                return "D";
-            }
-            return "";
-        }
+        //private string CheckAnswerForSingleChoice(DisplayQuestionViewModel model)
+        //{
+        //    if (model.SelectedAnswer.Equals(model.Option1))
+        //    {
+        //        return "A";
+        //    }
+        //    if (model.SelectedAnswer.Equals(model.Option2))
+        //    {
+        //        return "B";
+        //    }
+        //    if (model.SelectedAnswer.Equals(model.Option3))
+        //    {
+        //        return "C";
+        //    }
+        //    if (model.SelectedAnswer.Equals(model.Option4))
+        //    {
+        //        return "D";
+        //    }
+        //    return "";
+        //}
 
-        private StudentTopicQuiz CheckQuestionType(DisplayQuestionViewModel model)
-        {
-            var questionType = _db.StudentTopicQuizs.FirstOrDefault(x => x.QuestionNumber.Equals(model.QuestionNo)
-                                                                          && x.StudentId.Equals(model.StudentId) &&
-                                                                          x.TopicId.Equals(model.TopicId));
-            return questionType;
-        }
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //private StudentTopicQuiz CheckQuestionType(DisplayQuestionViewModel model)
+        //{
+        //    var questionType = _db.StudentTopicQuizs.FirstOrDefault(x => x.QuestionNumber.Equals(model.QuestionNo)
+        //                                                                  && x.StudentId.Equals(model.StudentId) &&
+        //                                                                  x.TopicId.Equals(model.TopicId));
+        //    return questionType;
+        //}
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        _db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 
 }

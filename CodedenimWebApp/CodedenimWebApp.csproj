@@ -224,10 +224,13 @@
     <Compile Include="Controllers\Api\CourseCategoriesController.cs" />
     <Compile Include="Controllers\Api\CoursesController.cs" />
     <Compile Include="Controllers\Api\ForumAnswersController.cs" />
+    <Compile Include="Controllers\Api\ForumQuestions1Controller.cs" />
     <Compile Include="Controllers\Api\ForumQuestionsController.cs" />
     <Compile Include="Controllers\Api\ModulesController.cs" />
+    <Compile Include="Controllers\Api\Rating.cs" />
     <Compile Include="Controllers\Api\StudentAssignedCoursesController.cs" />
     <Compile Include="Controllers\Api\StudentsController.cs" />
+    <Compile Include="Controllers\Api\TakeQuizApiController.cs" />
     <Compile Include="Controllers\Api\TopicMaterialUploadsController.cs" />
     <Compile Include="Controllers\Api\TopicQuizsController.cs" />
     <Compile Include="Controllers\Api\TopicsController.cs" />
@@ -236,6 +239,7 @@
     <Compile Include="Controllers\CourseCategoriesController.cs" />
     <Compile Include="Controllers\CourseForum\ForumAnswersController.cs" />
     <Compile Include="Controllers\CourseForum\ForumController.cs" />
+    <Compile Include="Controllers\CourseRatingsController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\CourseForum\ForumQuestionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -244,6 +248,7 @@
     <Compile Include="Controllers\Quiz\QuizRulesController.cs" />
     <Compile Include="Controllers\Quiz\StudentTopicQuizsController.cs" />
     <Compile Include="Controllers\Quiz\TopicQuizsController.cs" />
+    <Compile Include="Controllers\StartQuiz.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\Quiz\TakeQuizController.cs" />
     <Compile Include="Controllers\TopicMaterialUploadsController.cs" />
@@ -257,6 +262,10 @@
     <Compile Include="Migrations\201709090700025_added_forum_api.cs" />
     <Compile Include="Migrations\201709090700025_added_forum_api.Designer.cs">
       <DependentUpon>201709090700025_added_forum_api.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709140137262_Create_theRating_Model.cs" />
+    <Compile Include="Migrations\201709140137262_Create_theRating_Model.Designer.cs">
+      <DependentUpon>201709140137262_Create_theRating_Model.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -272,6 +281,7 @@
     <Compile Include="Service\EmailSetupServices.cs" />
     <Compile Include="Service\MultipleButtonAttributeController.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ApiVm.cs" />
     <Compile Include="ViewModels\AssignedCourses.cs" />
     <Compile Include="ViewModels\CourseVm.cs" />
     <Compile Include="ViewModels\DisplayQuestionViewModel.cs" />
@@ -855,6 +865,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201709090700025_added_forum_api.resx">
       <DependentUpon>201709090700025_added_forum_api.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709140137262_Create_theRating_Model.resx">
+      <DependentUpon>201709140137262_Create_theRating_Model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

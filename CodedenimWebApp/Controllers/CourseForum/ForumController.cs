@@ -41,7 +41,7 @@ namespace CodedenimWebApp.Controllers.CourseForum
         // GET: Forum/Create
         public ActionResult Create()
         {
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseId");
+            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName");
             //ViewBag.CourseId = new SelectList(db.ForumViews, "ContentViewId", "ContentViewId");
             return View();
         }

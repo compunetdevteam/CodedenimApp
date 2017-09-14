@@ -16,20 +16,37 @@ namespace CodedenimWebApp.Controllers.Api
 {
     public class CourseCategoriesController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         // GET: api/CourseCategories
-        public IEnumerable<CourseCategory> GetCourseCategories()
+        public IQueryable GetCourseCategories()
         {
-            return db.CourseCategories.Include(c => c.Courses).ToList();
+                return _db.CourseCategories.Select(x => new
+                {
+                    x.CategoryName,
+                    x.CourseCategoryId,              
+                    
+                });
         }
 
         // GET: api/CourseCategories/5
         [ResponseType(typeof(CourseCategory))]
         public async Task<IHttpActionResult> GetCourseCategory(int id)
         {
-            CourseCategory courseCategory = await db.CourseCategories.FindAsync(id);
-            
+            var courseCategory = await _db.Courses.Where(x => x.CourseCategoryId.Equals(id))
+                                                                .Select(x => new
+                                                                {
+                                                                    x.CourseId,
+                                                                    x.CourseCode,
+                                                                    x.CourseDescription,
+                                                                    x.FileLocation,
+                                                                    x.CourseName,
+                                                                    x.CourseCategoryId,
+                                                                    x.ExpectedTime,
+                                                                    x.CourseCategory.CategoryName
+
+                                                                }).ToListAsync();
+
             //var courseCategory = await db.CourseCategories.Where(x => x.CourseCategoryId.Equals(id))
             //                            .Select(x => new
             //                            {
@@ -57,11 +74,11 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest();
             }
 
-            db.Entry(courseCategory).State = EntityState.Modified;
+            _db.Entry(courseCategory).State = EntityState.Modified;
 
             try
             {
-                await db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -87,8 +104,8 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            db.CourseCategories.Add(courseCategory);
-            await db.SaveChangesAsync();
+            _db.CourseCategories.Add(courseCategory);
+            await _db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = courseCategory.CourseCategoryId }, courseCategory);
         }
@@ -97,14 +114,14 @@ namespace CodedenimWebApp.Controllers.Api
         [ResponseType(typeof(CourseCategory))]
         public async Task<IHttpActionResult> DeleteCourseCategory(int id)
         {
-            CourseCategory courseCategory = await db.CourseCategories.FindAsync(id);
+            CourseCategory courseCategory = await _db.CourseCategories.FindAsync(id);
             if (courseCategory == null)
             {
                 return NotFound();
             }
 
-            db.CourseCategories.Remove(courseCategory);
-            await db.SaveChangesAsync();
+            _db.CourseCategories.Remove(courseCategory);
+            await _db.SaveChangesAsync();
 
             return Ok(courseCategory);
         }
@@ -113,14 +130,14 @@ namespace CodedenimWebApp.Controllers.Api
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool CourseCategoryExists(int id)
         {
-            return db.CourseCategories.Count(e => e.CourseCategoryId == id) > 0;
+            return _db.CourseCategories.Count(e => e.CourseCategoryId == id) > 0;
         }
     }
 }

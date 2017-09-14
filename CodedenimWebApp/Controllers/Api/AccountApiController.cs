@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
+using System.Web.Http.Description;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.Providers;
 using CodedenimWebApp.Results;
+using CodedenimWebApp.Service;
 using CodeninModel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -343,7 +348,11 @@ namespace CodedenimWebApp.Controllers.Api
             return Ok();
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
 
         // POST api/Account/RegisterStudent
         [System.Web.Http.AllowAnonymous]
@@ -385,14 +394,29 @@ namespace CodedenimWebApp.Controllers.Api
                Batch = model.NyscBatch,
                Discpline = model.Discpline
             };
+
             _db.Students.Add(corper);
             await _db.SaveChangesAsync();
             await this.UserManager.AddToRoleAsync(user.Id, "Corper");
 
-            return Ok();
+            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            // var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
+            var callbackUrl = EmailLink(user.Id, code);
+
+            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+           //         ViewBag.Link = callbackUrl;
+                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your Tutor account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                    //ViewBag.Link = callbackUrl;
+                  //  TempData["UserMessage"] = $"Registration is Successful for {user.UserName}, Please Confirm Your Email to Login.";
+                    return Ok("ConfirmRegistration");
+
         }
 
-
+        public string EmailLink(string userId, string code)
+        {
+           var url = this.Url.Link("Default", new { Controller = "Account" , Action = "ConfirmEmail", userId, code} );
+            return url;
+        }
 
         // POST api/Account/RegisterCorper
         [System.Web.Http.AllowAnonymous]
@@ -455,6 +479,72 @@ namespace CodedenimWebApp.Controllers.Api
 
             return Ok();
         }
+
+        /// <summary>
+        /// Email Confirmation
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+
+        [System.Web.Http.AllowAnonymous]
+        public async Task<IHttpActionResult> SendEmail()
+        {
+            var message = new IdentityMessage
+            {
+                Subject = "Confirm Email",
+                Destination = "davidzagi93@gmail.com",
+                Body = "this is to Confirm Password",
+
+            };
+
+            var send = new EmailService();
+            await send.SendAsync(message);
+           // ViewBag.Success = "Success";
+            return Ok();
+
+            // return await message;
+        }
+
+
+
+        [System.Web.Http.AllowAnonymous]
+        public async Task SendAsync(EmailSender message)
+        {
+            // Plug in your email service here to send an email.
+            string schoolName = ConfigurationManager.AppSettings["CODEDENIM"];
+            string emailsetting = ConfigurationManager.AppSettings["GmailUserName"];
+            MailMessage email = new MailMessage(new MailAddress($"noreply{emailsetting}", "(Codedenin Registration, do not reply)"),
+                new MailAddress(message.Destination));
+
+            email.Subject = message.Subject;
+            email.Body = message.Body;
+
+            email.IsBodyHtml = true;
+
+            using (var mailClient = new EmailSetUpServices())
+            {
+                //In order to use the original from email address, uncomment this line:
+                email.From = new MailAddress(mailClient.UserName, $"(do not reply)@{schoolName}");
+
+                await mailClient.SendMailAsync(email);
+            }
+        }
+
+        //
+        //// GET: /Account/ConfirmEmail
+        //[System.Web.Http.AllowAnonymous]
+        //public async Task<IHttpActionResult> ConfirmEmail(string userId, string code)
+        //{
+        //    if (userId == null || code == null)
+        //    {
+        //        return Ok("Error");
+        //    }
+        //    var result = await UserManager.ConfirmEmailAsync(userId, code);
+        //    return Ok(result.Succeeded ? "ConfirmEmail" : "Error");
+        //}
+
+
+
 
         // POST api/Account/RegisterExternal    
         [System.Web.Http.OverrideAuthentication]

@@ -2,8 +2,8 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Exam";
-    ViewBag.StudentId = "101Dav" /*Model.StudentId*/;
-    ViewBag.CourseId =  1/*Model.TopicId*/;
+    ViewBag.StudentId = @Model.StudentId;
+    ViewBag.CourseId = Model.TopicId;
     //ViewBag.LevelId = Model.LevelId;
 
 }
@@ -14,8 +14,8 @@
 <div class="well">
         <div class="row">
             <div class="col-md-6">
-                    <p><h3 class="text-accent-dark"><strong>Course: </strong> @Model.Topic.TopicId</h3></p>
-               
+            
+                @*<p><h3 class="text-accent-dark"><strong>Course: </strong>ViewBag.CourseId</h3></p>*@
                
             </div>
 
@@ -35,7 +35,7 @@
             <div class="col-md-12">
                 <p><h3>Answered Questions are in Green Color while UnAnswered Questions are in Red </h3></p>
 
-                <p>@Html.Action("Menu", "TakeQuiz", new {studentId = Model.StudentId, cousreId = Model.TopicId})</p>
+                <p>@Html.Action("Menu", "TakeQuiz", new {studentId = Model.StudentId, cousreId =Model.TopicId})</p>
             </div>
             </div>
 @*</div>

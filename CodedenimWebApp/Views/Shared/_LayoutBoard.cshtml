@@ -110,7 +110,12 @@
                 }
                 @if (User.IsInRole("Tutor"))
                 {
-                   <p> Login as Tut</p>
+                    <li @ViewBag.Courses>
+                        <a href="@Url.Action("Index", "Courses")">
+                            <i class="fa fa-book"></i>
+                            <p>Courses</p>
+                        </a>
+                    </li>
                 }
             </div>
      

@@ -401,7 +401,6 @@ namespace CodedenimWebApp.Controllers
                     Id = model.TutorId,
                     UserName = model.FirstName + " " + model.LastName,
                     Email = model.Email,
-                  
                     PhoneNumber = model.PhoneNumber.Trim(),
                   
                 };
@@ -424,7 +423,7 @@ namespace CodedenimWebApp.Controllers
 
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your Tutor account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
                     ViewBag.Link = callbackUrl;
                     //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your Tutor account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
                     //ViewBag.Link = callbackUrl;

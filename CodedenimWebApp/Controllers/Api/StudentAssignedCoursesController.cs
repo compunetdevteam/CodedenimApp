@@ -16,19 +16,19 @@ namespace CodedenimWebApp.Controllers.Api
 {
     public class StudentAssignedCoursesController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         // GET: api/StudentAssignedCourses
         public IEnumerable<StudentAssignedCourse> GetStudentAssignedCourses()
         {
-            return db.StudentAssignedCourses.Include(t => t.Courses).ToList();
+            return _db.StudentAssignedCourses.Include(t => t.Courses).ToList();
         }
         
         // GET: api/StudentAssignedCourses/5
         [ResponseType(typeof(StudentAssignedCourse))]
         public async Task<IHttpActionResult> GetStudentAssignedCourse(int id)
         {
-            StudentAssignedCourse studentAssignedCourse = await db.StudentAssignedCourses.FindAsync(id);
+            StudentAssignedCourse studentAssignedCourse = await _db.StudentAssignedCourses.FindAsync(id);
             if (studentAssignedCourse == null)
             {
                 return NotFound();
@@ -51,11 +51,11 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest();
             }
 
-            db.Entry(studentAssignedCourse).State = EntityState.Modified;
+            _db.Entry(studentAssignedCourse).State = EntityState.Modified;
 
             try
             {
-                await db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -74,19 +74,31 @@ namespace CodedenimWebApp.Controllers.Api
 
         // POST: api/StudentAssignedCourses
         [ResponseType(typeof(StudentAssignedCourse))]
-        public async Task<IHttpActionResult> PostStudentAssignedCourse(StudentAssignedCourse studentAssignedCourse)
+        public IHttpActionResult PostStudentAssignedCourse(StudentAssignedCourse studentAssignedCourse)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var email = studentAssignedCourse.StudentId;
-            var converter = new Convert();
-            studentAssignedCourse.StudentId = converter.ConvertEmailToId(email);
-            db.StudentAssignedCourses.Add(studentAssignedCourse);
-            await db.SaveChangesAsync();
+            var compare = new Convert();
+            var studentId = compare.ConvertEmailToId(studentAssignedCourse.StudentId);
+            var courseId = studentAssignedCourse.CourseId;
 
-            return CreatedAtRoute("DefaultApi", new { id = studentAssignedCourse.StudentAssignedCourseId }, studentAssignedCourse);
+
+            var isStudentCourseExist = _db.StudentAssignedCourses.Any(x => x.StudentId.Equals(studentId) &&
+                                                                       x.CourseId.Equals(courseId));
+
+
+            if (!isStudentCourseExist)
+            {
+                studentAssignedCourse.StudentId =studentId;
+                _db.StudentAssignedCourses.Add(studentAssignedCourse);
+                 _db.SaveChangesAsync();
+
+                return CreatedAtRoute("DefaultApi", new {id = studentAssignedCourse.StudentAssignedCourseId},
+                    studentAssignedCourse);
+            }
+            return Ok("Record Exist");
         }
 
        
@@ -95,14 +107,14 @@ namespace CodedenimWebApp.Controllers.Api
         [ResponseType(typeof(StudentAssignedCourse))]
         public async Task<IHttpActionResult> DeleteStudentAssignedCourse(int id)
         {
-            StudentAssignedCourse studentAssignedCourse = await db.StudentAssignedCourses.FindAsync(id);
+            StudentAssignedCourse studentAssignedCourse = await _db.StudentAssignedCourses.FindAsync(id);
             if (studentAssignedCourse == null)
             {
                 return NotFound();
             }
 
-            db.StudentAssignedCourses.Remove(studentAssignedCourse);
-            await db.SaveChangesAsync();
+            _db.StudentAssignedCourses.Remove(studentAssignedCourse);
+            await _db.SaveChangesAsync();
 
             return Ok(studentAssignedCourse);
         }
@@ -111,14 +123,14 @@ namespace CodedenimWebApp.Controllers.Api
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool StudentAssignedCourseExists(int id)
         {
-            return db.StudentAssignedCourses.Count(e => e.StudentAssignedCourseId == id) > 0;
+            return _db.StudentAssignedCourses.Count(e => e.StudentAssignedCourseId == id) > 0;
         }
     }
 
