@@ -137,7 +137,7 @@ namespace CodedenimWebApp.Controllers
             {
                 TempData["UserMessage"] = $"Login Successful, Welcome {username}";
                 TempData["Title"] = "Success.";
-                return RedirectToAction("TutorDashboard", "Home");
+                return RedirectToAction("TutorDashboard", "Tutors");
                 // return RedirectToAction("AdminDashboard", "Home");
             }
 

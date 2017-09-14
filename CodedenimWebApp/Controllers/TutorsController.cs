@@ -72,6 +72,7 @@ namespace CodedenimWebApp.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
 
+           
         public async Task<ActionResult> TutorDashboard()
         {
             var tutorId = User.Identity.GetUserId();
@@ -109,7 +110,7 @@ namespace CodedenimWebApp.Controllers
             //{
             //    return HttpNotFound();
             //}
-            return View(tutor);
+            return View();
         }
 
         // GET: Tutors/Create
