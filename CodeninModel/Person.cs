@@ -51,6 +51,7 @@ namespace CodeninModel
 
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
         public DateTime? DateOfBirth { get; set; }
 
         public int? Age
