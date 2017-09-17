@@ -69,8 +69,8 @@
 	text-align: center;
 }
 .mycard {
-	border-radius: 50px !important;
-	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+	border-radius: 30% !important;
+	box-shadow: 0 4px 8px 0 #000;
 	transition: 0.3s;
 	-moz-transition: 0.3s;
 	-o-transition: 0.3s;

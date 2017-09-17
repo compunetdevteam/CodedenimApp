@@ -1,12 +1,14 @@
 ﻿@model CodedenimWebApp.Models.IndexViewModel
 @{
     ViewBag.Title = "Manage";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
 }
 
+<div class="container-fluid">
 <h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
-<div>
+<div class="container-fluid">
     <h4>Change your account settings</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -85,3 +87,4 @@
         </dd>
     </dl>
 </div>
+    </div>

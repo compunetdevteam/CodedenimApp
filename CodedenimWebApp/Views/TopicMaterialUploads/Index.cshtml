@@ -10,7 +10,7 @@
     <h2>Topic Materials</h2>
     <br />
     <p>
-        @Html.ActionLink("CREATE TOPIC MATERIAL", "Create", null, new { @class = "my-class" })
+        @Html.ActionLink("CREATE TOPIC MATERIAL", "Create", null, new { @class = "my-class; btn" })
     </p>
     <table class="table">
         <tr>
@@ -57,9 +57,9 @@
                     @Html.DisplayFor(modelItem => item.FileLocation)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.TopicMaterialUploadId }, new { @class = "my-class" }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.TopicMaterialUploadId }, new { @class = "my-class" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.TopicMaterialUploadId }, new { @class = "my-class" })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.TopicMaterialUploadId }, new { @class = "my-class; btn" })
+                    @Html.ActionLink("Details", "Details", new { id = item.TopicMaterialUploadId }, new { @class = "my-class; btn" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.TopicMaterialUploadId }, new { @class = "my-class; btn" })
                 </td>
             </tr>}
 

@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Delete";
-    Layout = "~/Views/Shared/_LayputBoard.cshtml";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
 }
 
 <div class="container-fluid">
@@ -180,7 +180,7 @@
             @Html.AntiForgeryToken()
 
             <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-default" /> |
+                <button class="btn btn-danger">Delete</button>|
                 @Html.ActionLink("Back to List", "Index")
             </div>}
     </div>

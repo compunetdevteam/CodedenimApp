@@ -1,128 +1,184 @@
-﻿@model CodeninModel.Tutor
+﻿@using CodeninModel
+@model CodeninModel.Tutor
 
 @{
     ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
 }
 
-<h2>Details</h2>
+<div class="container-fluid">
+    <h2>Details</h2>
 
-<div>
-    <h4>Tutor</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        
+    <div>
+        <h4>Tutor</h4>
+        <hr />
+        <dl class="dl-horizontal">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActiveTutor)
-        </dt>
+            <dd>
+                <img src="@Url.Action("RenderImage", new { studentId = Model.TutorId})" alt="avatar" />
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsActiveTutor)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ActiveStatus)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ActiveStatus)
-        </dd>
+            @*<img src="@Url.Content()" alt="avatar" />*@
+            <dt>
+                @Html.DisplayNameFor(model => model.Designation)
+            </dt>
 
-       
+            <dd>
+                @Html.DisplayFor(model => model.Designation)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.MaritalStatus)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.MaritalStatus)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MiddleName)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.IsActiveTutor)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.MiddleName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.IsActiveTutor)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.ActiveStatus)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.ActiveStatus)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.StaffRole)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.StaffRole)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.MiddleName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.MiddleName)
+            </dd>
 
-        
-        <dt>
-            @Html.DisplayNameFor(model => model.IsAcctive)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsAcctive)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Gender)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateOfBirth)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Gender)
+            </dd>
 
-       
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Passport)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Passport)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </dt>
 
-    </dl>
-    <table>
-        <tr>
-            <th>Cousre Code</th>
-            <th>COurse Name</th>
-        </tr>
-        @foreach(var course in Model.TutorCourses)
-    {
-        <tr>
-            <td>@course.Courses.CourseCode</td>
-            <td>@course.Courses.CourseName</td>
-        </tr>
-    }
-    </table>
-    
- 
+            <dd>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TownOfBirth)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TownOfBirth)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.StateOfOrigin)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.StateOfOrigin)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Nationality)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nationality)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CountryOfBirth)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CountryOfBirth)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IsAcctive)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IsAcctive)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DateOfBirth)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Age)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Age)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Passport)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Passport)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.TutorId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.TutorId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
