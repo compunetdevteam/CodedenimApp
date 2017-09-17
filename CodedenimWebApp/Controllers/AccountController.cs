@@ -8,10 +8,12 @@ using Microsoft.Owin.Security;
 using System.Configuration;
 using System.Data.Entity;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
@@ -390,7 +392,7 @@ namespace CodedenimWebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> TutorRegistration(TutorRegisterVm model)
+        public async Task<ActionResult> TutorRegistration(TutorRegisterVm model,  HttpPostedFileBase File)
         {
             var tutorInDb = _db.Tutors.Find(model.TutorId);
 
@@ -409,8 +411,23 @@ namespace CodedenimWebApp.Controllers
                    
                 if (result.Succeeded && (tutorInDb != null))
                 {
-                 
-                
+
+                    string _FileName = String.Empty;
+                    if (File.ContentLength > 0)
+                    {
+                        _FileName = Path.GetFileName(File.FileName);
+                        string path = HostingEnvironment.MapPath("~/Profile_Pics/") + _FileName;
+                        tutorInDb.ImageLocation = path;
+                        var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/Profile_Pics/"));
+                        if (directory.Exists == false)
+                        {
+                            directory.Create();
+                        }
+                        File.SaveAs(path);
+                    }
+                    tutorInDb.ImageLocation = _FileName;
+
+
                     tutorInDb.Email = model.Email;
 
                     tutorInDb.DateOfBirth = model.DateOfBirth;

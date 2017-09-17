@@ -267,6 +267,14 @@
     <Compile Include="Migrations\201709140137262_Create_theRating_Model.Designer.cs">
       <DependentUpon>201709140137262_Create_theRating_Model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709141410186_added_ImageLocationInTutorDB.cs" />
+    <Compile Include="Migrations\201709141410186_added_ImageLocationInTutorDB.Designer.cs">
+      <DependentUpon>201709141410186_added_ImageLocationInTutorDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709141518025_changeImageName.cs" />
+    <Compile Include="Migrations\201709141518025_changeImageName.Designer.cs">
+      <DependentUpon>201709141518025_changeImageName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -288,6 +296,7 @@
     <Compile Include="ViewModels\ForumQA_Vm.cs" />
     <Compile Include="ViewModels\TutorCreateVm.cs" />
     <Compile Include="ViewModels\TutorRegisterVm.cs" />
+    <Compile Include="ViewModels\TutorRegistrationVm.cs" />
     <Compile Include="ViewModels\TutorsIndexVm.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -829,6 +838,7 @@
     <Folder Include="Content\TutorFiles\" />
     <Folder Include="Controllers\Api\ForumApi\" />
     <Folder Include="MaterialUpload\" />
+    <Folder Include="Profile_Pics\" />
     <Folder Include="uploads\" />
     <Folder Include="Views\MultipleButtonAttribute\" />
   </ItemGroup>
@@ -868,6 +878,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709140137262_Create_theRating_Model.resx">
       <DependentUpon>201709140137262_Create_theRating_Model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709141410186_added_ImageLocationInTutorDB.resx">
+      <DependentUpon>201709141410186_added_ImageLocationInTutorDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709141518025_changeImageName.resx">
+      <DependentUpon>201709141518025_changeImageName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
