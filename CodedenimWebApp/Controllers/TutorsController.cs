@@ -54,7 +54,7 @@ namespace CodedenimWebApp.Controllers
             if (!string.IsNullOrEmpty(search))
             {
                 //v = v.OrderBy(sortColumn + " " + sortColumnDir);
-                v = db.Tutors.Where(x =>  (x.TutorId.Equals(search) || x.FirstName.Equals(search) || x.LastName.Equals(search) || x.MiddleName.Equals(search) || x.Email.Equals(search)))
+                v = db.Tutors.Where(x =>  (x.TutorId.Equals(search) || x.FirstName.Equals(search) || x.MiddleName.Equals(search) || x.LastName.Equals(search) || x.Email.Equals(search)))
                     .Select(s => new { s.TutorId, s.FirstName, s.MiddleName, s.LastName,s.Email }).ToList();
             }
             totalRecords = v.Count();
@@ -65,6 +65,7 @@ namespace CodedenimWebApp.Controllers
 
             //return Json(new { data = await Db.Subjects.AsNoTracking().Select(s => new { s.SubjectId, s.SubjectCode, s.SubjectName }).ToListAsync() }, JsonRequestBehavior.AllowGet);
         }
+
 
 
         public async Task<PartialViewResult> CreateTutorPartial() 
@@ -81,8 +82,9 @@ namespace CodedenimWebApp.Controllers
                // return RedirectToAction("Index");
             }
 
-           
-            return PartialView();
+            //return RedirectToAction("Index");
+
+             return PartialView();
         }
         public async Task<ActionResult> TutorDashboard()
         {
