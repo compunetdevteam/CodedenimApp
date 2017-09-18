@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNet.Identity
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -13,20 +12,16 @@
     <meta name="viewport" content="width=device-width" />
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="~/Content/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/font-awesome-4.7.0/css/font-awesome.min.css"> 
 
     <!-- Bootstrap core CSS     -->
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
-
+    <link href="~/Content/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />
+    
     <!-- Animation library for notifications   -->
     <link href="~/Content/animate.min.css" rel="stylesheet"/>
-
     <!--  Paper Dashboard core CSS    -->
     <link href="~/Content/paper-dashboard.css" rel="stylesheet"/>
-    
-    <!-- Material Design Bootstrap -->
-    <link href="~/Content/Css/mdb.css" rel="stylesheet">
-
     <link href="~/Content/Demo.css" rel="stylesheet">
 
 
@@ -50,16 +45,22 @@
 
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="@Url.Action("AdminDashboard", "Home")" class="simple-text">
+                    <a href="@Url.Action("", "Home")" class="simple-text">
                         <img src="~/Content/img/CodeDemin.png" height="50" width="50"/>
 
                         Code-Denim
-                    </a>
-                    <p>@ViewBag.Role</p>
-                    <img src="~/Content/img/Sebig.png" height="50" width="50" class="img-fluid rounded-circle" style="border-radius: 50%; display: block;">
+                    </a>              
+                    <img src="~/Content/img/Sebig.png" height="50" width="50" class="img-fluid rounded-circle"
+                         style="border-radius: 50%; display: block; margin-left: 40%;">
+
+                    @Html.ActionLink("Hello  " + User.Identity.GetUserName() + "!", "Index", "Manage", null, 
+                   new{style = "color:#093;padding:5px;"})
+                   
                 </div>
-                
-                @if (User.IsInRole("Admin"))
+               
+                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    //The View that only an admin can view and access
+                   
                 {
 
                     <ul class="nav">
@@ -71,14 +72,14 @@
                         </li>
                         <li @ViewBag.Courses>
                             <a href="@Url.Action("Index", "Courses")">
-                                <i class="fa fa-book"></i>
+                                <i class="fa fa-graduation-cap"></i>
                                 <p>Courses</p>
                             </a>
                         </li>
 
                         <li @ViewBag.Topics>
                             <a href="@Url.Action("Index", "Topics")">
-                                <i class="fa fa-pencil"></i>
+                                <i class="fa fa-book"></i>
                                 <p>Topics</p>
                             </a>
                         </li>
@@ -108,14 +109,49 @@
                         </li>
                     </ul>
                 }
-                @if (User.IsInRole("Tutor"))
+                //The View only the Tutor can see and access
+                else if (Request.IsAuthenticated && User.IsInRole("Tutor"))
                 {
-                    <li @ViewBag.Courses>
-                        <a href="@Url.Action("Index", "Courses")">
-                            <i class="fa fa-book"></i>
-                            <p>Courses</p>
-                        </a>
-                    </li>
+
+                    <ul class="nav">
+                        <li @ViewBag.Administrator>
+                            <a href="@Url.Action("TutorDashBoard", "Tutors")">
+                                <i class="fa fa-home"></i>
+                                <p>My DashBoard</p>
+                            </a>
+                        </li>
+                        <li @ViewBag.Courses>
+                            <a href="@Url.Action("Index", "Courses")">
+                                <i class="fa fa-book"></i>
+                                <p>Courses</p>
+                            </a>
+                        </li>
+
+                        <li @ViewBag.Topics>
+                            <a href="@Url.Action("Index", "Topics")">
+                                <i class="fa fa-graduation-cap"></i>
+                                <p>Topics</p>
+                            </a>
+                        </li>
+                        <li @ViewBag.Category>
+                            <a href="@Url.Action("Index", "CourseCategories")">
+                                <i class="fa fa-file"></i>
+                                <p>Course Category</p>
+                            </a>
+                        </li>
+                        <li @ViewBag.Materials>
+                            <a href="@Url.Action("Index", "TopicMaterialUploads")">
+                                <i class="fa fa-th"></i>
+                                <p>Materials</p>
+                            </a>
+                        </li>
+                        <li @ViewBag.Modules>
+                            <a href="@Url.Action("Index", "Modules")">
+                                <i class="fa fa-list"></i>
+                                <p>Modules</p>
+                            </a>
+                        </li>                     
+                    </ul>
                 }
             </div>
      
@@ -131,18 +167,63 @@
                     <span class="icon-bar bar2"></span>
                     <span class="icon-bar bar3"></span>
                 </button>
-                <a class="navbar-brand" href="#" style="color: #fff; text-shadow:2px 2px 2px black">@ViewBag.Title</a>
+                <a class="navbar-brand" href="#" style="color: #fff; text-shadow:1px 1px 1px black">@ViewBag.Title</a>
             </div>
+            @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-home"></i>
+                                <p>Home</p>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-users"></i>
+                                <p>Users</p>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("Index","Tutors")">Tutors</a></li>
+                                <li><a href="@Url.Action("Index","Students")">Undergraduates</a></li>
+                                <li><a href="#">Corps Members</a></li>
+
+                            </ul>
+                        </li>          
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                                <i class="fa fa-user"></i>
+                                <p>Profile</p>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("Index", "Manage")">My Profile</a></li>                           
+                                @using Microsoft.AspNet.Identity
+                                @if (Request.IsAuthenticated)
+                                {
+
+                                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", style = "padding:4px;" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a href="javascript:document.getElementById('logoutForm').submit()">
+                                            
+                                            <p style="padding-left: 10px;color:#000">Logout</p>
+                                        </a></li>
+                                    }
+                                } 
+                            </ul>
+                        </li>                  
+                    </ul>
+                    
+                   
+                </div>
+            }
+            else if(Request.IsAuthenticated && User.IsInRole("Tutor"))
+            {
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    
-                    @if (Request.IsAuthenticated)
-{
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm"}))
-    {
-                        @Html.AntiForgeryToken()
-
-
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-home"></i>
@@ -155,50 +236,49 @@
                             <p>Users</p>
                             <b class="caret"></b>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="@Url.Action("Index", "Tutors")">Tutors</a></li>
-                            <li><a href="@Url.Action("Index", "Students")">Undergraduates</a></li>
+                        <ul class="dropdown-menu">                         
+                            <li><a href="@Url.Action("Index","Students")">Undergraduates</a></li>
                             <li><a href="#">Corps Members</a></li>
 
                         </ul>
-                    </li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-user"></i>
-                <p>Profile</p>
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="#">My Profile</a></li>
-                <li><a href="@Url.Action("LogOff", "Account")">LogOut</a></li>
+                    </li>          
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                            <i class="fa fa-user"></i>
+                            <p>Profile</p>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("Index", "Manage")">My Profile</a></li>                           
+                            @using Microsoft.AspNet.Identity
+                            @if (Request.IsAuthenticated)
+                            {
 
-            </ul>
-        </li>
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-
-    }
-}
-                    else
-                    {
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>@Html.ActionLink("Register Tutor", "Create", "Tutors", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                            <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", style = "padding:4px;" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <li><a href="javascript:document.getElementById('logoutForm').submit()"><p>Log off</p></a></li>
+                                }
+                            } 
                         </ul>
-                    }
-
+                    </li>                  
                 </ul>
-
+                }
             </div>
+            }
+
         </div>
     </nav>
         @RenderBody() 
     <!--   Core JS Files   -->
+    <script src="/Scripts/jquery-3.1.1.min.js"></script>
     <script src="~/Scripts/paper/jquery-1.10.2.js" type="text/javascript"></script>
+    <!--   Bootstrap Files   -->
     <script src="~/Scripts/paper/bootstrap.min.js" type="text/javascript"></script>
-
+    <!--   DataTable Files  -->
+    <script src="~/Scripts/DataTables/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+    
     <!--  Checkbox, Radio & Switch Plugins -->
     <script src="~/Scripts/paper/bootstrap-checkbox-radio.js"></script>
 
@@ -215,8 +295,6 @@
     <script src="~/Scripts/paper/paper-dashboard.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="~/Scripts/mdb.min.js"></script>
-    
-
 
     @RenderSection("scripts", required: false)
 </div>
