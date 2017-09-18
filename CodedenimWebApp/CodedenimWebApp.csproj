@@ -317,6 +317,8 @@
     <Compile Include="ViewModels\DisplayQuestionViewModel.cs" />
     <Compile Include="ViewModels\ForumQA_Vm.cs" />
     <Compile Include="ViewModels\TutorCreateVm.cs" />
+    <Compile Include="ViewModels\TutorRegisterVm.cs" />
+    <Compile Include="ViewModels\TutorRegistrationVm.cs" />
     <Compile Include="ViewModels\TutorsIndexVm.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -719,6 +721,28 @@
     <Content Include="Views\Shared\_LayoutTutor.cshtml" />
     <Content Include="Views\Home\TutorDashboard.cshtml" />
     <Content Include="Views\Tutors\ConfirmTutor.cshtml" />
+    <Content Include="Views\CourseForum\Create.cshtml" />
+    <Content Include="Views\CourseForum\Delete.cshtml" />
+    <Content Include="Views\CourseForum\Details.cshtml" />
+    <Content Include="Views\CourseForum\Edit.cshtml" />
+    <Content Include="Views\CourseForum\Index.cshtml" />
+    <Content Include="Views\Forum\Create.cshtml" />
+    <Content Include="Views\Forum\Delete.cshtml" />
+    <Content Include="Views\Forum\Details.cshtml" />
+    <Content Include="Views\Forum\Edit.cshtml" />
+    <Content Include="Views\Forum\Index.cshtml" />
+    <Content Include="Views\ForumAnswers\Create.cshtml" />
+    <Content Include="Views\ForumAnswers\Delete.cshtml" />
+    <Content Include="Views\ForumAnswers\Details.cshtml" />
+    <Content Include="Views\ForumAnswers\Edit.cshtml" />
+    <Content Include="Views\ForumAnswers\Index.cshtml" />
+    <Content Include="Views\ForumQuestions\Create.cshtml" />
+    <Content Include="Views\ForumQuestions\Delete.cshtml" />
+    <Content Include="Views\ForumQuestions\Details.cshtml" />
+    <Content Include="Views\ForumQuestions\Edit.cshtml" />
+    <Content Include="Views\ForumQuestions\Index.cshtml" />
+    <Content Include="Views\Tutors\CreateTutorPartial.cshtml" />
+    <Content Include="Views\Tutors\TutorDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
