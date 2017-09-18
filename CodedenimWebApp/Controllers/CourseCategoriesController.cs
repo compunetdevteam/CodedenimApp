@@ -37,6 +37,7 @@ namespace CodedenimWebApp.Controllers
             return View(courseCategory);
         }
 
+
         // GET: CourseCategories/Create
         public ActionResult Create()
         {

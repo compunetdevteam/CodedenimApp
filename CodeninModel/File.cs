@@ -10,7 +10,7 @@ namespace CodeninModel
     public class File
     {
         public int FileId { get; set; }
-        [StringLength(255)]
+        [StringLength(355)]
         public string FileName { get; set; }
         [StringLength(100)]
         public string ContentType { get; set; }

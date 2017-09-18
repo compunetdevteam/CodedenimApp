@@ -51,6 +51,7 @@ namespace CodeninModel
 
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
         public DateTime? DateOfBirth { get; set; }
 
         public int? Age
@@ -71,33 +72,6 @@ namespace CodeninModel
 
         public byte[] Passport { get; set; }
 
-        [Display(Name = "Upload A Passport/Picture")]
-        [ValidateFile(ErrorMessage = "Please select a PNG/JPEG image smaller than 20kb")]
-        [NotMapped]
-        public HttpPostedFileBase File
-        {
-            get
-            {
-                return null;
-            }
-
-            set
-            {
-                try
-                {
-                    var target = new MemoryStream();
-
-                    if (value.InputStream == null)
-                        return;
-
-                    value.InputStream.CopyTo(target);
-                    Passport = target.ToArray();
-                }
-                catch (Exception ex)
-                {
-                    var message = ex.Message;
-                }
-            }
-        }
+     
     }
 }

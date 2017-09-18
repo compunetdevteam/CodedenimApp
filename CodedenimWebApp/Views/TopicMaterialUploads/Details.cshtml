@@ -1,71 +1,133 @@
-﻿@model CodeninModel.TopicMaterialUpload
+﻿@using CodeninModel
+@model CodeninModel.TopicMaterialUpload
 
 @{
     ViewBag.Title = "Topic Material Details";
-    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
 }
+<br /><br /><br /><br /><br />
+<div class="container">
 
-    <div class="container-fluid">
+    <h2>Details</h2>
 
-        <h2>Details</h2>
+    <div>
+        <h4>TopicMaterialUpload</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Course.TopicName)
+            </dt>
 
-        <div>
-            <h4>TopicMaterialUpload</h4>
-            <hr />
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.Course.TopicName)
-                </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Course.TopicName)
+            </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Course.TopicName)
-                </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Tutor)
+            </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Tutor)
-                </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Tutor)
+            </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Tutor)
-                </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.FileType)
+            </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.FileType)
-                </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FileType)
+            </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.FileType)
-                </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Name)
-                </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Name)
-                </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Description)
-                </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Description)
-                </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.FileLocation)
+            </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.FileLocation)
-                </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FileLocation)
+            </dd>
+            
 
-                <dd>
-                    @Html.DisplayFor(model => model.FileLocation)
-                </dd>
 
-            </dl>
-        </div>
-        <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.TopicMaterialUploadId }) |
-            @Html.ActionLink("Back to List", "Index")
-        </p>
+        </dl>
     </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.TopicMaterialUploadId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>
 
+
+
+<div>
+    @if (Model.FileType == FileType.MP4)
+    {
+        <div style="text-align:center">
+            <button onclick="playPause()">Play/Pause</button>
+            <button onclick="makeBig()">Big</button>
+            <button onclick="makeSmall()">Small</button>
+            <button onclick="makeNormal()">Normal</button>
+            <br><br>
+            @*<video controls="controls">
+                <source src="~/TopicMaterials/How%20to%20Use%20our%20Learning%20Management%20System.mp4" type="video/mp4" />
+            </video>*@
+            <video controls="controls" id="video1" width="420">
+                <source src="~/MaterialUpload/@Model.FileLocation" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+        </div>
+    }
+    else if (Model.FileType == FileType.PDF)
+    {
+        @*<iframe src="~/TopicMaterials/@Model.FileLocation" style="width: 100%;height: 100%;border: none;"></iframe>*@
+        <object data="~/MaterialUpload/@Model.FileLocation" type="application/pdf">
+            @*<embed src="~/TopicMaterials/@Model.FileLocation" width="500" height="375" type='application/pdf'></embed>*@
+            <iframe src="~/MaterialUpload/@Model.FileLocation" style="width: 100%;height: 100%;border: none;"></iframe>
+
+
+        </object>
+       
+    }
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TopicMaterialUploadId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+<script>
+
+    var myVideo = document.getElementById("video1");
+
+    function playPause() {
+        if (myVideo.paused)
+            myVideo.play();
+        else
+            myVideo.pause();
+    }
+
+    function makeBig() {
+        myVideo.width = 560;
+    }
+
+    function makeSmall() {
+        myVideo.width = 320;
+    }
+
+    function makeNormal() {
+        myVideo.width = 420;
+    }
+</script>

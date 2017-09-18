@@ -97,8 +97,8 @@ namespace CodedenimWebApp.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
+        [Display(Name = "Email & User Name")]
+        //[EmailAddress]
         public string Email { get; set; }
 
         [Required]

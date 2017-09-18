@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
-using Microsoft.AspNet.Identity;
-
 using System.Web.Mvc;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
-using Microsoft.AspNet.Identity.EntityFramework;
-using File = CodeninModel.File;
+using Microsoft.AspNet.Identity;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -23,124 +17,107 @@ namespace CodedenimWebApp.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Tutors
-        //public async Task<ActionResult> Index()
-        //{
-        //    return View(await db.Tutors.ToListAsync());
-        //}
-
-
-
-        public ActionResult Index(string id, int? courseId)
+        public async Task<ActionResult> Index()
         {
-            var viewModel = new TutorsIndexVm();
-
-            viewModel.Tutors = db.Tutors
-                .Include(i => i.Courses.Select(c => c.CourseCategory))
-                .OrderBy(i => i.LastName);
-
-            if (id != null)
-            {
-                ViewBag.TutorId = id;
-                viewModel.Courses = viewModel.Tutors.Single(i => i.TutorId == id).Courses;
-            }
-
-            if (courseId != null)
-            {
-                ViewBag.CourseId = courseId.Value;
-                // Lazy loading
-                //viewModel.Enrollments = viewModel.Courses.Where(
-                //    x => x.CourseID == courseID).Single().Enrollments;
-                // Explicit loading
-                var selectedCourse = viewModel.Courses.Where(x => x.CourseId == courseId).Single();
-                db.Entry(selectedCourse).Collection(x => x.Enrollments).Load();
-                foreach (Enrollment enrollment in selectedCourse.Enrollments)
-                {
-                    db.Entry(enrollment).Reference(x => x.Student).Load();
-                }
-
-                viewModel.Enrollments = selectedCourse.Enrollments;
-            }
-
-            return View(viewModel);
+            return View(await db.Tutors.ToListAsync());
         }
 
 
+        public async Task<ActionResult> GetIndex()
+        {
+            #region Server Side filtering
+            //Get parameter for sorting from grid table
+            // get Start (paging start index) and length (page size for paging)
+            var draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var start = Request.Form.GetValues("start").FirstOrDefault();
+            var length = Request.Form.GetValues("length").FirstOrDefault();
+            //Get Sort columns values when we click on Header Name of column
+            //getting column name
+            var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            //Soring direction(either desending or ascending)
+            var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            string search = Request.Form.GetValues("search[value]").FirstOrDefault();
 
-        /// <summary>
-        /// This Method Get the Details of the Current logged in Tutors Id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+            int pageSize = length != null ? Convert.ToInt32(length) : 0;
+            int skip = start != null ? Convert.ToInt32(start) : 0;
+            int totalRecords = 0;
+
+            //var v = Db.Subjects.Where(x => x.SchoolId != userSchool).Select(s => new { s.SubjectId, s.SubjectCode, s.SubjectName }).ToList();
+            var v = db.Tutors.Select(s => new { s.TutorId, s.FirstName, s.MiddleName,s.LastName,s.Email }).ToList();
+
+            //var v = Db.Subjects.Where(x => x.SchoolId.Equals(userSchool)).Select(s => new { s.SubjectId, s.SubjectCode, s.SubjectName }).ToList();
+            //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
+            //{
+            //    //v = v.OrderBy(sortColumn + " " + sortColumnDir);
+            //    v = new List<Subject>(v.OrderBy(x => "sortColumn + \" \" + sortColumnDir"));
+            //}
+            if (!string.IsNullOrEmpty(search))
+            {
+                //v = v.OrderBy(sortColumn + " " + sortColumnDir);
+                v = db.Tutors.Where(x =>  (x.TutorId.Equals(search) || x.FirstName.Equals(search) || x.LastName.Equals(search) || x.MiddleName.Equals(search) || x.Email.Equals(search)))
+                    .Select(s => new { s.TutorId, s.FirstName, s.MiddleName, s.LastName,s.Email }).ToList();
+            }
+            totalRecords = v.Count();
+            var data = v.Skip(skip).Take(pageSize).ToList();
+
+            return Json(new { draw = draw, recordsFiltered = totalRecords, recordsTotal = totalRecords, data = data }, JsonRequestBehavior.AllowGet);
+            #endregion
+
+            //return Json(new { data = await Db.Subjects.AsNoTracking().Select(s => new { s.SubjectId, s.SubjectCode, s.SubjectName }).ToListAsync() }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public async Task<PartialViewResult> CreateTutorPartial() 
+        {
+            return PartialView();
+        }
+        [HttpPost]
+        public async Task<PartialViewResult> CreateTutorPartial(Tutor tutor)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Tutors.Add(tutor);
+                await db.SaveChangesAsync();
+               // return RedirectToAction("Index");
+            }
 
            
+            return PartialView();
+        }
         public async Task<ActionResult> TutorDashboard()
         {
-            var tutorId = User.Identity.GetUserId();
-            Tutor tutor = db.Tutors.FirstOrDefault(t => t.TutorId == tutorId);
+            var tutor = User.Identity.GetUserId();
+
+
+
+            var tutorCourses = db.TutorCourses.AsNoTracking().Where(t => t.TutorId.Equals(tutor))
+                                                                .Select(c => c.Courses).ToList();
+
             return View();
-        }
-
-        public async Task<ActionResult> RenderImage(string TutorId)
-        {
-            var tutor = await db.Tutors.FindAsync(TutorId);
-
-            byte[] photoBack = tutor.Passport;
-
-            return File(photoBack, "image/png");
         }
 
         // GET: Tutors/Details/5
         public async Task<ActionResult> Details(string id)
         {
-           // var username = User.Identity.GetUserId();
-            //var user = await Db.Users.AsNoTracking().Where(c => c.Id.Equals(username)).Select(c => c.Email).FirstOrDefaultAsync();
-            //if (id == null)
-            //{
-            //    id = username;
-            //}
-
-            Tutor tutor = await db.Tutors.FindAsync(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Tutor tutor = await db.Tutors.Include(i => i.TutorCourses).Where(x => x.TutorId.Equals(id))
+                .FirstOrDefaultAsync();
             if (tutor == null)
             {
                 return HttpNotFound();
             }
-            // Tutor tutor =   db.Tutors.Include(s => s.Files).SingleOrDefault(s => s.TutorId == id);
-            // Tutor tutor = await db.Tutors.FindAsync(id);
-            //if (tutor == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            return View();
+            return View(tutor);
         }
 
         // GET: Tutors/Create
         public ActionResult Create()
         {
-            var tutor = new Tutor();
-            ViewBag.Roles = new SelectList(db.Roles.ToList(), "Id", "Name");
-            tutor.Courses = new List<Course>();
-            PopulateAssignedCourseData(tutor);
+           // ViewBag.Gender = new SelectList(Enum.GetValues(typeof(Gender), "Gender", "Gender");
             return View();
         }
-
-        //method to populate the assigned course in the the create view
-        private void PopulateAssignedCourseData(Tutor tutor)
-        {
-            var allCourses = db.Courses;
-            var instructorCourses = new HashSet<int>(tutor.Courses.Select(c => c.CourseId));
-            var viewModel = new List<AssignedCourses>();
-            foreach (var course in allCourses)
-            {
-                viewModel.Add(new AssignedCourses
-                {
-                    CourseId = course.CourseId,
-                    CourseName = course.CourseName,
-                    Assigned = instructorCourses.Contains(course.CourseId)
-                });
-            }
-            ViewBag.Courses = viewModel;
-        }
-
 
         // POST: Tutors/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -149,66 +126,49 @@ namespace CodedenimWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Tutor tutor)
         {
-
-            var store = new UserStore<ApplicationUser>(db);
-            var manager = new UserManager<ApplicationUser>(store);
-
-
-            //if (selectedCourses != null)
-            //{
-            //    tutor.Courses = new List<Course>();
-            //    foreach (var course in selectedCourses)
-            //    {
-            //        var courseToAdd = db.Courses.Find(int.Parse(course));
-            //        if (courseToAdd == null) throw new ArgumentNullException(nameof(courseToAdd));
-            //        tutor.Courses.Add(courseToAdd);
-            //    }
-            //}
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser
-                {
-                    Id = tutor.TutorId,
-                    UserName = tutor.FirstName + " " + tutor.LastName,
-                    Email = tutor.Email,
-                    PhoneNumber = tutor.PhoneNumber
-
-                };
-               
-                manager.Create(user,tutor.TutorId);
-                tutor = new Tutor
-                {
-                    TutorId = tutor.TutorId,
-                    FirstName = tutor.FirstName,
-                    LastName = tutor.LastName,
-                    DateOfBirth = tutor.DateOfBirth,
-                    Passport = tutor.Passport,
-
-                    
-                };
-
                 db.Tutors.Add(tutor);
                 await db.SaveChangesAsync();
-              
                 return RedirectToAction("Index");
             }
 
             return View(tutor);
         }
 
+        public async Task<ActionResult> ConfirmTutor()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public async Task<ActionResult> ConfirmTutor(string tutorId)
         {
-           // bool tutorIsExist = false;
+            // bool tutorIsExist = false;
             if (tutorId == null)
-            {    
+            {
+
             }
-            Tutor tutor = await db.Tutors.FindAsync(tutorId);
-            return View(tutor);
+
+
+            var tutor = db.Tutors.AsNoTracking()
+                .FirstOrDefault(t => t.TutorId.Equals(tutorId));
+
+            if (tutor == null)
+            {
+                ViewBag.Message = "This Id Does Not Exist";
+                return View();
+            }
+            var tutorVm = new TutorRegisterVm();
+            tutorVm.FirstName = tutor.FirstName;
+            tutorVm.TutorId = tutor.TutorId;
+            tutorVm.LastName = tutor.LastName;
+            return View("info", tutorVm);
         }
 
         // GET: Tutors/Edit/5
         public async Task<ActionResult> Edit(string id)
-        {   
+        {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

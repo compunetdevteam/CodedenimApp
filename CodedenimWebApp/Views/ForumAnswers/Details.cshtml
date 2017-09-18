@@ -1,0 +1,50 @@
+﻿@model CodeninModel.Forums.ForumAnswer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ForumAnswer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ForumQuestions.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ForumQuestions.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Answer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Answer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReplyDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReplyDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ForumAnswerId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

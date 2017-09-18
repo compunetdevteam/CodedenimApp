@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CodedenimWebApp.Models;
 
 namespace CodedenimWebApp.Controllers
 {
 	public class HomeController : Controller
 	{
-		//CodeDenim/
-		public ActionResult Index()
+	    private ApplicationDbContext _db;
+
+	    public HomeController()
+	    {
+            _db = new ApplicationDbContext();
+        }
+        //CodeDenim/
+        public ActionResult Index()
 		{
 			return View();
 		}
@@ -25,7 +32,14 @@ namespace CodedenimWebApp.Controllers
 	    [Authorize(Roles = "Admin")]
         public ActionResult AdminDashboard()
 		{
-			return View();
+            //get rating for specific courses
+            ViewBag.Likes = _db.CourseRatings.Count(x => x.Rating == 1);
+            ViewBag.Dislikes = _db.CourseRatings.Count(x => x.Dislike == 1);
+            ViewBag.TotalCourses = _db.Courses.Count();
+		    ViewBag.TotalTopics = _db.Topics.Count();
+		    ViewBag.TotalStudents = _db.Students.Count();
+		    ViewBag.TotalTutors = _db.Tutors.Count();
+            return View();
 		}
 
 		public ActionResult About()

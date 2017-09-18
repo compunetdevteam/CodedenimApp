@@ -16,19 +16,54 @@ namespace CodedenimWebApp.Controllers.Api
 {
     public class ModulesController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         // GET: api/Modules
-        public IEnumerable<Module> GetModules()
+        public IQueryable GetModules()
         {
-            return db.Modules.Include(m => m.Topics).ToList();
+           // return db.Modules.Include(m => m.Topics).ToList();
+            return _db.Modules.Select(x => new
+                                {
+                                   x.CourseId,
+                                   x.ExpectedTime,
+                                   x.ModuleDescription,
+                                   x.ModuleId,
+                                   x.ModuleName,
+                                });
+
         }
 
+
+/// <summary>
+/// these method takes the id of a course from the android app
+/// and select the specific modules connected to that course
+/// </summary>
+/// <param name="id"></param>
+/// <returns></returns>
         // GET: api/Modules/5
         [ResponseType(typeof(Module))]
         public async Task<IHttpActionResult> GetModule(int id)
         {
-            Module module = await db.Modules.FindAsync(id);
+            //Module module = await db.Modules.FindAsync(id);
+            //var module = await _db.Modules.Where(c => c.CourseId.Equals(id))
+            //                            .Select(m => new
+            //                            {
+            //                              m.ModuleId,
+            //                              m.ModuleName,
+            //                              m.ModuleDescription,
+            //                              m.ExpectedTime,
+            //                              m.CourseId
+            var module = await _db.Topics.Where(t => t.ModuleId.Equals(id))
+                                                .Select(t => new
+                                                {
+                                                    t.ModuleId,
+                                                    t.Module.ModuleName,
+                                                    t.TopicId,
+                                                    t.TopicName,
+                                                    t.ExpectedTime,
+                                                    t.StudentQuestions.Count
+                                                }).ToListAsync();
+            //                            }).ToListAsync();
             if (module == null)
             {
                 return NotFound();
@@ -36,6 +71,8 @@ namespace CodedenimWebApp.Controllers.Api
 
             return Ok(module);
         }
+
+
 
         // PUT: api/Modules/5
         [ResponseType(typeof(void))]
@@ -51,11 +88,11 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest();
             }
 
-            db.Entry(module).State = EntityState.Modified;
+            _db.Entry(module).State = EntityState.Modified;
 
             try
             {
-                await db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -81,8 +118,8 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            db.Modules.Add(module);
-            await db.SaveChangesAsync();
+            _db.Modules.Add(module);
+            await _db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = module.ModuleId }, module);
         }
@@ -91,14 +128,14 @@ namespace CodedenimWebApp.Controllers.Api
         [ResponseType(typeof(Module))]
         public async Task<IHttpActionResult> DeleteModule(int id)
         {
-            Module module = await db.Modules.FindAsync(id);
+            Module module = await _db.Modules.FindAsync(id);
             if (module == null)
             {
                 return NotFound();
             }
 
-            db.Modules.Remove(module);
-            await db.SaveChangesAsync();
+            _db.Modules.Remove(module);
+            await _db.SaveChangesAsync();
 
             return Ok(module);
         }
@@ -107,14 +144,14 @@ namespace CodedenimWebApp.Controllers.Api
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool ModuleExists(int id)
         {
-            return db.Modules.Count(e => e.ModuleId == id) > 0;
+            return _db.Modules.Count(e => e.ModuleId == id) > 0;
         }
     }
 }

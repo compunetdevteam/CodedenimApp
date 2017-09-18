@@ -1,0 +1,249 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>@ViewBag.Title</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/Css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="~/Content/Css/mdb.css" rel="stylesheet">
+
+    <!-- Customizer -->
+    <link rel="stylesheet" href="~/Content/Css/customizer.min.css">
+
+    <!-- Your custom styles (optional) -->
+    <link href="~/Content/Css/style.css" rel="stylesheet">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <style>
+        body{ color: black;}
+    </style>
+</head>
+<body class="fixed-sn white-skin">
+
+<!-- Customizer -->
+<div id="customizer" class="z-depth-1">
+    <div class="inner">
+        <p class="text-center customizer-heading">Pick a skin color</p>
+        <ul class="skins-list">
+            <li><a href="#" data-skin-color="deep-purple-skin"><span class="color skin-deep-purple"></span></a></li>
+            <li><a href="#" data-skin-color="navy-blue-skin"><span class="color skin-navy-blue"></span></a></li>
+            <li><a href="#" data-skin-color="cyan-skin"><span class="color skin-cyan"></span></a></li>
+            <li><a href="#" data-skin-color="pink-skin"><span class="color skin-pink"></span></a></li>
+            <li><a href="#" data-skin-color="indigo-skin"><span class="color skin-indigo"></span></a></li>
+            <li><a href="#" data-skin-color="light-blue-skin"><span class="color skin-light-blue"></span></a></li>
+            <li><a href="#" data-skin-color="grey-skin"><span class="color skin-grey"></span></a></li>
+            <li><a href="#" data-skin-color="white-skin"><span class="color skin-white"></span></a></li>
+            <li><a href="#" data-skin-color="black-skin"><span class="color skin-black"></span></a></li>
+            <li><a href="#" data-skin-color="mdb-skin"><span class="color skin-mdb"></span></a></li>
+        </ul>
+        <p class="text-center customizer-heading">SideNav Background Type</p>
+        <form class="form-inline">
+            <fieldset class="form-group">
+                <input name="group1" type="radio" id="radio11" value="flat">
+                <label for="radio11">Flat</label>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <input name="group1" type="radio" id="radio21" value="gradient">
+                <label for="radio21">Gradient</label>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <input name="group1" type="radio" id="radio31" value="background" checked="checked">
+                <label for="radio31">Image</label>
+            </fieldset>
+        </form>
+
+        <div id="bg-option">
+            <p class="text-center customizer-heading">Background Image</p>
+
+            <div class="bg-img-preview">
+                <label for="radio12"><img class="img-fluid" src="http://sidenav1-min.jpg" alt="Option 1"></label>
+                <label for="radio22"><img class="img-fluid" src="http://sidenav2-min.jpg" alt="Option 2"></label>
+                <label for="radio32"><img class="img-fluid" src="http://sidenav3-min.jpg" alt="Option 3"></label>
+                <label for="radio42"><img class="img-fluid" src="http://sidenav4-min.jpg" alt="Option 4"></label>
+            </div>
+
+            <form class="form-inline bg-img-options">
+                <fieldset class="form-group">
+                    <input name="group2" type="radio" id="radio12" value="1" checked="checked">
+                    <label for="radio12"></label>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <input name="group2" type="radio" id="radio22" value="2">
+                    <label for="radio22"></label>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <input name="group2" type="radio" id="radio32" value="3">
+                    <label for="radio32"></label>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <input name="group2" type="radio" id="radio42" value="4">
+                    <label for="radio42"></label>
+                </fieldset>
+            </form>
+
+            <p class="text-center customizer-heading">Mask opacity</p>
+
+            <form class="form-inline">
+                <fieldset class="form-group">
+                    <input name="group3" type="radio" id="radio13" value="strong" checked="checked">
+                    <label for="radio13">Strong</label>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <input name="group3" type="radio" id="radio23" value="light">
+                    <label for="radio23">Light</label>
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <input name="group3" type="radio" id="radio33" value="slight">
+                    <label for="radio33">Slight</label>
+                </fieldset>
+            </form>
+        </div>
+
+        <div>
+            <p class="text-center customizer-heading d-inline">Fixed sidenav</p>
+            <div class="switch d-inline-block float-right">
+                <label>
+                    Off
+                    <input type="checkbox" checked="checked">
+                    <span class="lever"></span> On
+                </label>
+            </div>
+        </div>      
+    </div>
+</div>
+<!-- /.Customizer -->
+
+
+@RenderBody()
+
+<!-- SCRIPTS -->
+
+<!-- JQuery -->
+<script type="text/javascript" src="~/Scripts/jquery-3.1.1.min.js"></script>
+    
+<!-- Bootstrap core JavaScript -->
+   <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="~/Scripts/tether.min.js"></script>
+
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="~/Scripts/mdb.min.js"></script>
+    
+<!-- Customizer -->
+<script type="text/javascript" src="~/Scripts/customizer.min.js"></script>
+
+<script>
+    $(function() {
+        var data = {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(0,0,0,.15)",
+                data: [65, 59, 80, 81, 56, 55, 40],
+                backgroundColor: "#4CAF50"
+            }, {
+                label: "My Second dataset",
+                fillColor: "rgba(255,255,255,.25)",
+                strokeColor: "rgba(255,255,255,.75)",
+                pointColor: "#fff",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(0,0,0,.15)",
+                data: [28, 48, 40, 19, 86, 27, 90]
+            }]
+        };
+
+
+        var dataPie = [{
+            value: 300,
+            color: "#F7464A",
+            highlight: "#FF5A5E",
+            label: "Red"
+        }, {
+            value: 50,
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: "Green"
+        }, {
+            value: 100,
+            color: "#FDB45C",
+            highlight: "#FFC870",
+            label: "Yellow"
+        }]
+
+        var option = {
+            responsive: true,
+            // set font color
+            scaleFontColor: "#fff",
+            // font family
+            defaultFontFamily: "'Roboto', sans-serif",
+            // background grid lines color
+            scaleGridLineColor: "rgba(255,255,255,.1)",
+            // hide vertical lines
+            scaleShowVerticalLines: false,
+        };
+
+        // Get the context of the canvas element we want to select
+        var ctx = document.getElementById("sales").getContext('2d');
+        var myLineChart = new Chart(ctx).Line(data, option); //'Line' defines type of the chart.
+    });
+</script>
+
+<script>
+    $(function() {
+        $('.min-chart#chart-sales').easyPieChart({
+            barColor: "#4caf50",
+            onStep: function(from, to, percent) {
+                $(this.el).find('.percent').text(Math.round(percent));
+            }
+        });
+    });
+</script>  
+
+<script>
+    // Data Picker Initialization
+    $('.datepicker').pickadate();
+
+
+    // Material Select Initialization
+    $(document).ready(function() {
+        $('.mdb-select').material_select();
+    });
+
+    // Sidenav Initialization
+    $(".button-collapse").sideNav();
+
+    // Tooltips Initialization
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+        $('#toggle').tooltip('show');
+    })
+</script>
+
+@RenderSection("scripts", required: false)
+
+</body>
+
+
+</html>

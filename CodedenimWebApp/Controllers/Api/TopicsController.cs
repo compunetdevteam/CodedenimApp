@@ -16,19 +16,36 @@ namespace CodedenimWebApp.Controllers.Api
 {
     public class TopicsController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         // GET: api/Topics
-        public IEnumerable<Topic> GetTopics()
+        public IQueryable GetTopics()
         {
-            return db.Topics.Include(t => t.MaterialUploads).ToList();
+            //return db.Topics.Include(t => t.MaterialUploads).ToList();
+            return _db.Topics.Select(x => new
+            {
+                x.ExpectedTime,
+                x.ModuleId,
+                x.TopicId,
+                x.TopicName,
+               
+             
+            });
         }
 
         // GET: api/Topics/5
         [ResponseType(typeof(Topic))]
+
         public async Task<IHttpActionResult> GetTopic(int id)
         {
-            Topic topic = await db.Topics.FindAsync(id);
+            //Topic topic = await db.Topics.FindAsync(id);
+            var topic = await _db.Topics.Where(t => t.ModuleId.Equals(id))
+                                                .Select(t => new
+                                                {
+                                                    t.TopicId,
+                                                    t.TopicName,
+                                                    t.ExpectedTime,
+                                                }).ToListAsync();
             if (topic == null)
             {
                 return NotFound();
@@ -51,11 +68,11 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest();
             }
 
-            db.Entry(topic).State = EntityState.Modified;
+            _db.Entry(topic).State = EntityState.Modified;
 
             try
             {
-                await db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -81,8 +98,8 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            db.Topics.Add(topic);
-            await db.SaveChangesAsync();
+            _db.Topics.Add(topic);
+            await _db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = topic.TopicId }, topic);
         }
@@ -91,14 +108,14 @@ namespace CodedenimWebApp.Controllers.Api
         [ResponseType(typeof(Topic))]
         public async Task<IHttpActionResult> DeleteTopic(int id)
         {
-            Topic topic = await db.Topics.FindAsync(id);
+            Topic topic = await _db.Topics.FindAsync(id);
             if (topic == null)
             {
                 return NotFound();
             }
 
-            db.Topics.Remove(topic);
-            await db.SaveChangesAsync();
+            _db.Topics.Remove(topic);
+            await _db.SaveChangesAsync();
 
             return Ok(topic);
         }
@@ -107,14 +124,14 @@ namespace CodedenimWebApp.Controllers.Api
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool TopicExists(int id)
         {
-            return db.Topics.Count(e => e.TopicId == id) > 0;
+            return _db.Topics.Count(e => e.TopicId == id) > 0;
         }
     }
 }

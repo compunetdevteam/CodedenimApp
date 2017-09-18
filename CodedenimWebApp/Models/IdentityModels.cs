@@ -60,8 +60,30 @@ namespace CodedenimWebApp.Models
         public System.Data.Entity.DbSet<CodeninModel.Tutor> Tutors { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
 
-        public System.Data.Entity.DbSet<CodeninModel.Student> Students { get; set; }
+        public DbSet<Student> Students { get; set; }
 
+        public DbSet<TutorCourses> TutorCourses { get; set; }
+
+        public DbSet<CodeninModel.CBTE.QuizRule> QuizRules { get; set; }
+
+        public DbSet<TopicQuiz> TopicQuizs { get; set; }
+
+        public System.Data.Entity.DbSet<StudentTopicQuiz> StudentTopicQuizs { get; set; }
+        public DbSet<QuizLog> QuizLogs { get; set; }
+
+        public System.Data.Entity.DbSet<CodeninModel.StudentAssignedCourse> StudentAssignedCourses { get; set; }
+
+        public System.Data.Entity.DbSet<CodeninModel.Forums.Forum> Fora { get; set; }
+
+        public System.Data.Entity.DbSet<CodeninModel.Forums.ForumView> ForumViews { get; set; }
+
+        public System.Data.Entity.DbSet<CodeninModel.Forums.ForumQuestion> ForumQuestions { get; set; }
+
+        public System.Data.Entity.DbSet<CodeninModel.Forums.ForumQuestionView> ForumQuestionViews { get; set; }
+
+        public System.Data.Entity.DbSet<CodeninModel.Forums.ForumAnswer> ForumAnswers { get; set; }
+
+        public System.Data.Entity.DbSet<CodeninModel.CourseRating> CourseRatings { get; set; }
         //public override int SaveChanges()
         //{
         //    try

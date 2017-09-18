@@ -10,6 +10,7 @@ namespace CodedenimWebApp.ViewModels
     {
         public IEnumerable<Tutor> Tutors { get; set; }
         public IEnumerable<Course> Courses { get; set; }
+        public IEnumerable<TutorCourses> TutorCourses { get; set; }
         public IEnumerable<Enrollment> Enrollments { get; set; }
     }
 

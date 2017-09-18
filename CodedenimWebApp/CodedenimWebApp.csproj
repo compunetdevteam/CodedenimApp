@@ -26,8 +26,6 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <Use64BitIISExpress />
-    <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,10 +38,10 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -68,21 +66,6 @@
     </Reference>
     <Reference Include="Fonlow.WebApiClientGen, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cf59ce9d94b04b8a, processorArchitecture=MSIL">
       <HintPath>..\packages\Fonlow.WebApiClientGen.2.2.5\lib\net452\Fonlow.WebApiClientGen.dll</HintPath>
-    </Reference>
-    <Reference Include="Glimpse.Ado, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Glimpse.Ado.1.7.3\lib\net45\Glimpse.Ado.dll</HintPath>
-    </Reference>
-    <Reference Include="Glimpse.AspNet, Version=1.9.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Glimpse.AspNet.1.9.2\lib\net45\Glimpse.AspNet.dll</HintPath>
-    </Reference>
-    <Reference Include="Glimpse.Core, Version=1.8.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Glimpse.EF6, Version=1.6.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Glimpse.EF6.1.6.5\lib\net45\Glimpse.EF6.dll</HintPath>
-    </Reference>
-    <Reference Include="Glimpse.Mvc5, Version=1.5.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
@@ -166,10 +149,12 @@
     <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -186,10 +171,6 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
@@ -263,34 +244,58 @@
     <Compile Include="Controllers\Api\AccountApiController.cs" />
     <Compile Include="Controllers\Api\CourseCategoriesController.cs" />
     <Compile Include="Controllers\Api\CoursesController.cs" />
+    <Compile Include="Controllers\Api\ForumAnswersController.cs" />
+    <Compile Include="Controllers\Api\ForumQuestions1Controller.cs" />
+    <Compile Include="Controllers\Api\ForumQuestionsController.cs" />
     <Compile Include="Controllers\Api\ModulesController.cs" />
+    <Compile Include="Controllers\Api\Rating.cs" />
+    <Compile Include="Controllers\Api\StudentAssignedCoursesController.cs" />
+    <Compile Include="Controllers\Api\StudentsController.cs" />
+    <Compile Include="Controllers\Api\TakeQuizApiController.cs" />
+    <Compile Include="Controllers\Api\TopicMaterialUploadsController.cs" />
+    <Compile Include="Controllers\Api\TopicQuizsController.cs" />
     <Compile Include="Controllers\Api\TopicsController.cs" />
+    <Compile Include="Controllers\Api\TutorsController.cs" />
     <Compile Include="Controllers\CodeGenController.cs" />
     <Compile Include="Controllers\CourseCategoriesController.cs" />
+    <Compile Include="Controllers\CourseForum\ForumAnswersController.cs" />
+    <Compile Include="Controllers\CourseForum\ForumController.cs" />
+    <Compile Include="Controllers\CourseRatingsController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\CourseForum\ForumQuestionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
+    <Compile Include="Controllers\Quiz\QuizRulesController.cs" />
+    <Compile Include="Controllers\Quiz\StudentTopicQuizsController.cs" />
+    <Compile Include="Controllers\Quiz\TopicQuizsController.cs" />
+    <Compile Include="Controllers\StartQuiz.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
+    <Compile Include="Controllers\Quiz\TakeQuizController.cs" />
     <Compile Include="Controllers\TopicMaterialUploadsController.cs" />
     <Compile Include="Controllers\TopicsController.cs" />
+    <Compile Include="Controllers\TutorCoursesController.cs" />
     <Compile Include="Controllers\TutorsController.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708230840393_added_fileUpload.cs" />
-    <Compile Include="Migrations\201708230840393_added_fileUpload.Designer.cs">
-      <DependentUpon>201708230840393_added_fileUpload.cs</DependentUpon>
+    <Compile Include="Migrations\201709090700025_added_forum_api.cs" />
+    <Compile Include="Migrations\201709090700025_added_forum_api.Designer.cs">
+      <DependentUpon>201709090700025_added_forum_api.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708230945204_StudentPhotoUpload.cs" />
-    <Compile Include="Migrations\201708230945204_StudentPhotoUpload.Designer.cs">
-      <DependentUpon>201708230945204_StudentPhotoUpload.cs</DependentUpon>
+    <Compile Include="Migrations\201709140137262_Create_theRating_Model.cs" />
+    <Compile Include="Migrations\201709140137262_Create_theRating_Model.Designer.cs">
+      <DependentUpon>201709140137262_Create_theRating_Model.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708241217270_Roles.cs" />
-    <Compile Include="Migrations\201708241217270_Roles.Designer.cs">
-      <DependentUpon>201708241217270_Roles.cs</DependentUpon>
+    <Compile Include="Migrations\201709141410186_added_ImageLocationInTutorDB.cs" />
+    <Compile Include="Migrations\201709141410186_added_ImageLocationInTutorDB.Designer.cs">
+      <DependentUpon>201709141410186_added_ImageLocationInTutorDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709141518025_changeImageName.cs" />
+    <Compile Include="Migrations\201709141518025_changeImageName.Designer.cs">
+      <DependentUpon>201709141518025_changeImageName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -304,14 +309,19 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Service\EmailSetupServices.cs" />
+    <Compile Include="Service\MultipleButtonAttributeController.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ApiVm.cs" />
     <Compile Include="ViewModels\AssignedCourses.cs" />
+    <Compile Include="ViewModels\CourseVm.cs" />
+    <Compile Include="ViewModels\DisplayQuestionViewModel.cs" />
+    <Compile Include="ViewModels\ForumQA_Vm.cs" />
     <Compile Include="ViewModels\TutorCreateVm.cs" />
+    <Compile Include="ViewModels\TutorRegisterVm.cs" />
     <Compile Include="ViewModels\TutorRegistrationVm.cs" />
     <Compile Include="ViewModels\TutorsIndexVm.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-Codedenim_log.ldf" />
     <Content Include="bin\CodedenimWebApp.dll" />
     <Content Include="bin\CodedenimWebApp.pdb" />
     <Content Include="Content\animate.min.css" />
@@ -322,163 +332,6 @@
     <Content Include="Content\bootstrap1.min.css" />
     <Content Include="Content\compiled.min.css" />
     <Content Include="Content\customizer.min.css" />
-    <Content Include="Content\DataTables\css\autoFill.bootstrap.css" />
-    <Content Include="Content\DataTables\css\autoFill.bootstrap.min.css" />
-    <Content Include="Content\DataTables\css\autoFill.bootstrap4.css" />
-    <Content Include="Content\DataTables\css\autoFill.bootstrap4.min.css" />
-    <Content Include="Content\DataTables\css\autoFill.dataTables.css" />
-    <Content Include="Content\DataTables\css\autoFill.dataTables.min.css" />
-    <Content Include="Content\DataTables\css\autoFill.foundation.css" />
-    <Content Include="Content\DataTables\css\autoFill.foundation.min.css" />
-    <Content Include="Content\DataTables\css\autoFill.jqueryui.css" />
-    <Content Include="Content\DataTables\css\autoFill.jqueryui.min.css" />
-    <Content Include="Content\DataTables\css\autoFill.semanticui.css" />
-    <Content Include="Content\DataTables\css\autoFill.semanticui.min.css" />
-    <Content Include="Content\DataTables\css\buttons.bootstrap.css" />
-    <Content Include="Content\DataTables\css\buttons.bootstrap.min.css" />
-    <Content Include="Content\DataTables\css\buttons.bootstrap4.css" />
-    <Content Include="Content\DataTables\css\buttons.bootstrap4.min.css" />
-    <Content Include="Content\DataTables\css\buttons.dataTables.css" />
-    <Content Include="Content\DataTables\css\buttons.dataTables.min.css" />
-    <Content Include="Content\DataTables\css\buttons.foundation.css" />
-    <Content Include="Content\DataTables\css\buttons.foundation.min.css" />
-    <Content Include="Content\DataTables\css\buttons.jqueryui.css" />
-    <Content Include="Content\DataTables\css\buttons.jqueryui.min.css" />
-    <Content Include="Content\DataTables\css\buttons.semanticui.css" />
-    <Content Include="Content\DataTables\css\buttons.semanticui.min.css" />
-    <Content Include="Content\DataTables\css\colReorder.bootstrap.css" />
-    <Content Include="Content\DataTables\css\colReorder.bootstrap.min.css" />
-    <Content Include="Content\DataTables\css\colReorder.bootstrap4.css" />
-    <Content Include="Content\DataTables\css\colReorder.bootstrap4.min.css" />
-    <Content Include="Content\DataTables\css\colReorder.dataTables.css" />
-    <Content Include="Content\DataTables\css\colReorder.dataTables.min.css" />
-    <Content Include="Content\DataTables\css\colReorder.foundation.css" />
-    <Content Include="Content\DataTables\css\colReorder.foundation.min.css" />
-    <Content Include="Content\DataTables\css\colReorder.jqueryui.css" />
-    <Content Include="Content\DataTables\css\colReorder.jqueryui.min.css" />
-    <Content Include="Content\DataTables\css\colReorder.semanticui.css" />
-    <Content Include="Content\DataTables\css\colReorder.semanticui.min.css" />
-    <Content Include="Content\DataTables\css\dataTables.bootstrap.css" />
-    <Content Include="Content\DataTables\css\dataTables.bootstrap.min.css" />
-    <Content Include="Content\DataTables\css\dataTables.bootstrap4.css" />
-    <Content Include="Content\DataTables\css\dataTables.bootstrap4.min.css" />
-    <Content Include="Content\DataTables\css\dataTables.foundation.css" />
-    <Content Include="Content\DataTables\css\dataTables.foundation.min.css" />
-    <Content Include="Content\DataTables\css\dataTables.jqueryui.css" />
-    <Content Include="Content\DataTables\css\dataTables.jqueryui.min.css" />
-    <Content Include="Content\DataTables\css\dataTables.material.css" />
-    <Content Include="Content\DataTables\css\dataTables.material.min.css" />
-    <Content Include="Content\DataTables\css\dataTables.semanticui.css" />
-    <Content Include="Content\DataTables\css\dataTables.semanticui.min.css" />
-    <Content Include="Content\DataTables\css\dataTables.uikit.css" />
-    <Content Include="Content\DataTables\css\dataTables.uikit.min.css" />
-    <Content Include="Content\DataTables\css\fixedColumns.bootstrap.css" />
-    <Content Include="Content\DataTables\css\fixedColumns.bootstrap.min.css" />
-    <Content Include="Content\DataTables\css\fixedColumns.bootstrap4.css" />
-    <Content Include="Content\DataTables\css\fixedColumns.bootstrap4.min.css" />
-    <Content Include="Content\DataTables\css\fixedColumns.dataTables.css" />
-    <Content Include="Content\DataTables\css\fixedColumns.dataTables.min.css" />
-    <Content Include="Content\DataTables\css\fixedColumns.foundation.css" />
-    <Content Include="Content\DataTables\css\fixedColumns.foundation.min.css" />
-    <Content Include="Content\DataTables\css\fixedColumns.jqueryui.css" />
-    <Content Include="Content\DataTables\css\fixedColumns.jqueryui.min.css" />
-    <Content Include="Content\DataTables\css\fixedColumns.semanticui.css" />
-    <Content Include="Content\DataTables\css\fixedColumns.semanticui.min.css" />
-    <Content Include="Content\DataTables\css\fixedHeader.bootstrap.css" />
-    <Content Include="Content\DataTables\css\fixedHeader.bootstrap.min.css" />
-    <Content Include="Content\DataTables\css\fixedHeader.bootstrap4.css" />
-    <Content Include="Content\DataTables\css\fixedHeader.bootstrap4.min.css" />
-    <Content Include="Content\DataTables\css\fixedHeader.dataTables.css" />
-    <Content Include="Content\DataTables\css\fixedHeader.dataTables.min.css" />
-    <Content Include="Content\DataTables\css\fixedHeader.foundation.css" />
-    <Content Include="Content\DataTables\css\fixedHeader.foundation.min.css" />
-    <Content Include="Content\DataTables\css\fixedHeader.jqueryui.css" />
-    <Content Include="Content\DataTables\css\fixedHeader.jqueryui.min.css" />
-    <Content Include="Content\DataTables\css\fixedHeader.semanticui.css" />
-    <Content Include="Content\DataTables\css\fixedHeader.semanticui.min.css" />
-    <Content Include="Content\DataTables\css\jquery.dataTables.css" />
-    <Content Include="Content\DataTables\css\jquery.dataTables.min.css" />
-    <Content Include="Content\DataTables\css\jquery.dataTables_themeroller.css" />
-    <Content Include="Content\DataTables\css\keyTable.bootstrap.css" />
-    <Content Include="Content\DataTables\css\keyTable.bootstrap.min.css" />
-    <Content Include="Content\DataTables\css\keyTable.bootstrap4.css" />
-    <Content Include="Content\DataTables\css\keyTable.bootstrap4.min.css" />
-    <Content Include="Content\DataTables\css\keyTable.dataTables.css" />
-    <Content Include="Content\DataTables\css\keyTable.dataTables.min.css" />
-    <Content Include="Content\DataTables\css\keyTable.foundation.css" />
-    <Content Include="Content\DataTables\css\keyTable.foundation.min.css" />
-    <Content Include="Content\DataTables\css\keyTable.jqueryui.css" />
-    <Content Include="Content\DataTables\css\keyTable.jqueryui.min.css" />
-    <Content Include="Content\DataTables\css\keyTable.semanticui.css" />
-    <Content Include="Content\DataTables\css\keyTable.semanticui.min.css" />
-    <Content Include="Content\DataTables\css\responsive.bootstrap.css" />
-    <Content Include="Content\DataTables\css\responsive.bootstrap.min.css" />
-    <Content Include="Content\DataTables\css\responsive.bootstrap4.css" />
-    <Content Include="Content\DataTables\css\responsive.bootstrap4.min.css" />
-    <Content Include="Content\DataTables\css\responsive.dataTables.css" />
-    <Content Include="Content\DataTables\css\responsive.dataTables.min.css" />
-    <Content Include="Content\DataTables\css\responsive.foundation.css" />
-    <Content Include="Content\DataTables\css\responsive.foundation.min.css" />
-    <Content Include="Content\DataTables\css\responsive.jqueryui.css" />
-    <Content Include="Content\DataTables\css\responsive.jqueryui.min.css" />
-    <Content Include="Content\DataTables\css\responsive.semanticui.css" />
-    <Content Include="Content\DataTables\css\responsive.semanticui.min.css" />
-    <Content Include="Content\DataTables\css\rowGroup.bootstrap.css" />
-    <Content Include="Content\DataTables\css\rowGroup.bootstrap.min.css" />
-    <Content Include="Content\DataTables\css\rowGroup.bootstrap4.css" />
-    <Content Include="Content\DataTables\css\rowGroup.bootstrap4.min.css" />
-    <Content Include="Content\DataTables\css\rowGroup.dataTables.css" />
-    <Content Include="Content\DataTables\css\rowGroup.dataTables.min.css" />
-    <Content Include="Content\DataTables\css\rowGroup.foundation.css" />
-    <Content Include="Content\DataTables\css\rowGroup.foundation.min.css" />
-    <Content Include="Content\DataTables\css\rowGroup.jqueryui.css" />
-    <Content Include="Content\DataTables\css\rowGroup.jqueryui.min.css" />
-    <Content Include="Content\DataTables\css\rowGroup.semanticui.css" />
-    <Content Include="Content\DataTables\css\rowGroup.semanticui.min.css" />
-    <Content Include="Content\DataTables\css\rowReorder.bootstrap.css" />
-    <Content Include="Content\DataTables\css\rowReorder.bootstrap.min.css" />
-    <Content Include="Content\DataTables\css\rowReorder.bootstrap4.css" />
-    <Content Include="Content\DataTables\css\rowReorder.bootstrap4.min.css" />
-    <Content Include="Content\DataTables\css\rowReorder.dataTables.css" />
-    <Content Include="Content\DataTables\css\rowReorder.dataTables.min.css" />
-    <Content Include="Content\DataTables\css\rowReorder.foundation.css" />
-    <Content Include="Content\DataTables\css\rowReorder.foundation.min.css" />
-    <Content Include="Content\DataTables\css\rowReorder.jqueryui.css" />
-    <Content Include="Content\DataTables\css\rowReorder.jqueryui.min.css" />
-    <Content Include="Content\DataTables\css\rowReorder.semanticui.css" />
-    <Content Include="Content\DataTables\css\rowReorder.semanticui.min.css" />
-    <Content Include="Content\DataTables\css\scroller.bootstrap.css" />
-    <Content Include="Content\DataTables\css\scroller.bootstrap.min.css" />
-    <Content Include="Content\DataTables\css\scroller.bootstrap4.css" />
-    <Content Include="Content\DataTables\css\scroller.bootstrap4.min.css" />
-    <Content Include="Content\DataTables\css\scroller.dataTables.css" />
-    <Content Include="Content\DataTables\css\scroller.dataTables.min.css" />
-    <Content Include="Content\DataTables\css\scroller.foundation.css" />
-    <Content Include="Content\DataTables\css\scroller.foundation.min.css" />
-    <Content Include="Content\DataTables\css\scroller.jqueryui.css" />
-    <Content Include="Content\DataTables\css\scroller.jqueryui.min.css" />
-    <Content Include="Content\DataTables\css\scroller.semanticui.css" />
-    <Content Include="Content\DataTables\css\scroller.semanticui.min.css" />
-    <Content Include="Content\DataTables\css\select.bootstrap.css" />
-    <Content Include="Content\DataTables\css\select.bootstrap.min.css" />
-    <Content Include="Content\DataTables\css\select.bootstrap4.css" />
-    <Content Include="Content\DataTables\css\select.bootstrap4.min.css" />
-    <Content Include="Content\DataTables\css\select.dataTables.css" />
-    <Content Include="Content\DataTables\css\select.dataTables.min.css" />
-    <Content Include="Content\DataTables\css\select.foundation.css" />
-    <Content Include="Content\DataTables\css\select.foundation.min.css" />
-    <Content Include="Content\DataTables\css\select.jqueryui.css" />
-    <Content Include="Content\DataTables\css\select.jqueryui.min.css" />
-    <Content Include="Content\DataTables\css\select.semanticui.css" />
-    <Content Include="Content\DataTables\css\select.semanticui.min.css" />
-    <Content Include="Content\DataTables\images\details_close.png" />
-    <Content Include="Content\DataTables\images\details_open.png" />
-    <Content Include="Content\DataTables\images\sort_asc.png" />
-    <Content Include="Content\DataTables\images\sort_asc_disabled.png" />
-    <Content Include="Content\DataTables\images\sort_both.png" />
-    <Content Include="Content\DataTables\images\sort_desc.png" />
-    <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
-    <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\mdb.css" />
     <Content Include="Content\mdb.min.css" />
     <Content Include="Content\Site.css" />
@@ -505,13 +358,57 @@
     <Content Include="Content\img\Sebig.png" />
     <Content Include="Content\img\svg\arrow_left.svg" />
     <Content Include="Content\img\svg\arrow_right.svg" />
+    <Content Include="Content\mdb.css" />
+    <Content Include="Content\mdb.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\paper-dashboard.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Content\themify-icons.css" />
     <Content Include="Content\Videos\animation-intro.mp4" />
     <Content Include="Content\Videos\animation.mp4" />
     <Content Include="Content\Videos\Beach-Ball.mp4" />
-    <Content Include="Content\Videos\CodeDenimVD.MP4" />
     <Content Include="Content\Videos\Ipad.mp4" />
     <Content Include="Content\Videos\Lines.mp4" />
     <Content Include="favicon.ico" />
@@ -520,6 +417,11 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\img\overlays\Thumbs.db" />
     <Content Include="fonts\roboto\Roboto-Bold.eot" />
     <Content Include="fonts\roboto\Roboto-Bold.ttf" />
     <Content Include="fonts\roboto\Roboto-Bold.woff" />
@@ -547,6 +449,8 @@
     <Content Include="fonts\roboto\Roboto-Thind41d.eot" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\ClientApi\HttpClient.js" />
+    <Content Include="Scripts\ClientApi\WebApiClientAuto.js" />
     <Content Include="Scripts\compiled.min.js" />
     <Content Include="Scripts\customizer.min.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
@@ -626,11 +530,9 @@
     <Content Include="Scripts\DataTables\responsive.semanticui.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.min.js" />
     <Content Include="Scripts\jarallax.js" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\DataTables\css\semanticui.scss" />
+    <Content Include="Content\DataTables\css\mixins.scss" />
+    <Content Include="Content\DataTables\css\common.scss" />
     <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
@@ -664,13 +566,7 @@
     <Content Include="Content\font-awesome-4.7.0\scss\_screen-reader.scss" />
     <Content Include="Content\font-awesome-4.7.0\scss\_stacked.scss" />
     <Content Include="Content\font-awesome-4.7.0\scss\_variables.scss" />
-    <Content Include="Content\img\overlays\Thumbs.db" />
     <Content Include="Content\.DS_Store" />
-    <Content Include="App_Data\aspnet-Codedenim" />
-    <Content Include="obj\Release\CoreCompileInputs.cache" />
-    <Content Include="Content\DataTables\css\common.scss" />
-    <Content Include="Content\DataTables\css\mixins.scss" />
-    <Content Include="Content\DataTables\css\semanticui.scss" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1-vsdoc.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
@@ -679,6 +575,8 @@
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -704,7 +602,9 @@
     <Content Include="Scripts\vendor\jvectormap\jquery-jvectormap-2.0.3.min.js" />
     <Content Include="Scripts\vendor\jvectormap\jquery-jvectormap-world-mill.js" />
     <Content Include="Scripts\vendor\tinymce\tinymce.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -761,11 +661,6 @@
     <Content Include="Views\TopicMaterialUploads\Upload.cshtml" />
     <Content Include="Views\Account\ConfirmRegistration.cshtml" />
     <Content Include="Views\Account\SendEmail.cshtml" />
-    <Content Include="Views\Tutors\Create.cshtml" />
-    <Content Include="Views\Tutors\Delete.cshtml" />
-    <Content Include="Views\Tutors\Details.cshtml" />
-    <Content Include="Views\Tutors\Edit.cshtml" />
-    <Content Include="Views\Tutors\Index.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />
     <Content Include="Views\Courses\Delete.cshtml" />
     <Content Include="Views\Courses\Details.cshtml" />
@@ -777,24 +672,80 @@
     <Content Include="Views\Students\Edit.cshtml" />
     <Content Include="Views\Students\Index.cshtml" />
     <Content Include="Views\Students\AssignedCourseView.cshtml" />
+    <Content Include="Views\Shared\_LayoutCodeDenim.cshtml" />
+    <Content Include="Views\Shared\_LayoutDashBoard.cshtml" />
     <Content Include="Views\Shared\_LayoutWeb.cshtml" />
     <Content Include="Views\Account\Login1.cshtml" />
     <Content Include="Views\Account\Register2.cshtml" />
-    <Content Include="Views\Home\AdminDashboard.cshtml" />
     <Content Include="Views\Home\Index1.cshtml" />
+    <Content Include="Views\Account\_tutorCourses.cshtml" />
+    <Content Include="Views\Account\ConfirmTutorReg.cshtml" />
+    <Content Include="Views\Account\TutorRegistration.cshtml" />
+    <Content Include="Views\Tutors\Create.cshtml" />
+    <Content Include="Views\Tutors\Delete.cshtml" />
+    <Content Include="Views\Tutors\Details.cshtml" />
+    <Content Include="Views\Tutors\Edit.cshtml" />
+    <Content Include="Views\Tutors\Index.cshtml" />
+    <Content Include="Views\TutorCourses\Create.cshtml" />
+    <Content Include="Views\TutorCourses\Delete.cshtml" />
+    <Content Include="Views\TutorCourses\Details.cshtml" />
+    <Content Include="Views\TutorCourses\Edit.cshtml" />
+    <Content Include="Views\TutorCourses\Index.cshtml" />
+    <Content Include="Views\Tutors\info.cshtml" />
+    <Content Include="Views\Tutors\ConfirmTutor.cshtml" />
+    <Content Include="Views\QuizRules\Create.cshtml" />
+    <Content Include="Views\QuizRules\Delete.cshtml" />
+    <Content Include="Views\QuizRules\Details.cshtml" />
+    <Content Include="Views\QuizRules\Edit.cshtml" />
+    <Content Include="Views\QuizRules\Index.cshtml" />
+    <Content Include="Views\TopicQuizs\Create.cshtml" />
+    <Content Include="Views\TopicQuizs\Delete.cshtml" />
+    <Content Include="Views\TopicQuizs\Details.cshtml" />
+    <Content Include="Views\TopicQuizs\Edit.cshtml" />
+    <Content Include="Views\TopicQuizs\Index.cshtml" />
+    <Content Include="Views\StudentTopicQuizs\Create.cshtml" />
+    <Content Include="Views\StudentTopicQuizs\Delete.cshtml" />
+    <Content Include="Views\StudentTopicQuizs\Details.cshtml" />
+    <Content Include="Views\StudentTopicQuizs\Edit.cshtml" />
+    <Content Include="Views\StudentTopicQuizs\Index.cshtml" />
+    <Content Include="Views\TakeQuiz\Exam.cshtml" />
+    <Content Include="Views\TakeQuiz\ExamIndex.cshtml" />
+    <Content Include="Views\TakeQuiz\FinishExam.cshtml" />
+    <Content Include="Views\TakeQuiz\MainExam.cshtml" />
+    <Content Include="Views\TakeQuiz\Menu.cshtml" />
+    <Content Include="Views\TakeQuiz\SelectExamIndex.cshtml" />
+    <Content Include="Views\TakeQuiz\SelectSubject.cshtml" />
+    <Content Include="Views\TakeQuiz\ShowNumbers.cshtml" />
+    <Content Include="Views\TakeQuiz\_Exam.cshtml" />
     <Content Include="Views\Shared\_LayoutBoard.cshtml" />
-    <Content Include="Views\Shared\_LayoutCodeDenim.cshtml" />
     <Content Include="Views\Shared\_LayoutTutor.cshtml" />
     <Content Include="Views\Home\TutorDashboard.cshtml" />
     <Content Include="Views\Tutors\ConfirmTutor.cshtml" />
-    <Content Include="Views\Account\ConfirmTutorReg.cshtml" />
-    <Content Include="Views\Account\_tutorCourses.cshtml" />
-    <Content Include="Views\Account\TutorRegistration.cshtml" />
+    <Content Include="Views\CourseForum\Create.cshtml" />
+    <Content Include="Views\CourseForum\Delete.cshtml" />
+    <Content Include="Views\CourseForum\Details.cshtml" />
+    <Content Include="Views\CourseForum\Edit.cshtml" />
+    <Content Include="Views\CourseForum\Index.cshtml" />
+    <Content Include="Views\Forum\Create.cshtml" />
+    <Content Include="Views\Forum\Delete.cshtml" />
+    <Content Include="Views\Forum\Details.cshtml" />
+    <Content Include="Views\Forum\Edit.cshtml" />
+    <Content Include="Views\Forum\Index.cshtml" />
+    <Content Include="Views\ForumAnswers\Create.cshtml" />
+    <Content Include="Views\ForumAnswers\Delete.cshtml" />
+    <Content Include="Views\ForumAnswers\Details.cshtml" />
+    <Content Include="Views\ForumAnswers\Edit.cshtml" />
+    <Content Include="Views\ForumAnswers\Index.cshtml" />
+    <Content Include="Views\ForumQuestions\Create.cshtml" />
+    <Content Include="Views\ForumQuestions\Delete.cshtml" />
+    <Content Include="Views\ForumQuestions\Details.cshtml" />
+    <Content Include="Views\ForumQuestions\Edit.cshtml" />
+    <Content Include="Views\ForumQuestions\Index.cshtml" />
+    <Content Include="Views\Tutors\CreateTutorPartial.cshtml" />
     <Content Include="Views\Tutors\TutorDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\StudentFiles\" />
-    <Folder Include="Content\TutorFiles\" />
+    <Folder Include="App_Data\" />
     <Folder Include="uploads\" />
     <Folder Include="Views\MultipleButtonAttribute\" />
   </ItemGroup>
@@ -817,17 +768,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708230840393_added_fileUpload.resx">
-      <DependentUpon>201708230840393_added_fileUpload.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708230945204_StudentPhotoUpload.resx">
-      <DependentUpon>201708230945204_StudentPhotoUpload.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708241217270_Roles.resx">
-      <DependentUpon>201708241217270_Roles.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
   </ItemGroup>
@@ -838,6 +778,20 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201709090700025_added_forum_api.resx">
+      <DependentUpon>201709090700025_added_forum_api.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709140137262_Create_theRating_Model.resx">
+      <DependentUpon>201709140137262_Create_theRating_Model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709141410186_added_ImageLocationInTutorDB.resx">
+      <DependentUpon>201709141410186_added_ImageLocationInTutorDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709141518025_changeImageName.resx">
+      <DependentUpon>201709141518025_changeImageName.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

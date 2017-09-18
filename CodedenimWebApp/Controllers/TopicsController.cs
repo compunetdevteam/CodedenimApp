@@ -19,8 +19,14 @@ namespace CodedenimWebApp.Controllers
         // GET: Topics
         public async Task<ActionResult> Index()
         {
+
             var topics = db.Topics.Include(t => t.Module);
             return View(await topics.ToListAsync());
+        }
+
+        public void TotalTopics()
+        {
+            ViewBag.TotalTopics = db.Topics.Count();
         }
 
         // GET: Topics/Details/5
