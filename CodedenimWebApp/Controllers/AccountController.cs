@@ -25,7 +25,7 @@ namespace CodedenimWebApp.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private ApplicationDbContext _db;
+        private readonly ApplicationDbContext _db;
 
         public AccountController()
         {
@@ -462,6 +462,11 @@ namespace CodedenimWebApp.Controllers
                 return View();
         }
 
+
+        /// <summary>
+        /// Corper Registration
+        /// </summary>
+        /// <returns></returns>
 
 
         [AllowAnonymous]

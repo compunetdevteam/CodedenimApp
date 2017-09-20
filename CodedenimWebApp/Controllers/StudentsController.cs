@@ -68,6 +68,7 @@ namespace CodedenimWebApp.Controllers
         }
 
         // GET: Students/Details/5
+
         public async Task<ActionResult> Details(string id)
         {
             if (id == null)
@@ -82,6 +83,10 @@ namespace CodedenimWebApp.Controllers
             return View(student);
         }
 
+        public async Task<ActionResult> CreateUnderGrad()
+        {
+            return View();
+        }
         // GET: Students/Create
         public ActionResult Create()
         {

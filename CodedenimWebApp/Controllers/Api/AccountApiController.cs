@@ -353,10 +353,17 @@ namespace CodedenimWebApp.Controllers.Api
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public async Task<IHttpActionResult> RegisterCorpe()
+        {
+            return Ok();
+        }
 
-        // POST api/Account/RegisterStudent
-        [System.Web.Http.AllowAnonymous]
+
+   // POST api/Account/RegisterStudent
+   [System.Web.Http.AllowAnonymous]
         [System.Web.Http.Route("RegisterCorper")]
+        [System.Web.Http.HttpPost]
         public async Task<IHttpActionResult> RegisterCorper([FromBody] RegisterCorperModel model)
         {
             if (!ModelState.IsValid)
@@ -421,7 +428,7 @@ namespace CodedenimWebApp.Controllers.Api
         // POST api/Account/RegisterCorper
         [System.Web.Http.AllowAnonymous]
         [System.Web.Http.Route("RegisterUnderGraduate")]
-        public async Task<IHttpActionResult> RegisterUnderGraduate([FromBody] RegisterStudentModel model)
+        public async Task<IHttpActionResult> RegisterUnderGraduate([FromBody] RegisterUnderGrad model)
         {
             if (!ModelState.IsValid)
             {
@@ -439,7 +446,7 @@ namespace CodedenimWebApp.Controllers.Api
 
             var student = new Student
             {
-                StudentId = model.AdmissionNumber,
+                StudentId = model.MatNumber,
                 Title = model.Title,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
@@ -453,7 +460,15 @@ namespace CodedenimWebApp.Controllers.Api
             _db.Students.Add(student);
             await _db.SaveChangesAsync();
             await this.UserManager.AddToRoleAsync(user.Id, "UnderGraduate");
-            return Ok();
+
+            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            // var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
+            var callbackUrl = EmailLink(user.Id, code);
+
+            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+            
+
+            return Ok("Student Created Successfully ");
         }
 
 
