@@ -30,7 +30,7 @@ namespace CodedenimWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TutorCourses tutorCourses = await db.TutorCourses.FindAsync(id);
+            TutorCourse tutorCourses = await db.TutorCourses.FindAsync(id);
             if (tutorCourses == null)
             {
                 return HttpNotFound();
@@ -51,7 +51,7 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "TutorCoursesId,TutorId,CourseId")] TutorCourses tutorCourses)
+        public async Task<ActionResult> Create([Bind(Include = "TutorCoursesId,TutorId,CourseId")] TutorCourse tutorCourses)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace CodedenimWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TutorCourses tutorCourses = await db.TutorCourses.FindAsync(id);
+            TutorCourse tutorCourses = await db.TutorCourses.FindAsync(id);
             if (tutorCourses == null)
             {
                 return HttpNotFound();
@@ -87,7 +87,7 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "TutorCoursesId,TutorId,CourseId")] TutorCourses tutorCourses)
+        public async Task<ActionResult> Edit([Bind(Include = "TutorCoursesId,TutorId,CourseId")] TutorCourse tutorCourses)
         {
             if (ModelState.IsValid)
             {
@@ -107,7 +107,7 @@ namespace CodedenimWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TutorCourses tutorCourses = await db.TutorCourses.FindAsync(id);
+            TutorCourse tutorCourses = await db.TutorCourses.FindAsync(id);
             if (tutorCourses == null)
             {
                 return HttpNotFound();
@@ -120,7 +120,7 @@ namespace CodedenimWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            TutorCourses tutorCourses = await db.TutorCourses.FindAsync(id);
+            TutorCourse tutorCourses = await db.TutorCourses.FindAsync(id);
             db.TutorCourses.Remove(tutorCourses);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");

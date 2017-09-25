@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CodeninModel
 {
-    public class TutorCourses
+    public class TutorCourse
     {
         [Key]
         public int TutorCoursesId { get; set; }

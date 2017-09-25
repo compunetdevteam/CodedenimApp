@@ -153,6 +153,42 @@
                         </li>                     
                     </ul>
                 }
+                else if (Request.IsAuthenticated && User.IsInRole("Corper"))
+                {
+
+                    <ul class="nav">
+                        <li @ViewBag.Administrator>
+                            <a href="@Url.Action("DashBoard", "Students")">
+                                <i class="fa fa-home"></i>
+                                <p>My DashBoard</p>
+                            </a>
+                        </li>
+                        <li @ViewBag.Courses>
+                            <a href="@Url.Action("Index", "Courses")">
+                                <i class="fa fa-book"></i>
+                                <p>My Courses</p>
+                            </a>
+                        </li>
+                        <li @ViewBag.Category>
+                            <a href="@Url.Action("Index", "Forum")">
+                                <i class="fa fa-list"></i>
+                                <p>My Forum</p>
+                            </a>
+                        </li>
+                        @*<li @ViewBag.Materials>
+                            <a href="@Url.Action("Index", "TopicMaterialUploads")">
+                                <i class="fa fa-th"></i>
+                                <p>Materials</p>
+                            </a>
+                        </li>
+                        <li @ViewBag.Modules>
+                            <a href="@Url.Action("Index", "Modules")">
+                                <i class="fa fa-list"></i>
+                                <p>Modules</p>
+                            </a>
+                        </li>*@
+                    </ul>
+                }
             </div>
      
             </div>
@@ -256,15 +292,83 @@
 
                                 using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", style = "padding:4px;" }))
                                 {
+                                    
                                     @Html.AntiForgeryToken()
-                                    <li><a href="javascript:document.getElementById('logoutForm').submit()"><p>Log off</p></a></li>
+                                    <li><a href="javascript:document.getElementById('logoutForm').submit()">
+                                            
+                                        <p style="padding-left: 10px;color:#000">Logout</p>
+                                    </a></li>
                                 }
                             } 
                         </ul>
                     </li>                  
                 </ul>
-                }
+                
             </div>
+            }
+            else if(Request.IsAuthenticated && User.IsInRole("Corper"))
+            {
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-home"></i>
+                                <p>Home</p>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-list"></i>
+                                <p>Forum</p>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("Index","Forum")">Forum</a></li>
+                                <li><a href="@Url.Action("Index","ForumQuestions")">My Questions</a></li>
+                                <li><a href="@Url.Action("Index","ForumAnswers")">My Answers</a></li>
+                                
+
+                            </ul>
+                        </li>          
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-users"></i>
+                                <p>My Logs</p>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">                         
+                                <li><a href="@Url.Action("Index","Courses")">My Courses</a></li>
+                                <li><a href="#">My Assignments</a></li>
+
+                            </ul>
+                        </li>          
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                                <i class="fa fa-user"></i>
+                                <p>Profile</p>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("Index", "Manage")">My Profile</a></li>                           
+                                @using Microsoft.AspNet.Identity
+                                @if (Request.IsAuthenticated)
+                                {
+
+                                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", style = "padding:4px;" }))
+                                    {
+                                    
+                                        @Html.AntiForgeryToken()
+                                        <li><a href="javascript:document.getElementById('logoutForm').submit()">
+                                            
+                                            <p style="padding-left: 10px;color:#000">Logout</p>
+                                        </a></li>
+                                    }
+                                } 
+                            </ul>
+                        </li>                  
+                    </ul>
+                
+                </div>
             }
 
         </div>
@@ -293,7 +397,7 @@
 
     <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
     <script src="~/Scripts/paper/paper-dashboard.js"></script>
-    <!-- MDB core JavaScript -->
+    <!-- MDB core JavaSc qript -->
     <script type="text/javascript" src="~/Scripts/mdb.min.js"></script>
 
     @RenderSection("scripts", required: false)

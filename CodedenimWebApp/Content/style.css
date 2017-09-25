@@ -28,7 +28,7 @@ a.my-class {
  }
 .myVideo {
     object-fit: fill;
-    position: absolute;
+    position: relative;
     right: 0;
     bottom: 0;
     height: auto;

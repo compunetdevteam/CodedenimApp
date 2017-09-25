@@ -1,19 +1,21 @@
 ﻿@model IEnumerable<CodeninModel.Tutor>
-@*<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">*@
+
 <link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Tutor";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
+    ViewBag.Tutor = "class = active";
 }
-
-<h2>Index</h2>
+<div class="container-fluid">
+<h2>Tutor</h2>
 
 <button type="button" class="btn btn-default btn-md" data-toggle="modal" data-url="@Url.Action("CreateTutorPartial","Tutors")" id="btnCreateAsset">  
-    <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Create Tutor  
+    <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Create Tutor 
 </button> 
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
+</p>*@
 @*<table class="table">
     <tr>
         <th>
@@ -152,7 +154,7 @@
 </table>*@
 
 
-<div class="tablecontainer" style="width: 90%; margin: 0 auto">
+<div class="table container" style="width: 90%; margin: 0 auto">
     @*<a class="popup" href="/AssignedClasses/Save/0" style="margin-bottom: 20px; margin-top: 20px">Add</a>*@
 
     @*<a onclick="myFunction()" class="btn btn-primary btn-lg"> <i class="fa fa-plus left"></i> Add Class</a>*@
@@ -176,6 +178,7 @@
 <div class="modal fade" id="createAssetModal" tabindex="-1" role="dialog" aria-labelledby="CreateAssetModal" aria-hidden="true" data-backdrop="static">
   
     <div id="createAssetContainer">
+        
     </div>
    
 </div>
@@ -189,60 +192,60 @@
 <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
 @*<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>*@
 <script type="text/javascript">
-        // alert("this is me ");
+    // alert("this is me ");
 
-        window.oTable = $("#Jdatatable").DataTable({
-            "processing": true, // for show progress bar while loading
-            "serverSide": true, // if it is true the preocess is done on server side
-            "filter": true, // disables search box
-            "info": true,
-            "stateSave": true,
-            "orderMulti": false, // disable multiple column loading at once
-            "ajax": {
-                "url": "/Tutors/GetIndex",
-                "type": "GET",
-                "datatype": "json"
-            },
-            "columns": [
-                { "data": "TutorId", "autoWidth": true },
-                { "data": "FirstName", "autoWidth": true },
-                { "data": "MiddleName", "autoWidth": true },
-                { "data": "LastName", "autoWidth": true },
-                { "data": "Email", "autoWidth": true },
+    window.oTable = $("#Jdatatable").DataTable({
+        "processing": true, // for show progress bar while loading
+        "serverSide": true, // if it is true the preocess is done on server side
+        "filter": true, // disables search box
+        "info": true,
+        "stateSave": true,
+        "orderMulti": false, // disable multiple column loading at once
+        "ajax": {
+            "url": "/Tutors/GetIndex",
+            "type": "POST",
+            "datatype": "json"
+        },
+        "columns": [
+            { "data": "TutorId", "autoWidth": true },
+            { "data": "FirstName", "autoWidth": true },
+            { "data": "MiddleName", "autoWidth": true },
+            { "data": "LastName", "autoWidth": true },
+            { "data": "Email", "autoWidth": true },
               
-                {
-                    "data": "TutorId",
-                    "autoWidth": true,
-                    "render": function(data) {
-                        return '<a href="#" onclick="Edit('+data+')" ><i class="fa fa-pencil" aria-hidden="true" ><i/></a>' +
-                            '<a class="text-danger" href="#" onclick="Delete('+data+')" ><i class="fa fa-remove" aria-hidden="true" ><i/></a>';                    }
-                }
-                //{
-                //    "data": "AssignedClassId",
-                //    "autoWidth": true,
-                //    "render": function(data) {
-                //        return '<a class="popup" href="/AssignedClasses/delete/' + data + '"><span class="md-delete"></span> Delete</a>';
-                //    }
-                //}
-                //{ "data": "EmailID", "autoWidth": true },
-                //{ "data": "Phone", "autoWidth": true },
-            ]
-        });
+            {
+                "data": "TutorId",
+                "autoWidth": true,
+                "render": function(data) {
+                    return '<a href="#" onclick="Edit('+data+')" ><i class="fa fa-pencil" aria-hidden="true" ><i/></a>' +
+                        '<a class="text-danger" href="#" onclick="Delete('+data+')" ><i class="fa fa-remove" aria-hidden="true" ><i/></a>';                    }
+            }
+            //{
+            //    "data": "AssignedClassId",
+            //    "autoWidth": true,
+            //    "render": function(data) {
+            //        return '<a class="popup" href="/AssignedClasses/delete/' + data + '"><span class="md-delete"></span> Delete</a>';
+            //    }
+            //}
+            //{ "data": "EmailID", "autoWidth": true },
+            //{ "data": "Phone", "autoWidth": true },
+        ]
+    });
 
-       // });
+    // });
 
 
-        $("#btnCreateAsset").on("click", function () {  
+    $("#btnCreateAsset").on("click", function () {  
   
-            var url = $(this).data("url");  
+        var url = $(this).data("url");  
   
-            $.get(url, function (data) { 
-                $('#createAssetContainer').html(data);  
+        $.get(url, function (data) { 
+            $('#createAssetContainer').html(data);  
   
-                $('#createAssetModal').modal('show');  
-            });  
+            $('#createAssetModal').modal('show');  
+        });  
   
-        }); 
+    }); 
     //$('#btnCreateAsset').on('click', function () {
     //    alert("this is me ");
     //    $('#createAssetModal').modal('show');
@@ -273,3 +276,4 @@
 
 
 </script>
+</div>

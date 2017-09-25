@@ -84,12 +84,9 @@ namespace CodedenimWebApp.Controllers
            
             return PartialView();
         }
-        public async Task<ActionResult> TutorDashboard()
+        public  ActionResult DashBoard()
         {
             var tutor = User.Identity.GetUserId();
-
-
-
             var tutorCourses = db.TutorCourses.AsNoTracking().Where(t => t.TutorId.Equals(tutor))
                                                                 .Select(c => c.Courses).ToList();
 

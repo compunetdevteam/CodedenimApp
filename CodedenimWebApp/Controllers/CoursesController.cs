@@ -34,9 +34,71 @@ namespace CodedenimWebApp.Controllers
             return View(courses.ToList());
         }
 
+        public  async Task<ActionResult> GetIndex()
+        {
+            #region Server Side filtering
+            //Get parameter for sorting from grid table
+            // get Start (paging start index) and length (page size for paging)
+            var draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var start = Request.Form.GetValues("start").FirstOrDefault();
+            var length = Request.Form.GetValues("length").FirstOrDefault();
+            //Get Sort columns values when we click on Header Name of column
+            //getting column name
+            var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            //Soring direction(either desending or ascending)
+            var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            string search = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int pageSize = length != null ? Convert.ToInt32(length) : 0;
+            int skip = start != null ? Convert.ToInt32(start) : 0;
+            int totalRecords = 0;
+
+            //var v = Db.Subjects.Where(x => x.SchoolId != userSchool).Select(s => new { s.SubjectId, s.SubjectCode, s.SubjectName }).ToList();
+            var v = db.Courses.Select(s => new {s.CourseCategoryId, s.CourseCode, s.CourseName, s.CourseDescription, s.ExpectedTime,s.DateAdded,s.Points, s.CourseImage }).ToList();
+
+            //var v = Db.Subjects.Where(x => x.SchoolId.Equals(userSchool)).Select(s => new { s.SubjectId, s.SubjectCode, s.SubjectName }).ToList();
+            //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
+            //{
+            //    //v = v.OrderBy(sortColumn + " " + sortColumnDir);
+            //    v = new List<Subject>(v.OrderBy(x => "sortColumn + \" \" + sortColumnDir"));
+            //}
+            if (!string.IsNullOrEmpty(search))
+            {
+                //v = v.OrderBy(sortColumn + " " + sortColumnDir);
+                v = db.Courses.Where(x => (x.CourseCategoryId.ToString().Equals(search) || x.CourseCode.Equals(search) || x.CourseName.Equals(search) || x.CourseDescription.Equals(search) || x.ExpectedTime.Equals(search) || x.DateAdded.Equals(search) || x.Points.Equals(search)))
+                    .Select(s => new {s.CourseCategoryId, s.CourseCode, s.CourseName, s.CourseDescription, s.ExpectedTime, s.DateAdded, s.Points, s.CourseImage }).ToList();
+            }
+            totalRecords = v.Count();
+            var data = v.Skip(skip).Take(pageSize).ToList();
+
+            return Json(new { draw = draw, recordsFiltered = totalRecords, recordsTotal = totalRecords, data = data }, JsonRequestBehavior.AllowGet);
+            #endregion
+
+            //return Json(new { data = await Db.Subjects.AsNoTracking().Select(s => new { s.SubjectId, s.SubjectCode, s.SubjectName }).ToListAsync() }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public async Task<PartialViewResult> CreateCoursePartial()
+        {
+            ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName");
+            return PartialView();
+        }
+        [HttpPost]
+        public async Task<PartialViewResult> CreateCoursePartial(Course course)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Courses.Add(course);
+                await db.SaveChangesAsync();
+                // return RedirectToAction("Index");
+            }
+
+
+            return PartialView();
+        }
 
         // GET: Courses/Details/5
-       
+
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)

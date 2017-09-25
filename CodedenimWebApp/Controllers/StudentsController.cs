@@ -66,6 +66,12 @@ namespace CodedenimWebApp.Controllers
 
             // return View(await db.Students.ToListAsync());
         }
+        
+        public ActionResult DashBoard()
+        {
+            var courses = db.Courses.ToList();
+            return View(courses);
+        }
 
         // GET: Students/Details/5
         public async Task<ActionResult> Details(string id)

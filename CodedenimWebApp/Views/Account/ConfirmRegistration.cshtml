@@ -1,8 +1,7 @@
 ﻿@model dynamic
 @{
     ViewBag.Title = "Send Email";
-    //Layout = "~/Views/Shared/_LayoutWebSite2.cshtml";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
     var schoolImage = @System.Configuration.ConfigurationManager.AppSettings["SchoolImage"];
 
 }
@@ -10,7 +9,7 @@
 <br />
 <br /><br />
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-6 col-lg-5 login-form mx-auto float-none">
 
@@ -21,7 +20,7 @@
                     <!--Header-->
                     <div class="form-header">
                         <h3>
-                            <img class="img-responsive" src="~/Content/Images/@schoolImage" />
+                            <img class="img-responsive" src="~/Content/img/@schoolImage" />
                             @*<i class="fa fa-lock"></i>*@
                         </h3>
                     </div>
