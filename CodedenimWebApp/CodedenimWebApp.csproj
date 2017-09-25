@@ -400,6 +400,9 @@
     <Content Include="Content\bootstrap1.min.css" />
     <Content Include="Content\compiled.min.css" />
     <Content Include="Content\customizer.min.css" />
+    <Content Include="Content\img\Corpers.jpg" />
+    <Content Include="Content\img\Others.jpg" />
+    <Content Include="Content\img\UnderG.jpg" />
     <Content Include="Content\mdb.css" />
     <Content Include="Content\mdb.min.css" />
     <Content Include="Content\Site.css" />

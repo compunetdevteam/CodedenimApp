@@ -7,11 +7,11 @@
     .demo-card-square.mdl-card {
         width: 320px;
         height: 320px;
+        margin-left: 30px;
     }
     .demo-card-square > .mdl-card__title {
         color: #eee;
-        background:
-                  url('~/Content/img/NYSC.jpg') bottom right 15% no-repeat #46B6AC;
+        background-color: #093;
     }
     .color {
         color: black;
@@ -19,36 +19,39 @@
     }
 </style>
 <br />
+<div class="container-fluid">
 <div class="row">
 <div class="col-md-4">
 
-<div class="demo-card-square mdl-card mdl-shadow--2dp">
-    <div class="mdl-card__title mdl-card--expand">
-        <h2 class="mdl-card__title-text">Corper</h2>
-    </div>
-    <div class="mdl-card__supporting-text">
-        Register As a Corper
-    </div>
-    <div class="mdl-card__actions mdl-card--border">
-        @Html.ActionLink("register","CreateCorper","Students",null,new{ @class = "btn btn-default"})
+    <div class="demo-card-square mdl-card mdl-shadow--2dp">
+        <img src="~/Content/img/Corpers.jpg" height="180" class="img-responsive"/>
+        <div class="mdl-card__title mdl-card--expand">
+            <h2 class="mdl-card__title-text">Corper</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <h5>Register As a Corper</h5>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            @Html.ActionLink("register", "CreateCorper", "Students", null, new {@class = "btn btn-default"})
 
+        </div>
     </div>
-</div>
     </div>
 
 
 
     <div class="col-md-4">
         <div class="demo-card-square mdl-card mdl-shadow--2dp">
+            <img src="~/Content/img/UnderG.jpg" height="200" class="img-responsive" />
             <div class="mdl-card__title mdl-card--expand">
                 <h2 class="mdl-card__title-text">UnderGraduate</h2>
             </div>
             <div class="mdl-card__supporting-text">
-                Under Graduate Students
+                <h5> Under Graduate Students</h5>
             </div>
             <div class="mdl-card__actions mdl-card--border">
-               
-                @Html.ActionLink("register","CreateUnderGrad","Students",null,new{ @class = "btn btn-default"})
+
+                @Html.ActionLink("register", "CreateUnderGrad", "Students", null, new {@class = "btn btn-default"})
             </div>
         </div>
     </div>
@@ -57,11 +60,12 @@
 
     <div class="col-md-4">
         <div class="demo-card-square mdl-card mdl-shadow--2dp">
+            <img src="~/Content/img/Others.jpg" height="200" class="img-responsive" />
             <div class="mdl-card__title mdl-card--expand">
                 <h2 class="mdl-card__title-text">Just Want To Learn</h2>
             </div>
             <div class="mdl-card__supporting-text">
-                Want to Learn
+                <h5> Want to Learn</h5>
             </div>
             <div class="mdl-card__actions mdl-card--border">
                 <a class="btn btn-default">
@@ -109,4 +113,4 @@
           
     }); 
 </script>*@
-
+</div>
