@@ -7,18 +7,11 @@
     Layout = "~/Views/Shared/_LayoutWeb.cshtml";
 }
 
-<h2>CreateUnderGrad</h2>
+<h2>Register UnderGraduate Student</h2>
 
 @*@using (Html.BeginForm("RegisterUnderGraduate", "api/AccountApi", FormMethod.Post))
 {*@
-@using (Ajax.BeginForm("RegisterUnderGraduate", "account",
-                        new AjaxOptions
-                        {
-                            HttpMethod = "Post",
-                            OnSuccess = "OnSuccess",
-                            OnFailure = "OnFailure",
-                            LoadingElementId = "progress"
-                        }))
+@using(Html.BeginForm("RegisterUnderGraduate","Account"))
 {
 @*<form class="table table-bordered" id="form" enctype=multipart/form-data method="post">*@
 
@@ -135,7 +128,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <button class="btn btn-success js-submit" data-url="@Url.Action("RegisterUnderGraduate", "api/AccountApi")">Create</button>
+            <input type="submit" value="Create" class="btn btn-default" />
         </div>
     </div>
 }`
