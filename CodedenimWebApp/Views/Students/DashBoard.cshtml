@@ -31,9 +31,10 @@
                                     @*<i class="fa fa-hand-o-right"></i> <a href="@Url.Action("Index", "Courses")">VIEW MORE...</a>*@
                                     @Html.DisplayFor(modelItem => item.CourseDescription)
                                 </div>
-                                      <div>
-                                    <button class="btn btn-success">@Html.ActionLink("Enroll","Pay","PaymentType")</button>
-                                    </div>
+                                <div>
+                                    <a href="@Url.Action("Pay","PaymentTypes")" class="btn btn-primary btn-lg">Pay To Enroll</a>
+                                    @*@Html.ActionLink("Enroll","Pay","PaymentTypes",null, new{@style ="btn btn-default"})*@
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -581,6 +581,61 @@ namespace CodedenimWebApp.Controllers
 
 
 
+
+
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegularStudent([FromBody] AnyStudentVm model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("error");
+            }
+
+            var user = new ApplicationUser()
+            {
+                Id = model.MatNumber,
+                UserName = model.Email,
+                Email = model.Email
+            };
+
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded)
+            {
+                return View("error");
+            }
+
+            var student = new Student
+            {
+                StudentId = model.MatNumber,
+                Title = model.Title,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
+                Gender = model.Gender,
+                PhoneNumber = model.MobileNumber,
+                Institution = model.Institution,
+                Discpline = model.Discpline
+
+            };
+            _db.Students.Add(student);
+            await _db.SaveChangesAsync();
+            await this.UserManager.AddToRoleAsync(user.Id, "UnderGraduate");
+
+            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            // var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
+            var callbackUrl = EmailLink(user.Id, code);
+
+            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+
+
+            return View("ConfirmEmail");
+        }
+
+
+
         /// <summary>
         /// Corper Registration
         /// </summary>

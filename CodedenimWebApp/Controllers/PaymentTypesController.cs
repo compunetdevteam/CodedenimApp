@@ -38,17 +38,18 @@ namespace CodedenimWebApp.Controllers
             {
 
 
-                var person = _db.Students.AsNoTracking().SingleOrDefault(x => x.StudentId.Equals(userId));
+                var person = _db.Users.AsNoTracking().SingleOrDefault(x => x.Id.Equals(userId));
+                //var email = _db.Students.AsNoTracking().Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).ToString();
                 //var amount = _db.PaymentTypes
                 //    .Where(x => x.PaymentTypeId.Equals(person.PaymentTypeId)).Select(x => x.Amount).FirstOrDefault();
 
                 // var convert = new KoboToNaira();
-               // var convertedamount = KoboToNaira.ConvertKoboToNaira(amount);
+               // var convertedamount = KoboToNaira.ConvertKoboToNaira(amount); 
                 var transactionInitializaRequest = new TransactionInitializeRequest
                 {
                     //Reference = "SwifKampus",
-                    AmountInKobo = 150000,
-                    CallbackUrl = "http://localhost:54984/home/ConfrimPayment",
+                    AmountInKobo = 1500000,
+                    CallbackUrl = "http://localhost:64301/home/Dashboard",
                     Email = person.Email,
                     Bearer = "Application fee",
 
