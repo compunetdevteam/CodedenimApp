@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -11,7 +12,9 @@ using System.Web.Mvc;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
+using Newtonsoft.Json.Linq;
 using PagedList;
+using PayStack.Net;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -67,8 +70,54 @@ namespace CodedenimWebApp.Controllers
             // return View(await db.Students.ToListAsync());
         }
         
-        public ActionResult DashBoard()
-        {
+        public ActionResult DashBoard(string reference, string trxref)
+            {
+            if ((reference != null) && (trxref != null))
+            {
+                var testOrLiveSecret = ConfigurationManager.AppSettings["PayStackSecret"];
+                var api = new PayStackApi(testOrLiveSecret);
+               // Verifying a transaction
+                var verifyResponse = api.Transactions.Verify(reference); // auto or supplied when initializing;
+                if (verifyResponse.Status)
+                {
+                    /* 
+                       You can save the details from the json object returned above so that the authorization code 
+                       can be used for charging subsequent transactions
+
+                       // var authCode = verifyResponse.Data.Authorization.AuthorizationCode
+                       // Save 'authCode' for future charges!
+
+                   */
+                    //var customfieldArray = verifyResponse.Data.Metadata.CustomFields.A
+
+                    var convertedValues = new List<SelectableEnumItem>();
+                    var valuepair = verifyResponse.Data.Metadata.Where(x => x.Key.Contains("custom")).Select(s => s.Value);
+
+                    foreach (var item in valuepair)
+                    {
+                        convertedValues = ((JArray)item).Select(x => new SelectableEnumItem
+                        {
+                            key = (string)x["display_name"],
+                            value = (string)x["value"]
+                        }).ToList();
+                    }
+                    //var studentid = _db.Users.Find(id);
+                    var professionalPayment = new ProfessionalPayment()
+                    {
+                        //FeeCategoryId = Convert.ToInt32(verifyResponse.Data.Metadata.CustomFields[3].Value),
+                        ProfessionalWorkerId = convertedValues.Where(x => x.key.Equals("professionalworkerid")).Select(s => s.value).FirstOrDefault(),
+                        PaymentDateTime = DateTime.Now,
+                        Amount = Convert.ToDecimal(convertedValues.Where(x => x.key.Equals("amount")).Select(s => s.value).FirstOrDefault()),
+                        IsPayed = true,
+                        //StudentId = "HAS-201",
+                        AmountPaid = PaymentTypesController.KoboToNaira.ConvertKoboToNaira(verifyResponse.Data.Amount),
+
+                    };
+                    db.ProfessionalPayments.Add(professionalPayment);
+                   db.SaveChangesAsync();
+                }
+                return RedirectToAction("DashBoard");
+            }
             var courses = db.Courses.ToList();
             return View(courses);
         }
@@ -321,5 +370,21 @@ namespace CodedenimWebApp.Controllers
             }
             base.Dispose(disposing);
         }
+    }
+
+    public class ProfessionalPayment
+    {
+       public int ProfessionalPaymentId { get; set; }
+        public string ProfessionalWorkerId { get; set; }
+        public DateTime PaymentDateTime { get; set; }
+        public decimal Amount { get; set; }
+        public bool IsPayed { get; set; }
+        public object AmountPaid { get; set; }
+    }
+
+    public class SelectableEnumItem
+    {
+        public string key { get; set; }
+        public string value { get; set; }
     }
 }

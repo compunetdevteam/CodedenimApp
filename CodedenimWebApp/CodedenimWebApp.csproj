@@ -316,6 +316,10 @@
     <Compile Include="Migrations\201709250000150_added_Payment.Designer.cs">
       <DependentUpon>201709250000150_added_Payment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709252123452_save_PayementDetails.cs" />
+    <Compile Include="Migrations\201709252123452_save_PayementDetails.Designer.cs">
+      <DependentUpon>201709252123452_save_PayementDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -905,6 +909,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709250000150_added_Payment.resx">
       <DependentUpon>201709250000150_added_Payment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709252123452_save_PayementDetails.resx">
+      <DependentUpon>201709252123452_save_PayementDetails.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

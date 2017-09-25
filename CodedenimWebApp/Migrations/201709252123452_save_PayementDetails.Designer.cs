@@ -7,18 +7,18 @@ namespace CodedenimWebApp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Created_the_Seed_Methods : IMigrationMetadata
+    public sealed partial class save_PayementDetails : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Created_the_Seed_Methods));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(save_PayementDetails));
         
         string IMigrationMetadata.Id
         {
-            get { return "201709051015516_Created_the_Seed_Methods"; }
+            get { return "201709252123452_save_PayementDetails"; }
         }
         
         string IMigrationMetadata.Source
         {
-            get { return null; }
+            get { return Resources.GetString("Source"); }
         }
         
         string IMigrationMetadata.Target

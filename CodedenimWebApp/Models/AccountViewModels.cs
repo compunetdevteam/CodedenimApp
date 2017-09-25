@@ -267,7 +267,7 @@ namespace CodedenimWebApp.Models
     //custom model for Registration of Course Instructor
 
 
-    public class AnyStudent
+    public class AnyStudentVm
     {
 
       

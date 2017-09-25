@@ -36,9 +36,10 @@ namespace CodedenimWebApp.Controllers
 
             if (userId != null)
             {
-
+                string reference = "";
 
                 var person = _db.Users.AsNoTracking().SingleOrDefault(x => x.Id.Equals(userId));
+               // var role = _db
                 //var email = _db.Students.AsNoTracking().Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).ToString();
                 //var amount = _db.PaymentTypes
                 //    .Where(x => x.PaymentTypeId.Equals(person.PaymentTypeId)).Select(x => x.Amount).FirstOrDefault();
@@ -49,7 +50,7 @@ namespace CodedenimWebApp.Controllers
                 {
                     //Reference = "SwifKampus",
                     AmountInKobo = 1500000,
-                    CallbackUrl = "http://localhost:64301/home/Dashboard",
+                    CallbackUrl = "http://localhost:64301/Students/DashBoard",  
                     Email = person.Email,
                     Bearer = "Application fee",
 
@@ -195,6 +196,7 @@ namespace CodedenimWebApp.Controllers
         // GET: PaymentTypes/Create
         public ActionResult Create()
         {
+            ViewBag.Roles = new SelectList(_db.Roles,"Id","Name");
             return View();
         }
 
@@ -205,6 +207,7 @@ namespace CodedenimWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "PaymentTypeId,PaymentName,Amount")] PaymentType paymentType)
         {
+
             if (ModelState.IsValid)
             {
                 _db.PaymentTypes.Add(paymentType);
@@ -212,6 +215,8 @@ namespace CodedenimWebApp.Controllers
                 return RedirectToAction("Index");
             }
 
+
+            ViewBag.Roles = new SelectList(_db.Roles, "Id", "Name");
             return View(paymentType);
         }
 
@@ -222,6 +227,7 @@ namespace CodedenimWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            ViewBag.Roles = new SelectList(_db.Roles, "Id", "Name");
             PaymentType paymentType = await _db.PaymentTypes.FindAsync(id);
             if (paymentType == null)
             {
