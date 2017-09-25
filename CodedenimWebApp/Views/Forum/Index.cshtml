@@ -1,13 +1,15 @@
 ﻿@model IEnumerable<CodeninModel.Forums.Forum>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Forums";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
 }
 
-<h2>Index</h2>
+<div class="container-fluid">
+<h2>Forum</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new{@class = "btn"})
 </p>
 <table class="table">
     <tr>
@@ -61,3 +63,4 @@
 }
 
 </table>
+</div>

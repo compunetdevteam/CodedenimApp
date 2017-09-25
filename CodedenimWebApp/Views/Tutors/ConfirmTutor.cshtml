@@ -1,17 +1,18 @@
 ﻿@model CodeninModel.Tutor
 @{
     ViewBag.Title = "ConfirmTutor";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
  
 }
 
-
+<div class="container-fluid">
 <h2>ConfirmTutor</h2>
 @using (Html.BeginForm("ConfirmTutor", "Tutors", FormMethod.Post, new {enctype = "multipart/form-data"}))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <a href="~/Views/Tutors/Create.cshtml">~/Views/Tutors/Create.cshtml</a>
+        <a href="~/Views/Tutors/Create.cshtml">Create Tutors</a>
         <h4>Tutor</h4>
         <hr/>
         @Html.ValidationSummary(true, "", new {@class = "text-danger"})
@@ -35,3 +36,4 @@
 
 
 }
+</div>

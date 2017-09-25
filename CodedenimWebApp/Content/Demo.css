@@ -69,13 +69,20 @@
 	text-align: center;
 }
 .mycard {
-	border-radius: 30% !important;
+	border-radius: 20% !important;
 	box-shadow: 0 4px 8px 0 #000;
 	transition: 0.3s;
 	-moz-transition: 0.3s;
 	-o-transition: 0.3s;
 }
+
+.card-width {
+   
+}
 th,tr,td,table{
     border: 1px solid black;
     padding: 1px;
+}
+body.modal-open div.modal-backdrop {
+     z-index: 0 !important;
 }

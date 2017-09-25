@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using CodedenimWebApp.Controllers;
 using CodeninModel;
 using CodeninModel.Quiz;
 using Microsoft.AspNet.Identity;
@@ -62,7 +63,7 @@ namespace CodedenimWebApp.Models
 
         public DbSet<Student> Students { get; set; }
 
-        public DbSet<TutorCourses> TutorCourses { get; set; }
+        public DbSet<TutorCourse> TutorCourses { get; set; }
 
         public DbSet<CodeninModel.CBTE.QuizRule> QuizRules { get; set; }
 

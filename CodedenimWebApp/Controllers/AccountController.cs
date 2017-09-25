@@ -106,7 +106,7 @@ namespace CodedenimWebApp.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("CustomDashborad", new { username = user.UserName });
+                    return RedirectToAction("CustomDashboard", new { username = user.UserName });
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -119,7 +119,7 @@ namespace CodedenimWebApp.Controllers
         }
 
 
-        public ActionResult CustomDashborad(string username)
+        public ActionResult CustomDashboard(string username)
         {
             if (User.IsInRole(RoleName.Admin))
             {
@@ -128,20 +128,27 @@ namespace CodedenimWebApp.Controllers
                 return RedirectToAction("AdminDashBoard", "Home");
                 // return RedirectToAction("AdminDashboard", "Home");
             }
+            if (User.IsInRole(RoleName.Tutor))
+            {
+                TempData["UserMessage"] = $"Login Successful, Welcome {username}";
+                TempData["Title"] = "Success.";
+                return RedirectToAction("DashBoard", "Tutors");
+                // return RedirectToAction("AdminDashboard", "Home");
+            }
 
             if (User.IsInRole(RoleName.Student))
             {
-                //var model = await Db.Students.Where(x => x.StudentId.Equals(username)).FirstOrDefaultAsync();
-                //model.IsLogin = true;
-                //Db.Entry(model).State = EntityState.Modified;
-                //await Db.SaveChangesAsync();
-
-                //IdentityResult result = await UserManager.UpdateAsync(model);
                 TempData["UserMessage"] = $"Login Successful, Welcome {username}";
                 TempData["Title"] = "Success.";
-                return RedirectToAction("Dashboard", "Students");
+                return RedirectToAction("DashBoard", "Students");
             }
-           
+            if (User.IsInRole(RoleName.Corper))
+            {
+                TempData["UserMessage"] = $"Login Successful, Welcome {username}";
+                TempData["Title"] = "Success.";
+                return RedirectToAction("DashBoard", "Students");
+            }    
+
             return RedirectToAction("Index", "Home");
         }
 
