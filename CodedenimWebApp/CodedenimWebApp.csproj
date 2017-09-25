@@ -786,6 +786,8 @@
     <Content Include="Views\PaymentTypes\Edit.cshtml" />
     <Content Include="Views\PaymentTypes\Index.cshtml" />
     <Content Include="Views\Home\AdminDashboard.cshtml" />
+    <Content Include="Views\Students\DashBoard.cshtml" />
+    <Content Include="Views\Tutors\DashBoard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
