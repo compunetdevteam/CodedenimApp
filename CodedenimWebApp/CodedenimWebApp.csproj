@@ -286,6 +286,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709051015516_Created_the_Seed_Methods.cs" />
+    <Compile Include="Migrations\201709051015516_Created_the_Seed_Methods.Designer.cs">
+      <DependentUpon>201709051015516_Created_the_Seed_Methods.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201709090700025_added_forum_api.cs" />
     <Compile Include="Migrations\201709090700025_added_forum_api.Designer.cs">
       <DependentUpon>201709090700025_added_forum_api.cs</DependentUpon>
@@ -505,10 +509,12 @@
     <Content Include="fonts\roboto\Roboto-Thin.woff" />
     <Content Include="fonts\roboto\Roboto-Thin.woff2" />
     <Content Include="fonts\roboto\Roboto-Thind41d.eot" />
+    <Content Include="MaterialUpload\511052.jpg" />
     <Content Include="MaterialUpload\a-brief-history-of-computer-network-technology_513d9ec01fd40.png" />
     <Content Include="MaterialUpload\Addition of single precision floating point numbers.mp4" />
     <Content Include="MaterialUpload\Boolean Logic &amp; Logic Gates- Crash Course Computer Science #3.mp4" />
     <Content Include="MaterialUpload\Camera.jpg" />
+    <Content Include="MaterialUpload\CodeDemin.png" />
     <Content Include="MaterialUpload\Codedenim.png" />
     <Content Include="MaterialUpload\Data Management_ What Is Master Data Management %28Mdm%29.mp4" />
     <Content Include="MaterialUpload\myfile.mp4" />
@@ -817,6 +823,26 @@
     <Content Include="Views\ForumQuestions\Index.cshtml" />
     <Content Include="Views\Tutors\CreateTutorPartial.cshtml" />
     <Content Include="Views\Tutors\TutorDashboard.cshtml" />
+    <Content Include="Views\PaymentTypes\Create.cshtml" />
+    <Content Include="Views\PaymentTypes\Delete.cshtml" />
+    <Content Include="Views\PaymentTypes\Details.cshtml" />
+    <Content Include="Views\PaymentTypes\Edit.cshtml" />
+    <Content Include="Views\PaymentTypes\Index.cshtml" />
+    <Content Include="Views\Account\_RegisterUnderGraduate.cshtml" />
+    <Content Include="Views\Students\CreateCorper.cshtml" />
+    <Content Include="Views\Students\CreateUnderGrad.cshtml" />
+    <Content Include="Views\Students\DashBoard.cshtml" />
+    <Content Include="Views\Students\RegularStudent.cshtml" />
+    <Content Include="Views\Students\Student.cshtml" />
+    <Content Include="Views\Students1\Create.cshtml" />
+    <Content Include="Views\Students1\Delete.cshtml" />
+    <Content Include="Views\Students1\Details.cshtml" />
+    <Content Include="Views\Students1\Edit.cshtml" />
+    <Content Include="Views\Students1\Index.cshtml" />
+    <Content Include="Views\Tutors\DashBoard.cshtml" />
+    <Content Include="Views\Tutors\NotExist.cshtml" />
+    <Content Include="Views\Tutors\TutorExist.cshtml" />
+    <Content Include="Views\Home\AdminDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -854,6 +880,9 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201709051015516_Created_the_Seed_Methods.resx">
+      <DependentUpon>201709051015516_Created_the_Seed_Methods.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709090700025_added_forum_api.resx">
       <DependentUpon>201709090700025_added_forum_api.cs</DependentUpon>
     </EmbeddedResource>
