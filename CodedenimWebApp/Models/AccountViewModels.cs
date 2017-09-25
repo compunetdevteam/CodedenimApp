@@ -239,9 +239,9 @@ namespace CodedenimWebApp.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class RegisterStudentModel
+    public class RegisterUnderGrad
     {
-        public string AdmissionNumber { get; set; }
+        public string MatNumber { get; set; }
         public Title Title { get; set; }
         public string FirstName { get; set; }
         public DateTime DateOfBirth { get; set; }

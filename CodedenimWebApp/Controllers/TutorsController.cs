@@ -54,7 +54,7 @@ namespace CodedenimWebApp.Controllers
             if (!string.IsNullOrEmpty(search))
             {
                 //v = v.OrderBy(sortColumn + " " + sortColumnDir);
-                v = db.Tutors.Where(x =>  (x.TutorId.Equals(search) || x.FirstName.Equals(search) || x.LastName.Equals(search) || x.MiddleName.Equals(search) || x.Email.Equals(search)))
+                v = db.Tutors.Where(x =>  (x.TutorId.Equals(search) || x.FirstName.Equals(search) || x.MiddleName.Equals(search) || x.LastName.Equals(search) || x.Email.Equals(search)))
                     .Select(s => new { s.TutorId, s.FirstName, s.MiddleName, s.LastName,s.Email }).ToList();
             }
             totalRecords = v.Count();
@@ -65,6 +65,7 @@ namespace CodedenimWebApp.Controllers
 
             //return Json(new { data = await Db.Subjects.AsNoTracking().Select(s => new { s.SubjectId, s.SubjectCode, s.SubjectName }).ToListAsync() }, JsonRequestBehavior.AllowGet);
         }
+
 
 
         public async Task<PartialViewResult> CreateTutorPartial() 
@@ -81,8 +82,9 @@ namespace CodedenimWebApp.Controllers
                // return RedirectToAction("Index");
             }
 
-           
-            return PartialView();
+            //return RedirectToAction("Index");
+
+             return PartialView();
         }
         public  ActionResult DashBoard()
         {
@@ -123,12 +125,29 @@ namespace CodedenimWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Tutor tutor)
         {
-            if (ModelState.IsValid)
+            var sameTutorId = db.Tutors.AsNoTracking().SingleOrDefault(x => x.TutorId.Equals(tutor.TutorId));
+            if (sameTutorId == null)
             {
-                db.Tutors.Add(tutor);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Tutors.Add(tutor);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
             }
+            else
+            {
+                //wanted to send to the view the information to the existing tutor that wanted to be added again
+                var tutorInfo = new TutorCreateVm();
+                var tutorExist = db.Tutors.AsNoTracking().FirstOrDefault(x => x.TutorId.Equals(tutor.TutorId));
+                tutorInfo.TutorId = tutorExist.TutorId;
+                tutorInfo.LastName = tutorExist.LastName;
+                tutorInfo.FirstName = tutorExist.FirstName;
+                tutorInfo.Gender = tutorExist.Gender;
+
+                return View("TutorExist" ,tutorInfo);
+            }
+
 
             return View(tutor);
         }
@@ -153,8 +172,8 @@ namespace CodedenimWebApp.Controllers
 
             if (tutor == null)
             {
-                ViewBag.Message = "This Id Does Not Exist";
-                return View();
+                
+                return View("NotExist");
             }
             var tutorVm = new TutorRegisterVm();
             tutorVm.FirstName = tutor.FirstName;
