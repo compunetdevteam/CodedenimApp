@@ -270,6 +270,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
+    <Compile Include="Controllers\PaymentTypesController.cs" />
     <Compile Include="Controllers\Quiz\QuizRulesController.cs" />
     <Compile Include="Controllers\Quiz\StudentTopicQuizsController.cs" />
     <Compile Include="Controllers\Quiz\TopicQuizsController.cs" />
@@ -301,6 +302,10 @@
     <Compile Include="Migrations\201709141518025_changeImageName.Designer.cs">
       <DependentUpon>201709141518025_changeImageName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709250000150_added_Payment.cs" />
+    <Compile Include="Migrations\201709250000150_added_Payment.Designer.cs">
+      <DependentUpon>201709250000150_added_Payment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -322,6 +327,7 @@
     <Compile Include="ViewModels\CourseVm.cs" />
     <Compile Include="ViewModels\DisplayQuestionViewModel.cs" />
     <Compile Include="ViewModels\ForumQA_Vm.cs" />
+    <Compile Include="ViewModels\RegularStudentVm.cs" />
     <Compile Include="ViewModels\TutorCreateVm.cs" />
     <Compile Include="ViewModels\TutorRegisterVm.cs" />
     <Compile Include="ViewModels\TutorRegistrationVm.cs" />
@@ -338,8 +344,12 @@
     <Content Include="Content\bootstrap1.min.css" />
     <Content Include="Content\compiled.min.css" />
     <Content Include="Content\customizer.min.css" />
+    <Content Include="Content\img\loading %281%29.gif" />
+    <Content Include="Content\img\loading.gif" />
+    <Content Include="Content\img\NYSC.jpg" />
     <Content Include="Content\mdb.css" />
     <Content Include="Content\mdb.min.css" />
+    <Content Include="Content\my.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\Demo.css" />
@@ -583,6 +593,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -756,6 +768,18 @@
     <Content Include="Views\Students1\Edit.cshtml" />
     <Content Include="Views\Students1\Index.cshtml" />
     <Content Include="Views\Students\CreateUnderGrad.cshtml" />
+    <Content Include="Views\Account\_RegisterUnderGraduate.cshtml" />
+    <Content Include="Views\Students\CreateCorper.cshtml" />
+    <Content Include="Views\Tutors\TutorExist.cshtml" />
+    <Content Include="Views\Tutors\NotExist.cshtml" />
+    <Content Include="Views\Students\Student.cshtml" />
+    <Content Include="Views\Students\RegularStudent.cshtml" />
+    <Content Include="Views\PaymentTypes\Create.cshtml" />
+    <Content Include="Views\PaymentTypes\Delete.cshtml" />
+    <Content Include="Views\PaymentTypes\Details.cshtml" />
+    <Content Include="Views\PaymentTypes\Edit.cshtml" />
+    <Content Include="Views\PaymentTypes\Index.cshtml" />
+    <Content Include="Views\Home\AdminDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -805,6 +829,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709141518025_changeImageName.resx">
       <DependentUpon>201709141518025_changeImageName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709250000150_added_Payment.resx">
+      <DependentUpon>201709250000150_added_Payment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -110,6 +110,7 @@
     <Compile Include="Forums\ForumTopic.cs" />
     <Compile Include="Forums\LatestPost.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="PaymentType.cs" />
     <Compile Include="Quiz\QuizLog.cs" />
     <Compile Include="Quiz\QuizLogVm.cs" />
     <Compile Include="StudentAssignedCourses.cs" />

@@ -76,6 +76,13 @@
                                 <p>Courses</p>
                             </a>
                         </li>
+                        
+                        <li @ViewBag.Courses>
+                            <a href="@Url.Action("Create", "PaymentTypes")">
+                                <i class="fa fa-graduation-cap"></i>
+                                <p>Courses</p>
+                            </a>
+                        </li>
 
                         <li @ViewBag.Topics>
                             <a href="@Url.Action("Index", "Topics")">

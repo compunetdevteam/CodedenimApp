@@ -84,6 +84,9 @@ namespace CodedenimWebApp.Models
         public System.Data.Entity.DbSet<CodeninModel.Forums.ForumAnswer> ForumAnswers { get; set; }
 
         public System.Data.Entity.DbSet<CodeninModel.CourseRating> CourseRatings { get; set; }
+
+        public System.Data.Entity.DbSet<CodedenimWebApp.ViewModels.RegularStudentVm> RegularStudentVms { get; set; }
+        public DbSet<PaymentType> PaymentTypes { get; set; }
         //public override int SaveChanges()
         //{
         //    try

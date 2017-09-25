@@ -83,8 +83,33 @@ namespace CodedenimWebApp.Controllers
             return View(student);
         }
 
+        public async Task<ActionResult> CreateCorper()
+        {
+            return View();
+        }
+
         public async Task<ActionResult> CreateUnderGrad()
         {
+            return View();
+        }
+
+        public ActionResult RegularStudent()
+        {
+            return View();
+        }
+
+        public async Task<ActionResult> RegularStudent(RegularStudentVm regularStudentVm)
+        {
+            if (ModelState.IsValid)
+            {
+                var student = new Student();
+                student.FirstName = regularStudentVm.FirstName;
+                student.LastName = regularStudentVm.LastName;
+                student.Email = regularStudentVm.Email;
+                student.PhoneNumber = regularStudentVm.PhoneNumber;
+                
+                db.Students.Add(student);
+            }
             return View();
         }
         // GET: Students/Create

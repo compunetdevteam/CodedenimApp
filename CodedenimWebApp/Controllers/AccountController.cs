@@ -14,13 +14,14 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
+using System.Web.Http;
 using System.Web.Mvc;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
 
 namespace CodedenimWebApp.Controllers
 {
-    [Authorize]
+    [System.Web.Mvc.Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -65,7 +66,7 @@ namespace CodedenimWebApp.Controllers
 
         //
         // GET: /Account/Login
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -74,8 +75,8 @@ namespace CodedenimWebApp.Controllers
 
         //
         // POST: /Account/Login
-        [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
@@ -148,7 +149,7 @@ namespace CodedenimWebApp.Controllers
 
         //
         // GET: /Account/VerifyCode
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
             // Require that the user has already logged in via username/password or external login
@@ -161,8 +162,8 @@ namespace CodedenimWebApp.Controllers
 
         //
         // POST: /Account/VerifyCode
-        [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
         {
@@ -192,7 +193,7 @@ namespace CodedenimWebApp.Controllers
 
         //Confirm if the tutor has been registered
         // GET: /Account/Register
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult ConfirmTutorReg()
         {
             //  var tutor = new ConfirmTutorVm();
@@ -297,18 +298,17 @@ namespace CodedenimWebApp.Controllers
 
 
         // GET: /Account/Register
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult Register()
         {
-            //  var tutor = new ConfirmTutorVm();
-           // var tutor = ConfirmTutor(id);
+         
             return View();
         }
 
         //
         // POST: /Account/Register
-        [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -357,8 +357,8 @@ namespace CodedenimWebApp.Controllers
         }
 
 
-        [HttpGet]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult TutorRegistration()
         {
             //var tutor = new Tutor();
@@ -389,8 +389,8 @@ namespace CodedenimWebApp.Controllers
         //}
 
 
-        [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> TutorRegistration(TutorRegisterVm model,  HttpPostedFileBase File)
         {
@@ -463,13 +463,124 @@ namespace CodedenimWebApp.Controllers
         }
 
 
+        [System.Web.Mvc.AllowAnonymous]
+        public  PartialViewResult _RegisterUnderGraduate()
+        {
+            return PartialView();
+        }
+
+
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterCorper([FromBody] RegisterCorperModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("error");
+            }
+
+            var user = new ApplicationUser()
+            {
+                Id = model.CallUpNumber,
+                UserName = model.Email,
+                Email = model.Email
+            };
+
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded)
+            {
+                return View("error");
+            }
+
+            var student = new Student
+            {
+                StudentId = model.CallUpNumber,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
+                Gender = model.Gender,
+                PhoneNumber = model.MobileNumber,
+                Institution = model.Institution,
+                Discpline = model.Discpline
+
+            };
+            _db.Students.Add(student);
+            await _db.SaveChangesAsync();
+            await this.UserManager.AddToRoleAsync(user.Id, "Corper");
+
+            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            // var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
+            var callbackUrl = EmailLink(user.Id, code);
+
+            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+
+
+            return View("ConfirmEmail");
+        }
+
+
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterUnderGraduate([FromBody] RegisterUnderGrad model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("error");
+            }
+
+            var user = new ApplicationUser()
+            {
+                Id = model.MatNumber,
+                UserName = model.Email,
+                Email = model.Email
+            };
+
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded)
+            {
+                return View("error");
+            }
+
+            var student = new Student
+            {
+                StudentId = model.MatNumber,
+                Title = model.Title,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
+                Gender = model.Gender,
+                PhoneNumber = model.MobileNumber,
+                Institution = model.Institution,
+                Discpline = model.Discpline
+
+            };
+            _db.Students.Add(student);
+            await _db.SaveChangesAsync();
+            await this.UserManager.AddToRoleAsync(user.Id, "UnderGraduate");
+
+            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            // var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
+            var callbackUrl = EmailLink(user.Id, code);
+
+            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+
+
+            return View("ConfirmEmail");
+        }
+
+
+
         /// <summary>
         /// Corper Registration
         /// </summary>
         /// <returns></returns>
 
 
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public async Task<ActionResult> SendEmail()
         {
             var message = new IdentityMessage
@@ -488,9 +599,13 @@ namespace CodedenimWebApp.Controllers
             // return await message;
         }
 
+        public string EmailLink(string userId, string code)
+        {
+            var url = this.Url.HttpRouteUrl("Default", new { Controller = "Account", Action = "ConfirmEmail", userId, code });
+            return url;
+        }
 
-
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public async Task SendAsync(EmailSender message)
         {
             // Plug in your email service here to send an email.
@@ -515,7 +630,7 @@ namespace CodedenimWebApp.Controllers
 
         //
         // GET: /Account/ConfirmEmail
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
@@ -528,7 +643,7 @@ namespace CodedenimWebApp.Controllers
 
         //
         // GET: /Account/ForgotPassword
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult ForgotPassword()
         {
             return View();
@@ -536,8 +651,8 @@ namespace CodedenimWebApp.Controllers
 
         //
         // POST: /Account/ForgotPassword
-        [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
@@ -564,7 +679,7 @@ namespace CodedenimWebApp.Controllers
 
         //
         // GET: /Account/ForgotPasswordConfirmation
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
@@ -572,7 +687,7 @@ namespace CodedenimWebApp.Controllers
 
         //
         // GET: /Account/ResetPassword
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
             return code == null ? View("Error") : View();
@@ -580,8 +695,8 @@ namespace CodedenimWebApp.Controllers
 
         //
         // POST: /Account/ResetPassword
-        [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
@@ -606,7 +721,7 @@ namespace CodedenimWebApp.Controllers
 
         //
         // GET: /Account/ResetPasswordConfirmation
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
@@ -614,8 +729,8 @@ namespace CodedenimWebApp.Controllers
 
         //
         // POST: /Account/ExternalLogin
-        [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
@@ -625,7 +740,7 @@ namespace CodedenimWebApp.Controllers
 
         //
         // GET: /Account/SendCode
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
         {
             var userId = await SignInManager.GetVerifiedUserIdAsync();
@@ -640,8 +755,8 @@ namespace CodedenimWebApp.Controllers
 
         //
         // POST: /Account/SendCode
-        [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SendCode(SendCodeViewModel model)
         {
@@ -660,7 +775,7 @@ namespace CodedenimWebApp.Controllers
 
         //
         // GET: /Account/ExternalLoginCallback
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
@@ -690,8 +805,8 @@ namespace CodedenimWebApp.Controllers
 
         //
         // POST: /Account/ExternalLoginConfirmation
-        [HttpPost]
-        [AllowAnonymous]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
@@ -728,7 +843,7 @@ namespace CodedenimWebApp.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
@@ -738,7 +853,7 @@ namespace CodedenimWebApp.Controllers
 
         //
         // GET: /Account/ExternalLoginFailure
-        [AllowAnonymous]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {
             return View();

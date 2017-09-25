@@ -128,12 +128,29 @@ namespace CodedenimWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Tutor tutor)
         {
-            if (ModelState.IsValid)
+            var sameTutorId = db.Tutors.AsNoTracking().SingleOrDefault(x => x.TutorId.Equals(tutor.TutorId));
+            if (sameTutorId == null)
             {
-                db.Tutors.Add(tutor);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Tutors.Add(tutor);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
             }
+            else
+            {
+                //wanted to send to the view the information to the existing tutor that wanted to be added again
+                var tutorInfo = new TutorCreateVm();
+                var tutorExist = db.Tutors.AsNoTracking().FirstOrDefault(x => x.TutorId.Equals(tutor.TutorId));
+                tutorInfo.TutorId = tutorExist.TutorId;
+                tutorInfo.LastName = tutorExist.LastName;
+                tutorInfo.FirstName = tutorExist.FirstName;
+                tutorInfo.Gender = tutorExist.Gender;
+
+                return View("TutorExist" ,tutorInfo);
+            }
+
 
             return View(tutor);
         }
@@ -158,8 +175,8 @@ namespace CodedenimWebApp.Controllers
 
             if (tutor == null)
             {
-                ViewBag.Message = "This Id Does Not Exist";
-                return View();
+                
+                return View("NotExist");
             }
             var tutorVm = new TutorRegisterVm();
             tutorVm.FirstName = tutor.FirstName;
