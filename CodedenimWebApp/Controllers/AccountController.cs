@@ -580,9 +580,6 @@ namespace CodedenimWebApp.Controllers
         }
 
 
-
-
-
         [System.Web.Mvc.HttpPost]
         [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -595,7 +592,7 @@ namespace CodedenimWebApp.Controllers
 
             var user = new ApplicationUser()
             {
-                Id = model.MatNumber,
+               // Id = model.MatNumber,
                 UserName = model.Email,
                 Email = model.Email
             };
@@ -609,15 +606,15 @@ namespace CodedenimWebApp.Controllers
 
             var student = new Student
             {
-                StudentId = model.MatNumber,
-                Title = model.Title,
+                //StudentId = model.MatNumber,
+                //Title = model.Title,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
                 Gender = model.Gender,
                 PhoneNumber = model.MobileNumber,
-                Institution = model.Institution,
-                Discpline = model.Discpline
+               // Institution = model.Institution,
+               // Discpline = model.Discpline
 
             };
             _db.Students.Add(student);
