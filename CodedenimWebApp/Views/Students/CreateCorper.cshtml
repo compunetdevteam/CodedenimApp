@@ -9,13 +9,7 @@
 <h2>CreateCorper</h2>
 <div class="container-fluid">
 
-@using (Ajax.BeginForm("RegisterUnderGraduate", "account", new AjaxOptions
-                        {
-                            HttpMethod = "Post",
-                            OnSuccess = "OnSuccess",
-                            OnFailure = "OnFailure",
-                            LoadingElementId = "progress"
-                        }))
+@using (Html.BeginForm("RegisterUnderGraduate", "Account"))
 {
 
 

@@ -1,17 +1,17 @@
-﻿@using CodeninModel
+﻿
+@using CodeninModel
 @model CodeninModel.TopicMaterialUpload
 
 @{
     ViewBag.Title = "Topic Material Details";
-    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
 }
 <br /><br /><br /><br /><br />
-<div class="container">
 
     <h2>Details</h2>
-
-    <div>
-        <h4>TopicMaterialUpload</h4>
+    <div class="row">
+    <div class="col-md-4">
+        <h4>Topic Material Upload</h4>
         <hr />
         <dl class="dl-horizontal">
             <dt>
@@ -67,47 +67,63 @@
         </dl>
     </div>
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.TopicMaterialUploadId }) |
-        @Html.ActionLink("Back to List", "Index")
+        @*@Html.ActionLink("Edit", "Edit", new { id = Model.TopicMaterialUploadId }) |
+        @Html.ActionLink("Back to List", "Index")*@
     </p>
-</div>
 
 
 
-<div>
-    @if (Model.FileType == FileType.MP4)
-    {
-        <div style="text-align:center">
-            <button onclick="playPause()">Play/Pause</button>
-            <button onclick="makeBig()">Big</button>
-            <button onclick="makeSmall()">Small</button>
-            <button onclick="makeNormal()">Normal</button>
-            <br><br>
-            @*<video controls="controls">
+
+    <div class="col-md-4">
+        @if (Model.FileType == FileType.MP4)
+        {
+            <div style="text-align:center">
+                <button onclick="playPause()">Play/Pause</button>
+                <button onclick="makeBig()">Big</button>
+                <button onclick="makeSmall()">Small</button>
+                <button onclick="makeNormal()">Normal</button>
+                <br><br>
+                @*<video controls="controls">
                 <source src="~/TopicMaterials/How%20to%20Use%20our%20Learning%20Management%20System.mp4" type="video/mp4" />
             </video>*@
-            <video controls="controls" id="video1" width="420">
-                <source src="~/MaterialUpload/@Model.FileLocation" type="video/mp4">
-                Your browser does not support HTML5 video.
-            </video>
-        </div>
-    }
-    else if (Model.FileType == FileType.PDF)
-    {
+                <video controls="controls" id="video1" width="420">
+                    <source src="~/MaterialUpload/@Model.FileLocation" type="video/mp4">
+                    Your browser does not support HTML5 video.
+                </video>
+            </div>
+        }
+        else if (Model.FileType == FileType.PDF)
+        {
         @*<iframe src="~/TopicMaterials/@Model.FileLocation" style="width: 100%;height: 100%;border: none;"></iframe>*@
-        <object data="~/MaterialUpload/@Model.FileLocation" type="application/pdf">
-            @*<embed src="~/TopicMaterials/@Model.FileLocation" width="500" height="375" type='application/pdf'></embed>*@
-            <iframe src="~/MaterialUpload/@Model.FileLocation" style="width: 100%;height: 100%;border: none;"></iframe>
+            <object data="~/MaterialUpload/@Model.FileLocation" type="application/pdf">
+                @*<embed src="~/TopicMaterials/@Model.FileLocation" width="500" height="375" type='application/pdf'></embed>*@
+                <iframe src="~/MaterialUpload/@Model.FileLocation" style="width: 100%;height: 100%;border: none;"></iframe>
 
 
-        </object>
+            </object>
        
-    }
+        }
+    </div>
+    
+<div class="col-md-3">
+<div class="panel panel-default" data-toggle="panel-collapse" data-open="true">
+    <div class="panel-heading panel-collapse-trigger">
+        <h4 class="panel-title">List Of Videos</h4>
+    </div>
+    <div class="panel-body list-group">
+        <ul class="list-group list-group-menu">
+            <li class="list-group-item"><a class="link-text-color" href="website-instructor-dashboard.html">Dashboard</a></li>
+           
+        </ul>
+    </div>
 </div>
-<p>
+    @*@Html.ActionLink("Back to Topics", "Content","Courses", new{ id = Model.Course.Module.CourseId})*@
+</div>
+</div>
+@*<p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.TopicMaterialUploadId }) |
     @Html.ActionLink("Back to List", "Index")
-</p>
+</p>*@
 <script>
 
     var myVideo = document.getElementById("video1");

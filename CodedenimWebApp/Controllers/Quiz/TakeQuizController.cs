@@ -45,6 +45,11 @@ namespace CodedenimWebApp.Controllers
         }
 
 
+        public ActionResult TakeQuizPage()
+        {
+            return View();
+        }
+
        // [Authorize(Roles = RoleName.Student)]
         [HttpGet]
         public async Task<ActionResult> SelectSubject(int topicId)
