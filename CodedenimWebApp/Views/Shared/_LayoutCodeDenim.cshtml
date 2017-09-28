@@ -23,36 +23,42 @@
     
 </head>
 <body>
-<div class="container-fluid">
-    @RenderBody();
-</div>
-    <!-- JQuery -->
-    <script src="~/Scripts/jquery-3.1.1.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="~/Scripts/tether.min.js"></script>
 
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
-
-    <!-- MDB core JavaScript -->
-<script type="text/javascript" src="~/Scripts/mdb.min.js"></script>
     
 
-    <script>
-        //Animation init
-        new WOW().init();
+<main class="">
+    <div class="container-fluid">
+        @RenderBody();
+    </div>
+</main>
+<!-- JQuery -->
+<script src="~/Scripts/jquery-3.1.1.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="~/Scripts/tether.min.js"></script>
 
-        //Modal
-        $('#myModal').on('shown.bs.modal', function () {
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="~/Scripts/mdb.min.js"></script>
+
+
+<script>
+    //Animation init
+    new WOW().init();
+
+    //Modal
+    $('#myModal').on('shown.bs.modal',
+        function() {
             $('#myInput').focus()
         })
 
-        // Material Select Initialization
-        $(document).ready(function () {
-            $('.mdb-select').material_select();
-        });
+    // Material Select Initialization
+    $(document).ready(function() {
+        $('.mdb-select').material_select();
+    });
 
-    </script>
+</script>
 
 </body>
 

@@ -25,6 +25,11 @@ namespace CodedenimWebApp.Controllers
             return View(await forumQuestions.ToListAsync());
         }
 
+        public ActionResult ForumQuestion()
+        {
+            return View();
+        }
+
         // GET: ForumQuestions/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -58,7 +63,7 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ForumQuestionId,Title,QuestionName,CourseId,StudentId")] ForumQuestion forumQuestion)
+        public async Task<ActionResult> Create(ForumQuestion forumQuestion)
         {
             if (ModelState.IsValid)
             {

@@ -12,6 +12,7 @@ using System.Web.Mvc;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
+using Xamarin.Forms;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -32,6 +33,25 @@ namespace CodedenimWebApp.Controllers
                 .Include(d => d.CourseCategory);
             //var courses = db.Courses.Include(c => c.CourseCategory);
             return View(courses.ToList());
+        }
+
+        public async Task<ActionResult> ListCourses()
+        {
+
+            var courses = db.Courses.ToList();
+            return View(courses);
+        }
+
+        public ActionResult Content(int id)
+        {
+            var viewModel = new CourseContentVm();
+            viewModel.Modules = db.Modules.Include(x => x.Topics).Include(x => x.Course).Where(x => x.CourseId.Equals(id)).ToList();
+
+         
+            viewModel.Topics = db.Topics.Include(x => x.MaterialUploads).ToList();
+            //var courseList = new CourseContentVm();
+            //courseList.Modules = courses
+            return View(viewModel);
         }
 
         public  async Task<ActionResult> GetIndex()

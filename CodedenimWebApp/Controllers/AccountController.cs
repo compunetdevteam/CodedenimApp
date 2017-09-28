@@ -524,7 +524,7 @@ namespace CodedenimWebApp.Controllers
             await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
 
 
-            return View("ConfirmEmail");
+            return View("ConfirmRegistration");
         }
 
 
@@ -576,8 +576,11 @@ namespace CodedenimWebApp.Controllers
             await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
 
 
-            return View("ConfirmEmail");
+            return View("ConfirmRegistration");
         }
+
+
+
 
 
         [System.Web.Mvc.HttpPost]
@@ -592,7 +595,7 @@ namespace CodedenimWebApp.Controllers
 
             var user = new ApplicationUser()
             {
-               // Id = model.MatNumber,
+              
                 UserName = model.Email,
                 Email = model.Email
             };
@@ -606,20 +609,18 @@ namespace CodedenimWebApp.Controllers
 
             var student = new Student
             {
-                //StudentId = model.MatNumber,
-                //Title = model.Title,
+             
+               
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
                 Gender = model.Gender,
                 PhoneNumber = model.MobileNumber,
-               // Institution = model.Institution,
-               // Discpline = model.Discpline
-
+              
             };
             _db.Students.Add(student);
             await _db.SaveChangesAsync();
-            await this.UserManager.AddToRoleAsync(user.Id, "UnderGraduate");
+            await this.UserManager.AddToRoleAsync(user.Id, "Student");
 
             var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
             // var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
@@ -628,7 +629,7 @@ namespace CodedenimWebApp.Controllers
             await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
 
 
-            return View("ConfirmEmail");
+            return View("ConfirmRegistration");
         }
 
 

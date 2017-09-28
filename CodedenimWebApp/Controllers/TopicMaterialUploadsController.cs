@@ -54,10 +54,10 @@ namespace CodedenimWebApp.Controllers
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
-			TopicMaterialUpload topicMaterialUpload = await db.TopicMaterialUploads.FindAsync(id);
+			TopicMaterialUpload topicMaterialUpload = db.TopicMaterialUploads.Find(id);
 			if (topicMaterialUpload == null)
 			{
-				return HttpNotFound();
+				return View("NoContent");
 			}
 			return View(topicMaterialUpload);
 		}

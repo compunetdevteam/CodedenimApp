@@ -23,6 +23,13 @@ namespace CodedenimWebApp.Controllers.CourseForum
             return View(await fora.ToListAsync());
         }
 
+
+        public ActionResult ForumIndex()
+        {
+            return View();
+        }
+
+
         // GET: Forum/Details/5
         public async Task<ActionResult> Details(int? id)
         {
