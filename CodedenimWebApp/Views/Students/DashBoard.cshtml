@@ -20,7 +20,7 @@
                                 </div>
                                 <div class="col-xs-7">
                                     <div class="numbers">
-                                        <p style="font-size: bolder">@Html.DisplayFor(modelItem => item.CourseName)</p>
+                                        <p>@Html.DisplayFor(modelItem => item.CourseName)</p>
 
                                     </div>
                                 </div>
@@ -33,7 +33,7 @@
                                 </div>
                                 <div>
                                     <a href="@Url.Action("Pay","PaymentTypes")" class="btn btn-primary btn-lg">Pay To Enroll</a>
-                                    @*@Html.ActionLink("Enroll","Pay","PaymentTypes",null, new{@style ="btn btn-default"})*@
+                                    
                                 </div>
                             </div>
                         </div>
