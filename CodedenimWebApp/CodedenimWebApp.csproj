@@ -1069,6 +1069,8 @@
     <Content Include="Views\TakeQuiz\TakeQuizPage.cshtml" />
     <Content Include="Views\Tutors\TutorDashboard.cshtml" />
     <Content Include="Views\Shared\_LayoutTutorMd.cshtml" />
+    <Content Include="Views\Shared\_LayoutGeneral.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
