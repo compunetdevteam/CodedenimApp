@@ -551,6 +551,7 @@
     <Content Include="Content\LMS\js\vendor-tables.min.js" />
     <Content Include="Content\mdb.css" />
     <Content Include="Content\mdb.min.css" />
+    <Content Include="Content\my.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\Demo.css" />
@@ -1033,7 +1034,6 @@
     <Content Include="Views\ForumQuestions\Edit.cshtml" />
     <Content Include="Views\ForumQuestions\Index.cshtml" />
     <Content Include="Views\Tutors\CreateTutorPartial.cshtml" />
-    <Content Include="Views\Tutors\TutorDashboard.cshtml" />
     <Content Include="Views\PaymentTypes\Create.cshtml" />
     <Content Include="Views\PaymentTypes\Delete.cshtml" />
     <Content Include="Views\PaymentTypes\Details.cshtml" />
@@ -1067,10 +1067,14 @@
     <Content Include="Views\ForumQuestions\ForumQuestion.cshtml" />
     <Content Include="Views\ForumQuestions\AskQuestion.cshtml" />
     <Content Include="Views\TakeQuiz\TakeQuizPage.cshtml" />
+    <Content Include="Views\Tutors\TutorDashboard.cshtml" />
+    <Content Include="Views\Shared\_LayoutTutorMd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\LMS\js\plugins\maps_google\jquery-ui-map\ui\min\" />
+    <Folder Include="Content\StudentFiles\" />
+    <Folder Include="Content\TutorFiles\" />
     <Folder Include="uploads\" />
     <Folder Include="Views\MultipleButtonAttribute\" />
   </ItemGroup>

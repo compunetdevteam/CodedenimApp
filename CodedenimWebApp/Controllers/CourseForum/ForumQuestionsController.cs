@@ -27,7 +27,8 @@ namespace CodedenimWebApp.Controllers
 
         public ActionResult ForumQuestion()
         {
-            return View();
+            var forumQuestions = db.ForumQuestions.Include(f => f.Forum).Include(f => f.ForumQuestionView).Include(f => f.Students).Include(x => x.ForumAnswers);
+            return View(forumQuestions.ToList());
         }
 
         // GET: ForumQuestions/Details/5
