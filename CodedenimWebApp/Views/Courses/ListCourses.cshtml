@@ -12,8 +12,8 @@
 <div class="page-section third">
 
 
-<div class="row">
-<div class="col-md-9">
+<div class="row" style="margin-left: 10px;">
+<div class="col-md-12">
 
 <div class="row" data-toggle="isotope">
 
@@ -44,7 +44,7 @@
                             <img src="@Url.Content("~/MaterialUpload/" + item.FileLocation)" />
                         </span>
                     </a>
-                    <a href="website-take-course.html" class="overlay overlay-full overlay-hover overlay-bg-white">
+                    <a href="@Url.Action("Details","Courses", new{id = item.CourseId})" class="overlay overlay-full overlay-hover overlay-bg-white">
                         <span class="v-center">
                             <span class="btn btn-circle btn-white btn-lg"><i class="fa fa-graduation-cap"></i></span>
                         </span>
@@ -62,13 +62,9 @@
         </div>
     
     }
-    
-       
-  
 
-
-</div >
-</div >
+</div>
+</div>
 
 </div>
         </div >
