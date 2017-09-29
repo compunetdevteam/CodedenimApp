@@ -47,7 +47,7 @@ namespace CodedenimWebApp.Controllers
             var viewModel = new CourseContentVm();
             viewModel.Modules = db.Modules.Include(x => x.Topics).Include(x => x.Course).Where(x => x.CourseId.Equals(id)).ToList();
 
-         
+            
             viewModel.Topics = db.Topics.Include(x => x.MaterialUploads).ToList();
             //var courseList = new CourseContentVm();
             //courseList.Modules = courses

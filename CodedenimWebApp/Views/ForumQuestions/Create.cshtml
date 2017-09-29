@@ -60,7 +60,7 @@
     @Html.ActionLink("Back to List", "Index")
 </div>*@
 
-*@using (Html.BeginForm())
+*@using (Html.BeginForm("Create","ForumQuestions"))
 {
     @Html.AntiForgeryToken()
 
@@ -96,7 +96,8 @@
                          </div>
                          <div class="form-group">
                              <label for="description">Description</label>
-                             <textarea name="" id="description" cols="30" rows="10" class="summernote"></textarea>
+                             @*<textarea name="" id="description" cols="30" rows="10" class="summernote"></textarea>*@
+                             @Html.TextAreaFor(model => model.QuestionName, new { rows = 10, columns = 40 })
                          </div>
                      </form>
 

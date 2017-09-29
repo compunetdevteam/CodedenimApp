@@ -95,6 +95,11 @@ namespace CodedenimWebApp.Controllers
             return View();
         }
 
+        public ActionResult TutorDashboard()
+        {
+            return View();
+        }
+
         // GET: Tutors/Details/5
         public async Task<ActionResult> Details(string id)
         {
