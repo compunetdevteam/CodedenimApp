@@ -8,9 +8,9 @@
 <h2>Tutor Info</h2>
 
 
-@Html.Editor(Model.TutorId)
-@Html.DisplayName(Model.FirstName)
-@Html.DisplayName(Model.LastName)
+@Html.Raw(Model.TutorId)
+@Html.Raw(Model.FirstName)
+@Html.Raw(Model.LastName)
   
 
 @using (Html.BeginForm("TutorRegistration", "Account", FormMethod.Post, new {enctype = "multipart/form-data"}))

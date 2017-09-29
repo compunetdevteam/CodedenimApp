@@ -1047,6 +1047,8 @@
     <Content Include="Views\Shared\_LayoutTutorMd.cshtml" />
     <Content Include="Views\Shared\_LayoutGeneral.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\CourseCategories\UpLoadCategory.cshtml" />
+    <Content Include="Views\Topics\Save.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

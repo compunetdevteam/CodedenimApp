@@ -1,9 +1,22 @@
-﻿@model IEnumerable<CodeninModel.Course>
+﻿@using CodedenimWebApp.Models
+@model IEnumerable<CodeninModel.Course>
 
 @{
     ViewBag.Title = "Courses";
     ViewBag.Courses = "class = active";
-    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
+    //if (Roles.IsUserInRole(RoleName.Admin))
+    //{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    //}
+    //if (Roles.IsUserInRole(RoleName.Tutor))
+    //{
+    //    Layout = "~/Views/Shared/_LayoutTutor.cshtml";
+    //}
+    //else
+    //{
+    //    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    //}
+
 }
 <link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
 

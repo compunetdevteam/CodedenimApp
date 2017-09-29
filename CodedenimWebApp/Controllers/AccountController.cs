@@ -142,6 +142,12 @@ namespace CodedenimWebApp.Controllers
                 TempData["Title"] = "Success.";
                 return RedirectToAction("DashBoard", "Students");
             }
+            if (User.IsInRole(RoleName.UnderGraduate))
+            {
+                TempData["UserMessage"] = $"Login Successful, Welcome {username}";
+                TempData["Title"] = "Success.";
+                return RedirectToAction("DashBoard", "Students");
+            }
             if (User.IsInRole(RoleName.Corper))
             {
                 TempData["UserMessage"] = $"Login Successful, Welcome {username}";
@@ -661,7 +667,7 @@ namespace CodedenimWebApp.Controllers
 
         public string EmailLink(string userId, string code)
         {
-            var url = this.Url.HttpRouteUrl("Default", new { Controller = "Account", Action = "ConfirmEmail", userId, code });
+            var url = Url.HttpRouteUrl("Default", new { Controller = "Account", Action = "ConfirmEmail", userId, code });
             return url;
         }
 

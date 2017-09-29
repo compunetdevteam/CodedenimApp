@@ -70,7 +70,7 @@ namespace CodedenimWebApp.Controllers
             {
                 db.ForumQuestions.Add(forumQuestion);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("ForumQuestion");
             }
 
             ViewBag.CourseId = new SelectList(db.Fora, "CourseId", "ForumName", forumQuestion.CourseId);

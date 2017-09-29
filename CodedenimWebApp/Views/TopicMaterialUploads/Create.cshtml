@@ -2,7 +2,8 @@
 
 @{
     ViewBag.Title = "Create Topic Materials";
-    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
 }
 
 <div class="container-fluid">
@@ -30,7 +31,7 @@
                 @Html.LabelFor(model => model.Tutor, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @ViewBag.UserName
-                    @Html.EditorFor(model => model.Tutor, new { htmlAttributes = new { @class = "form-control"  } })
+                    @Html.EditorFor(model => model.Tutor, new { htmlAttributes = new { @class = "form-control", @value="@User,Identity.GetUserName" } })
                     @Html.ValidationMessageFor(model => model.Tutor, "", new {@class = "text-danger"})
                 </div>
             </div>
@@ -107,8 +108,8 @@
         </div>
     </div>*@
 
-    @section Scripts {
+
         @Scripts.Render("~/bundles/jqueryval")
-    }
+    
 </div>
 

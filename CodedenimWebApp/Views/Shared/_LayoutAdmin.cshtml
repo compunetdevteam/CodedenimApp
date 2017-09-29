@@ -255,12 +255,24 @@
                 <h4 class="text-display-1 margin-none">Instructor Name</h4>
             </div>
         </div>
-        <ul class="sidebar-menu">
+        <ul class="sidebar-menu">   
             <li class="active"><a href="@Url.Action("TutorDashboard","Tutors")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
-            @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>
-                    <li><a href="app-instructor-courses.html"><i class="fa fa-mortar-board"></i><span>My Courses</span></a></li>
-                    <li><a href="app-instructor-earnings.html"><i class="fa fa-bar-chart-o"></i><span>Earnings</span></a></li>
-                    <li><a href="app-instructor-statement.html"><i class="fa fa-dollar"></i><span>Statement</span></a></li>*@
+            <li class="active"><a href="@Url.Action("Create","Tutors")"><i class="fa fa-home"></i><span>Create Tutor</span></a></li>
+            <li class="active"><a href="@Url.Action("Create","TutorCourses")"><i class="fa fa-home"></i><span>Assign Tutor A Subject</span></a></li>
+            <hr/>
+            @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>*@
+                    <li><a href="@Url.Action("Create","CourseCategories")"><i class="fa fa-mortar-board"></i><span>Create Courses Category</span></a></li>
+                    <li><a href="@Url.Action("Create","Courses")"><i class="fa fa-bar-chart-o"></i><span>Create Courses</span></a></li>
+            <li><a href="@Url.Action("Create","Modules")"><i class="fa fa-dollar"></i><span>Create Modules</span></a></li>
+            <li><a href="@Url.Action("Create","Topics")"><i class="fa fa-dollar"></i><span>Create Topics</span></a></li>
+            <li><a href="@Url.Action("Create","TopicMaterialUploads")"><i class="fa fa-dollar"></i><span>Create Topics Materials</span></a></li>
+            
+
+            <hr/>
+            
+            <li><a href="@Url.Action("Create","TopicMaterialUploads")"><i class="fa fa-dollar"></i><span>Quiz Rules</span></a></li>
+            
+            <hr/>
             <li><a href="@Url.Action("Logoff","Account")"><i class="fa fa-sign-out"></i><span>Logout</span></a></li>
         </ul>
     </div>
