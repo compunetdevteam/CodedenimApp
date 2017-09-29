@@ -7,13 +7,13 @@ namespace CodedenimWebApp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class added_Payment : IMigrationMetadata
+    public sealed partial class IntiLCreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(added_Payment));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(IntiLCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "201709250000150_added_Payment"; }
+            get { return "201709280944435_IntiL Create"; }
         }
         
         string IMigrationMetadata.Source
