@@ -12,6 +12,14 @@ namespace CodeninModel
         [Key]
         public string StudentId { get; set; }
 
+        //[Index(IsUnique = true)]
+        //[MaxLength(35)]
+        public string MatricNo { get; set; }
+
+        //[Index(IsUnique = true)]
+        //[MaxLength(15)]
+        public string CallUpNo { get; set; }
+
         // [DataType(DataType.Date)]
         // [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Enrollment Date")]

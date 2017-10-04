@@ -303,7 +303,7 @@ The file has to be loaded in addition to the UI modules above;
 module-bundle-main.js already includes theme-core.js so this should be loaded
 ONLY when using the standalone modules; -->
 <script src="~/Content/LMS/js/theme-core.min.js"></script>
-    
+@RenderSection("scripts", required: false)
 
 </body>
 </html>

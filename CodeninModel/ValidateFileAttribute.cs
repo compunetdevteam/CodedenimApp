@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Net.Mime;
 using System.Web;
 
 namespace CodeninModel
@@ -23,10 +22,10 @@ namespace CodeninModel
 
             try
             {
-                //using (var img = MediaTypeNames.Image.FromStream(file.InputStream))
-                //{
-                //    return img.RawFormat.Equals(img.RawFormat.Equals(ImageFormat.Png) ? ImageFormat.Png : ImageFormat.Jpeg);
-                //}
+                using (var img = Image.FromStream(file.InputStream))
+                {
+                    return img.RawFormat.Equals(img.RawFormat.Equals(ImageFormat.Png) ? ImageFormat.Png : ImageFormat.Jpeg);
+                }
             }
             catch { }
             return false;
