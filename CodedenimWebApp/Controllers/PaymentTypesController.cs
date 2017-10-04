@@ -33,19 +33,21 @@ namespace CodedenimWebApp.Controllers
 
 
             var userId = User.Identity.GetUserId();
+           // var userRole = User.Identity;
 
             if (userId != null)
             {
                 string reference = "";
-
+               // var userRole = _db.Rol
                 var person = _db.Users.AsNoTracking().SingleOrDefault(x => x.Id.Equals(userId));
-               // var role = _db
-                //var email = _db.Students.AsNoTracking().Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).ToString();
-                //var amount = _db.PaymentTypes
-                //    .Where(x => x.PaymentTypeId.Equals(person.PaymentTypeId)).Select(x => x.Amount).FirstOrDefault();
+               // var roles = _db.PaymentTypes.Where(x => x.PaymentTypeValue.Equals(_db.Roles.))
+               // // var role = _db
+               // //var email = _db.Students.AsNoTracking().Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).ToString();
+               // var amount = _db.PaymentTypes
+               //     .Where(x => x.PaymentTypeId.Equals(person.PaymentTypeId)).Select(x => x.Amount).FirstOrDefault();
 
-                // var convert = new KoboToNaira();
-               // var convertedamount = KoboToNaira.ConvertKoboToNaira(amount); 
+               //// var convert = new KoboToNaira();
+             //   var convertedamount = KoboToNaira.ConvertKoboToNaira(amount);
                 var transactionInitializaRequest = new TransactionInitializeRequest
                 {
                     //Reference = "SwifKampus",
@@ -205,8 +207,9 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "PaymentTypeId,PaymentName,Amount")] PaymentType paymentType)
+        public async Task<ActionResult> Create([Bind(Include = "PaymentTypeId,PaymentName,Amount,PaymentTypeValue")] PaymentType paymentType)
         {
+            ViewBag.Roles = new SelectList(_db.Roles, "Id", "Name");
 
             if (ModelState.IsValid)
             {
@@ -216,7 +219,6 @@ namespace CodedenimWebApp.Controllers
             }
 
 
-            ViewBag.Roles = new SelectList(_db.Roles, "Id", "Name");
             return View(paymentType);
         }
 

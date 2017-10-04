@@ -152,7 +152,7 @@ namespace CodedenimWebApp.Controllers
             {
                 TempData["UserMessage"] = $"Login Successful, Welcome {username}";
                 TempData["Title"] = "Success.";
-                return RedirectToAction("DashBoard", "Students");
+                return RedirectToAction("CorperDashboard", "Students");
             }    
 
             return RedirectToAction("Index", "Home");
@@ -486,8 +486,9 @@ namespace CodedenimWebApp.Controllers
         [System.Web.Mvc.HttpPost]
         [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RegisterCorper([FromBody] RegisterCorperModel model)
+        public async Task<ActionResult> RegisterCorper([FromBody] RegisterCorperModel model, HttpPostedFileBase FileLocation)
         {
+            var studentId = _db.Students.Find(model.CallUpNumber);
             if (!ModelState.IsValid)
             {
                 return View("error");
@@ -509,7 +510,22 @@ namespace CodedenimWebApp.Controllers
 
             var student = new Student
             {
-                StudentId = model.CallUpNumber,
+
+            //    string _FileName = String.Empty;
+            //    if (FileLocation.ContentLength > 0)
+            //    {
+            //        _FileName = Path.GetFileName(FileLocation.FileName);
+            //        string path = HostingEnvironment.MapPath("~/Profile_Pics/") + _FileName;
+            //    studentId.FileLocation = path;
+            //        var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/Profile_Pics/"));
+            //                if (directory.Exists == false)
+            //                {
+            //                directory.Create();
+            //                     }
+            //File.SaveAs(path);
+            //}
+
+            StudentId = model.CallUpNumber,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
@@ -523,11 +539,17 @@ namespace CodedenimWebApp.Controllers
             await _db.SaveChangesAsync();
             await this.UserManager.AddToRoleAsync(user.Id, "Corper");
 
-            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-            // var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
-            var callbackUrl = EmailLink(user.Id, code);
+            //var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            //// var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
+            //var callbackUrl = EmailLink(user.Id, code);
 
-            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+            //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+
+            // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+            // Send an email with this link
+            string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
 
             return View("ConfirmRegistration");
@@ -575,11 +597,15 @@ namespace CodedenimWebApp.Controllers
             await _db.SaveChangesAsync();
             await this.UserManager.AddToRoleAsync(user.Id, "UnderGraduate");
 
-            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-            // var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
-            var callbackUrl = EmailLink(user.Id, code);
+            //var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            //// var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
+            //var callbackUrl = EmailLink(user.Id, code);
 
-            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+            //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+            string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
 
 
             return View("ConfirmRegistration");
@@ -628,11 +654,15 @@ namespace CodedenimWebApp.Controllers
             await _db.SaveChangesAsync();
             await this.UserManager.AddToRoleAsync(user.Id, "Student");
 
-            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-            // var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
-            var callbackUrl = EmailLink(user.Id, code);
+            //var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            //// var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
+            //var callbackUrl = EmailLink(user.Id, code);
 
-            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+            //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+            string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
 
 
             return View("ConfirmRegistration");
@@ -667,7 +697,7 @@ namespace CodedenimWebApp.Controllers
 
         public string EmailLink(string userId, string code)
         {
-            var url = Url.HttpRouteUrl("Default", new { Controller = "Account", Action = "ConfirmEmail", userId, code });
+            var url = this.Url.RouteUrl("Default", new { Controller = "Account", Action = "ConfirmEmail", userId, code });
             return url;
         }
 
@@ -703,6 +733,7 @@ namespace CodedenimWebApp.Controllers
             {
                 return View("Error");
             }
+
             var result = await UserManager.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
@@ -855,7 +886,8 @@ namespace CodedenimWebApp.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    //return RedirectToAction("CustomDashboard"/* new { username = user.UserName }*/);
+                    return RedirectToAction("DashBoard", "Students");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

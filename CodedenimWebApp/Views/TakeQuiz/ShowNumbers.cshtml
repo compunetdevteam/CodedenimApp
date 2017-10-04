@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<ExamSolutionModel.CBTE.StudentQuestion>
+@model IEnumerable<CodeninModel.Assesment.StudentQuestion>
 @{
     ViewBag.Title = "ShowNumbers";
 }
@@ -8,12 +8,12 @@
 {
     if (item.SelectedAnswer == null)
     {
-        @Html.ActionLink(item.QuestionNumber.ToString(), "Exam", new { questionNo = item.QuestionNumber, courseId = item.CourseId, studentid = item.StudentId, examtype = item.ExamTypeId })
+        @*@Html.ActionLink(item.QuestionNumber.ToString(), "Exam", new { questionNo = item.QuestionNumber, courseId = item.CourseId, studentid = item.StudentId, examtype = item.ExamTypeId })*@
     @*<a href="" class="btn-success"> @item.QuestionNumber</a>*@
     }
     else if(item.SelectedAnswer != null)
     {
-        @Html.ActionLink(item.QuestionNumber.ToString(), "Exam", new { questionNo = item.QuestionNumber, courseId = item.CourseId, studentid = item.StudentId, examtype = item.ExamTypeId })
+        @*@Html.ActionLink(item.QuestionNumber.ToString(), "Exam", new { questionNo = item.QuestionNumber, courseId = item.CourseId, studentid = item.StudentId, examtype = item.ExamTypeId })*@
     @*<button class="btn-danger"> @item.QuestionNumber</button>*@
     }
 

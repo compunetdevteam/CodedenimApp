@@ -71,6 +71,7 @@ namespace CodeninModel
         public string FullName => LastName + " " + FirstName + " " + MiddleName;
 
         public byte[] Passport { get; set; }
+        public string FileLocation { get; set; }
 
      
     }

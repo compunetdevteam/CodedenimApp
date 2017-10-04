@@ -402,9 +402,9 @@ namespace CodedenimWebApp.Controllers
             //});
             var myMsg = "Exam Saved Successfully...";
             TempData["Message"] = myMsg;
-            return RedirectToAction("LogOff", "Account", new { message = myMsg });
+            return RedirectToAction("Dashboard", "Students", new { message = myMsg });
         }
-
+       
         public ActionResult FinishExam()
         {
             return View();

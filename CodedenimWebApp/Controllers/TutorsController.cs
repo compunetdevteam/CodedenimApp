@@ -97,7 +97,26 @@ namespace CodedenimWebApp.Controllers
 
         public ActionResult TutorDashboard()
         {
-            return View();
+
+            var userId = User.Identity.GetUserId();
+          
+            var tutorCourses = db.TutorCourses.FirstOrDefault(x => x.TutorId.Equals(userId));
+            var courses = db.TutorCourses.Where(x => x.TutorId.Equals(userId)).ToList();
+
+            var courseId = db.TutorCourses.Where(x => x.TutorId.Equals(userId)).Select(x => x.CourseId).ToList();
+
+            //if the tutor has not  been assigned a course it shouldnt give and error....that logic goes here
+            if (tutorCourses != null)
+            {
+                var question = db.ForumQuestions.Where(x => x.CourseId.Equals(tutorCourses.CourseId)).ToList();
+
+                ViewBag.ForumQuestions = question;
+            }
+           //var tutorInfo = new TutorDashboardVm();
+            ViewBag.TutorProfile = db.Tutors.Where(x => x.TutorId.Equals(userId)).Select(x => x.ImageLocation).FirstOrDefault();
+            ViewBag.TutorCourses = courses;
+      
+            return View();  
         }
 
         // GET: Tutors/Details/5
@@ -137,7 +156,7 @@ namespace CodedenimWebApp.Controllers
                 {
                     db.Tutors.Add(tutor);
                     await db.SaveChangesAsync();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Create","TutorCourses");
                 }
             }
             else

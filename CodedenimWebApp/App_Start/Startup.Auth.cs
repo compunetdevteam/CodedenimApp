@@ -76,8 +76,8 @@ namespace CodedenimWebApp
             //    consumerSecret: "");
 
             app.UseFacebookAuthentication(  
-                appId: "1501036156649645",
-                appSecret: "36730d3f27365de529639c25ca65bb85");
+                appId: "662881010576859",
+                appSecret: "b2e27f7678ba99544981b1ec42952e0e");
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {

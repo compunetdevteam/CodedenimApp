@@ -23,6 +23,11 @@ namespace CodedenimWebApp.Controllers
             return View(await modules.ToListAsync());
         }
 
+        public async Task<ActionResult> MyCourses(string id)
+        {
+            var tutorCourses = await db.TutorCourses.Where(x => x.TutorId.Equals(id)).ToListAsync();
+            return View(tutorCourses);
+        }
         // GET: Modules/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -39,9 +44,11 @@ namespace CodedenimWebApp.Controllers
         }
 
         // GET: Modules/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode");
+
+        
+            ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(id.Value)).ToList(), "CourseId", "CourseCode");
             return View();
         }
 

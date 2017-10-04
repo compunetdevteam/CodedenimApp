@@ -39,6 +39,7 @@ namespace CodedenimWebApp.Controllers
 		    ViewBag.TotalTopics = _db.Topics.Count();
 		    ViewBag.TotalStudents = _db.Students.Count();
 		    ViewBag.TotalTutors = _db.Tutors.Count();
+          //  ViewBag.AdminProfile = _db.
             return View();
 		}
 

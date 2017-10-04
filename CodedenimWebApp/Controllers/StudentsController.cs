@@ -4,10 +4,12 @@ using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.ViewModels;
@@ -116,11 +118,19 @@ namespace CodedenimWebApp.Controllers
                     db.ProfessionalPayments.Add(professionalPayment);
                    db.SaveChangesAsync();
                 }
-                return RedirectToAction("DashBoard");
+                return RedirectToAction("ListCourses","Courses");
             }
+                ViewBag.Profile = db.Students.Select(x => x.FileLocation);
             var courses = db.Courses.ToList();
             return View(courses);
         }
+
+
+        public ActionResult CorperDashboard()
+        {
+            return View(db.Courses.ToList());
+        }
+
 
         // GET: Students/Details/5
 
@@ -235,33 +245,31 @@ namespace CodedenimWebApp.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                string _FileName = String.Empty;
+                if (upload.ContentLength > 0)
                 {
-                    //if (upload != null && upload.ContentLength > 0)
-                    //{
-                    //    var avatar = new File
-                    //    {
-                    //        FileName = System.IO.Path.GetFileName(upload.FileName),
-                    //        FileType = FileType.Photo,
-                    //        ContentType = upload.ContentType
-                    //    };
-                    //    using (var reader = new System.IO.BinaryReader(upload.InputStream))
-                    //    {
-                    //        avatar.Content = reader.ReadBytes(upload.ContentLength);
-                    //    }
-                    //    student.Files = new List<File> { avatar };
-                    //}
-                    db.Students.Add(student);
+                    _FileName = Path.GetFileName(upload.FileName);
+                    string path = HostingEnvironment.MapPath("~/ProfilePics/") + _FileName;
+                    student.FileLocation = path;
+                    var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/ProfilePics/"));
+                    if (directory.Exists == false)
+                    {
+                        directory.Create();
+                    }
+                    upload.SaveAs(path);
+                }
+                student.FileLocation = _FileName;
+                db.Students.Add(student);
                     db.SaveChanges();
                     return RedirectToAction("Index");
-                }
+               
             }
             catch (RetryLimitExceededException /* dex */)
             {
                 //Log the error (uncomment dex variable name and add a line here to write a log.
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
-            return View(student);
+            return View();
         }
 
         // GET: Students/Edit/5

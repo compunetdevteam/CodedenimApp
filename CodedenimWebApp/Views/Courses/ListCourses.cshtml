@@ -2,8 +2,7 @@
 
 @{
     ViewBag.Title = "ListCourses";
-    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
-        
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";        
 }
 <div class="st-content">
 <!-- extra div for emulating position:fixed of the menu -->
@@ -39,19 +38,19 @@
                 </div>
                 <div class="cover overlay cover-image-full hover">
                     <span class="img icon-block height-100 bg-default"></span>
-                    <a href="@Url.Action("Content")" class="padding-none overlay overlay-full icon-block bg-default">
+                    <a href="@Url.Action("Content","Courses")" class="padding-none overlay overlay-full icon-block bg-default">
                         <span class="v-center">
                             <img src="@Url.Content("~/MaterialUpload/" + item.FileLocation)" style="width: 160px; height: 170px;" />
                         </span>
                     </a>
-                    <a href="website-take-course.html" class="overlay overlay-full overlay-hover overlay-bg-white">
+                    <a href="#" class="overlay overlay-full overlay-hover overlay-bg-white">
                         <span class="v-center">
                             <span class="btn btn-circle btn-white btn-lg"><i class="fa fa-graduation-cap"></i></span>
                         </span>
                     </a>
                 </div>
                 <div class="panel-body">
-                    <h4 class="text-headline margin-v-0-10"><a href="website-take-course.html">@Html.DisplayFor(modelItem => item.CourseName)</a></h4>
+                    <h4 class="text-headline margin-v-0-10"><a href="@Url.Action("Content","Courses", new {id = item.CourseId})">@Html.DisplayFor(modelItem => item.CourseName)</a></h4>
                 </div>
                 <hr class="margin-none"/>
                 <div class="panel-body">
