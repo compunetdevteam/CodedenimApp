@@ -154,7 +154,7 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Passport)
+                <img src="@Url.Action("RenderImage", "Students", new { studentId = Model.StudentId})" width="100" height="100" />
             </dd>
 
         </dl>

@@ -186,7 +186,7 @@
                                         <li>
                                             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
                                         </li>
-                                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                                        <li><a href="@Url.Action("LogOff","Account")">Log off</a></li>
                                     </ul>
                                 }
                             }
@@ -208,7 +208,7 @@
                                 @if (Request.IsAuthenticated)
                                 {
 
-                                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", style = "padding:4px;" }))
+                                    using (Html.BeginForm("LogOff", "Account",new { id = "logoutForm", style = "padding:4px;" }))
                                     {
                                         @Html.AntiForgeryToken()
                                         <li>
@@ -784,7 +784,7 @@
                                 @if (Request.IsAuthenticated)
                                         {
 
-                                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", style = "padding:4px;" }))
+                                            using (Html.BeginForm("LogOff", "Account", FormMethod.Get, new { id = "logoutForm", style = "padding:4px;" }))
                                             {
                                         @Html.AntiForgeryToken()
                                         <li>

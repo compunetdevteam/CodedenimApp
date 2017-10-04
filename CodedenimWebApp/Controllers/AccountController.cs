@@ -939,7 +939,6 @@ namespace CodedenimWebApp.Controllers
         //
         // POST: /Account/LogOff
         [System.Web.Mvc.HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);

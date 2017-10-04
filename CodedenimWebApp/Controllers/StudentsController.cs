@@ -1,4 +1,11 @@
-﻿using System;
+﻿using CodedenimWebApp.Models;
+using CodedenimWebApp.ViewModels;
+using CodeninModel;
+using Microsoft.AspNet.Identity;
+using Newtonsoft.Json.Linq;
+using PagedList;
+using PayStack.Net;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -6,17 +13,11 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
-using CodedenimWebApp.Models;
-using CodedenimWebApp.ViewModels;
-using CodeninModel;
-using Newtonsoft.Json.Linq;
-using PagedList;
-using PayStack.Net;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -43,7 +44,7 @@ namespace CodedenimWebApp.Controllers
             ViewBag.CurrentFilter = searchString;
 
             var students = from s in db.Students
-                select s;
+                           select s;
             if (!String.IsNullOrEmpty(searchString))
             {
                 students = students.Where(s => s.LastName.Contains(searchString)
@@ -71,14 +72,14 @@ namespace CodedenimWebApp.Controllers
 
             // return View(await db.Students.ToListAsync());
         }
-        
+
         public ActionResult DashBoard(string reference, string trxref)
-            {
+        {
             if ((reference != null) && (trxref != null))
             {
                 var testOrLiveSecret = ConfigurationManager.AppSettings["PayStackSecret"];
                 var api = new PayStackApi(testOrLiveSecret);
-               // Verifying a transaction
+                // Verifying a transaction
                 var verifyResponse = api.Transactions.Verify(reference); // auto or supplied when initializing;
                 if (verifyResponse.Status)
                 {
@@ -116,11 +117,11 @@ namespace CodedenimWebApp.Controllers
 
                     };
                     db.ProfessionalPayments.Add(professionalPayment);
-                   db.SaveChangesAsync();
+                    db.SaveChangesAsync();
                 }
-                return RedirectToAction("ListCourses","Courses");
+                return RedirectToAction("ListCourses", "Courses");
             }
-                ViewBag.Profile = db.Students.Select(x => x.FileLocation);
+            ViewBag.Profile = db.Students.Select(x => x.FileLocation);
             var courses = db.Courses.ToList();
             return View(courses);
         }
@@ -138,7 +139,7 @@ namespace CodedenimWebApp.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                id = User.Identity.GetUserId();
             }
             Student student = await db.Students.FindAsync(id);
             if (student == null)
@@ -172,7 +173,7 @@ namespace CodedenimWebApp.Controllers
                 student.LastName = regularStudentVm.LastName;
                 student.Email = regularStudentVm.Email;
                 student.PhoneNumber = regularStudentVm.PhoneNumber;
-                
+
                 db.Students.Add(student);
             }
             return View();
@@ -260,9 +261,9 @@ namespace CodedenimWebApp.Controllers
                 }
                 student.FileLocation = _FileName;
                 db.Students.Add(student);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-               
+                db.SaveChanges();
+                return RedirectToAction("Index");
+
             }
             catch (RetryLimitExceededException /* dex */)
             {
@@ -275,16 +276,35 @@ namespace CodedenimWebApp.Controllers
         // GET: Students/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //Student student = db.Students.Include(s => s.Files).SingleOrDefault(s => s.StudentId == id);
-            //if (student == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            return View();
+            if (id == null)
+            {
+                id = User.Identity.GetUserId();
+            }
+            Student student = await db.Students.FindAsync(id);
+            if (student != null)
+            {
+                var model = new StudentVm
+                {
+                    StudentId = student.StudentId,
+                    AccountType = student.AccountType,
+                    CountryOfBirth = student.CountryOfBirth,
+                    DateOfBirth = student.DateOfBirth,
+                    Discpline = student.Discpline,
+                    Passport = student.Passport,
+                    Email = student.Email,
+                    FirstName = student.FirstName,
+                    LastName = student.LastName,
+                    MiddleName = student.MiddleName,
+                    TownOfBirth = student.TownOfBirth,
+                    Institution = student.Institution,
+                    PhoneNumber = student.PhoneNumber,
+                    MatricNo = student.MatricNo,
+                    CallUpNo = student.CallUpNo
+
+                };
+                return View(model);
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         // POST: Students/Edit/5
@@ -292,57 +312,56 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "StudentId,EnrollmentDate,ProgrammeId,Active,IsGraduated,FirstName,MiddleName,LastName,Gender,Email,PhoneNumber,TownOfBirth,StateOfOrigin,Nationality,CountryOfBirth,IsAcctive,DateOfBirth,Age,Passport")] Student student, HttpPostedFileBase upload)
+        public async Task<ActionResult> Edit(StudentVm student)
         {
-            if (student.StudentId == null)
+            if (ModelState.IsValid)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var studentToUpdate = db.Students.Find(student.StudentId);
-            if (TryUpdateModel(studentToUpdate, "",
-                new string[] { "LastName", "FirstMidName", "EnrollmentDate" }))
-            {
-                try
-                {
-                    //if (upload != null && upload.ContentLength > 0)
-                    //{
-                    //    if (studentToUpdate.Files.Any(f => f.FileType == FileType.Photo))
-                    //    {
-                    //        db.Files.Remove(studentToUpdate.Files.First(f => f.FileType == FileType.Photo));
-                    //    }
-                    //    var avatar = new File
-                    //    {
-                    //        FileName = System.IO.Path.GetFileName(upload.FileName),
-                    //        FileType = FileType.Photo,
-                    //        ContentType = upload.ContentType
-                    //    };
-                    //    using (var reader = new System.IO.BinaryReader(upload.InputStream))
-                    //    {
-                    //        avatar.Content = reader.ReadBytes(upload.ContentLength);
-                    //    }
-                    //    studentToUpdate.Files = new List<File> { avatar };
-                    //}
-                    db.Entry(studentToUpdate).State = EntityState.Modified;
-                    db.SaveChanges();
+                var model = await db.Students.FindAsync(student.StudentId);
 
-                    return RedirectToAction("Index");
-                }
-                catch (RetryLimitExceededException /* dex */)
+                if (model != null)
                 {
-                    //Log the error (uncomment dex variable name and add a line here to write a log.
-                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                    model.StudentId = student.StudentId;
+                    model.AccountType = student.AccountType;
+                    model.CountryOfBirth = student.CountryOfBirth;
+                    model.DateOfBirth = student.DateOfBirth;
+                    model.Discpline = student.Discpline;
+                    model.Passport = student.Passport;
+                    model.Email = student.Email;
+                    model.FirstName = student.FirstName;
+                    model.LastName = student.LastName;
+                    model.MiddleName = student.MiddleName;
+                    model.Institution = student.Institution;
+                    model.EnrollmentDate = DateTime.Now;
+                    model.PhoneNumber = student.PhoneNumber;
+                    model.StateOfService = student.StateOfService.ToString();
+                    model.StateOfOrigin = student.StateOfOrigin.ToString();
+                    model.Batch = student.Batch.ToString();
+                    model.Title = student.Title.ToString();
+                    model.TownOfBirth = student.TownOfBirth;
+                    model.Gender = student.Gender.ToString();
+                    model.MatricNo = student.MatricNo;
+                    model.CallUpNo = student.CallUpNo;
+
+                    db.Entry(model).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+
+                    return RedirectToAction("Details");
                 }
             }
-            return View(studentToUpdate);
+            return View(student);
 
-            //if (ModelState.IsValid)
-            //{
-            //    db.Entry(student).State = EntityState.Modified;
-            //    await db.SaveChangesAsync();
-            //    return RedirectToAction("Index");
-            //}
-            //return View(student);
         }
+
+        [AllowAnonymous]
+        public async Task<ActionResult> RenderImage(string studentId)
+        {
+            Student student = await db.Students.FindAsync(studentId);
+
+            byte[] photoBack = student.Passport;
+
+            return File(photoBack, "image/png");
+        }
+
 
         // GET: Students/Delete/5
         public async Task<ActionResult> Delete(string id)
@@ -382,7 +401,7 @@ namespace CodedenimWebApp.Controllers
 
     public class ProfessionalPayment
     {
-       public int ProfessionalPaymentId { get; set; }
+        public int ProfessionalPaymentId { get; set; }
         public string ProfessionalWorkerId { get; set; }
         public DateTime PaymentDateTime { get; set; }
         public decimal Amount { get; set; }

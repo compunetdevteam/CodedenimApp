@@ -328,6 +328,7 @@
     <Compile Include="ViewModels\DisplayQuestionViewModel.cs" />
     <Compile Include="ViewModels\ForumQA_Vm.cs" />
     <Compile Include="ViewModels\RegularStudentVm.cs" />
+    <Compile Include="ViewModels\StudentVm.cs" />
     <Compile Include="ViewModels\TutorCreateVm.cs" />
     <Compile Include="ViewModels\TutorDashboardVm.cs" />
     <Compile Include="ViewModels\TutorRegisterVm.cs" />
