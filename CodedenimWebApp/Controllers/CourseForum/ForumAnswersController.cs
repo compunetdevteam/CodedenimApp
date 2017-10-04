@@ -46,9 +46,10 @@ namespace CodedenimWebApp.Controllers.CourseForum
         }
 
         // GET: ForumAnswers/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            ViewBag.ForumQuestionId = new SelectList(db.ForumQuestions, "ForumQuestionId", "Title");
+           ViewBag.ForumQuestionId = new SelectList(db.ForumQuestions.Where(x => x.ForumQuestionId.Equals(id)), "ForumQuestionId", "Title");
+           // ViewBag.QuestionId = db.ForumQuestions.Where(x => x.ForumQuestionId.Equals(id)).ToList();
             return View();
         }
 
@@ -68,7 +69,7 @@ namespace CodedenimWebApp.Controllers.CourseForum
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ForumQuestionId = new SelectList(db.ForumQuestions, "ForumQuestionId", "Title", forumAnswer.ForumQuestionId);
+          //SS  ViewBag.ForumQuestionId = new SelectList(db.ForumQuestions, "ForumQuestionId", "Title", forumAnswer.ForumQuestionId);
             return View(forumAnswer);
         }
 

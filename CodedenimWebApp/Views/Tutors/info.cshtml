@@ -1,16 +1,17 @@
 ﻿ @model CodedenimWebApp.ViewModels.TutorRegisterVm
 @{
     ViewBag.Title = "Tutor info";
-    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
+    Layout = "~/Views/Shared/_LayoutGeneral.cshtml";
 }
 
 <div class="container-fluid" >
 <h2>Tutor Info</h2>
 
 
-@Html.Editor(Model.TutorId)
-@Html.DisplayName(Model.FirstName)
-@Html.DisplayName(Model.LastName)
+@Html.Raw(Model.TutorId)
+@Html.Raw(Model.FirstName)
+@Html.Raw(Model.LastName)
+  
 
 @using (Html.BeginForm("TutorRegistration", "Account", FormMethod.Post, new {enctype = "multipart/form-data"}))
 {
@@ -30,7 +31,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TutorId, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-6">
-                @Html.EditorFor(model => model.TutorId, new {htmlAttributes = new {@class = "form-control",@value = @Model.TutorId } })
+                @Html.EditorFor(model => model.TutorId, new {htmlAttributes = new {@class = "form-control",@value = @Model.TutorId, @readonly="readonly"} })
             
             </div>
         </div>
@@ -38,7 +39,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FirstName, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-6">
-                @Html.EditorFor(model => model.FirstName, new {htmlAttributes = new {@class = "form-control",@value = @Model.FirstName } })
+                @Html.EditorFor(model => model.FirstName, new {htmlAttributes = new {@class = "form-control",@value = @Model.FirstName, @readonly = "readonly" } })
             
             </div>
         </div>
@@ -46,7 +47,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.LastName, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-6">
-                @Html.EditorFor(model => model.LastName, new {htmlAttributes = new {@class = "form-control",@value = @Model.LastName } })
+                @Html.EditorFor(model => model.LastName, new {htmlAttributes = new {@class = "form-control",@value = @Model.LastName, @readonly = "readonly" } })
             
             </div>
         </div>
@@ -70,7 +71,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-6">
-                @Html.EditorFor(model => model.DateOfBirth, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.EditorFor(model => model.DateOfBirth, new {htmlAttributes = new {@class = "form-control datepicker ", @readonly=true } })
                 @Html.ValidationMessageFor(model => model.DateOfBirth, "", new {@class = "text-danger"})
             </div>
         </div>
@@ -107,3 +108,19 @@
     </div>
         }
    </div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {  
+        $('.datepicker').datepicker(
+            {  
+                dateFormat: "dd/M/yy",  
+                changeMonth: true,  
+                changeYear: true,  
+                yearRange: "-60:+0"  
+            }
+        );  
+  
+    });
+</script> 

@@ -1,7 +1,7 @@
 ﻿@model CodeninModel.Tutor
 @{
     ViewBag.Title = "ConfirmTutor";
-    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
+    Layout = "~/Views/Shared/_LayoutGeneral.cshtml";
  
 }
 
@@ -17,7 +17,7 @@
         <hr/>
         @Html.ValidationSummary(true, "", new {@class = "text-danger"})
         <div class="form-group">
-            @Html.LabelFor(model => model.TutorId, htmlAttributes: new {@class = "control-label col-md-2"})
+            @Html.Label("Enter You Tutor Id", htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
                 @Html.EditorFor(model => model.TutorId, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.TutorId, "", new {@class = "text-danger"})

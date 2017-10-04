@@ -35,12 +35,12 @@
         <div class="form-group">
             @Html.Label("Type")
             <div class="col-md-10">
-                @Html.DropDownList("Id",
-                    new SelectList(ViewBag.Roles),
+                @Html.DropDownListFor(model => model.PaymentTypeValue,
+                    ViewBag.Roles as SelectList,
                     "Select Type",
                     new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.PaymentName, "", new { @class = "text-danger" })
-            </div>
+            </div>  
         </div>
 
     

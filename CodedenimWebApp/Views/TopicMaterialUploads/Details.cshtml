@@ -4,7 +4,7 @@
 
 @{
     ViewBag.Title = "Topic Material Details";
-    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
 }
 <br /><br /><br /><br /><br />
 
@@ -97,11 +97,11 @@
         @*<iframe src="~/TopicMaterials/@Model.FileLocation" style="width: 100%;height: 100%;border: none;"></iframe>*@
             <object data="~/MaterialUpload/@Model.FileLocation" type="application/pdf">
                 @*<embed src="~/TopicMaterials/@Model.FileLocation" width="500" height="375" type='application/pdf'></embed>*@
-                <iframe src="~/MaterialUpload/@Model.FileLocation" style="width: 100%;height: 100%;border: none;"></iframe>
+                <iframe src="~/MaterialUpload/@Model.FileLocation" style="width: 100%;height: 100%;border: none;"> </iframe>
 
 
             </object>
-       
+
         }
     </div>
     

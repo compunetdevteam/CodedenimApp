@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using CodedenimWebApp.Models;
 using CodeninModel.Forums;
 using Microsoft.AspNet.Identity;
+using PagedList;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -25,10 +26,12 @@ namespace CodedenimWebApp.Controllers
             return View(await forumQuestions.ToListAsync());
         }
 
-        public ActionResult ForumQuestion()
+        public ActionResult ForumQuestion(int? page)
         {
+            int pageNo = (page ?? 1);
+            int PerPageSize = 5;
             var forumQuestions = db.ForumQuestions.Include(f => f.Forum).Include(f => f.ForumQuestionView).Include(f => f.Students).Include(x => x.ForumAnswers);
-            return View(forumQuestions.ToList());
+            return View(forumQuestions.OrderBy(x => x.PostDate).ToPagedList(pageNo, PerPageSize));
         }
 
         // GET: ForumQuestions/Details/5
@@ -68,9 +71,10 @@ namespace CodedenimWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                forumQuestion.PostDate = DateTime.Now;
                 db.ForumQuestions.Add(forumQuestion);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("ForumQuestion");
             }
 
             ViewBag.CourseId = new SelectList(db.Fora, "CourseId", "ForumName", forumQuestion.CourseId);

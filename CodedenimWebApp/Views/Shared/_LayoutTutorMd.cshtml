@@ -1,4 +1,6 @@
 ﻿
+@using CodeninModel
+@using Microsoft.AspNet.Identity
 <!DOCTYPE html>
 <html class="transition-navbar-scroll top-navbar-xlarge bottom-footer" lang="en">
 <head>
@@ -48,6 +50,13 @@
 </head>
 <body>
 
+
+
+
+
+
+
+
     <!-- Wrapper required for sidebar transitions -->
     <div class="st-container">
         <!-- Fixed navbar -->
@@ -61,10 +70,8 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <div class="navbar-brand">
-                        <a class="svg" href="@Url.Action("Tutordashboard","Tutors")">
-                            <img src="~/Content/img/CodeDemin.png" height="60" width="80" /> &nbsp;<i>Code-Denim</i>
-                        </a>
+                    <div class="navbar-brand navbar-brand-primary navbar-brand-logo navbar-nav-padding-left">
+              
                     </div>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -101,14 +108,12 @@
                         <li class="dropdown active">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instructor <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li class="active"><a href="app-instructor-dashboard.html">Dashboard</a></li>
-                                <li><a href="app-instructor-courses.html">My Courses</a></li>
-                                <li><a href="app-instructor-course-edit-course.html">Edit Course</a></li>
-                                <li><a href="app-instructor-earnings.html">Earnings</a></li>
-                                <li><a href="app-instructor-statement.html">Statement</a></li>
-                                <li><a href="app-instructor-profile.html">Edit Profile</a></li>
-                                <li><a href="app-instructor-billing.html">Edit Billing</a></li>
-                                <li><a href="app-instructor-messages.html">Messages</a></li>
+                                <li class="active"><a href="@Url.Action("TutorDashboard","Tutors")">Dashboard</a></li>
+                                <li><a href="#">My Courses</a></li>
+                        
+                                <li><a href="#">Statement</a></li>
+                                <li><a href="#">Edit Profile</a></li>
+                           
                             </ul>
                         </li>
                     </ul>
@@ -169,12 +174,39 @@
                         <!-- // END notifications -->
                         <!-- User -->
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle user" data-toggle="dropdown">
-                                <img src="images/people/110/guy-5.jpg" alt="Bill" class="img-circle" width="40" /> Bill <span class="caret"></span>
-                            </a>
+                          
+                                <img src="@Url.Content("~/Profile_Pics/" + ViewBag.TutorProfile)" alt="Pics" class="img-circle" width="40" />
+                                
+                           
+                                @if (Request.IsAuthenticated)
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        <ul class="nav navbar-nav navbar-right">
+                                            <li>
+                                                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                                            </li>
+                                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                                        </ul>
+                                    }
+                                }
+                                else
+                                {
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li>@Html.ActionLink("Register Tutor", "Create", "Tutors", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                                        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                                    </ul>
+                                }
+
+
+
+                                <span class="caret"></span>
+                      
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="app-student-profile.html">Account</a></li>
-                                <li><a href="app-student-billing.html">Billing</a></li>
+                                <li><a href="#">Account</a></li>
+                                <li><a href="#">Billing</a></li>
                                 <li><a href="login.html">Logout</a></li>
                             </ul>
                         </li>
@@ -193,7 +225,7 @@
         <div class="sidebar-block">
             <div class="profile">
                 <a href="#">
-                    <img src="images/people/110/guy-6.jpg" alt="people" class="img-circle width-80" />
+                    <img src="@Url.Content("~/Profile_Pics/" + ViewBag.TutorProfile)" alt="Pics" class="img-circle" width="40" />
                 </a>
                 <h4 class="text-display-1 margin-none">Instructor Name</h4>
             </div>
@@ -211,10 +243,25 @@
 <!-- sidebar effects OUTSIDE of st-pusher: -->
 <!-- st-effect-1, st-effect-2, st-effect-4, st-effect-5, st-effect-9, st-effect-10, st-effect-11, st-effect-12, st-effect-13 -->
     
-<div class="container-fluid" style="padding-left:15%;">
+<div style="padding-left:15%;">
     
 @RenderBody()
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
     var colors = {
         "danger-color": "#e74c3c",

@@ -2,68 +2,66 @@
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<div class="container-fluid" style="margin-left: 10%;">
-    <h2>Details</h2>
+<h2>Details</h2>
 
-    <div>
-        <h4>Forum</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Course.CourseCode)
-            </dt>
+<div>
+    <h4>Forum</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Course.CourseCode)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Course.CourseCode)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Course.CourseCode)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.ForumView.ContentViewId)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.ForumView.ContentViewId)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.ForumView.ContentViewId)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.ForumView.ContentViewId)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.ForumName)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.ForumName)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.ForumName)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.ForumName)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.LastPosted)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastPosted)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.LastPosted)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.LastPosted)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.CreationDate)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.CreationDate)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
 
-        </dl>
-    </div>
+    </dl>
+</div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
-    </div>

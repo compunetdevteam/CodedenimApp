@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -22,6 +22,13 @@ namespace CodedenimWebApp.Controllers
             var tutorCourses = db.TutorCourses.Include(t => t.Courses).Include(t => t.Tutor);
             return View(await tutorCourses.ToListAsync());
         }
+
+        public async Task<ActionResult> MyCourses(string id)
+        {
+            var tutorCourses = await db.TutorCourses.Where(x => x.TutorId.Equals(id)).ToListAsync();
+            return View( tutorCourses);
+        }
+
 
         // GET: TutorCourses/Details/5
         public async Task<ActionResult> Details(int? id)
