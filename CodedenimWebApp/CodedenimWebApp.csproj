@@ -871,6 +871,7 @@
     <Content Include="Scripts\vendor\jvectormap\jquery-jvectormap-2.0.3.min.js" />
     <Content Include="Scripts\vendor\jvectormap\jquery-jvectormap-world-mill.js" />
     <Content Include="Scripts\vendor\tinymce\tinymce.min.js" />
+    <Content Include="Views\Account\ConfirmRegistration.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -928,7 +929,6 @@
     <Content Include="Views\TopicMaterialUploads\Edit.cshtml" />
     <Content Include="Views\TopicMaterialUploads\Index.cshtml" />
     <Content Include="Views\TopicMaterialUploads\Upload.cshtml" />
-    <Content Include="Views\Account\ConfirmRegistration.cshtml" />
     <Content Include="Views\Account\SendEmail.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />
     <Content Include="Views\Courses\Delete.cshtml" />

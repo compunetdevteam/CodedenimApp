@@ -5,7 +5,7 @@
 }
 
 
-<div class="container">
+<div class="container-fluid" style="padding-left: 10%;">
 <div class="page-section">
 <div class="row">
 <div class="col-md-9">
@@ -72,7 +72,7 @@
 
 @foreach (var item in Model)
 {
-    <div class="item col-xs-12 col-sm-6 col-lg-2">
+    <div class="item col-xs-12 col-sm-6 col-lg-2" style="margin-left:5%">
         <div class="panel panel-default paper-shadow" data-z="0.5">
             <div class="cover overlay cover-image-full hover">
                 <span class="img icon-block height-150 bg-lightred"></span>
@@ -87,17 +87,13 @@
                     </span>
                 </a>
             </div>
-            <div class="panel-body">
-         
-            </div>
+           
             <hr class="margin-none"/>
-            <div class="panel-body">
+            <div class="panel-body" style="width: inherit">
                 <a href="@Url.Action("Pay","PaymentTypes")" class="btn btn-primary "><i class="fa fa-fw fa-pencil"></i> Pay To Enroll</a>
             </div>
         </div>
     </div>
-
-
 }
 
 

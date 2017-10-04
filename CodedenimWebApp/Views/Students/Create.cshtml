@@ -2,13 +2,13 @@
 
 @{
     ViewBag.Title = "Create Student";
-    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
 }
 
-<div class="container-fluid">
+<div class="container-fluid" style="padding-left: 10%; ">
 <h2>Create</h2>
 
-@using (Html.BeginForm("RegisterCorper","api/AccountApi", FormMethod.Post))
+@using (Html.BeginForm("Create","Students", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 

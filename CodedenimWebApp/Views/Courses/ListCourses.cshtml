@@ -13,16 +13,14 @@
 
 
 <div class="row">
-<div class="col-md-10">
+<div class="col-md-10" style="padding-left: 10%;">
 
 <div class="row" data-toggle="isotope">
 
     @foreach (var item in Model)
     {
 
-
-
-        <div class="item col-xs-12 col-sm-6 col-lg-4">
+        <div class="item col-xs-12 col-sm-6 col-lg-3">
             <div class="panel panel-default paper-shadow" data-z="0.5">
                 <div class="panel-heading">
                     <div class="media media-clearfix-xs-min v-middle">
@@ -55,7 +53,7 @@
                 </div>
                 <hr class="margin-none"/>
                 <div class="panel-body">
-                    @Html.ActionLink("Go to course", "Content", new {id = item.CourseId})
+                    @Html.ActionLink("Go to Course", "Content", new {id = item.CourseId})
                     @*<a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("Content","Courses")">Go to course</a>*@
                 </div>
             </div>
