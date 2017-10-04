@@ -19,14 +19,9 @@
                 <h4>Corps Member Registration</h4>
             </div>
 
-            @using (Ajax.BeginForm("RegisterCorper", "Account", new AjaxOptions
-            {
-                HttpMethod = "Post",
-                OnSuccess = "OnSuccess",
-                OnFailure = "OnFailure",
-                LoadingElementId = "progress"
-            }))
-            {
+            @using (Html.BeginForm("RegisterCorper", "Account"))
+                { 
+            
 
 
                 @Html.AntiForgeryToken()

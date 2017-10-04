@@ -26,6 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -537,7 +538,6 @@
     <Content Include="Content\mdb.css" />
     <Content Include="Content\mdb.min.css" />
     <Content Include="Content\my.css" />
-    <Content Include="Content\Site.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\Demo.css" />
     <Content Include="Content\font-awesome-4.7.0\css\font-awesome.css" />
@@ -843,6 +843,7 @@
     <Content Include="Content\LMS\fonts\picto-foundry-weather.woff" />
     <Content Include="Content\LMS\js\data\google_maps\markers.json" />
     <Content Include="MaterialUpload\How a CPU Works.mp4" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1-vsdoc.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
@@ -997,7 +998,6 @@
     <Content Include="Views\TakeQuiz\_Exam.cshtml" />
     <Content Include="Views\Shared\_LayoutBoard.cshtml" />
     <Content Include="Views\Shared\_LayoutTutor.cshtml" />
-    <Content Include="Views\Home\TutorDashboard.cshtml" />
     <Content Include="Views\Tutors\ConfirmTutor.cshtml" />
     <Content Include="Views\CourseForum\Create.cshtml" />
     <Content Include="Views\CourseForum\Delete.cshtml" />
@@ -1060,6 +1060,8 @@
     <Content Include="Views\Topics\Save.cshtml" />
     <Content Include="Views\Students\CorperDashboard.cshtml" />
     <Content Include="Views\TutorCourses\MyCourses.cshtml" />
+    <Content Include="Views\Account\RegularStudent.cshtml" />
+    <Content Include="Views\Account\RedirectEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

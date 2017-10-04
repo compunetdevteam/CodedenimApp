@@ -19,33 +19,34 @@
                 </div>
 
                 <!--Body-->
-                <form action="" method="post">
-                    @Html.AntiForgeryToken()
-                    <div class="md-form">
-                        <i class="fa fa-envelope prefix"></i>
-                        <input type="text" id="Email" name="Email" class="form-control" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required.">
-                        <label for="Email">Your Email</label>
-                        <span class="field-validation-valid text-danger" data-valmsg-for="Email" data-valmsg-replace="true"></span>
-                    </div>
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="md-form">
+                    <i class="fa fa-envelope prefix"></i>
+                    <input type="text" id="Email" name="Email" class="form-control" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required.">
+                    <label for="Email">Your Email</label>
+                    <span class="field-validation-valid text-danger" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                </div>
 
-                    <div class="md-form">
-                        <i class="fa fa-lock prefix"></i>
-                        <input type="password" id="Password" name="Password" class="form-control" data-val="true" data-val-Password="The Password field is required." data-val-required="The Password field is required.">
-                        <label for="Password">Your Password</label>
-                        <span class="field-validation-valid text-danger" data-valmsg-for="Password" data-valmsg-replace="true"></span>
-                    </div>
+                <div class="md-form">
+                    <i class="fa fa-lock prefix"></i>
+                    <input type="password" id="Password" name="Password" class="form-control" data-val="true" data-val-Password="The Password field is required." data-val-required="The Password field is required.">
+                    <label for="Password">Your Password</label>
+                    <span class="field-validation-valid text-danger" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                </div>
 
-                    <fieldset class="form-group">
-                        &nbsp;<input type="checkbox" id="RememberMe" name="RememberMe">
-                        <label for="RememberMe"> &nbsp;Remember Me</label>
-                    </fieldset>
+                <fieldset class="form-group">
+                    &nbsp;<input type="checkbox" id="RememberMe" name="RememberMe">
+                    <label for="RememberMe"> &nbsp;Remember Me</label>
+                </fieldset>
 
-                    <div class="text-center">
-                        <button class="btn btn-default" style="background-color: #093 !important">Login</button>
-                    </div>                   
-                    <div class="modal-footer text-center">
-                        <a href="@Url.Action("ForgotPassword", "Account")"><b style="color: #093">Forgot Password?</b></a>
-                    </div>
+                <div class="text-center">
+                    <button class="btn btn-default" style="background-color: #093 !important">Login</button>
+                </div>
+                <div class="modal-footer text-center">
+                    <a href="@Url.Action("ForgotPassword", "Account")"><b style="color: #093">Forgot Password?</b></a>
+                </div>
 
                     @*<div class="row my-3 d-flex justify-content-center">
                     <!--Facebook-->
@@ -55,7 +56,7 @@
                     <!--Google +-->
                     <button type="button" class="btn btn-white btn-rounded z-depth-1a"><i class="fa fa-google-plus blue-text"></i></button>
                 </div>*@
-                </form>
+            }
             </div>
         </div>
         

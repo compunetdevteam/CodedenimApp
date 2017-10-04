@@ -9,9 +9,9 @@
 <link href="~/Content/my.css" rel="stylesheet" />
 <h2>CreateUnderGrad</h2>
 
-@*@using (Html.BeginForm("RegisterUnderGraduate", "api/AccountApi", FormMethod.Post))
-{*@
-@using (Ajax.BeginForm("RegisterUnderGraduate", "Account",
+@using (Html.BeginForm("RegisterUnderGraduate", "Account", FormMethod.Post))
+{
+@*@using (Ajax.BeginForm("RegisterUnderGraduate", "Account",
     new AjaxOptions
     {
         HttpMethod = "Post",
@@ -19,7 +19,7 @@
         OnFailure = "OnFailure",
         LoadingElementId = "progress"
     }))
-{
+{*@
 @*<form class="table table-bordered" id="form" enctype=multipart/form-data method="post">*@
 
     @Html.AntiForgeryToken()

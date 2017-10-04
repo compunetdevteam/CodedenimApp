@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using CodedenimWebApp.Models;
+﻿using CodedenimWebApp.Models;
 using CodedenimWebApp.Service;
+using CodedenimWebApp.ViewModels;
+using CodeninModel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System;
 using System.Configuration;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -16,8 +16,6 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Mvc;
-using CodedenimWebApp.ViewModels;
-using CodeninModel;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -153,7 +151,7 @@ namespace CodedenimWebApp.Controllers
                 TempData["UserMessage"] = $"Login Successful, Welcome {username}";
                 TempData["Title"] = "Success.";
                 return RedirectToAction("CorperDashboard", "Students");
-            }    
+            }
 
             return RedirectToAction("Index", "Home");
         }
@@ -210,7 +208,7 @@ namespace CodedenimWebApp.Controllers
         public ActionResult ConfirmTutorReg()
         {
             //  var tutor = new ConfirmTutorVm();
-           // var tutor = ConfirmTutor(id);
+            // var tutor = ConfirmTutor(id);
             return View();
         }
 
@@ -314,7 +312,7 @@ namespace CodedenimWebApp.Controllers
         [System.Web.Mvc.AllowAnonymous]
         public ActionResult Register()
         {
-         
+
             return View();
         }
 
@@ -323,43 +321,23 @@ namespace CodedenimWebApp.Controllers
         [System.Web.Mvc.HttpPost]
         [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterVm model)
         {
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email + model.Email };
-                // var result = await UserManager.CreateAsync(user, model.Password);
-
-                // create a tutor from admin without a password
-                var result = await UserManager.CreateAsync(user,model.Password);
+                var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
 
-                    await this.UserManager.AddToRoleAsync(user.Id, "Tutor");
-
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                  
-
-
-                    //var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your Tutor account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
-                    //ViewBag.Link = callbackUrl;
-                    ////await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your Tutor account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
-                    ////ViewBag.Link = callbackUrl;
-                    //TempData["UserMessage"] = $"Registration is Successful for {user.UserName}, Please Confirm Your Email to Login.";
-                    //return View("ConfirmRegistration");
-
-                    // await this.UserManager.AddToRoleAsync(user.Id, "Admin");
-                    // await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await this.UserManager.AddToRoleAsync(user.Id, model.AccountType.ToString());
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                   return RedirectToAction("Index", "Home");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    return RedirectToAction("RedirectEmail", "Account");
 
                 }
                 AddErrors(result);
@@ -405,7 +383,7 @@ namespace CodedenimWebApp.Controllers
         [System.Web.Mvc.HttpPost]
         [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> TutorRegistration(TutorRegisterVm model,  HttpPostedFileBase File)
+        public async Task<ActionResult> TutorRegistration(TutorRegisterVm model, HttpPostedFileBase File)
         {
             var tutorInDb = _db.Tutors.Find(model.TutorId);
 
@@ -417,11 +395,11 @@ namespace CodedenimWebApp.Controllers
                     UserName = model.FirstName + " " + model.LastName,
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber.Trim(),
-                  
+
                 };
 
-                var result = await UserManager.CreateAsync(user,model.Password);
-                   
+                var result = await UserManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded && (tutorInDb != null))
                 {
 
@@ -445,9 +423,9 @@ namespace CodedenimWebApp.Controllers
 
                     tutorInDb.DateOfBirth = model.DateOfBirth;
                     tutorInDb.PhoneNumber = model.PhoneNumber;
-                  
+
                     _db.Entry(tutorInDb).State = EntityState.Modified;
-                   
+
                     await _db.SaveChangesAsync();
                     await this.UserManager.AddToRoleAsync(user.Id, "Tutor");
 
@@ -460,24 +438,24 @@ namespace CodedenimWebApp.Controllers
                     TempData["UserMessage"] = $"Registration is Successful for {user.UserName}, Please Confirm Your Email to Login.";
                     return View("ConfirmRegistration");
 
-                  
+
 
                     RedirectToAction("Index", "Tutors");
 
-                   
-                };
-                   
-                 
 
-     
+                };
+
+
+
+
                 AddErrors(result);
             }
-                return View();
+            return View();
         }
 
 
         [System.Web.Mvc.AllowAnonymous]
-        public  PartialViewResult _RegisterUnderGraduate()
+        public PartialViewResult _RegisterUnderGraduate()
         {
             return PartialView();
         }
@@ -511,21 +489,21 @@ namespace CodedenimWebApp.Controllers
             var student = new Student
             {
 
-            //    string _FileName = String.Empty;
-            //    if (FileLocation.ContentLength > 0)
-            //    {
-            //        _FileName = Path.GetFileName(FileLocation.FileName);
-            //        string path = HostingEnvironment.MapPath("~/Profile_Pics/") + _FileName;
-            //    studentId.FileLocation = path;
-            //        var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/Profile_Pics/"));
-            //                if (directory.Exists == false)
-            //                {
-            //                directory.Create();
-            //                     }
-            //File.SaveAs(path);
-            //}
+                //    string _FileName = String.Empty;
+                //    if (FileLocation.ContentLength > 0)
+                //    {
+                //        _FileName = Path.GetFileName(FileLocation.FileName);
+                //        string path = HostingEnvironment.MapPath("~/Profile_Pics/") + _FileName;
+                //    studentId.FileLocation = path;
+                //        var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/Profile_Pics/"));
+                //                if (directory.Exists == false)
+                //                {
+                //                directory.Create();
+                //                     }
+                //File.SaveAs(path);
+                //}
 
-            StudentId = model.CallUpNumber,
+                StudentId = model.CallUpNumber,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
@@ -611,8 +589,12 @@ namespace CodedenimWebApp.Controllers
             return View("ConfirmRegistration");
         }
 
+        [System.Web.Mvc.AllowAnonymous]
 
-
+        public ActionResult RegularStudent()
+        {
+            return View();
+        }
 
 
         [System.Web.Mvc.HttpPost]
@@ -627,7 +609,7 @@ namespace CodedenimWebApp.Controllers
 
             var user = new ApplicationUser()
             {
-              
+
                 UserName = model.Email,
                 Email = model.Email
             };
@@ -641,14 +623,14 @@ namespace CodedenimWebApp.Controllers
 
             var student = new Student
             {
-             
-               
+
+
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
                 Gender = model.Gender,
                 PhoneNumber = model.MobileNumber,
-              
+
             };
             _db.Students.Add(student);
             await _db.SaveChangesAsync();
@@ -1035,6 +1017,11 @@ namespace CodedenimWebApp.Controllers
             }
         }
         #endregion
+
+        public ActionResult RedirectEmail()
+        {
+            return View();
+        }
     }
 
     public class EmailSender
