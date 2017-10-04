@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection;
-using CodeninModel.Assesment;
+﻿using CodeninModel.Assesment;
 using CodeninModel.CBTE;
 using CodeninModel.Forums;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CodeninModel
 {
@@ -13,7 +12,7 @@ namespace CodeninModel
         [Key]
         public string StudentId { get; set; }
 
-        [DataType(DataType.Date)]
+        // [DataType(DataType.Date)]
         // [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Enrollment Date")]
         public DateTime? EnrollmentDate { get; set; }
@@ -21,27 +20,20 @@ namespace CodeninModel
         // public string GuardianEmail { get; set; }
 
         public bool Active { get; set; }
-        public Title Title { get; set; }
+        public string Title { get; set; }
+        public string AccountType { get; set; }
 
         public bool IsGraduated { get; set; }
         public string Institution { get; set; }
-        public State StateOfService { get; set; }
-        public Batch Batch { get; set; }
+        public string StateOfService { get; set; }
+        public string Batch { get; set; }
         public string Discpline { get; set; }
 
-        public string FullName
-        {
-            get
-            {
-                var name = FirstName + " " + LastName;
-                return FullName = name;
-            }
-            set { }
-        }
+
 
         public virtual ICollection<Enrollment> Enrollments { get; set; }
-      //  public virtual ICollection<File> Files { get; set; }
-  
+        //  public virtual ICollection<File> Files { get; set; }
+
         public virtual ICollection<SubmitAssignment> SubmitAssignments { get; set; }
         public virtual ICollection<StudentTestLog> StudentTestLogs { get; set; }
         public virtual ICollection<StudentQuestion> StudentQuestions { get; set; }

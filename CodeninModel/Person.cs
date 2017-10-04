@@ -1,8 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Web;
 
 namespace CodeninModel
 {
@@ -27,6 +25,8 @@ namespace CodeninModel
 
         // [Required]
         [EmailAddress]
+        [Index(IsUnique = true)]
+        [MaxLength(100)]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -50,16 +50,21 @@ namespace CodeninModel
         public bool IsAcctive { get; set; }
 
         [Display(Name = "Date Of Birth")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        //[DataType(DataType.Date)]
+        // [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
         public DateTime? DateOfBirth { get; set; }
 
         public int? Age
         {
             get
             {
-               var t = DateTime.Now - DateTime.Parse(DateOfBirth.ToString());
-                return Age = (int)t.Days / 365;
+                if (DateOfBirth != null)
+                {
+                    var t = DateTime.Now - DateTime.Parse(DateOfBirth.ToString());
+                    return Age = (int)t.Days / 365;
+                }
+                return null;
+
             }
             set { }
         }
@@ -73,6 +78,6 @@ namespace CodeninModel
         public byte[] Passport { get; set; }
         public string FileLocation { get; set; }
 
-     
+
     }
 }
