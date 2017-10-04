@@ -328,6 +328,7 @@
     <Compile Include="ViewModels\DisplayQuestionViewModel.cs" />
     <Compile Include="ViewModels\ForumQA_Vm.cs" />
     <Compile Include="ViewModels\RegularStudentVm.cs" />
+    <Compile Include="ViewModels\StudentVm.cs" />
     <Compile Include="ViewModels\TutorCreateVm.cs" />
     <Compile Include="ViewModels\TutorDashboardVm.cs" />
     <Compile Include="ViewModels\TutorRegisterVm.cs" />
@@ -1062,6 +1063,7 @@
     <Content Include="Views\TutorCourses\MyCourses.cshtml" />
     <Content Include="Views\Account\RegularStudent.cshtml" />
     <Content Include="Views\Account\RedirectEmail.cshtml" />
+    <Content Include="Views\Students\EditStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
