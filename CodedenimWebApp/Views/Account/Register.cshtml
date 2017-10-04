@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Register";
-    Layout = "~/Views/Shared/_LayoutWeb.cshtml";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
 }
 
 <style>
@@ -28,7 +28,7 @@
 <br /><br />
 <br />
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post))
+@*@using (Html.BeginForm("Register", "Account", FormMethod.Post))
 {
  
 
@@ -93,91 +93,148 @@
             <button class="btn btn-success js-submit">Create</button>
         </div>
     </div>
-}
+}*@
 
 
-@*<div class="container-fluid">
+
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new{ @class= "form-horizontal" }))
+{
+
+
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
+<div class="container">
+<div class="page-section">
 <div class="row">
-<div class="col-md-4">
-
-    <div class="demo-card-square mdl-card mdl-shadow--2dp">
-        <img src="~/Content/img/Corpers.jpg" height="200"/> 
-        <div class="mdl-card__title mdl-card--expand">
-            <h2 class="mdl-card__title-text">Corper...?</h2>
-        </div>
- 
-        <div class="mdl-card__actions mdl-card--border">
-            @Html.ActionLink("register", "CreateCorper", "Students", null, new {@class = "btn btn-default"})
-
-        </div>
-    </div>
-    </div>
+<div class="col-md-9">
+    <!-- Tabbable Widget -->
+    <div class="tabbable paper-shadow relative" data-z="0.5">
+        <!-- Tabs -->
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="website-student-profile.html"><i class="fa fa-fw fa-lock"></i> <span class="hidden-sm hidden-xs">Register Account</span></a></li>
+S        </ul>
+        <!-- // END Tabs -->
+        <!-- Panes -->
+        <div class="tab-content">
+            <div id="account" class="tab-pane active">
 
 
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-md-2 control-label">Full Name</label>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-control-material">
 
-    <div class="col-md-4">
-        <div class="demo-card-square mdl-card mdl-shadow--2dp">
-            <img src="~/Content/img/UnderG.jpg" height="200"/>
-            <div class="mdl-card__title mdl-card--expand">
-                <h2 class="mdl-card__title-text">Undergraduate...?</h2>
+                                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "exampleInputFirstName", @placeholder = "Your first name" } })
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                    <label for="exampleInputFirstName">First name</label>
+
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-control-material">
+
+                                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id = "exampleInputLastName", @placeholder = "Your Last name" } })
+                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                    <label for="exampleInputLastName">Last name</label>
+                                    @*<input type="email" class="form-control" id="exampleInputLastName" placeholder="Your last name">
+                                <label for="exampleInputLastName">Last name</label>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-md-2 control-label">Email</label>
+                    <div class="col-md-6">
+                        <div class="form-control-material">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "exampleInputEmailName", @type = "email", @placeholder = "Your Email name" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                @*<input type="email" class="form-control" id="inputEmail3" placeholder="Email">*@
+                                <label for="inputEmail3">Email address</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AccountType, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        <div class="form-control-material">
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    @Html.EnumDropDownListFor(model => model.AccountType, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.AccountType, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-md-2 control-label"> Password</label>
+                                <div class="col-md-6">
+                                    <div class="form-control-material">
+
+                                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                        <label for="inputPassword3">Password</label>
+                                        @*<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                    <label for="inputPassword3">Password</label>*@
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-md-2 control-label">Confirm Password</label>
+                                <div class="col-md-6">
+                                    <div class="form-control-material">
+                                        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                        @*<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                    <label for="inputPassword3">Password</label>*@
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="form-group">
+                            <div class="col-md-offset-2 col-md-6">
+                                <div class="checkbox checkbox-success">
+                                    <input id="checkbox3" type="checkbox" checked="">
+                                    <label for="checkbox3">Subscribe to our Newsletter</label>
+                                </div>
+                            </div>
+                        </div>*@
+                            @*<div class="form-group margin-none">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="submit" class="btn btn-primary paper-shadow relative" data-z="0.5" data-hover-z="1" data-animated>Save Changes</button>
+                            </div>
+                        </div>*@
+
+
+
+                            <div class="form-group margin-none">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <button class="btn btn-primary js-submit paper-shadow relative" data-z="0.5" data-hover-z="1" data-animated>Register</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- // END Panes -->
+                </div>
+                <!-- // END Tabbable Widget -->
+                <br />
+                <br />
             </div>
-            <div class="mdl-card__actions mdl-card--border">
-
-                @Html.ActionLink("register", "CreateUnderGrad", "Students", null, new {@class = "btn btn-default"})
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="demo-card-square mdl-caSrd mdl-shadow--2dp">
-            <img src="~/Content/img/Others.jpg" height="200" />
-            <div class="mdl-card__title mdl-card--expand">
-                <h2 class="mdl-card__title-text">Just Want To Learn...?</h2>
-            </div>
-
-            <div class="mdl-card__actions mdl-card--border">
-                <a class="btn btn-default">
-                    @Html.ActionLink("register", "RegularStudent", "Account", null, new {@class = "btn btn-default"})
-                </a>
-            </div>
-        </div>
-    </div>
 
 </div>
-
-
-
-
-
-<div class="modal fade" id="createAssetModal" tabindex="-1" role="dialog" aria-labelledby="CreateAssetModal" aria-hidden="true" data-backdrop="static">
-
-    <div id="createAssetContainer">
-    </div>
-
 </div>
-
-
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-       
-    }
-@*<script type="text/javascript">
-    $("#RegisterUnderGraduate").on("click", function () {  
-  
-        var url = $(this).data("url");
-        //alert(url);
-        $.get(url, function (data) { 
-            $('#createAssetContainer').html(data);  
-                   
-            $('#createAssetModal').modal('show');  
-            alert(url);
-        });  
-          
-    }); 
-</script>
-</div>*@
+</div>
+            }
