@@ -164,7 +164,7 @@ namespace CodedenimWebApp.Controllers
             return View();
         }
 
-        public async Task<ActionResult> RegularStudent(RegularStudentVm regularStudentVm)
+        public async Task<ActionResult> EditStudent(StudentVm student)
         {
             if (ModelState.IsValid)
             {
@@ -173,7 +173,7 @@ namespace CodedenimWebApp.Controllers
                 student.LastName = regularStudentVm.LastName;
                 student.Email = regularStudentVm.Email;
                 student.PhoneNumber = regularStudentVm.PhoneNumber;
-
+                
                 db.Students.Add(student);
             }
             return View();

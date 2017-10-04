@@ -1063,6 +1063,7 @@
     <Content Include="Views\TutorCourses\MyCourses.cshtml" />
     <Content Include="Views\Account\RegularStudent.cshtml" />
     <Content Include="Views\Account\RedirectEmail.cshtml" />
+    <Content Include="Views\Students\EditStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
