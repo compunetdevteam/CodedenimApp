@@ -325,11 +325,26 @@ namespace CodedenimWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email + model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.FirstName + " " + model.LastName,
+                    Email = model.Email,
+                };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-
+                    var student = new Student
+                    {
+                        StudentId = user.Id,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Email = model.Email,
+                        AccountType = model.AccountType.ToString(),
+                        //DateOfBirth = DateTime.Now
+                    };
+                    _db.Students.Add(student);
+                    await _db.SaveChangesAsync();
                     await this.UserManager.AddToRoleAsync(user.Id, model.AccountType.ToString());
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -561,7 +576,7 @@ namespace CodedenimWebApp.Controllers
             var student = new Student
             {
                 StudentId = model.MatNumber,
-                Title = model.Title,
+                Title = model.Title.ToString(),
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
@@ -1018,6 +1033,7 @@ namespace CodedenimWebApp.Controllers
         }
         #endregion
 
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult RedirectEmail()
         {
             return View();

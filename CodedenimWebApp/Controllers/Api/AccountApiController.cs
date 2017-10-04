@@ -396,9 +396,9 @@ namespace CodedenimWebApp.Controllers.Api
                 Gender = model.Gender,
                 Email = model.Email,
                 PhoneNumber = model.MobileNumber,
-                StateOfService = model.NyscState,
+                StateOfService = model.NyscState.ToString(),
                Institution = model.Institution,
-               Batch = model.NyscBatch,
+               Batch = model.NyscBatch.ToString(),
                Discpline = model.Discpline
             };
 
@@ -452,7 +452,7 @@ namespace CodedenimWebApp.Controllers.Api
             var student = new Student
             {
                 StudentId = model.MatNumber,
-                Title = model.Title,
+                Title = model.Title.ToString(),
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
