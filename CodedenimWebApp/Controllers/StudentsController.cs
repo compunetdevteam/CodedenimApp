@@ -163,23 +163,7 @@ namespace CodedenimWebApp.Controllers
             return View();
         }
 
-        public async Task<ActionResult> EditStudent(StudentVm student)
-        {
-            if (ModelState.IsValid)
-            {
-                var studentInfo = new Student();
-                //if (User.IsInRole(RoleName.Corper))
-                //{
-                //    studentInfo.DateOfBirth = student.DateOfBirth;
-                //    student.CallUpNumber = student.CallUpNumber;
-                //    student.
-                //}
-
-                
-                db.Students.Add(student);
-            }
-            return View();
-        }
+      
         // GET: Students/Create
         public ActionResult Create()
         {
