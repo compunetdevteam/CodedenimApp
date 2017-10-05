@@ -164,20 +164,6 @@ namespace CodedenimWebApp.Controllers
             return View();
         }
 
-        public async Task<ActionResult> EditStudent(StudentVm student)
-        {
-            if (ModelState.IsValid)
-            {
-                var student = new Student();
-                student.FirstName = regularStudentVm.FirstName;
-                student.LastName = regularStudentVm.LastName;
-                student.Email = regularStudentVm.Email;
-                student.PhoneNumber = regularStudentVm.PhoneNumber;
-                
-                db.Students.Add(student);
-            }
-            return View();
-        }
         // GET: Students/Create
         public ActionResult Create()
         {

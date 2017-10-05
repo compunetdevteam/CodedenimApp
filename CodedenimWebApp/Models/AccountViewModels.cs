@@ -292,7 +292,7 @@ namespace CodedenimWebApp.Models
 
     public enum AccountType
     {
-        Corper = 1, UnderGraduate, Regular
+        Corper = 1, UnderGraduate, Student
     }
 
     public class RegisterVm

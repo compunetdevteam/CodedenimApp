@@ -40,20 +40,20 @@ namespace CodedenimWebApp.Controllers
                 string reference = "";
                // var userRole = _db.Rol
                 var person = _db.Users.AsNoTracking().SingleOrDefault(x => x.Id.Equals(userId));
-               // var roles = _db.PaymentTypes.Where(x => x.PaymentTypeValue.Equals(_db.Roles.))
-               // // var role = _db
-               // //var email = _db.Students.AsNoTracking().Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).ToString();
-               // var amount = _db.PaymentTypes
-               //     .Where(x => x.PaymentTypeId.Equals(person.PaymentTypeId)).Select(x => x.Amount).FirstOrDefault();
+                var roles = _db.PaymentTypes.FirstOrDefault(x => x.PaymentTypeValue.Equals(_db.Roles));
+                // var role = _db
+                var email = _db.Students.AsNoTracking().Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).ToString();
+                //var amount = _db.PaymentTypes
+                //    .Where(x => x.PaymentTypeId.Equals(person.PaymentTypeId)).Select(x => x.Amount).FirstOrDefault();
 
-               //// var convert = new KoboToNaira();
-             //   var convertedamount = KoboToNaira.ConvertKoboToNaira(amount);
+                //var convert = new KoboToNaira();
+                //var convertedamount = KoboToNaira.ConvertKoboToNaira(amount);
                 var transactionInitializaRequest = new TransactionInitializeRequest
                 {
                     //Reference = "SwifKampus",
                     AmountInKobo = 1500000,
                     CallbackUrl = "http://localhost:64301/Students/DashBoard",  
-                    Email = person.Email,
+                    Email = email,
                     Bearer = "Application fee",
 
                     //CustomFields = new List<CustomField>

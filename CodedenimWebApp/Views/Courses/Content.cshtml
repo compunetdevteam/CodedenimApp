@@ -34,7 +34,7 @@
             @* End of side category bar *@
 
                 <h5 class="text-subhead-2 text-light">Learning Path</h5>
-
+    @*@if(User.Identity,GetRoles)*@
                 @foreach (var item in Model.Modules)
                 {
 

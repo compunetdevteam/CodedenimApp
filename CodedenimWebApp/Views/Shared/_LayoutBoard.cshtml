@@ -336,6 +336,7 @@
                 <li class="active"><a href="@Url.Action("AdminDashboard", "Home")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
                 <li class="active"><a href="@Url.Action("Create", "Tutors")"><i class="fa fa-home"></i><span>Create Tutor</span></a></li>
                 <li class="active"><a href="@Url.Action("Create", "TutorCourses")"><i class="fa fa-home"></i><span>Assign Tutor A Subject</span></a></li>
+                <li class="active"><a href="@Url.Action("Create", "Forum")"><i class="fa fa-home"></i><span>Create Forum</span></a></li>
                 <hr/>
                 @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>*@
                 <li><a href="@Url.Action("Create", "CourseCategories")"><i class="fa fa-mortar-board"></i><span>Create Courses Category</span></a></li>
@@ -416,6 +417,8 @@ else if (Request.IsAuthenticated && User.IsInRole("Corper"))
             </div>
             <ul class="sidebar-menu">
                 <li class="active"><a href="@Url.Action("Dashboard", "Students")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
+                
+                <li class="active"><a href="@Url.Action("Create", "ForumQuestions")"><i class="fa fa-home"></i><span>Ask Question</span></a></li>S
                 @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>
                                     <li><a href="app-instructor-courses.html"><i class="fa fa-mortar-board"></i><span>My Courses</span></a></li>
                                     <li><a href="app-instructor-earnings.html"><i class="fa fa-bar-chart-o"></i><span>Earnings</span></a></li>
@@ -652,6 +655,8 @@ else if (Request.IsAuthenticated && User.IsInRole("UnderGraduate"))
             </div>
             <ul class="sidebar-menu">
                 <li class="active"><a href="@Url.Action("Dashboard", "Students")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
+                
+                <li class="active"><a href="@Url.Action("Create", "ForumQuestions")"><i class="fa fa-home"></i><span>Ask Question</span></a></li>S
                 @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>
                                 <li><a href="app-instructor-courses.html"><i class="fa fa-mortar-board"></i><span>My Courses</span></a></li>
                                 <li><a href="app-instructor-earnings.html"><i class="fa fa-bar-chart-o"></i><span>Earnings</span></a></li>

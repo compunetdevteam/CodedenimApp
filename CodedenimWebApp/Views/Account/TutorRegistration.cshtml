@@ -116,7 +116,7 @@
                     <table>
                         <tr>
                         @{
-                            int cnt = 0;
+                            @*int cnt = 0;
                             List<CodedenimWebApp.ViewModels.AssignedCourses> courses = ViewBag.Courses;
 
                             foreach (var course in courses)
@@ -124,7 +124,7 @@
                                 if (cnt++ % 3 == 0)
                                 {
                                     @:</tr><tr>
-                                }
+                                }*@
                             @*@:<td>
                             <input type="checkbox" 
                                    name="selectedCourses"
@@ -133,14 +133,14 @@
                             @course.CourseId @:  @course.CourseName
                             @:</td>*@
 
-                          
-                                <input type="checkbox" id="@course.CourseId" name="selectedCourses" value="@course.CourseId">
-                                <label for="@course.CourseId">@course.CourseId:  @course.CourseName</label> 
-                          
+                                @*<input type="checkbox" id="@course.CourseId" name="selectedCourses" value="@course.CourseId">
+                                <label for="@course.CourseId">@course.CourseId:  @course.CourseName</label>*@ 
 
 
-                            }
-                            @:</tr>
+
+
+                            @*}
+                            @:</tr>*@
                         }
                     </table>
                 </div>

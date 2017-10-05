@@ -46,9 +46,16 @@ namespace CodedenimWebApp.Controllers
         // GET: Modules/Create
         public ActionResult Create(int? id)
         {
+            if (id != null)
+            {
+                ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(id.Value)).ToList(), "CourseId", "CourseName");
+               /// ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode");
 
-        
-            ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(id.Value)).ToList(), "CourseId", "CourseCode");
+            }
+            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName");
+            //  ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(id.Value)).ToList(), "CourseId", "CourseCode");
+
+
             return View();
         }
 
