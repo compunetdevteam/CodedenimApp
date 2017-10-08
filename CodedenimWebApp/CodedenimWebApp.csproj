@@ -294,74 +294,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709280944435_IntiL Create.cs" />
-    <Compile Include="Migrations\201709280944435_IntiL Create.Designer.cs">
-      <DependentUpon>201709280944435_IntiL Create.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709292306082_addedDateToForumQuestion.cs" />
-    <Compile Include="Migrations\201709292306082_addedDateToForumQuestion.Designer.cs">
-      <DependentUpon>201709292306082_addedDateToForumQuestion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709300014235_addedFileLocationToPersonTable.cs" />
-    <Compile Include="Migrations\201709300014235_addedFileLocationToPersonTable.Designer.cs">
-      <DependentUpon>201709300014235_addedFileLocationToPersonTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710050902537_studentCoursesTable.cs" />
-    <Compile Include="Migrations\201710050902537_studentCoursesTable.Designer.cs">
-      <DependentUpon>201710050902537_studentCoursesTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710061037597_added_CoursePrice_onCourseTable.cs" />
-    <Compile Include="Migrations\201710061037597_added_CoursePrice_onCourseTable.Designer.cs">
-      <DependentUpon>201710061037597_added_CoursePrice_onCourseTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710061345019_added_otherStudent_Roles.cs" />
-    <Compile Include="Migrations\201710061345019_added_otherStudent_Roles.Designer.cs">
-      <DependentUpon>201710061345019_added_otherStudent_Roles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710070202263_added_fields_to_PaymentTypeTable.cs" />
-    <Compile Include="Migrations\201710070202263_added_fields_to_PaymentTypeTable.Designer.cs">
-      <DependentUpon>201710070202263_added_fields_to_PaymentTypeTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710070210338_removeFieldsOnPaymentType_Mistake.cs" />
-    <Compile Include="Migrations\201710070210338_removeFieldsOnPaymentType_Mistake.Designer.cs">
-      <DependentUpon>201710070210338_removeFieldsOnPaymentType_Mistake.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710070214393_added_fields_to_ProfesionalPaymentTable.cs" />
-    <Compile Include="Migrations\201710070214393_added_fields_to_ProfesionalPaymentTable.Designer.cs">
-      <DependentUpon>201710070214393_added_fields_to_ProfesionalPaymentTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710070321085_addedUserID_in_PaymentTable.cs" />
-    <Compile Include="Migrations\201710070321085_addedUserID_in_PaymentTable.Designer.cs">
-      <DependentUpon>201710070321085_addedUserID_in_PaymentTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710070506017_addedSomeThings.cs" />
-    <Compile Include="Migrations\201710070506017_addedSomeThings.Designer.cs">
-      <DependentUpon>201710070506017_addedSomeThings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710071212401_CorperEnrolledCourses.cs" />
-    <Compile Include="Migrations\201710071212401_CorperEnrolledCourses.Designer.cs">
-      <DependentUpon>201710071212401_CorperEnrolledCourses.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710071257388_corperEnrollments.cs" />
-    <Compile Include="Migrations\201710071257388_corperEnrollments.Designer.cs">
-      <DependentUpon>201710071257388_corperEnrollments.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710080302187_Commented_theEmail_IsuniqueAttr.cs" />
-    <Compile Include="Migrations\201710080302187_Commented_theEmail_IsuniqueAttr.Designer.cs">
-      <DependentUpon>201710080302187_Commented_theEmail_IsuniqueAttr.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710081533485_changesToCosandCosCat.cs" />
-    <Compile Include="Migrations\201710081533485_changesToCosandCosCat.Designer.cs">
-      <DependentUpon>201710081533485_changesToCosandCosCat.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710081608595_cosPriceRemoved.cs" />
-    <Compile Include="Migrations\201710081608595_cosPriceRemoved.Designer.cs">
-      <DependentUpon>201710081608595_cosPriceRemoved.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710081705334_Create_CourseEnrollment.cs" />
-    <Compile Include="Migrations\201710081705334_Create_CourseEnrollment.Designer.cs">
-      <DependentUpon>201710081705334_Create_CourseEnrollment.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -1137,6 +1069,7 @@
     <Content Include="Views\AssignCourseCategories\Edit.cshtml" />
     <Content Include="Views\AssignCourseCategories\Index.cshtml" />
     <Content Include="Views\Courses\ListCourses.cshtml" />
+    <Content Include="Views\CourseCategories\CourseCategoryPayment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1178,59 +1111,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709280944435_IntiL Create.resx">
-      <DependentUpon>201709280944435_IntiL Create.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709292306082_addedDateToForumQuestion.resx">
-      <DependentUpon>201709292306082_addedDateToForumQuestion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709300014235_addedFileLocationToPersonTable.resx">
-      <DependentUpon>201709300014235_addedFileLocationToPersonTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710050902537_studentCoursesTable.resx">
-      <DependentUpon>201710050902537_studentCoursesTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710061037597_added_CoursePrice_onCourseTable.resx">
-      <DependentUpon>201710061037597_added_CoursePrice_onCourseTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710061345019_added_otherStudent_Roles.resx">
-      <DependentUpon>201710061345019_added_otherStudent_Roles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710070202263_added_fields_to_PaymentTypeTable.resx">
-      <DependentUpon>201710070202263_added_fields_to_PaymentTypeTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710070210338_removeFieldsOnPaymentType_Mistake.resx">
-      <DependentUpon>201710070210338_removeFieldsOnPaymentType_Mistake.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710070214393_added_fields_to_ProfesionalPaymentTable.resx">
-      <DependentUpon>201710070214393_added_fields_to_ProfesionalPaymentTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710070321085_addedUserID_in_PaymentTable.resx">
-      <DependentUpon>201710070321085_addedUserID_in_PaymentTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710070506017_addedSomeThings.resx">
-      <DependentUpon>201710070506017_addedSomeThings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710071212401_CorperEnrolledCourses.resx">
-      <DependentUpon>201710071212401_CorperEnrolledCourses.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710071257388_corperEnrollments.resx">
-      <DependentUpon>201710071257388_corperEnrollments.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710080302187_Commented_theEmail_IsuniqueAttr.resx">
-      <DependentUpon>201710080302187_Commented_theEmail_IsuniqueAttr.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710081533485_changesToCosandCosCat.resx">
-      <DependentUpon>201710081533485_changesToCosandCosCat.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710081608595_cosPriceRemoved.resx">
-      <DependentUpon>201710081608595_cosPriceRemoved.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710081705334_Create_CourseEnrollment.resx">
-      <DependentUpon>201710081705334_Create_CourseEnrollment.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

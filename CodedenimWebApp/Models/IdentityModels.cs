@@ -1,13 +1,12 @@
-﻿using System;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using CodedenimWebApp.Controllers;
+﻿using CodedenimWebApp.Controllers;
 using CodeninModel;
 using CodeninModel.Quiz;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System;
+using System.Data.Entity;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace CodedenimWebApp.Models
 {
@@ -94,6 +93,7 @@ namespace CodedenimWebApp.Models
         public DbSet<CorperEnrolledCourses> CorperEnrolledCourses { get; set; }
 
         public System.Data.Entity.DbSet<CodeninModel.AssignCourseCategory> AssignCourseCategories { get; set; }
+        public DbSet<StudentPayment> StudentPayments { get; set; }
         //public override int SaveChanges()
         //{
         //    try

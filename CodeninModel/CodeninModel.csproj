@@ -128,6 +128,7 @@
     <Compile Include="Quiz\QuizLogVm.cs" />
     <Compile Include="StudentAssignedCourses.cs" />
     <Compile Include="StudentCourses.cs" />
+    <Compile Include="StudentPayment.cs" />
     <Compile Include="TopicMaterialUpload.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Person.cs" />

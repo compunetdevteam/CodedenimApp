@@ -40,10 +40,7 @@ namespace CodedenimWebApp.Controllers
             if (userId != null)
             {
                 string reference = "";
-               // var userRole = _db.Rol
-                //var person = _db.Users.AsNoTracking().SingleOrDefault(x => x.Id.Equals(userId));
-                //var roles = User;
-                // var role = _db
+              
                 var email = _db.Students.AsNoTracking().Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).FirstOrDefault();
                 var accountType = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.AccountType)
                               .FirstOrDefault();
@@ -68,12 +65,7 @@ namespace CodedenimWebApp.Controllers
                         new  CustomField("courseId","courseId", coursePayedFor),
                         new  CustomField("accountType","accounttype", accountType),
                         new  CustomField("userId","userId", userId),
-                       // new CustomField("professionalworkerid","professionalworkerid", worker.ProfessionalWorkerId),
-                        //new CustomField("professionalworkerid","professionalworkerid", worker.ProfessionalWorkerId),
-                       // new CustomField("amount", "amount", model.Amount.ToString(CultureInfo.InvariantCulture)),
-                        //new CustomField("sessionid", "sessionid", schoolFeePayment.SessionId.ToString()),
-                        //new CustomField("feepaymentid","feepaymentid", schoolFeePayment.FeeCategoryId.ToString()),
-                        //new CustomField("paymentmode","paymentmode", schoolFeePayment.p)
+                       
                     }
 
                 };

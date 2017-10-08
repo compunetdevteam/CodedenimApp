@@ -12,6 +12,6 @@ namespace CodeninModel
         public string CategoryName { get; set; }
         public decimal Amount { get; set; }
         public string StudentType { get;set; }
-        //public virtual ICollection<Course> Courses { get; set; }
+        public virtual ICollection<StudentPayment> StudentPayments { get; set; }
     }
 }
