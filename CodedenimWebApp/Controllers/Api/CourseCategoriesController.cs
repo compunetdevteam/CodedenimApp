@@ -33,31 +33,31 @@ namespace CodedenimWebApp.Controllers.Api
         [ResponseType(typeof(CourseCategory))]
         public async Task<IHttpActionResult> GetCourseCategory(int id)
         {
-            var courseCategory = await _db.Courses.Where(x => x.CourseCategoryId.Equals(id))
-                                                                .Select(x => new
-                                                                {
-                                                                    x.CourseId,
-                                                                    x.CourseCode,
-                                                                    x.CourseDescription,
-                                                                    x.FileLocation,
-                                                                    x.CourseName,
-                                                                    x.CourseCategoryId,
-                                                                    x.ExpectedTime,
-                                                                    x.CourseCategory.CategoryName
+        //    var courseCategory = await _db.Courses.Where(x => x.CourseCategoryId.Equals(id))
+        //                                                        .Select(x => new
+        //                                                        {
+        //                                                            x.CourseId,
+        //                                                            x.CourseCode,
+        //                                                            x.CourseDescription,
+        //                                                            x.FileLocation,
+        //                                                            x.CourseName,
+        //                                                            x.CourseCategoryId,
+        //                                                            x.ExpectedTime,
+        //                                                            x.CourseCategory.CategoryName
 
-                                                                }).ToListAsync();
+        //                                                        }).ToListAsync();
 
-            //var courseCategory = await db.CourseCategories.Where(x => x.CourseCategoryId.Equals(id))
-            //                            .Select(x => new
-            //                            {
-            //                                x.Courses
-            //                            }).ToListAsync();
-            if (courseCategory == null)
-            {
-                return NotFound();
-            }
+        //    //var courseCategory = await db.CourseCategories.Where(x => x.CourseCategoryId.Equals(id))
+        //    //                            .Select(x => new
+        //    //                            {
+        //    //                                x.Courses
+        //    //                            }).ToListAsync();
+        //    if (courseCategory == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(courseCategory);
+            return Ok(/*courseCategory*/);
         }
 
         // PUT: api/CourseCategories/5

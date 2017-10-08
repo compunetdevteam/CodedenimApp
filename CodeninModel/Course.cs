@@ -12,10 +12,11 @@ namespace CodeninModel
     public class Course
     {
         public int CourseId { get; set; }
-        public int CourseCategoryId { get; set; }
+        //public int CourseCategoryId { get; set; }
         public string CourseCode { get; set; }
         public string CourseName { get; set; }
         public string CourseDescription { get; set; }
+        //public string CoursePrice { get; set; }
         public int ExpectedTime { get; set; }
         public DateTime? DateAdded { get; set; }
         [Range(0, 5)]
@@ -52,14 +53,15 @@ namespace CodeninModel
             }
         }
 
-        public virtual CourseCategory CourseCategory { get; set; }
-        public virtual ICollection<Enrollment> Enrollments { get; set; }
+        //public virtual CourseCategory CourseCategory { get; set; }
+        //public virtual ICollection<Enrollment> Enrollments { get; set; }
         //public virtual Tutor Instructors { get; set; }
         public virtual ICollection<TutorCourse> TutorCourses { get; set; }
         public virtual ICollection<Module> Modules { get; set; }
         public virtual ICollection<AssesmentQuestionAnswer> AssesmentQuestionAnswers { get; set; }
         public virtual ICollection<StudentAssignedCourse> StudentAssignedCourses {get;set;}
         public virtual Forum Forum { get; set; }
-      
+        public virtual ICollection<CourseEnrollment> CourseEnrollments { get; set; }
+        
     }
 }

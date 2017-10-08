@@ -267,6 +267,7 @@
     <Compile Include="Controllers\Api\TopicQuizsController.cs" />
     <Compile Include="Controllers\Api\TopicsController.cs" />
     <Compile Include="Controllers\Api\TutorsController.cs" />
+    <Compile Include="Controllers\AssignCourseCategoriesController.cs" />
     <Compile Include="Controllers\CodeGenController.cs" />
     <Compile Include="Controllers\CourseCategoriesController.cs" />
     <Compile Include="Controllers\CourseForum\ForumAnswersController.cs" />
@@ -305,6 +306,62 @@
     <Compile Include="Migrations\201709300014235_addedFileLocationToPersonTable.Designer.cs">
       <DependentUpon>201709300014235_addedFileLocationToPersonTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710050902537_studentCoursesTable.cs" />
+    <Compile Include="Migrations\201710050902537_studentCoursesTable.Designer.cs">
+      <DependentUpon>201710050902537_studentCoursesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710061037597_added_CoursePrice_onCourseTable.cs" />
+    <Compile Include="Migrations\201710061037597_added_CoursePrice_onCourseTable.Designer.cs">
+      <DependentUpon>201710061037597_added_CoursePrice_onCourseTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710061345019_added_otherStudent_Roles.cs" />
+    <Compile Include="Migrations\201710061345019_added_otherStudent_Roles.Designer.cs">
+      <DependentUpon>201710061345019_added_otherStudent_Roles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710070202263_added_fields_to_PaymentTypeTable.cs" />
+    <Compile Include="Migrations\201710070202263_added_fields_to_PaymentTypeTable.Designer.cs">
+      <DependentUpon>201710070202263_added_fields_to_PaymentTypeTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710070210338_removeFieldsOnPaymentType_Mistake.cs" />
+    <Compile Include="Migrations\201710070210338_removeFieldsOnPaymentType_Mistake.Designer.cs">
+      <DependentUpon>201710070210338_removeFieldsOnPaymentType_Mistake.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710070214393_added_fields_to_ProfesionalPaymentTable.cs" />
+    <Compile Include="Migrations\201710070214393_added_fields_to_ProfesionalPaymentTable.Designer.cs">
+      <DependentUpon>201710070214393_added_fields_to_ProfesionalPaymentTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710070321085_addedUserID_in_PaymentTable.cs" />
+    <Compile Include="Migrations\201710070321085_addedUserID_in_PaymentTable.Designer.cs">
+      <DependentUpon>201710070321085_addedUserID_in_PaymentTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710070506017_addedSomeThings.cs" />
+    <Compile Include="Migrations\201710070506017_addedSomeThings.Designer.cs">
+      <DependentUpon>201710070506017_addedSomeThings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710071212401_CorperEnrolledCourses.cs" />
+    <Compile Include="Migrations\201710071212401_CorperEnrolledCourses.Designer.cs">
+      <DependentUpon>201710071212401_CorperEnrolledCourses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710071257388_corperEnrollments.cs" />
+    <Compile Include="Migrations\201710071257388_corperEnrollments.Designer.cs">
+      <DependentUpon>201710071257388_corperEnrollments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710080302187_Commented_theEmail_IsuniqueAttr.cs" />
+    <Compile Include="Migrations\201710080302187_Commented_theEmail_IsuniqueAttr.Designer.cs">
+      <DependentUpon>201710080302187_Commented_theEmail_IsuniqueAttr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710081533485_changesToCosandCosCat.cs" />
+    <Compile Include="Migrations\201710081533485_changesToCosandCosCat.Designer.cs">
+      <DependentUpon>201710081533485_changesToCosandCosCat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710081608595_cosPriceRemoved.cs" />
+    <Compile Include="Migrations\201710081608595_cosPriceRemoved.Designer.cs">
+      <DependentUpon>201710081608595_cosPriceRemoved.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710081705334_Create_CourseEnrollment.cs" />
+    <Compile Include="Migrations\201710081705334_Create_CourseEnrollment.Designer.cs">
+      <DependentUpon>201710081705334_Create_CourseEnrollment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -323,6 +380,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ApiVm.cs" />
     <Compile Include="ViewModels\AssignedCourses.cs" />
+    <Compile Include="ViewModels\CorperDashboard1Vm.cs" />
     <Compile Include="ViewModels\CourseContentVm.cs" />
     <Compile Include="ViewModels\CourseVm.cs" />
     <Compile Include="ViewModels\DisplayQuestionViewModel.cs" />
@@ -334,6 +392,7 @@
     <Compile Include="ViewModels\TutorRegisterVm.cs" />
     <Compile Include="ViewModels\TutorRegistrationVm.cs" />
     <Compile Include="ViewModels\TutorsIndexVm.cs" />
+    <Compile Include="ViewModels\UserCourseDetail.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\roslyn\csc.exe" />
@@ -855,6 +914,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\jquery.cookie-1.4.1.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -919,11 +980,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\CourseCategories\Create.cshtml" />
-    <Content Include="Views\CourseCategories\Delete.cshtml" />
-    <Content Include="Views\CourseCategories\Details.cshtml" />
-    <Content Include="Views\CourseCategories\Edit.cshtml" />
-    <Content Include="Views\CourseCategories\Index.cshtml" />
     <Content Include="Views\Modules\Create.cshtml" />
     <Content Include="Views\Modules\Delete.cshtml" />
     <Content Include="Views\Modules\Details.cshtml" />
@@ -1043,7 +1099,6 @@
     <Content Include="Views\Students\DashBoard.cshtml" />
     <Content Include="Views\Tutors\DashBoard.cshtml" />
     <Content Include="Views\Account\CreateCoursePartial.cshtml" />
-    <Content Include="Views\Courses\ListCourses.cshtml" />
     <Content Include="Views\Shared\_LayoutLMS.cshtml" />
     <Content Include="Views\Courses\Content.cshtml" />
     <Content Include="Views\Shared\_LayoutStudent.cshtml" />
@@ -1064,6 +1119,24 @@
     <Content Include="Views\Account\RegularStudent.cshtml" />
     <Content Include="Views\Account\RedirectEmail.cshtml" />
     <Content Include="Views\Students\EditStudent.cshtml" />
+    <Content Include="Views\Shared\_LayoutMain.cshtml" />
+    <Content Include="Views\ForumQuestions\Asked.cshtml" />
+    <Content Include="Views\Students\CoursesIPaidFor.cshtml" />
+    <Content Include="Views\Students\CorperDashboard1.cshtml" />
+    <Content Include="Views\Shared\_ListCoursesPartial.cshtml" />
+    <Content Include="Views\Modules\CreatePartial.cshtml" />
+    <Content Include="Views\Students\CorperCourses.cshtml" />
+    <Content Include="Views\CourseCategories\Create.cshtml" />
+    <Content Include="Views\CourseCategories\Delete.cshtml" />
+    <Content Include="Views\CourseCategories\Details.cshtml" />
+    <Content Include="Views\CourseCategories\Edit.cshtml" />
+    <Content Include="Views\CourseCategories\Index.cshtml" />
+    <Content Include="Views\AssignCourseCategories\Create.cshtml" />
+    <Content Include="Views\AssignCourseCategories\Delete.cshtml" />
+    <Content Include="Views\AssignCourseCategories\Details.cshtml" />
+    <Content Include="Views\AssignCourseCategories\Edit.cshtml" />
+    <Content Include="Views\AssignCourseCategories\Index.cshtml" />
+    <Content Include="Views\Courses\ListCourses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1074,6 +1147,7 @@
     <Folder Include="ProfilePics\" />
     <Folder Include="uploads\" />
     <Folder Include="Views\MultipleButtonAttribute\" />
+    <Folder Include="Views\Students\Corper\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1114,6 +1188,48 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709300014235_addedFileLocationToPersonTable.resx">
       <DependentUpon>201709300014235_addedFileLocationToPersonTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710050902537_studentCoursesTable.resx">
+      <DependentUpon>201710050902537_studentCoursesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710061037597_added_CoursePrice_onCourseTable.resx">
+      <DependentUpon>201710061037597_added_CoursePrice_onCourseTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710061345019_added_otherStudent_Roles.resx">
+      <DependentUpon>201710061345019_added_otherStudent_Roles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710070202263_added_fields_to_PaymentTypeTable.resx">
+      <DependentUpon>201710070202263_added_fields_to_PaymentTypeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710070210338_removeFieldsOnPaymentType_Mistake.resx">
+      <DependentUpon>201710070210338_removeFieldsOnPaymentType_Mistake.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710070214393_added_fields_to_ProfesionalPaymentTable.resx">
+      <DependentUpon>201710070214393_added_fields_to_ProfesionalPaymentTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710070321085_addedUserID_in_PaymentTable.resx">
+      <DependentUpon>201710070321085_addedUserID_in_PaymentTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710070506017_addedSomeThings.resx">
+      <DependentUpon>201710070506017_addedSomeThings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710071212401_CorperEnrolledCourses.resx">
+      <DependentUpon>201710071212401_CorperEnrolledCourses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710071257388_corperEnrollments.resx">
+      <DependentUpon>201710071257388_corperEnrollments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710080302187_Commented_theEmail_IsuniqueAttr.resx">
+      <DependentUpon>201710080302187_Commented_theEmail_IsuniqueAttr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710081533485_changesToCosandCosCat.resx">
+      <DependentUpon>201710081533485_changesToCosandCosCat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710081608595_cosPriceRemoved.resx">
+      <DependentUpon>201710081608595_cosPriceRemoved.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710081705334_Create_CourseEnrollment.resx">
+      <DependentUpon>201710081705334_Create_CourseEnrollment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

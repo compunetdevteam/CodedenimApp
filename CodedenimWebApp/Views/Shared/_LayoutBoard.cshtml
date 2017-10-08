@@ -322,17 +322,9 @@
 
 
     <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
-    <div class="sidebar left sidebar-size-3 sidebar-offseSSt-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
+        <div class="sidebar left sidebar-size-1 sidebar-mini-reveal sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
         <div data-scrollable>
-            <div class="sidebar-block">
-                <div class="profile">
-                    <a href="#">
-                        <img src="images/people/110/guy-6.jpg" alt="people" class="img-circle width-80"/>
-                    </a>
-                    <h4 class="text-display-1 margin-none">Instructor Name</h4>
-                </div>
-            </div>
-            <ul class="sidebar-menu">
+            <ul class="sidebar-menu">   
                 <li class="active"><a href="@Url.Action("AdminDashboard", "Home")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
                 <li class="active"><a href="@Url.Action("Create", "Tutors")"><i class="fa fa-home"></i><span>Create Tutor</span></a></li>
                 <li class="active"><a href="@Url.Action("Create", "TutorCourses")"><i class="fa fa-home"></i><span>Assign Tutor A Subject</span></a></li>
@@ -340,6 +332,8 @@
                 <hr/>
                 @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>*@
                 <li><a href="@Url.Action("Create", "CourseCategories")"><i class="fa fa-mortar-board"></i><span>Create Courses Category</span></a></li>
+                <li><a href="@Url.Action("Create", "AssignCourseCategories")"><i class="fa fa-mortar-board"></i><span>Assign Courses Category</span></a></li>
+
                 <li><a href="@Url.Action("Create", "Courses")"><i class="fa fa-bar-chart-o"></i><span>Create Courses</span></a></li>
                 <li><a href="@Url.Action("Create", "Modules")"><i class="fa fa-dollar"></i><span>Create Modules</span></a></li>
                 <li><a href="@Url.Action("Create", "Topics")"><i class="fa fa-dollar"></i><span>Create Topics</span></a></li>
@@ -354,12 +348,14 @@
                 <hr/>
                 <li><a href="@Url.Action("Create", "PaymentTypes")"><i class="fa fa-dollar"></i><span>Set Payements Amount</span></a></li>
                 <hr/>
-                <li><a href="@Url.Action("Logoff", "Account")"><i class="fa fa-sign-out"></i><span>Logout</span></a></li>
             </ul>
+            <li><a href="app-student-dashboard.html"><i class="fa fa-bar-chart-o"></i><span>Dashboard</span></a></li>
+ 
+        
         </div>
     </div>
-    <!-- sidebar effects OUTSIDE of st-pusher: -->
-    <!-- st-effect-1, st-effect-2, st-effect-4, st-effect-5, st-effect-9, st-effect-10, st-effect-11, st-effect-12, st-effect-13 -->
+    <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
+
 
 }
 //The View only the Tutor can see and access
@@ -367,68 +363,90 @@ else if (Request.IsAuthenticated && User.IsInRole("Tutor"))
 {
 
    
-
-
     <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
-    <div class="sidebar left sidebar-size-3 sidebar-offseSSt-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
+    <div class="sidebar left sidebar-size-1 sidebar-mini-reveal sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
         <div data-scrollable>
-            <div class="sidebar-block">
-                <div class="profile">
-                    <a href="#">
-                        <img src="@Url.Content("~/Profile_Pics/" + ViewBag.TutorProfile)" alt="Pics" class="img-circle" width="40"/>
-                    </a>
-                    <h4 class="text-display-1 margin-none">Instructor Name</h4>
-                </div>
-            </div>
             <ul class="sidebar-menu">
                 <li class="active"><a href="@Url.Action("TutorDashboard", "Tutors")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
-                <li class="active"><a href="@Url.Action("MyCourses", "TutorCourses", new {id = @User.Identity.GetUserId()})"><i class="fa fa-home"></i><span>My Courses</span></a></li>
-                @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages<SSS/span></a></li>
-                                    <li><a href="app-instructor-courses.html"><i class="fa fa-mortar-board"></i><span>My Courses</span></a></li>
-                                    <li><a href="app-instructor-earnings.html"><i class="fa fa-bar-chart-o"></i><span>Earnings</span></a></li>
-                                    <li><a href="app-instructor-statement.html"><i class="fa fa-dollar"></i><span>Statement</span></a></li>*@
-                <li><a href="@Url.Action("Logoff", "Account")"><i class="fa fa-sign-out"></i><span>Logout</span></a></li>
+
+                <li class="active"><a href="@Url.Action("Create", "ForumQuestions")"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
+                @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>
+            <li><a href="app-instructor-courses.html"><i class="fa fa-mortar-board"></i><span>My Courses</span></a></li>
+            <li><a href="app-instructor-earnings.html"><i class="fa fa-bar-chart-o"></i><span>Earnings</span></a></li>
+            <li><a href="app-instructor-statement.html"><i class="fa fa-dollar"></i><span>Statement</span></a></li>*@
             </ul>
+ 
+        
         </div>
     </div>
-    <!-- sidebar effects OUTSIDE of st-pusher: -->
-    <!-- st-effect-1, st-effect-2, st-effect-4, st-effect-5, st-effect-9, st-effect-10, st-effect-11, st-effect-12, st-effect-13 -->
+    <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
 
+
+
+
+
+
+   
 }
 else if (Request.IsAuthenticated && User.IsInRole("Corper"))
 {
 
     <!-- Fixed navbar -->
-   
+
+
+
+    <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
+    <div class="sidebar left sidebar-size-1 sidebar-mini-reveal sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
+        <div data-scrollable>
+            <ul class="sidebar-menu">
+                <li class="active"><a href="@Url.Action("CorperDashboard", "Students")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
+                <li class="active"><a href="@Url.Action("Edit", "Students")"><i class="fa fa-home"></i><span>Edit Profile</span></a></li>
+
+                <li class="active"><a href="@Url.Action("Create", "ForumQuestions")"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
+                @*<li class="active"><a href="@Url.Action("Asked", "ForumQuestions")"><i class="fa fa-home"></i><span>Questions  I Ask</span></a></li>*@
+                <li class="active"><a href="@Url.Action("CorperCourses", "Students")"><i class="fa fa-home"></i><span>My Courses</span></a></li>
+                
+
+                @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>
+                    <li><a href="app-instructor-courses.html"><i class="fa fa-mortar-board"></i><span>My Courses</span></a></li>
+                    <li><a href="app-instructor-earnings.html"><i class="fa fa-bar-chart-o"></i><span>Earnings</span></a></li>
+                    <li><a href="app-instructor-statement.html"><i class="fa fa-dollar"></i><span>Statement</span></a></li>*@
+            </ul>
+
+
+        </div>  
+    </div>
+    <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
+
 
 
 
 
     <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
-    <div class="sidebar left sidebar-size-3 sidebar-offseSSt-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
-        <div data-scrollable>
-            <div class="sidebar-block">
-                <div class="profile">
-                    <a href="#">
-                        <img src="images/people/110/guy-6.jpg" alt="people" class="img-circle width-80"/>
-                    </a>
-                    <h4 class="text-display-1 margin-none">Instructor Name</h4>
-                </div>
+    @*<div class="sidebar left sidebar-size-3 sidebar-offseSSt-0 sar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
+    <div data-scrollable>ideb
+        <div class="sidebar-block">
+            <div class="profile">
+                <a href="#">
+                    <img src="images/people/110/guy-6.jpg" alt="people" class="img-circle width-80"/>
+                </a>
+                <h4 class="text-display-1 margin-none">Instructor Name</h4>
             </div>
-            <ul class="sidebar-menu">
-                <li class="active"><a href="@Url.Action("Dashboard", "Students")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
-                
-                <li class="active"><a href="@Url.Action("Create", "ForumQuestions")"><i class="fa fa-home"></i><span>Ask Question</span></a></li>S
+        </div>
+        <ul class="sidebar-menu">
+            <li class="active"><a href="@Url.Action("CorperDashboard", "Students")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
+
+            <li class="active"><a href="@Url.Action("Create", "ForumQuestions")"><i class="fa fa-home"></i><span>Ask Question</span></a></li>S*@
                 @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>
                                     <li><a href="app-instructor-courses.html"><i class="fa fa-mortar-board"></i><span>My Courses</span></a></li>
                                     <li><a href="app-instructor-earnings.html"><i class="fa fa-bar-chart-o"></i><span>Earnings</span></a></li>
-                                    <li><a href="app-instructor-statement.html"><i class="fa fa-dollar"></i><span>Statement</span></a></li>*@
-                <li><a href="@Url.Action("Logoff", "Account")"><i class="fa fa-sign-out"></i><span>Logout</span></a></li>
+                                    @*<li><a href="app-instructor-statement.html"><i class="fa fa-dollar"></i><span>Statement</span></a></li>*@
+                @*<li><a href="@Url.Action("Logoff", "Account")"><i class="fa fa-sign-out"></i><span>Logout</span></a></li>
             </ul>
         </div>
     </div>
     <!-- sidebar effects OUTSIDE of st-pusher: -->
-    <!-- st-effect-1, st-effect-2, st-effect-4, st-effect-5, st-effect-9, st-effect-10, st-effect-11, st-effect-12, st-effect-13 -->
+    <!-- st-effect-1, st-effect-2, st-effect-4, st-effect-5, st-effect-9, st-effect-10, st-effect-11, st-effect-12, st-effect-13 -->*@
 
 }
 
@@ -437,241 +455,71 @@ else if (Request.IsAuthenticated && User.IsInRole("Corper"))
 @if (Request.IsAuthenticated && User.IsInRole("Student"))
 {
 
-    <!-- Fixed navbar -->
-    <div class="navbar navbar-size-large navbar-default navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a href="#sidebar-menu" data-toggle="sidebar-menu" class="toggle pull-left visible-xs"><i class="fa fa-ellipsis-v"></i></a>
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="navbar-brand navbar-brand-primary navbar-brand-logo navbar-nav-padding-left">
-
-                    </div>
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="main-nav">
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Forum <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="@Url.Action("ForumQuestion","ForumQuestions")">Forum</a></li>
-                                <li><a href="@Url.Action("Create","ForumQuestions")">Ask a Question</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                @*<li><a href="app-directory-grid.html">Courses Grid</a></li>*@
-                                <li><a href="@Url.Action("ListCourses","Courses")">Courses List</a></li>
-                                @*<li><a href="app-student-course.html">Course Details</a></li>*@
-                            </ul>
-                        </li>
-                        <li class="dropdown active">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Student <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li class="active"><a href="@Url.Action("Dashboard","Students")">Dashboard</a></li>
-                                <li><a href="@Url.Action("")">My Courses</a></li>
-                                @*<li><a href="app-take-course.html">Take Course</a></li>*@
-                                @*<li><a href="app-course-forums.html">Course Forums</a></li>*@
-                                @*<li><a href="@Url.Action("SelectSubject","TakeQuiz" )">Take Quiz</a></li>*@
-                                @*<li><a href="app-student-profile.html">Edit Profile</a></li>
-                                    <li><a href="app-student-billing.html">Edit Billing</a></li>
-                                    <li><a href="app-student-messages.html">Messages</a></li>*@
-                            </ul>
-                        </li>
-                        @*<li class="dropdown">
-                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instructor <span class="caret"></span></a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="app-instructor-dashboard.html">Dashboard</a></li>
-                                                    <li><a href="app-instructor-courses.html">My Courses</a></li>
-                                                    <li><a href="app-instructor-course-edit-course.html">Edit Course</a></li>
-                                                    <li><a href="app-instructor-earnings.html">Earnings</a></li>
-                                                    <li><a href="app-instructor-statement.html">Statement</a></li>
-                            <a href="~/Views/Shared/_LayoutStudent.cshtml">~/Views/Shared/_LayoutStudent.cshtml</a>
-                                                    <li><a href="app-instructor-profile.html">Edit Profile</a></li>
-                                                    <li><a href="app-instructor-billing.html">Edit Billing</a></li>
-                                                    <li><a href="app-instructor-messages.html">Messages</a></li>
-                                                </ul>
-                                            </li>*@
-                    </ul>
-                    <ul class="nav navbar-nav navbar-nav-bordered navbar-right">
-                        <!-- notifications -->
-                        <li class="dropdown notifications updates">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-bell-o"></i>
-                                <span class="badge badge-primary">4</span>
-                            </a>
-                            <ul class="dropdown-menu" role="notification">
-                                <li class="dropdown-header">Notifications</li>
-                                <li class="media">
-                                    <div class="pull-right">
-                                        <span class="label label-success">New</span>
-                                    </div>
-                                    <div class="media-left">
-                                        <img src="images/people/50/guy-2.jpg" alt="people" class="img-circle" width="30">
-                                    </div>
-                                    <div class="media-body">
-                                        <a href="#">Adrian D.</a> posted <a href="#">a photo</a> on his timeline.
-                                        <br />
-                                        <span class="text-caption text-muted">5 mins ago</span>
-                                    </div>
-                                </li>
-                                <li class="media">
-                                    <div class="pull-right">
-                                        <span class="label label-success">New</span>
-                                    </div>
-                                    <div class="media-left">
-                                        <img src="images/people/50/guy-6.jpg" alt="people" class="img-circle" width="30">
-                                    </div>
-                                    <div class="media-body">
-                                        <a href="#">Bill</a> posted <a href="#">a comment</a> on Adrian's recent <a href="#">post</a>.
-                                        <br />
-                                        <span class="text-caption text-muted">3 hrs ago</span>
-                                    </div>
-                                </li>
-                                <li class="media">
-                                    <div class="media-left">
-                                        <span class="icon-block s30 bg-grey-200"><i class="fa fa-plus"></i></span>
-                                    </div>
-                                    <div class="media-body">
-                                        <a href="#">Mary D.</a> and <a href="#">Michelle</a> are now friends.
-                                        <p>
-                                            <span class="text-caption text-muted">1 day ago</span>
-                                        </p>
-                                        <a href="">
-                                            <img class="width-30 img-circle" src="images/people/50/woman-6.jpg" alt="people">
-                                        </a>
-                                        <a href="">
-                                            <img class="width-30 img-circle" src="images/people/50/woman-3.jpg" alt="people">
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                        <!-- // END notifications -->
-                        <!-- User -->
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle user" data-toggle="dropdown">
-                                <img src="@Url.Content("~/Profile_Pics/" + ViewBag.Profile)" alt="Bill" class="img-circle" width="40" />
 
 
-
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                @*<li><a href="app-student-profile.html">Account</a></li>*@
-                                <li><a href="@Url.Action("Index", "Manage")">My Profile</a></li>
-
-                                @using Microsoft.AspNet.Identity
-                                @if (Request.IsAuthenticated)
-                                        {
-
-                                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", style = "padding:4px;" }))
-                                            {
-                                        @Html.AntiForgeryToken()
-                                        <li>
-                                            <a href="javascript:document.getElementById('logoutForm').submit()">
-
-                                                <p style="padding-left: 10px;color:#000">Logout</p>
-                                            </a>
-                                        </li>
-                                            }
-                                        }
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-            </div>
-        </div>
-
-
-
-
-    <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
-    <div class="sidebar left sidebar-size-3 sidebar-offseSSt-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
+    <div class="sidebar left sidebar-size-1 sidebar-mini-reveal sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
         <div data-scrollable>
-            <div class="sidebar-block">
-                <div class="profile">
-                    <a href="#">
-                        <img src="images/people/110/guy-6.jpg" alt="people" class="img-circle width-80"/>
-                    </a>
-                    <h4 class="text-display-1 margin-none">Instructor Name</h4>
-                </div>
-            </div>
             <ul class="sidebar-menu">
                 <li class="active"><a href="@Url.Action("Dashboard", "Students")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
+                <li class="active"><a href="@Url.Action("Edit", "Students")"><i class="fa fa-home"></i><span>Edit Profile</span></a></li>
+                <li><a href="@Url.Action("ListCourses","Courses")">Courses List</a></li>
+
+
+                <li class="active"><a href="@Url.Action("Create", "ForumQuestions")"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
                 @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>
-                                <li><a href="app-instructor-courses.html"><i class="fa fa-mortar-board"></i><span>My Courses</span></a></li>
-                                <li><a href="app-instructor-earnings.html"><i class="fa fa-bar-chart-o"></i><span>Earnings</span></a></li>
-                                <li><a href="app-instructor-statement.html"><i class="fa fa-dollar"></i><span>Statement</span></a></li>*@
-                <li><a href="@Url.Action("Logoff", "Account")"><i class="fa fa-sign-out"></i><span>Logout</span></a></li>
+                    <li><a href="app-instructor-courses.html"><i class="fa fa-mortar-board"></i><span>My Courses</span></a></li>
+                    <li><a href="app-instructor-earnings.html"><i class="fa fa-bar-chart-o"></i><span>Earnings</span></a></li>
+                    <li><a href="app-instructor-statement.html"><i class="fa fa-dollar"></i><span>Statement</span></a></li>*@
             </ul>
+
+
         </div>
     </div>
-    <!-- sidebar effects OUTSIDE of st-pusher: -->
-    <!-- st-effect-1, st-effect-2, st-effect-4, st-effect-5, st-effect-9, st-effect-10, st-effect-11, st-effect-12, st-effect-13 -->
+
+
+
+  
+
+
+
+
 
 }
 else if (Request.IsAuthenticated && User.IsInRole("UnderGraduate"))
 {
-
-    <!-- Fixed navbar -->
-    <div class="navbar navbar-size-large navbar-default navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a href="#sidebar-menu" data-toggle="sidebar-menu" class="toggle pull-left visible-xs"><i class="fa fa-ellipsis-v"></i></a>
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="navbar-brand navbar-brand-primary navbar-brand-logo navbar-nav-padding-left">
-
-                </div>
-            </div>
-        
-        </div>
-    </div>
-
-
-
-
-    <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
-    <div class="sidebar left sidebar-size-3 sidebar-offseSSt-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
+    <div class="sidebar left sidebar-size-1 sidebar-mini-reveal sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
         <div data-scrollable>
-            <div class="sidebar-block">
-                <div class="profile">
-                    <a href="#">
-                        <img src="images/people/110/guy-6.jpg" alt="people" class="img-circle width-80"/>
-                    </a>
-                    <h4 class="text-display-1 margin-none">Instructor Name</h4>
-                </div>
-            </div>
             <ul class="sidebar-menu">
                 <li class="active"><a href="@Url.Action("Dashboard", "Students")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
-                
-                <li class="active"><a href="@Url.Action("Create", "ForumQuestions")"><i class="fa fa-home"></i><span>Ask Question</span></a></li>S
+                <li class="active"><a href="@Url.Action("Edit", "Students")"><i class="fa fa-home"></i><span>Edit Profile</span></a></li>
+                <li><a href="@Url.Action("ListCourses","Courses")">Courses List</a></li>
+
+
+                <li class="active"><a href="@Url.Action("Create", "ForumQuestions")"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
                 @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>
-                                <li><a href="app-instructor-courses.html"><i class="fa fa-mortar-board"></i><span>My Courses</span></a></li>
-                                <li><a href="app-instructor-earnings.html"><i class="fa fa-bar-chart-o"></i><span>Earnings</span></a></li>
-                                <li><a href="app-instructor-statement.html"><i class="fa fa-dollar"></i><span>Statement</span></a></li>*@
-                <li><a href="@Url.Action("Logoff", "Account")"><i class="fa fa-sign-out"></i><span>Logout</span></a></li>
+                    <li><a href="app-instructor-courses.html"><i class="fa fa-mortar-board"></i><span>My Courses</span></a></li>
+                    <li><a href="app-instructor-earnings.html"><i class="fa fa-bar-chart-o"></i><span>Earnings</span></a></li>
+                    <li><a href="app-instructor-statement.html"><i class="fa fa-dollar"></i><span>Statement</span></a></li>*@
             </ul>
+
+
         </div>
     </div>
-    <!-- sidebar effects OUTSIDE of st-pusher: -->
-    <!-- st-effect-1, st-effect-2, st-effect-4, st-effect-5, st-effect-9, st-effect-10, st-effect-11, st-effect-12, st-effect-13 -->
+
+
+
+
+
 
 }
 
 <div style="padding-left: 15%;" class="col-md-12">
+    
+    
+    
+  
 
+    
 
     @RenderBody()
 </div>
@@ -687,6 +535,9 @@ else if (Request.IsAuthenticated && User.IsInRole("UnderGraduate"))
 
 <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
 
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <script>
     var colors = {
         "danger-color": "#e74c3c",
@@ -749,6 +600,6 @@ module-bundle-main.js already includes theme-core.js so this should be loaded
 ONLY when using the standalone modules; -->
 <script src="~/Content/LMS/js/theme-core.min.js"></script>
 
-
+@RenderSection("scripts", required: false)
 </body>
 </html>

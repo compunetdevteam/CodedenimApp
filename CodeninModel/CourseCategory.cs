@@ -10,6 +10,8 @@ namespace CodeninModel
     {
         public int CourseCategoryId { get; set; }
         public string CategoryName { get; set; }
-        public virtual ICollection<Course> Courses { get; set; }
+        public decimal Amount { get; set; }
+        public string StudentType { get;set; }
+        //public virtual ICollection<Course> Courses { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace CodeninModel
 
         // [Required]
         [EmailAddress]
-        [Index(IsUnique = true)]
+        //[Index(IsUnique = true)]
         [MaxLength(100)]
         [Display(Name = "Email")]
         public string Email { get; set; }

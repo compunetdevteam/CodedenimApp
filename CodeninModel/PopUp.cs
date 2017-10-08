@@ -111,4 +111,9 @@
     {
         Mr = 1, Mrs , Arch, Bar, Dr, Engr, Miss, Pharm
     }
+
+    public enum StudentTypes
+    {
+        Corper = 1, Undergraduate, RegularStudent
+    }
 }

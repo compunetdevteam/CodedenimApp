@@ -64,6 +64,14 @@ namespace CodedenimWebApp.Migrations
                 manager.Create(role);
             }
 
+            if (!context.Roles.Any(r => r.Name == "OtherStudent"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "OtherStudent" };
+
+                manager.Create(role);
+            }
             if (!context.Users.Any(u => u.UserName == "Admin@Codedenim.com"))
             {
                 var store = new UserStore<ApplicationUser>(context);

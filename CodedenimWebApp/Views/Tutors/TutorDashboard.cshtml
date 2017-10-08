@@ -9,7 +9,10 @@
 
 <h2>TutorDashboard</h2>
 
+<div id="image_loading" style="position: fixed; display: none;">
 
+    <img src="~/Content/img/loading (1).gif" />
+</div>
 <!-- content push wrapper -->
 <div class="st-pusher" id="content">
 <!-- sidebar effects INSIDE of st-pusher: -->
@@ -23,11 +26,11 @@
     <h1 class="text-display-1">Dashboard</h1>
 </div>
 <div class="row" data-toggle="isotope">
-<div class="item col-xs-12 col-lg-6">
-    <div class="panel panel-default paper-shadow" data-z="0.5">
+<div class="item col-xs-12 col-lg-6"  id="replace" >
+    <div class="panel panel-default paper-shadow" data-z="0.5" >
         <div class="panel-heading">
             <div class="media v-middle">
-                <div class="media-body">
+                <div class="media-body" >
                     <h4 class="text-headline margin-none">Earnings</h4>
                     <p class="text-subhead text-light">This Month</p>
                 </div>
@@ -71,6 +74,8 @@
                             foreach (var courses in ViewBag.TutorCourses as List<TutorCourse>)
                              {
                                  <a href="@Url.Action("Create", "Modules", new {id = courses.CourseId})" class="btn btn-primary paper-shadow relative" data-z="0" data-hover-z="1" data-animated>@courses.Courses.CourseName</a><br /><br />
+                                @*@Ajax.ActionLink(@courses.Courses.CourseName, "CreatePartial", "Modules", new { id = courses.CourseId },
+                                    new AjaxOptions { UpdateTargetId = "replace", InsertionMode = InsertionMode.Replace, LoadingElementId = "image_loading" })*@
                             }
                         }
                         else
@@ -146,3 +151,5 @@
     </div>
     <!-- /st-content-inner -->
 </div>
+
+

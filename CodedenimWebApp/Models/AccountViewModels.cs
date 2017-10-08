@@ -262,6 +262,29 @@ namespace CodedenimWebApp.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class RegisterOtherStudentModel
+    {
+        public string Title { get; set; }
+        public string FirstName { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string LastName { get; set; }
+        public string Gender { get; set; }
+        public string MobileNumber { get; set; }
+        public string Email { get; set; }
+
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "New password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+    }
+
     //custom model for Registration of Course Instructor
 
 

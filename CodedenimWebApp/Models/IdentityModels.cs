@@ -89,6 +89,11 @@ namespace CodedenimWebApp.Models
         public System.Data.Entity.DbSet<CodedenimWebApp.ViewModels.RegularStudentVm> RegularStudentVms { get; set; }
         public DbSet<PaymentType> PaymentTypes { get; set; }
         public DbSet<ProfessionalPayment> ProfessionalPayments { get; set; }
+
+        public System.Data.Entity.DbSet<CodedenimWebApp.ViewModels.UserCourseDetail> UserCourseDetails { get; set; }
+        public DbSet<CorperEnrolledCourses> CorperEnrolledCourses { get; set; }
+
+        public System.Data.Entity.DbSet<CodeninModel.AssignCourseCategory> AssignCourseCategories { get; set; }
         //public override int SaveChanges()
         //{
         //    try

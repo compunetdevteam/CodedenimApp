@@ -12,10 +12,11 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <a href="~/Views/Tutors/Create.cshtml">Create Tutors</a>
-        <h4>Tutor</h4>
+       
+      
         <hr/>
         @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+        ]
         <div class="form-group">
             @Html.Label("Enter You Tutor Id", htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">

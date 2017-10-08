@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CodeninModel.AssignCourseCategory>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseCategory.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Courses.CourseCode)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseCategory.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Courses.CourseName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AssignCourseCategoryId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AssignCourseCategoryId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AssignCourseCategoryId })
+        </td>
+    </tr>
+}
+
+</table>

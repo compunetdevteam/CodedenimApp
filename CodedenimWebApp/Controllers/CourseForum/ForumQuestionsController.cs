@@ -34,6 +34,15 @@ namespace CodedenimWebApp.Controllers
             return View(forumQuestions.OrderBy(x => x.PostDate).ToPagedList(pageNo, PerPageSize));
         }
 
+
+        public async Task<ActionResult> Asked()
+        {
+            var userId = User.Identity.GetUserId();
+
+            ViewBag.MyQuestion = await db.ForumQuestions.Where(x => x.StudentId.Equals(userId)).Select(x => new{ x.QuestionName,x.ForumQuestionId}).ToListAsync();
+            return View();
+        }
+
         // GET: ForumQuestions/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -55,7 +64,7 @@ namespace CodedenimWebApp.Controllers
             var userId = User.Identity.GetUserId();
 
             var student = db.Students.Where(x => x.StudentId.Equals(userId)).ToList();
-
+           
             ViewBag.CourseId = new SelectList(db.Fora, "CourseId", "ForumName");
             ViewBag.ForumQuestionId = new SelectList(db.ForumQuestionViews, "ForumQuestionId", "ForumQuestionId");
             ViewBag.StudentId = new SelectList(student, "StudentId", "FullName");
@@ -71,6 +80,7 @@ namespace CodedenimWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                forumQuestion.StudentId = User.Identity.GetUserId();
                 forumQuestion.PostDate = DateTime.Now;
                 db.ForumQuestions.Add(forumQuestion);
                 await db.SaveChangesAsync();

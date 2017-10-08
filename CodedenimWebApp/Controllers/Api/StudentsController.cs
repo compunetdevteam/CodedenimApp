@@ -38,27 +38,27 @@ namespace CodedenimWebApp.Controllers.Api
            // Student student = await db.Students.FindAsync(id);
            var email = new Convert();
            
-            var studentCourses = _db.StudentAssignedCourses.Include(x => x.Courses).Where(x => x.Student.Email.Equals(id))
-                                                                                 .Select(x =>new {
-                                                                                    x.CourseId,
-                                                                                    x.Courses.CourseCode,
-                                                                                    x.Courses.CourseName,
-                                                                                     x.Courses.CourseDescription,
-                                                                                     x.Courses.ExpectedTime,
-                                                                                     x.Courses.CourseCategory.CategoryName,
-                                                                                     x.Courses.CourseCategoryId,
-                                                                                     x.Courses.FileLocation
+            //var studentCourses = _db.StudentAssignedCourses.Include(x => x.Courses).Where(x => x.Student.Email.Equals(id))
+            //                                                                     .Select(x =>new {
+            //                                                                        x.CourseId,
+            //                                                                        x.Courses.CourseCode,
+            //                                                                        x.Courses.CourseName,
+            //                                                                         x.Courses.CourseDescription,
+            //                                                                         x.Courses.ExpectedTime,
+            //                                                                         x.Courses.CourseCategory.CategoryName,
+            //                                                                         x.Courses.CourseCategoryId,
+            //                                                                         x.Courses.FileLocation
                                                                                  
                                                                                                 
-                                                                                 }).ToList();
-            //var studentCourses = db.StudentAssignedCourses.Where(x => x.StudentId.Equals(student.StudentId))
-            //                                              .Select(s => s.Courses);
-            //if (student == null)
-            //{
-            //    return NotFound();
-            //}
+            //                                                                     }).ToList();
+            ////var studentCourses = db.StudentAssignedCourses.Where(x => x.StudentId.Equals(student.StudentId))
+            ////                                              .Select(s => s.Courses);
+            ////if (student == null)
+            ////{
+            ////    return NotFound();
+            ////}
 
-            return Ok(studentCourses);
+            return Ok(/*studentCourses*/);
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -147,13 +148,22 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Tutor tutor)
+        
+        public async Task<ActionResult> Create(TutorCreateVm model)
         {
-            var sameTutorId = db.Tutors.AsNoTracking().SingleOrDefault(x => x.TutorId.Equals(tutor.TutorId));
+            var sameTutorId = db.Tutors.AsNoTracking().SingleOrDefault(x => x.TutorId.Equals(model.TutorId));
             if (sameTutorId == null)
             {
                 if (ModelState.IsValid)
                 {
+                    var tutor = new Tutor
+                    {
+                            
+                        TutorId = model.TutorId,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName
+                };
+                   
                     db.Tutors.Add(tutor);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Create","TutorCourses");
@@ -163,17 +173,17 @@ namespace CodedenimWebApp.Controllers
             {
                 //wanted to send to the view the information to the existing tutor that wanted to be added again
                 var tutorInfo = new TutorCreateVm();
-                var tutorExist = db.Tutors.AsNoTracking().FirstOrDefault(x => x.TutorId.Equals(tutor.TutorId));
+                var tutorExist = db.Tutors.AsNoTracking().FirstOrDefault(x => x.TutorId.Equals(model.TutorId));
                 tutorInfo.TutorId = tutorExist.TutorId;
                 tutorInfo.LastName = tutorExist.LastName;
                 tutorInfo.FirstName = tutorExist.FirstName;
-                tutorInfo.Gender = tutorExist.Gender;
+               
 
                 return View("TutorExist" ,tutorInfo);
             }
 
 
-            return View(tutor);
+            return View();
         }
 
         public async Task<ActionResult> ConfirmTutor()

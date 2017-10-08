@@ -8,9 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CodedenimWebApp.Models;
-using CodedenimWebApp.Services;
 using CodeninModel;
-using OfficeOpenXml;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -39,10 +37,13 @@ namespace CodedenimWebApp.Controllers
             return View(courseCategory);
         }
 
-
         // GET: CourseCategories/Create
         public ActionResult Create()
         {
+
+            var studentType = from StudentTypes s in Enum.GetValues(typeof(StudentTypes))
+                select new {Id = s, Name = s.ToString()};
+            ViewBag.StudentType = new SelectList(studentType, "Name", "Name");
             return View();
         }
 
@@ -51,7 +52,7 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "CourseCategoryId,CategoryName")] CourseCategory courseCategory)
+        public async Task<ActionResult> Create([Bind(Include = "CourseCategoryId,CategoryName,Amount,StudentType")] CourseCategory courseCategory)
         {
             if (ModelState.IsValid)
             {
@@ -59,7 +60,7 @@ namespace CodedenimWebApp.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-
+          //  ViewBag.StudentType = new SelectList(studentType, "Name", "Name");
             return View(courseCategory);
         }
 
@@ -70,6 +71,9 @@ namespace CodedenimWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var studentType = from StudentTypes s in Enum.GetValues(typeof(StudentTypes))
+                select new { Id = s, Name = s.ToString() };
+            ViewBag.StudentType = new SelectList(studentType, "Name", "Name");
             CourseCategory courseCategory = await db.CourseCategories.FindAsync(id);
             if (courseCategory == null)
             {
@@ -83,7 +87,7 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "CourseCategoryId,CategoryName")] CourseCategory courseCategory)
+        public async Task<ActionResult> Edit([Bind(Include = "CourseCategoryId,CategoryName,Amount,StudentType")] CourseCategory courseCategory)
         {
             if (ModelState.IsValid)
             {
@@ -119,110 +123,6 @@ namespace CodedenimWebApp.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-
-
-
-        public ActionResult UpLoadCategory()
-        {
-            return View();
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<ActionResult> UpLoadCategory(HttpPostedFileBase excelfile)
-        {
-            if (excelfile == null || excelfile.ContentLength == 0)
-            {
-                ViewBag.Error = "Please Select a excel file <br/>";
-                return View("UpLoadCategory");
-            }
-            else
-            {
-                HttpPostedFileBase file = Request.Files["excelfile"];
-                if (excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
-                {
-                    string lastrecord = "";
-                    int recordCount = 0;
-                    string message = "";
-                    string fileContentType = file.ContentType;
-                    byte[] fileBytes = new byte[file.ContentLength];
-                    var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
-
-                    // Read data from excel file
-                    using (var package = new ExcelPackage(file.InputStream))
-                    {
-                        ExcelValidation myExcel = new ExcelValidation();
-                        var currentSheet = package.Workbook.Worksheets;
-                        var workSheet = currentSheet.First();
-                        var noOfCol = workSheet.Dimension.End.Column;
-                        var noOfRow = workSheet.Dimension.End.Row;
-                        int requiredField = 1;
-
-                        string validCheck = myExcel.ValidateExcel(noOfRow, workSheet, requiredField);
-                        if (!validCheck.Equals("Success"))
-                        {
-                            //string row = "";
-                            //string column = "";
-                            string[] ssizes = validCheck.Split(' ');
-                            string[] myArray = new string[2];
-                            for (int i = 0; i < ssizes.Length; i++)
-                            {
-                                myArray[i] = ssizes[i];
-                                // myArray[i] = ssizes[];
-                            }
-                            string lineError = $"Line/Row number {myArray[0]}  and column {myArray[1]} is not rightly formatted, Please Check for anomalies ";
-                            //ViewBag.LineError = lineError;
-                            TempData["UserMessage"] = lineError;
-                            TempData["Title"] = "Error.";
-                            return View();
-                        }
-
-                        for (int row = 2; row <= noOfRow; row++)
-                        {
-                            string CategoryName = workSheet.Cells[row, 1].Value.ToString().Trim();
-                     
-               
-                            try
-                            {
-                                var category = new CourseCategory()
-                                {
-                                    CategoryName = CategoryName,
-                                   
-                            
-                                };
-                                db.CourseCategories.Add(category);
-
-
-                                recordCount++;
-                                //    lastrecord =
-                                //        $"The last Updated record has the Last Name {lastName} and First Name {firstName} with Phone Number {phoneNumber}";
-                                //
-                            }
-                            catch (Exception e)
-                            {
-                                message = $"You have successfully Uploaded {recordCount} records...  and {lastrecord}";
-                                TempData["UserMessage"] = message;
-                                TempData["Title"] = "Success.";
-                                return View("Error3");
-                            }
-
-
-                        }
-                        await db.SaveChangesAsync();
-                        message = $"You have successfully Uploaded {recordCount} records...  and {lastrecord}";
-                        TempData["UserMessage"] = message;
-                        TempData["Title"] = "Success.";
-                        return RedirectToAction("Index", "CourseCategories");
-                    }
-                }
-                else
-                {
-                    ViewBag.Error = "File type is Incorrect <br/>";
-                    return View("UploadStudent");
-                }
-            }
-        }
-
 
         protected override void Dispose(bool disposing)
         {

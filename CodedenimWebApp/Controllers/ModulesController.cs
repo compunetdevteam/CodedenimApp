@@ -43,13 +43,13 @@ namespace CodedenimWebApp.Controllers
             return View(module);
         }
 
-        // GET: Modules/Create
+        //GET: Modules/Create
         public ActionResult Create(int? id)
         {
             if (id != null)
             {
                 ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(id.Value)).ToList(), "CourseId", "CourseName");
-               /// ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode");
+                /// ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode");
 
             }
             ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName");
@@ -59,8 +59,8 @@ namespace CodedenimWebApp.Controllers
             return View();
         }
 
-        // POST: Modules/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //POST: Modules/Create
+        //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -77,6 +77,42 @@ namespace CodedenimWebApp.Controllers
             return View(module);
         }
 
+
+        public PartialViewResult CreatePartial(int? id)
+        {
+            if (id != null)
+            {
+                ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(id.Value)).ToList(), "CourseId", "CourseName");
+                /// ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode");
+
+            }
+            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName");
+            //  ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(id.Value)).ToList(), "CourseId", "CourseCode");
+
+
+            return PartialView();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<PartialViewResult> CreatePartial([Bind(Include = "ModuleId,CourseId,ModuleName,ModuleDescription,ExpectedTime")] Module module)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Modules.Add(module);
+                await db.SaveChangesAsync();
+               // Redirect();
+            }
+
+            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", module.CourseId);
+            return PartialView(module);
+        }
+
+        public ActionResult Redirect()
+        {
+            return RedirectToAction("TutorDashBoard","Tutors");
+        }
         // GET: Modules/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {

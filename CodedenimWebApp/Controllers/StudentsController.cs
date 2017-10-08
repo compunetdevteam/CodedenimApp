@@ -18,12 +18,13 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
+using CodedenimWebApp.Migrations;
 
 namespace CodedenimWebApp.Controllers
 {
     public class StudentsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         // GET: Students
         public async Task<ActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
@@ -43,7 +44,7 @@ namespace CodedenimWebApp.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var students = from s in db.Students
+            var students = from s in _db.Students
                            select s;
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -73,65 +74,168 @@ namespace CodedenimWebApp.Controllers
             // return View(await db.Students.ToListAsync());
         }
 
-        public ActionResult DashBoard(string reference, string trxref)
+        public ActionResult DashBoard()
         {
-            if ((reference != null) && (trxref != null))
+            var userId = User.Identity.GetUserId();
+            var email = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).FirstOrDefault();
+           // var studentType = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.AccountType).FirstOrDefault();
+            var paymentRecord = _db.ProfessionalPayments.FirstOrDefault(x => x.UserId.Equals(userId) && x.IsPayed.Equals(true));
+
+            if (User.IsInRole(RoleName.Corper))
             {
-                var testOrLiveSecret = ConfigurationManager.AppSettings["PayStackSecret"];
-                var api = new PayStackApi(testOrLiveSecret);
-                // Verifying a transaction
-                var verifyResponse = api.Transactions.Verify(reference); // auto or supplied when initializing;
-                if (verifyResponse.Status)
-                {
-                    /* 
-                       You can save the details from the json object returned above so that the authorization code 
-                       can be used for charging subsequent transactions
+                var corperCourses = _db.AssignCourseCategories.Include(x => x.CourseCategory)
+                                                               .Include(x => x.Courses)
+                                                               .Where(x => x.CourseCategory.StudentType.Equals(RoleName.Corper))
+                                                               .ToList();
+                return RedirectToAction("Content", "Courses", corperCourses);
 
-                       // var authCode = verifyResponse.Data.Authorization.AuthorizationCode
-                       // Save 'authCode' for future charges!
 
-                   */
-                    //var customfieldArray = verifyResponse.Data.Metadata.CustomFields.A
-
-                    var convertedValues = new List<SelectableEnumItem>();
-                    var valuepair = verifyResponse.Data.Metadata.Where(x => x.Key.Contains("custom")).Select(s => s.Value);
-
-                    foreach (var item in valuepair)
-                    {
-                        convertedValues = ((JArray)item).Select(x => new SelectableEnumItem
-                        {
-                            key = (string)x["display_name"],
-                            value = (string)x["value"]
-                        }).ToList();
-                    }
-                    //var studentid = _db.Users.Find(id);
-                    var professionalPayment = new ProfessionalPayment()
-                    {
-                        //FeeCategoryId = Convert.ToInt32(verifyResponse.Data.Metadata.CustomFields[3].Value),
-                        ProfessionalWorkerId = convertedValues.Where(x => x.key.Equals("professionalworkerid")).Select(s => s.value).FirstOrDefault(),
-                        PaymentDateTime = DateTime.Now,
-                        Amount = Convert.ToDecimal(convertedValues.Where(x => x.key.Equals("amount")).Select(s => s.value).FirstOrDefault()),
-                        IsPayed = true,
-                        //StudentId = "HAS-201",
-                        AmountPaid = PaymentTypesController.KoboToNaira.ConvertKoboToNaira(verifyResponse.Data.Amount),
-
-                    };
-                    db.ProfessionalPayments.Add(professionalPayment);
-                    db.SaveChangesAsync();
-                }
-                return RedirectToAction("ListCourses", "Courses");
             }
-            ViewBag.Profile = db.Students.Select(x => x.FileLocation);
-            var courses = db.Courses.ToList();
-            return View(courses);
+            if (User.IsInRole(RoleName.UnderGraduate))
+            {
+                if (paymentRecord == null)
+                {
+                    return RedirectToAction("ListCourses", "Courses");
+                }
+                
+                var corperCourses = _db.AssignCourseCategories.Include(x => x.CourseCategory)
+                    .Include(x => x.Courses)
+                    .Where(x => x.CourseCategory.StudentType.Equals(RoleName.UnderGraduate))
+                    .ToList();
+                return RedirectToAction("Content", "Courses", corperCourses);
+            }
+            if (User.IsInRole(RoleName.Student))
+            {
+
+            }
+
+            //if (reference != null)
+            //{
+            //    var testOrLiveSecret = ConfigurationManager.AppSettings["PayStackSecret"];
+            //    var api = new PayStackApi(testOrLiveSecret);
+            //    // Verifying a transaction
+            //    var verifyResponse = api.Transactions.Verify(reference); // auto or supplied when initializing;
+            //    if (verifyResponse.Status)
+            //    {
+            //        /* 
+            //           You can save the details from the json object returned above so that the authorization code 
+            //           can be used for charging subsequent transactions
+
+            //           // var authCode = verifyResponse.Data.Authorization.AuthorizationCode
+            //           // Save 'authCode' for future charges!
+
+            //       */
+            //        //var customfieldArray = verifyResponse.Data.Metadata.CustomFields.A
+
+            //        var convertedValues = new List<SelectableEnumItem>();
+            //        var valuepair = verifyResponse.Data.Metadata.Where(x => x.Key.Contains("custom")).Select(s => s.Value);
+
+            //        foreach (var item in valuepair)
+            //        {
+            //            convertedValues = ((JArray)item).Select(x => new SelectableEnumItem
+            //            {
+            //                key = (string)x["display_name"],
+            //                value = (string)x["value"]
+            //            }).ToList();
+            //        }
+            //        //var studentid = _db.Users.Find(id);
+            //        var professionalPayment = new ProfessionalPayment()
+            //        {
+            //            //FeeCategoryId = Convert.ToInt32(verifyResponse.Data.Metadata.CustomFields[3].Value),
+            //            ProfessionalWorkerId = convertedValues.Where(x => x.key.Equals("professionalworkerid")).Select(s => s.value).FirstOrDefault(),
+            //            PaymentDateTime = DateTime.Now,
+            //            Amount = Convert.ToDecimal(convertedValues.Where(x => x.key.Equals("amount")).Select(s => s.value).FirstOrDefault()),
+            //            IsPayed = true,
+            //            //StudentId = "HAS-201",
+            //            AmountPaid = PaymentTypesController.KoboToNaira.ConvertKoboToNaira(verifyResponse.Data.Amount),
+
+            //        };
+            //        db.ProfessionalPayments.Add(professionalPayment);
+            //        db.SaveChangesAsync();
+            //    }
+            //    return RedirectToAction("ListCourses", "Courses");
+            //}
+            //ViewBag.Profile = db.Students.Select(x => x.FileLocation);
+            //var courses = db.Courses.ToList();
+            ////return RedirectToAction("ListCourses", "Courses");
+
+            ViewBag.UserCourseName = _db.ProfessionalPayments.Where(x => x.IsPayed == true && x.Email.Equals(email))
+                .Select(x => x.CoursePayedFor).FirstOrDefault();
+            return View(_db.Courses.ToList());
         }
 
+        /// <summary>
+        /// the list of courses that a corper has enrolled
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult CorperCourses(int? courseId)
+        {
+            var userId = User.Identity.GetUserId();
+            //   var course = db.db.ProfessionalPayments.Where(x => x.Email.Equals(vUserCourseName)).Select(x => x.CoursePayedFor).FirstOrDefault(),.Where(x => x.Email.Equals(email)).Select(x => x.CoursePayedFor).FirstOrDefault(),
+            var email = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).SingleOrDefault();
+            var studentId = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.StudentId).FirstOrDefault();
+            var callUpNumber =_db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.CallUpNo).FirstOrDefault();
+             
+            if ((courseId != null) && (callUpNumber != null))
+            {
+
+                var corperEnrolleCourses = new CodeninModel.CorperEnrolledCourses
+                {
+                    StudentId = studentId,
+                    CorperCallUpNumber = callUpNumber,
+                    CourseId = (int)courseId,
+                };
+
+                _db.CorperEnrolledCourses.Add(corperEnrolleCourses);
+                _db.SaveChanges();
+
+            }
+            else if (callUpNumber == null)
+            {
+                return RedirectToAction("Edit","Students");
+            }
+           
+            ViewBag.UserCourseName = _db.CorperEnrolledCourses.Where(x => x.StudentId.Equals(userId)).Select(x => x.CourseId);
+          //  ViewBag.CourseId = db.Courses.Where(x => x.CourseName.Equals(UserCourseName)).Select(x => x.CourseId);
+            //var userCourseDetail = new List<UserCourseDetail>
+            //{
+            //   UserCourseName = db.ProfessionalPayments.Where(x =>  x.Email.Equals(email)).Select(x => x.CoursePayedFor).FirstOrDefault(),
+            //   CourseId = db.Courses.Where(x => x.CourseName.Equals(UserCourseName)).Select(x => x.CourseId )
+            //};
+
+            return View();
+
+        }
 
         public ActionResult CorperDashboard()
         {
-            return View(db.Courses.ToList());
+            var userId = User.Identity.GetUserId();
+            var email = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).SingleOrDefault();
+            ViewBag.CorperCourse = _db.ProfessionalPayments.Where(x => x.Email.Equals(email))
+                .Select(x => x.CoursePayedFor).FirstOrDefault();
+          
+            return View(_db.Courses.ToList());
         }
 
+        /// <summary>
+        /// CorperDashboard1 is the First Dashboard 
+        /// that a corper see when they login
+        /// can view Courses based on Categories,
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<ActionResult> CorperDashboard1()
+        {
+            var categories = await  _db.CourseCategories.ToListAsync();
+
+            var corperDashboard1 = new CorperDashboard1Vm
+            {
+                CourseCategories = categories,
+            };
+            return View(corperDashboard1);
+        }
+
+       
 
         // GET: Students/Details/5
 
@@ -141,7 +245,7 @@ namespace CodedenimWebApp.Controllers
             {
                 id = User.Identity.GetUserId();
             }
-            Student student = await db.Students.FindAsync(id);
+            Student student = await _db.Students.FindAsync(id);
             if (student == null)
             {
                 return HttpNotFound();
@@ -209,7 +313,7 @@ namespace CodedenimWebApp.Controllers
         /// <param name="student"></param>
         private void PopulateAssignedCourseData(Student student)
         {
-            var allCourses = db.Courses;
+            var allCourses = _db.Courses;
             var studentCourses = new HashSet<int>(student.Enrollments.Select(c => c.CourseID));
             var viewModel = new List<AssignedCourses>();
             foreach (var course in allCourses)
@@ -246,8 +350,8 @@ namespace CodedenimWebApp.Controllers
                     upload.SaveAs(path);
                 }
                 student.FileLocation = _FileName;
-                db.Students.Add(student);
-                db.SaveChanges();
+                _db.Students.Add(student);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
 
             }
@@ -266,7 +370,7 @@ namespace CodedenimWebApp.Controllers
             {
                 id = User.Identity.GetUserId();
             }
-            Student student = await db.Students.FindAsync(id);
+            Student student = await _db.Students.FindAsync(id);
             if (student != null)
             {
                 var model = new StudentVm
@@ -302,7 +406,7 @@ namespace CodedenimWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var model = await db.Students.FindAsync(student.StudentId);
+                var model = await _db.Students.FindAsync(student.StudentId);
 
                 if (model != null)
                 {
@@ -328,8 +432,8 @@ namespace CodedenimWebApp.Controllers
                     model.MatricNo = student.MatricNo;
                     model.CallUpNo = student.CallUpNo;
 
-                    db.Entry(model).State = EntityState.Modified;
-                    await db.SaveChangesAsync();
+                    _db.Entry(model).State = EntityState.Modified;
+                    await _db.SaveChangesAsync();
 
                     return RedirectToAction("Details");
                 }
@@ -341,7 +445,7 @@ namespace CodedenimWebApp.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> RenderImage(string studentId)
         {
-            Student student = await db.Students.FindAsync(studentId);
+            Student student = await _db.Students.FindAsync(studentId);
 
             byte[] photoBack = student.Passport;
 
@@ -356,7 +460,7 @@ namespace CodedenimWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Student student = await db.Students.FindAsync(id);
+            Student student = await _db.Students.FindAsync(id);
             if (student == null)
             {
                 return HttpNotFound();
@@ -369,9 +473,9 @@ namespace CodedenimWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
-            Student student = await db.Students.FindAsync(id);
-            db.Students.Remove(student);
-            await db.SaveChangesAsync();
+            Student student = await _db.Students.FindAsync(id);
+            _db.Students.Remove(student);
+            await _db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -379,7 +483,7 @@ namespace CodedenimWebApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -388,11 +492,16 @@ namespace CodedenimWebApp.Controllers
     public class ProfessionalPayment
     {
         public int ProfessionalPaymentId { get; set; }
+        public string UserId { get; set; }
         public string ProfessionalWorkerId { get; set; }
         public DateTime PaymentDateTime { get; set; }
         public decimal Amount { get; set; }
         public bool IsPayed { get; set; }
         public object AmountPaid { get; set; }
+        public string Email { get; set; }
+        public string CoursePayedFor { get; set; }
+        public string PaymentDate { get; set; }
+        public string PayStackCustomerId { get; set; }
     }
 
     public class SelectableEnumItem

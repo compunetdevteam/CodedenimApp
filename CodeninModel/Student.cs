@@ -36,6 +36,7 @@ namespace CodeninModel
         public string StateOfService { get; set; }
         public string Batch { get; set; }
         public string Discpline { get; set; }
+        
 
 
 
@@ -48,5 +49,6 @@ namespace CodeninModel
         public virtual ICollection<StudentAssesment> StudentAssesments { get; set; }
         public virtual ICollection<StudentAssignedCourse> AssignedCourses { get; set; }
         public virtual ICollection<ForumQuestion> ForumQuestions { get; set; }
+        public virtual ICollection<CourseEnrollment> CourseEnrollement { get; set; }
     }
 }

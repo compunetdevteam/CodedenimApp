@@ -354,14 +354,14 @@ namespace CodedenimWebApp.Controllers.Api
         /// <param name="model"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        public async Task<IHttpActionResult> RegisterCorpe()
+        public async Task<IHttpActionResult> RegisterCorper()
         {
             return Ok();
         }
 
 
    // POST api/Account/RegisterStudent
-   [System.Web.Http.AllowAnonymous]
+        [System.Web.Http.AllowAnonymous]
         [System.Web.Http.Route("RegisterCorper")]
         [System.Web.Http.HttpPost]
         public async Task<IHttpActionResult> RegisterCorper([FromBody] RegisterCorperModel model)
@@ -476,7 +476,74 @@ namespace CodedenimWebApp.Controllers.Api
             return Ok("Student Created Successfully ");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public async Task<IHttpActionResult> OtherStudent()
+        {
+            return Ok();
+        }
 
+
+
+        /// <summary>
+        /// method to register student from the mobile app
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [System.Web.Http.AllowAnonymous]
+        [System.Web.Http.Route("OtherStudent")]
+        [System.Web.Http.HttpPost]
+        public async Task<IHttpActionResult> OtherStudent([FromBody] RegisterOtherStudentModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = new ApplicationUser()
+            {
+                UserName = model.Email,
+                Email = model.Email
+            };
+
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            var student = new Student
+            {
+              
+                Title = model.Title.ToString(),
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
+                Gender = model.Gender,
+                PhoneNumber = model.MobileNumber,
+                Email = model.Email
+                
+
+            };
+            _db.Students.Add(student);
+            await _db.SaveChangesAsync();
+
+
+            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            var callbackUrl = EmailLink(user.Id, code);
+
+            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+            //  
+            await UserManager.AddToRoleAsync(user.Id, "OtherStudent");
+
+            return Ok("Student Created Successfully ");
+         
+        }
         //my custom Registration controller
         // POST api/Account/InstructorRegister
         [System.Web.Http.AllowAnonymous]

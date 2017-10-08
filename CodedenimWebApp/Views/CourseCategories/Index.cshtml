@@ -1,38 +1,45 @@
 ﻿@model IEnumerable<CodeninModel.CourseCategory>
+
 @{
-    ViewBag.Title = "Category";
-    ViewBag.Category = "class = active";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Index";
 }
 
+<h2>Index</h2>
 
-<div class="container-fluid">
-    <h2>COURSE CATEGORIES</h2>
-    <br />
-    <p>
-        @Html.ActionLink("CREATE CATEGORIES", "Create", null, new { @class = "my-class; btn" })
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryName)
-            </th>
-            <th></th>
-        </tr>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentType)
+        </th>
+        <th></th>
+    </tr>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CategoryName)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.CourseCategoryId }, new { @class = "my-class; btn" })
-                    @Html.ActionLink("Details", "Details", new { id = item.CourseCategoryId }, new { @class = "my-class; btn" })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.CourseCategoryId }, new { @class = "my-class; btn" })
-                </td>
-            </tr>}
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentType)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CourseCategoryId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CourseCategoryId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CourseCategoryId })
+        </td>
+    </tr>
+}
 
-    </table>
-</div>
-   
+</table>

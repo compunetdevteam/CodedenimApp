@@ -98,14 +98,17 @@
     <Compile Include="Assesment\StudentAssesment.cs" />
     <Compile Include="Assesment\StudentQuestion.cs" />
     <Compile Include="Assesment\StudentTestLog.cs" />
+    <Compile Include="AssignCourseCategory.cs" />
     <Compile Include="BlogPost\Comment.cs" />
     <Compile Include="BlogPost\Post.cs" />
     <Compile Include="BlogPost\Tag.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Classroom.cs" />
     <Compile Include="Content.cs" />
+    <Compile Include="CorperEnrolledCourses.cs" />
     <Compile Include="Course.cs" />
     <Compile Include="CourseCategory.cs" />
+    <Compile Include="CourseEnrollment.cs" />
     <Compile Include="CourseRating.cs" />
     <Compile Include="Enrollment.cs" />
     <Compile Include="File.cs" />
@@ -124,6 +127,7 @@
     <Compile Include="Quiz\QuizLog.cs" />
     <Compile Include="Quiz\QuizLogVm.cs" />
     <Compile Include="StudentAssignedCourses.cs" />
+    <Compile Include="StudentCourses.cs" />
     <Compile Include="TopicMaterialUpload.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Person.cs" />
@@ -194,6 +198,8 @@
     <Content Include="Scripts\jquery-1.12.4.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\jquery.cookie-1.4.1.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -27,12 +27,12 @@ namespace CodedenimWebApp.Controllers
             ViewBag.SelectedCategory = new SelectList(categories, "CourseCategoryId", "CategoryName", SelectedCategory);
             int categoryId = SelectedCategory.GetValueOrDefault();
 
-            IEnumerable<Course> courses = db.Courses
-                .Where(c => !SelectedCategory.HasValue || c.CourseCategoryId == categoryId)
-                .OrderBy(d => d.CourseId)
-                .Include(d => d.CourseCategory);
+            //IEnumerable<Course> courses = db.Courses
+            //    .Where(c => !SelectedCategory.HasValue || c.CourseCategoryId == categoryId)
+            //    .OrderBy(d => d.CourseId)
+            //    .Include(d => d.CourseCategory);
             //var courses = db.Courses.Include(c => c.CourseCategory);
-            return View(courses.ToList());
+            return View(/*courses.ToList()*/);
         }
 
         public async Task<ActionResult> ListCourses()
@@ -41,6 +41,25 @@ namespace CodedenimWebApp.Controllers
             var courses = db.Courses.ToList();
             return View(courses);
         }
+
+        public async Task<ActionResult> _ListCoursesPartial(int? categoryId)
+        {
+            var category = await db.Courses.Where(x => x.CourseId.Equals((int)categoryId)).ToListAsync();
+            if (category != null)
+            {
+                var courses = new CorperDashboard1Vm
+                {
+                    Courses = category
+
+                };
+                return PartialView(courses);
+
+            }
+
+
+            return PartialView();
+        }
+
 
         public ActionResult Content(int id)
         {
@@ -74,7 +93,7 @@ namespace CodedenimWebApp.Controllers
             int totalRecords = 0;
 
             //var v = Db.Subjects.Where(x => x.SchoolId != userSchool).Select(s => new { s.SubjectId, s.SubjectCode, s.SubjectName }).ToList();
-            var v = db.Courses.Select(s => new {s.CourseCategoryId, s.CourseCode, s.CourseName, s.CourseDescription, s.ExpectedTime,s.DateAdded,s.Points, s.CourseImage }).ToList();
+            var v = db.Courses.Select(s => new { s.CourseCode, s.CourseName, s.CourseDescription, s.ExpectedTime,s.DateAdded,s.Points, s.CourseImage }).ToList();
 
             //var v = Db.Subjects.Where(x => x.SchoolId.Equals(userSchool)).Select(s => new { s.SubjectId, s.SubjectCode, s.SubjectName }).ToList();
             //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
@@ -85,8 +104,8 @@ namespace CodedenimWebApp.Controllers
             if (!string.IsNullOrEmpty(search))
             {
                 //v = v.OrderBy(sortColumn + " " + sortColumnDir);
-                v = db.Courses.Where(x => (x.CourseCategoryId.ToString().Equals(search) || x.CourseCode.Equals(search) || x.CourseName.Equals(search) || x.CourseDescription.Equals(search) || x.ExpectedTime.Equals(search) || x.DateAdded.Equals(search) || x.Points.Equals(search)))
-                    .Select(s => new {s.CourseCategoryId, s.CourseCode, s.CourseName, s.CourseDescription, s.ExpectedTime, s.DateAdded, s.Points, s.CourseImage }).ToList();
+                v = db.Courses.Where(x => ( x.CourseCode.Equals(search) || x.CourseName.Equals(search) || x.CourseDescription.Equals(search) || x.ExpectedTime.Equals(search) || x.DateAdded.Equals(search) || x.Points.Equals(search)))
+                    .Select(s => new { s.CourseCode, s.CourseName, s.CourseDescription, s.ExpectedTime, s.DateAdded, s.Points, s.CourseImage }).ToList();
             }
             totalRecords = v.Count();
             var data = v.Skip(skip).Take(pageSize).ToList();
@@ -176,7 +195,7 @@ namespace CodedenimWebApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName", course.CourseCategoryId);
+            ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName"/*, course.CourseCategoryId*/);
             return View(course);
         }
 
@@ -193,7 +212,7 @@ namespace CodedenimWebApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName", course.CourseCategoryId);
+            //ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName", course.CourseCategoryId);
             return View(course);
         }
 
@@ -211,7 +230,7 @@ namespace CodedenimWebApp.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName", course.CourseCategoryId);
+           // ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName", course.CourseCategoryId);
             return View(course);
         }
 

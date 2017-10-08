@@ -1,31 +1,42 @@
 ﻿@model CodeninModel.CourseCategory
 
 @{
-    ViewBag.Title = "Category Details";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Details";
 }
 
-<div class="container-fluid">
+<h2>Details</h2>
 
-    <h2>Details</h2>
+<div>
+    <h4>CourseCategory</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </dt>
 
-    <div>
-        <h4>CourseCategory</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.CategoryName)
-            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CategoryName)
+        </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.CategoryName)
-            </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
 
-        </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.CourseCategoryId }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentType)
+        </dd>
+
+    </dl>
 </div>
-   
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CourseCategoryId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

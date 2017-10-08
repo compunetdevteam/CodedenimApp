@@ -20,22 +20,22 @@ namespace CodedenimWebApp.Controllers.Api
 
         // GET: api/Courses
         //Get all the Courses to the client
-        public IQueryable GetCourses()
+        public IHttpActionResult GetCourses()
         {
-            return _db.Courses.Select(x => new
-                                    {
-                                        x.CourseId,
-                                        x.CourseCode,
-                                        x.CourseDescription,
-                                        x.CourseCategory.CategoryName,
-                                        x.CourseName,
-                                        x.ExpectedTime,
-                                        x.CourseCategoryId,
-                                        x.FileLocation
+            //return _db.Courses.Select(x => new
+            //                        {
+            //                            x.CourseId,
+            //                            x.CourseCode,
+            //                            x.CourseDescription,
+            //                            x.CourseCategory.CategoryName,
+            //                            x.CourseName,
+            //                            x.ExpectedTime,
+            //                            x.CourseCategoryId,
+            //                            x.FileLocation
                                        
                                        
-                                    });
-            //return db.Courses.Include(c => c.Modules).ToList();
+            //                        });
+            return Ok(); //_db.Courses.Include(c => c.Modules).ToList();
         }
 
         // GET: api/Courses/5
@@ -61,31 +61,31 @@ namespace CodedenimWebApp.Controllers.Api
 
             //                            }).ToListAsync();
 
-           var course = await  _db.Modules.Where(c => c.CourseId.Equals(id))
-                                                .Select(x => new
-                                                {
-                                                    x.CourseId,
-                                                    x.Course.CourseCode,
-                                                    x.Course.CourseName,
-                                                    x.Course.CourseDescription,
-                                                    x.Course.ExpectedTime,
-                                                    x.Course.CourseCategory.CategoryName,
-                                                    x.Course.CourseCategoryId,
-                                                    x.Course.FileLocation
+           //var course = await  _db.Modules.Where(c => c.CourseId.Equals(id))
+           //                                     .Select(x => new
+           //                                     {
+           //                                         x.CourseId,
+           //                                         x.Course.CourseCode,
+           //                                         x.Course.CourseName,
+           //                                         x.Course.CourseDescription,
+           //                                         x.Course.ExpectedTime,
+           //                                         x.Course.CourseCategory.CategoryName,
+           //                                         x.Course.CourseCategoryId,
+           //                                         x.Course.FileLocation
 
-                                                    //m.ModuleId,
-                                                    //m.ModuleName,
-                                                    //m.ModuleDescription,
-                                                    //m.ExpectedTime,
-                                                    //m.CourseId,
-                                                    //m.Course.CourseName
-                                                }).ToListAsync();
-            if (course == null)
-            {
-                return NotFound();
-            }
+           //                                         //m.ModuleId,
+           //                                         //m.ModuleName,
+           //                                         //m.ModuleDescription,
+           //                                         //m.ExpectedTime,
+           //                                         //m.CourseId,
+           //                                         //m.Course.CourseName
+           //                                     }).ToListAsync();
+           // if (course == null)
+           // {
+           //     return NotFound();
+           // }
 
-            return Ok(course);
+            return Ok(/*course*/);
         }
 
         // PUT: api/Courses/5

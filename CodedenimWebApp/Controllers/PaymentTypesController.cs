@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 using CodedenimWebApp.Models;
 using CodeninModel;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json.Linq;
 using PayStack.Net;
 
 namespace CodedenimWebApp.Controllers
@@ -26,48 +28,57 @@ namespace CodedenimWebApp.Controllers
         }
 
 
-        public ActionResult Pay()
+        public ActionResult Pay(int? id)
         {
+          
             var testOrLiveSecret = ConfigurationManager.AppSettings["PayStackSecret"];
             var api = new PayStackApi(testOrLiveSecret);
 
 
             var userId = User.Identity.GetUserId();
-           // var userRole = User.Identity;
-
+            // var userRole = User.Identity;
             if (userId != null)
             {
                 string reference = "";
                // var userRole = _db.Rol
-                var person = _db.Users.AsNoTracking().SingleOrDefault(x => x.Id.Equals(userId));
-                var roles = _db.PaymentTypes.FirstOrDefault(x => x.PaymentTypeValue.Equals(_db.Roles));
+                //var person = _db.Users.AsNoTracking().SingleOrDefault(x => x.Id.Equals(userId));
+                //var roles = User;
                 // var role = _db
-                var email = _db.Students.AsNoTracking().Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).ToString();
-                //var amount = _db.PaymentTypes
-                //    .Where(x => x.PaymentTypeId.Equals(person.PaymentTypeId)).Select(x => x.Amount).FirstOrDefault();
+                var email = _db.Students.AsNoTracking().Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).FirstOrDefault();
+                var accountType = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.AccountType)
+                              .FirstOrDefault();
+                var amount = _db.PaymentTypes.Where(x => x.PaymentName.Equals(accountType)).Select(x => x.Amount).FirstOrDefault();
+                var coursePayedFor = _db.Courses.Where(x => x.CourseId.Equals((int)id)).Select(x => x.CourseName).SingleOrDefault();
 
+                //var paymentId = new ProfessionalPayment();
+                //var courseId = new Course();
                 //var convert = new KoboToNaira();
-                //var convertedamount = KoboToNaira.ConvertKoboToNaira(amount);
+                var convertedamount = KoboToNaira.ConvertKoboToNaira(amount);
                 var transactionInitializaRequest = new TransactionInitializeRequest
                 {
                     //Reference = "SwifKampus",
-                    AmountInKobo = 1500000,
-                    CallbackUrl = "http://localhost:64301/Students/DashBoard",  
+                    AmountInKobo = convertedamount,
+                    CallbackUrl = "http://localhost:64301/PaymentTypes/ConfrimPayment",  
                     Email = email,
                     Bearer = "Application fee",
 
-                    //CustomFields = new List<CustomField>
-                    //{
-                    //    new CustomField("professionalworkerid","professionalworkerid", worker.ProfessionalWorkerId),
-                    //    new CustomField("amount", "amount", model.Amount.ToString(CultureInfo.InvariantCulture))
-                    //    //new CustomField("sessionid", "sessionid", schoolFeePayment.SessionId.ToString()),
-                    //    //new CustomField("feepaymentid","feepaymentid", schoolFeePayment.FeeCategoryId.ToString())
-                    //    //new CustomField("paymentmode","paymentmode", schoolFeePayment.p)
-                    //}
+                    CustomFields = new List<CustomField>
+                    {
+                        new  CustomField("email","email", email),
+                        new  CustomField("courseId","courseId", coursePayedFor),
+                        new  CustomField("accountType","accounttype", accountType),
+                        new  CustomField("userId","userId", userId),
+                       // new CustomField("professionalworkerid","professionalworkerid", worker.ProfessionalWorkerId),
+                        //new CustomField("professionalworkerid","professionalworkerid", worker.ProfessionalWorkerId),
+                       // new CustomField("amount", "amount", model.Amount.ToString(CultureInfo.InvariantCulture)),
+                        //new CustomField("sessionid", "sessionid", schoolFeePayment.SessionId.ToString()),
+                        //new CustomField("feepaymentid","feepaymentid", schoolFeePayment.FeeCategoryId.ToString()),
+                        //new CustomField("paymentmode","paymentmode", schoolFeePayment.p)
+                    }
 
                 };
                 var response = api.Transactions.Initialize(transactionInitializaRequest);
-
+         
                 if (response.Status)
                 {
                     //redirect to authorization url
@@ -111,47 +122,55 @@ namespace CodedenimWebApp.Controllers
             var testOrLiveSecret = ConfigurationManager.AppSettings["PayStackSecret"];
             var api = new PayStackApi(testOrLiveSecret);
             //Verifying a transaction
-            //var verifyResponse = api.Transactions.Verify(reference); // auto or supplied when initializing;
-            //if (verifyResponse.Status)
-            //{
-            //    /* 
-            //       You can save the details from the json object returned above so that the authorization code 
-            //       can be used for charging subsequent transactions
+            var verifyResponse = api.Transactions.Verify(reference); // auto or supplied when initializing;
+            if (verifyResponse.Status)
+            {
+                /* 
+                   You can save the details from the json object returned above so that the authorization code 
+                   can be used for charging subsequent transactions
 
-            //       // var authCode = verifyResponse.Data.Authorization.AuthorizationCode
-            //       // Save 'authCode' for future charges!
+                   // var authCode = verifyResponse.Data.Authorization.AuthorizationCode
+                   // Save 'authCode' for future charges!
 
-            //   */
-            //    //var customfieldArray = verifyResponse.Data.Metadata.CustomFields.A
+               */
+                //var customfieldArray = verifyResponse.Data.Metadata.CustomFields.A
 
-            //    var convertedValues = new List<SelectableEnumItem>();
-            //    var valuepair = verifyResponse.Data.Metadata.Where(x => x.Key.Contains("custom")).Select(s => s.Value);
+                var convertedValues = new List<SelectableEnumItem>();
+                var valuepair = verifyResponse.Data.Metadata.Where(x => x.Key.Contains("custom")).Select(s => s.Value);
 
-            //    foreach (var item in valuepair)
-            //    {
-            //        convertedValues = ((JArray)item).Select(x => new SelectableEnumItem
-            //        {
-            //            key = (string)x["display_name"],
-            //            value = (string)x["value"]
-            //        }).ToList();
-            //    }
-            //    //var studentid = _db.Users.Find(id);
-            //    var professionalPayment = new ProfessionalPayment()
-            //    {
-            //        //FeeCategoryId = Convert.ToInt32(verifyResponse.Data.Metadata.CustomFields[3].Value),
-            //        ProfessionalWorkerId = convertedValues.Where(x => x.key.Equals("professionalworkerid")).Select(s => s.value).FirstOrDefault(),
-            //        PaymentDateTime = DateTime.Now,
-            //        Amount = Convert.ToDecimal(convertedValues.Where(x => x.key.Equals("amount")).Select(s => s.value).FirstOrDefault()),
-            //        IsPayed = true,
-            //        //StudentId = "HAS-201",
-            //        AmountPaid = _query.ConvertToNaira(verifyResponse.Data.Amount),
+                foreach (var item in valuepair)
+                {
+                    convertedValues = ((JArray)item).Select(x => new SelectableEnumItem
+                    {
+                        key = (string)x["display_name"],
+                        value = (string)x["value"]
+                    }).ToList();
+                }
+                //var studentid = _db.Users.Find(id);
+                var professionalPayment = new ProfessionalPayment()
+                 {
+                    //FeeCategoryId = Convert.ToInt32(verifyResponse.Data.Metadata.CustomFields[3].Value),
+                    ProfessionalWorkerId = convertedValues.Where(x => x.key.Equals("professionalworkerid")).Select(s => s.value).FirstOrDefault(),
+                    PaymentDateTime = DateTime.Now,
+                    Email = convertedValues.Where(x => x.key.Equals("email")).Select(s => s.value).FirstOrDefault(),
+                     CoursePayedFor = convertedValues.Where(x => x.key.Equals("courseId")).Select(s => s.value).FirstOrDefault() ,
+                     UserId = convertedValues.Where(x => x.key.Equals("userId")).Select(s => s.value).FirstOrDefault(),
+                    //PaymentDate = 
+                    PayStackCustomerId = verifyResponse.Data.Customer.CustomerCode,
+                    //Amount = Convert.ToDecimal(convertedValues.Where(x => x.key.Equals("amount")).Select(s => s.value).FirstOrDefault()),
+                    Amount = KoboToNaira.ConvertKoboToNaira(verifyResponse.Data.Amount),
+                    IsPayed = true,
+                    //StudentId = "HAS-201",
+                    AmountPaid = KoboToNaira.ConvertKoboToNaira(verifyResponse.Data.Amount),
 
-            //    };
-            //    _db.ProfessionalPayments.Add(professionalPayment);
-            //    await _db.SaveChangesAsync();
-            //}
+                };
+                _db.ProfessionalPayments.Add(professionalPayment);
+                await _db.SaveChangesAsync();
+            }
 
-            return RedirectToAction("ConfrimPayment");
+            return RedirectToAction("ListCourses", "Courses");
+
+            // return RedirectToAction("ConfrimPayment");
         }
 
 
