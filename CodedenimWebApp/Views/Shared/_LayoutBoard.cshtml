@@ -399,12 +399,12 @@ else if (Request.IsAuthenticated && User.IsInRole("Corper"))
     <div class="sidebar left sidebar-size-1 sidebar-mini-reveal sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
         <div data-scrollable>
             <ul class="sidebar-menu">
-                <li class="active"><a href="@Url.Action("CorperDashboard", "Students")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
+                <li class="active"><a href="@Url.Action("Dashboard", "Students")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
                 <li class="active"><a href="@Url.Action("Edit", "Students")"><i class="fa fa-home"></i><span>Edit Profile</span></a></li>
 
                 <li class="active"><a href="@Url.Action("Create", "ForumQuestions")"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
                 @*<li class="active"><a href="@Url.Action("Asked", "ForumQuestions")"><i class="fa fa-home"></i><span>Questions  I Ask</span></a></li>*@
-                <li class="active"><a href="@Url.Action("CorperCourses", "Students")"><i class="fa fa-home"></i><span>My Courses</span></a></li>
+                <li class="active"><a href="@Url.Action("_ListCoursesPartial", "Courses")"><i class="fa fa-home"></i><span>My Courses</span></a></li>
                 
 
                 @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>

@@ -79,14 +79,12 @@ namespace CodedenimWebApp.Controllers
             var userId = User.Identity.GetUserId();
             var email = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).FirstOrDefault();
            // var studentType = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.AccountType).FirstOrDefault();
-            var paymentRecord = _db.ProfessionalPayments.FirstOrDefault(x => x.UserId.Equals(userId) && x.IsPayed.Equals(true));
+            var paymentRecord = _db.StudentPayments.FirstOrDefault(x => x.StudentId.Equals(userId) && x.IsPayed.Equals(true));
 
             if (User.IsInRole(RoleName.Corper))
             {
-                var corperCourses = _db.AssignCourseCategories.Include(x => x.CourseCategory).Include(x => x.Courses)
-                                    .Where(x => x.CourseCategory.StudentType.Equals(RoleName.Corper))
-                                    .ToList();
-                return RedirectToAction("Content", "Courses", corperCourses);
+            
+                return RedirectToAction("CorperDashboard", "Students");
 
 
             }
@@ -94,20 +92,21 @@ namespace CodedenimWebApp.Controllers
             {
                 if (paymentRecord == null)
                 {
-                    return RedirectToAction("ListCourses", "Courses");
+                    return RedirectToAction("CourseCategoryPayment","CourseCategories");
                 }
                 
-                var corperCourses = _db.AssignCourseCategories.Include(x => x.CourseCategory)
+                var student = _db.AssignCourseCategories.Include(x => x.CourseCategory)
                     .Include(x => x.Courses)
                     .Where(x => x.CourseCategory.StudentType.Equals(RoleName.UnderGraduate))
                     .ToList();
-                return RedirectToAction("Content", "Courses", corperCourses);
+                return RedirectToAction("MyCoursesAsync", "Courses", student);
             }
            
 
-            ViewBag.UserCourseName = _db.ProfessionalPayments.Where(x => x.IsPayed == true && x.Email.Equals(email))
-                .Select(x => x.CoursePayedFor).FirstOrDefault();
-            return View(_db.Courses.ToList());
+            //ViewBag.UserCourseName = _db.StudentPayments.Where(x => x.IsPayed == true && x.StudentId.Equals(userId))
+            //    .Select(x => x.).FirstOrDefault();
+            //return View(_db.Courses.ToList());
+            return View();
         }
 
         /// <summary>
@@ -153,14 +152,21 @@ namespace CodedenimWebApp.Controllers
 
         }
 
-        public ActionResult CorperDashboard()
+        public async Task<ActionResult> CorperDashboard()
         {
-            var userId = User.Identity.GetUserId();
-            var email = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).SingleOrDefault();
-            ViewBag.CorperCourse = _db.ProfessionalPayments.Where(x => x.Email.Equals(email))
-                .Select(x => x.CoursePayedFor).FirstOrDefault();
-          
-            return View(_db.Courses.ToList());
+
+
+
+
+            var corperCourses = await _db.AssignCourseCategories.Include(x => x.CourseCategory).Include(x => x.Courses)
+                .Where(x => x.CourseCategory.StudentType.Equals(RoleName.Corper))
+                .ToListAsync();
+            var model = new DashboardVm()
+            {
+                AssignCourseCategories = corperCourses
+            };
+
+            return View(model);
         }
 
         /// <summary>

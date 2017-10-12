@@ -10,7 +10,7 @@ namespace CodedenimWebApp.Models
 
         public const string Admin = "Admin";
         public const string Tutor = "Tutor";
-        public const string Student = "Student";
+        public const string Student = "RegularStudent";
         public const string Corper = "Corper";
         public const string Mentor = "Mentor";
         public const string UnderGraduate = "UnderGraduate";

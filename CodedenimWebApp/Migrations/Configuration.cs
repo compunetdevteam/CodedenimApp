@@ -39,11 +39,11 @@ namespace CodedenimWebApp.Migrations
 
                 manager.Create(role);
             }
-            if (!context.Roles.Any(r => r.Name == "Student"))
+            if (!context.Roles.Any(r => r.Name == "RegularStudent"))
             {
                 var store = new RoleStore<IdentityRole>(context);
                 var manager = new RoleManager<IdentityRole>(store);
-                var role = new IdentityRole { Name = "Student" };
+                var role = new IdentityRole { Name = "RegularStudent" };
 
                 manager.Create(role);
             }

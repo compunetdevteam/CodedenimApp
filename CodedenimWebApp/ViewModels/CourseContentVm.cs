@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using CodeninModel;
 using CodeninModel.Quiz;
@@ -9,11 +10,11 @@ namespace CodedenimWebApp.ViewModels
 {
     public class CourseContentVm
     {
-        public IEnumerable<Module> Modules { get; set; }
-        public IEnumerable<Topic> Topics { get; set; }
-        public IEnumerable<TopicMaterialUpload> Materials { get; set; }
-        public IEnumerable<Tutor> Tutors { get; set; }
+        public List<Module> Modules { get; set; }
+        public List<Topic> Topics { get; set; }
+        public List<TopicMaterialUpload> Materials { get; set; }
+        public List<Tutor> Tutors { get; set; }
 
-        public IEnumerable<Course> Courses { get; set; }
+        public List<Course> Courses { get; set; }
     }
 }

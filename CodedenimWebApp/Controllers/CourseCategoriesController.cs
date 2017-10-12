@@ -29,7 +29,7 @@ namespace CodedenimWebApp.Controllers
         {
             var userId = User.Identity.GetUserId();
             var student = await db.Students.FindAsync(userId);
-
+                
             var model = new List<CourseCategory>();
 
             var assignedCourse = await db.AssignCourseCategories.Include(i => i.CourseCategory).Include(i => i.Courses)
@@ -159,7 +159,7 @@ namespace CodedenimWebApp.Controllers
 
                     }
                     await db.SaveChangesAsync();
-                    return RedirectToAction("ListCourses", "Courses");
+                    return RedirectToAction("DashBoard", "Students");
                 }
                 var studentPayment = new StudentPayment()
                 {
@@ -175,7 +175,7 @@ namespace CodedenimWebApp.Controllers
                 };
                 db.StudentPayments.Add(studentPayment);
                 await db.SaveChangesAsync();
-                return RedirectToAction("ListCourses", "Courses");
+                return RedirectToAction("MyCoursesAsync", "Courses");
             }
             return RedirectToAction("ListCourses", "Courses");
         }

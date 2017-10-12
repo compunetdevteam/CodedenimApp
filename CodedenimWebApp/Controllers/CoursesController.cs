@@ -12,13 +12,16 @@ using System.Web.Mvc;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
+using Microsoft.AspNet.Identity;
 using Xamarin.Forms;
 
 namespace CodedenimWebApp.Controllers
 {
     public class CoursesController : Controller
     {
+        
         private ApplicationDbContext db = new ApplicationDbContext();
+    
         // GET: Courses
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Index(int? SelectedCategory)
@@ -42,35 +45,99 @@ namespace CodedenimWebApp.Controllers
             return View(courses);
         }
 
-        public async Task<ActionResult> _ListCoursesPartial(int? categoryId)
+        public async Task<PartialViewResult> _ListCoursesPartial(int? categoryId)
         {
-            var category = await db.Courses.Where(x => x.CourseId.Equals((int)categoryId)).ToListAsync();
-            if (category != null)
+
+
+           
+
+            var corperCourses = await db.AssignCourseCategories.Include(x => x.CourseCategory).Include(x => x.Courses)
+                .Where(x => x.CourseCategory.StudentType.Equals(RoleName.Corper))
+                .ToListAsync();
+            var model = new DashboardVm()
             {
-                var courses = new CorperDashboard1Vm
-                {
-                    Courses = category
+                AssignCourseCategories = corperCourses
+            };
 
-                };
-                return PartialView(courses);
+            //var userId = User.Identity.GetUserId();
+            //var courseCategoryId = await db.StudentPayments.Include(i => i.CourseCategory)
+            //    .Where(x => x.StudentId.Equals(userId)).ToListAsync()
+            //    /*.Select(x => x.CourseCategoryId).ToListAsync()*/;
+            ////var course = new List<int>();
 
-            }
+            //var model = new CorperDashboard1Vm();
+
+            //foreach (var courses in courseCategoryId)
+            //{
+            //    {
+            //        model.CourseCategories.Add(courses.CourseCategory);
+
+            //    }
+            //}
+            ////var category = await db.Courses.Where(x => x.CourseId.Equals(course)).ToListAsync();
+            ////if (category != null)
+            ////{
+            ////    var courses = new CorperDashboard1Vm
+            ////    {
+            ////        Courses = category
+
+            ////    };
+            ////    return View(courses);
+
+            ////}
 
 
-            return PartialView();
+
+            return PartialView(model);
+        }
+        /// <summary>
+        /// course Category is what comes into these method
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult CategoryContent(int id)
+        {
+            var userId = User.Identity.GetUserId();
+
+            var categoryVm = new CategoryVm();
+           // var course = new List<int>();
+
+            var categoriesPaidFor = db.StudentPayments.Where(x => x.StudentId.Equals(userId))
+                                     .Select(x => x.CourseCategoryId).FirstOrDefault();
+            //foreach (var category in categoriesPaidFor)
+            //{
+            //   course.Add(category); 
+            //}
+
+            categoryVm.Courses = db.AssignCourseCategories.Include(x => x.CourseCategory).Include(x => x.Courses)
+                .Where(x => x.CourseCategoryId.Equals(categoriesPaidFor)).ToList();
+            categoryVm.CourseCategory = db.CourseCategories.Where(x => x.CourseCategoryId.Equals(categoriesPaidFor))
+                .Select(x => x.CategoryName).FirstOrDefault();
+
+            return View(categoryVm);
         }
 
-
-        public ActionResult Content(int id)
+/// <summary>
+/// course id is what come into these  method
+/// </summary>
+/// <param name="id"></param>
+/// <returns></returns>
+        public ActionResult Content(int? id)
         {
-            var viewModel = new CourseContentVm();
-            viewModel.Modules = db.Modules.Include(x => x.Topics).Include(x => x.Course).Where(x => x.CourseId.Equals(id)).ToList();
+            var viewModel = new CourseContentVm
+            {
+                Modules =  db.Modules.Include(x => x.Topics).Include(x => x.Course).Where(x => x.CourseId.Equals((int)id)).ToList(),
+                Topics =  db.Topics.Include(x => x.MaterialUploads).ToList(),
+        };
+            
+
+            //viewModel.Modules =  db.Modules.Include(x => x.Topics).Include(x => x.Course).Where(x => x.CourseId.Equals((int)id)).ToListAsync();
 
             
-            viewModel.Topics = db.Topics.Include(x => x.MaterialUploads).ToList();
+            //viewModel.Topics =  db.Topics.Include(x => x.MaterialUploads).ToListAsync();
             //var courseList = new CourseContentVm();
             //courseList.Modules = courses
-            return View(viewModel);
+            return View( viewModel);
         }
 
         public  async Task<ActionResult> GetIndex()
@@ -270,5 +337,17 @@ namespace CodedenimWebApp.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public async Task<ActionResult> MyCoursesAsync()
+        {
+            var userId = User.Identity.GetUserId();
+            var mycourses = await db.StudentPayments.Where(x => x.StudentId.Equals(userId)).ToArrayAsync();
+           return View(mycourses);
+        }
     }
+
+    //public class MyCourses
+    //{
+    //    public List<int> Courses { get; set; }
+    //}
 }

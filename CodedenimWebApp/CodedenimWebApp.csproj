@@ -294,6 +294,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710101524407_added_RegularStudents.cs" />
+    <Compile Include="Migrations\201710101524407_added_RegularStudents.Designer.cs">
+      <DependentUpon>201710101524407_added_RegularStudents.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -312,9 +316,11 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ApiVm.cs" />
     <Compile Include="ViewModels\AssignedCourses.cs" />
+    <Compile Include="ViewModels\CategoryVm.cs" />
     <Compile Include="ViewModels\CorperDashboard1Vm.cs" />
     <Compile Include="ViewModels\CourseContentVm.cs" />
     <Compile Include="ViewModels\CourseVm.cs" />
+    <Compile Include="ViewModels\DashboardVm.cs" />
     <Compile Include="ViewModels\DisplayQuestionViewModel.cs" />
     <Compile Include="ViewModels\ForumQA_Vm.cs" />
     <Compile Include="ViewModels\RegularStudentVm.cs" />
@@ -1055,7 +1061,7 @@
     <Content Include="Views\ForumQuestions\Asked.cshtml" />
     <Content Include="Views\Students\CoursesIPaidFor.cshtml" />
     <Content Include="Views\Students\CorperDashboard1.cshtml" />
-    <Content Include="Views\Shared\_ListCoursesPartial.cshtml" />
+    <Content Include="Views\Courses\_ListCoursesPartial.cshtml" />
     <Content Include="Views\Modules\CreatePartial.cshtml" />
     <Content Include="Views\Students\CorperCourses.cshtml" />
     <Content Include="Views\CourseCategories\Create.cshtml" />
@@ -1070,6 +1076,8 @@
     <Content Include="Views\AssignCourseCategories\Index.cshtml" />
     <Content Include="Views\Courses\ListCourses.cshtml" />
     <Content Include="Views\CourseCategories\CourseCategoryPayment.cshtml" />
+    <Content Include="Views\Courses\MyCoursesAsync.cshtml" />
+    <Content Include="Views\Courses\CategoryContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1111,6 +1119,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201710101524407_added_RegularStudents.resx">
+      <DependentUpon>201710101524407_added_RegularStudents.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
