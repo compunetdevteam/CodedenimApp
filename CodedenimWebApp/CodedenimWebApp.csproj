@@ -841,6 +841,7 @@
     <Content Include="Content\LMS\fonts\picto-foundry-weather.woff" />
     <Content Include="Content\LMS\js\data\google_maps\markers.json" />
     <Content Include="MaterialUpload\How a CPU Works.mp4" />
+    <Content Include="Codedenim Requirement\mobile app synopsis.pdf" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1-vsdoc.js" />
