@@ -27,6 +27,7 @@
 
     <!-- Changed By Kelechi -->
     <link href="~/Content/LMS/css/theme-core.css" rel="stylesheet" /> 
+
     <!-- Standalone Modules
     As a convenience, we provide the entire UI framework broke down in separate modules
     Some of the standalone modules may have not been used with the current theme/module
@@ -485,9 +486,32 @@ else if (Request.IsAuthenticated && User.IsInRole("Tutor"))
 
 
                 <ul class="sidebar-menu">
-                    <li class="active"><a href="@Url.Action("TutorDashboard", "Tutors")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
+                    <li class="">
+                        <a class="collapsible-header waves-effect arrow-r"><i class="fa fa-code"></i> Creators<i class="fa fa-angle-down rotate-icon"></i></a>
+                        <div class="collapsible-body" style="display: none; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
+                            <ul>
+                                <li>
+                                    <a href="modals.html" class="waves-effect">Modals</a>
+                                </li>
+                                <li>
+                                    <a href="page-create.html" class="waves-effect">Create Page</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
 
-                    <li class="active"><a href="@Url.Action("Create", "ForumQuestions")"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
+
+
+
+
+
+                    <li class="active"><a href="@Url.Action("TutorDashboard", "Tutors")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
+                    
+                    <li class="active"><a href="#"><i class="fa fa-home"></i><span>Questions</span></a></li>
+                    <li class="active"><a href="#"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
+                    <li class="active"><a href="#"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
+                    <li class="active"><a href="#"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
+
                     @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>
                     <li><a href="app-instructor-courses.html"><i class="fa fa-mortar-board"></i><span>My Courses</span></a></li>
                     <li><a href="app-instructor-earnings.html"><i class="fa fa-bar-chart-o"></i><span>Earnings</span></a></li>

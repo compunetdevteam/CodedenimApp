@@ -2530,11 +2530,12 @@ output {
 .form-control::-webkit-input-placeholder {
   color: #cccccc;
 }
+/*Kelechi made changes to this script to prevent read-only class in form control from having a wierd colour*/
 .form-control[disabled],
 .form-control[readonly],
 fieldset[disabled] .form-control {
   cursor: not-allowed;
-  background-color: #eeeeee;
+  background-color: #ffffff;
   opacity: 1;
 }
 textarea.form-control {
