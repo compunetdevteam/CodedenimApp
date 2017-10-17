@@ -1063,6 +1063,7 @@
     <Content Include="Views\CourseCategories\CourseCategoryPayment.cshtml" />
     <Content Include="Views\Courses\MyCoursesAsync.cshtml" />
     <Content Include="Views\Courses\CategoryContent.cshtml" />
+    <Content Include="Views\Account\ConfirmTutorRegistration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
