@@ -1,37 +1,40 @@
 ﻿@model CodeninModel.TutorCourse
-
+<style>
+    body {
+        background: white !important;
+    }
+</style>
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
 }
 
-<h2>Create</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+
+    <fieldset>
+        <legend><h3><b>Assign Course To Tutor</b></h3></legend>
     <div class="form-horizontal">
-        <h4>TutorCourses</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.TutorId, "TutorId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-8">
                 @Html.DropDownList("TutorId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.TutorId, "", new { @class = "text-danger" })
             </div>
         </div>
-        
-      
 
         <div class="form-group">
             @Html.LabelFor(model => model.CourseId, "CourseId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-8">
                 @Html.DropDownList("CourseId", null, htmlAttributes: new { @class = "form-control", data_toggle = "select2", @multiple = "multiple" })
                 @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
             </div>
         </div>
+        
+        
         
         
         @*<h5>Multi-Value Select Boxes</h5>
@@ -104,12 +107,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <button class="btn btn-success"><span>Assign</span>  <i class="fa fa-paper-plane-o"></i></button>
+                <button class="btn-inverse btn" type="reset"><span>Reset</span>  <i class="fa fa-undo"></i></button>
             </div>
         </div>
     </div>
+        </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+

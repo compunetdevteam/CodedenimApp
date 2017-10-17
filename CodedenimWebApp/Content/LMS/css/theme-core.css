@@ -2508,7 +2508,7 @@ output {
   font-size: 13px;
   line-height: 1.42857143;
   color: #333333;
-  
+ 
   background-image: none;
   border: 1px solid #efefef;
   border-radius: 2px;
@@ -2530,12 +2530,11 @@ output {
 .form-control::-webkit-input-placeholder {
   color: #cccccc;
 }
-/*Kelechi made changes to this script to prevent read-only class in form control from having a wierd colour*/
 .form-control[disabled],
 .form-control[readonly],
 fieldset[disabled] .form-control {
   cursor: not-allowed;
-  background-color: #ffffff;
+  background-color: #eeeeee;
   opacity: 1;
 }
 textarea.form-control {
