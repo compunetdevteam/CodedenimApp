@@ -463,6 +463,10 @@
     <Content Include="Content\LMS\fonts\picto-foundry-sports.svg" />
     <Content Include="Content\LMS\fonts\picto-foundry-vehicle-navigation.svg" />
     <Content Include="Content\LMS\fonts\picto-foundry-weather.svg" />
+    <Content Include="Content\LMS\guy-1.jpg" />
+    <Content Include="Content\LMS\guy-2.jpg" />
+    <Content Include="Content\LMS\guy-5.jpg" />
+    <Content Include="Content\LMS\guy-6.jpg" />
     <Content Include="Content\LMS\js\jplayer\addons\jquery.jplayer.swf" />
     <Content Include="Content\LMS\js\module-bundle-all.js" />
     <Content Include="Content\LMS\js\module-bundle-all.min.js" />

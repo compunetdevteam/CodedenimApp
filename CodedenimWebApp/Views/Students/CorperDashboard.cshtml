@@ -82,10 +82,32 @@
 
 
 @* ////////////////////////////////////////////// *@
+<!--StyleSheet1 created to add new style and overide some styles
+    - ioedeveloper
+    -->
 <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
 
  
 <div class="container">
+    <div class="parallax overflow-hidden bg-blue-400 page-section third" id="top-container2">
+        <div class="container parallax-layer" data-opacity="true" style="opacity: 1; transform: translate3d(0px, 0px, 0px);">
+            <div class="media v-middle">
+                <div class="media-left text-center">
+                    <a href="#">
+                        <img src="~/Content/LMS/guy-6.jpg" alt="people" class="img-circle width-80" />
+                        @*<img src="images/people/110/guy-6.jpg" >*@
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h1 class="text-white text-display-1 margin-v-0" style="color:#576071;">My Courses</h1>
+                    <!--<p class="text-subhead"><a class="link-white text-underline" href="website-student-public-profile.html" id="a-public-profile">View public profile</a></p>-->
+                </div>
+                <div class="media-right">
+                    <span class="label bg-blue-500">Corper</span>
+                </div>
+            </div>
+        </div>
+    </div>
 <div class="page-section">
 <div class="row">
     <div class="col-md-9">
@@ -109,7 +131,7 @@
             </div>
         </div>
         <div class="row" data-toggle="isotope" style="position: relative; height: 515.533px;">
-            <div class="item col-xs-12 col-sm-6 col-lg-4" style="position: absolute; left: 0px; top: 0px;">
+            <div class="item col-xs-12 col-sm-6 col-lg-4" style="position: absolute; left: 0px; top: 0px; z-index:0;">
                 <div class="panel panel-default paper-shadow" data-z="0.5">
                     <div class="cover overlay cover-image-full hover" style="height: 150px;">
                         <span class="img icon-block height-150 bg-purple"></span>
@@ -129,7 +151,7 @@
                     </div>
                     <hr class="margin-none">
                     <div class="panel-body">
-                        <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated="" href="#"><i class="fa fa-fw fa-angle-up"></i> 35% completed</a>
+                        <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated="" href="#"><i class="fa fa-fw fa-angle-up"></i> 35% complete</a>
                         <div class="progress">
                             <div class="progress-bar progress-bar-success" style="width: 35%"><span class="sr-only">35% Complete (success)</span></div>
 
@@ -157,7 +179,7 @@
                     </div>
                     <hr class="margin-none">
                     <div class="panel-body">
-                        <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated="" href="#"><i class="fa fa-fw fa-angle-up"></i>50% completed</a>
+                        <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated="" href="#"><i class="fa fa-fw fa-angle-up"></i>50% complete</a>
                         <div class="progress">
                             <div class="progress-bar progress-bar-success" style="width: 50%"><span class="sr-only">50% Complete (success)</span></div>
 
@@ -185,23 +207,11 @@
                     </div>
                     <hr class="margin-none">
                     <div class="panel-body">
-                        <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated="" href="#"><i class="fa fa-fw fa-angle-up"></i>100% completed</a>
+                        <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated="" href="#"><i class="fa fa-fw fa-angle-up"></i>100% complete</a>
                         <div class="progress">
                             <div class="progress-bar progress-bar-success" style="width: 100%"><span class="sr-only">100% Complete (success)</span></div>
 
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item col-xs-12 col-sm-6 col-lg-4" style="position: absolute; left: 0px; top: 345px;">
-                <div class="panel panel-default paper-shadow" data-z="0.5">
-                    <div class="cover overlay cover-image-full hover" style="height: 150px;">
-                        <span class="img icon-block height-150 bg-grey-200"></span>
-                        <a href="app-instructor-course-edit-course.html" class="padding-none overlay overlay-full icon-block bg-grey-200" style="height: 150px;">
-                            <span class="v-center">
-                                <i class="fa fa-plus text-grey-600"></i>
-                            </span>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -532,6 +542,143 @@
                                 </p>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="but_list">
+            <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                <ul id="myTab" class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true"><i class="fa fa-fw fa-comment-o" style="display:block;font-size:2em;margin: auto;"></i><span>Discussions</span></a></li>
+                    <li role="presentation" class=""><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false"><i class="fa fa-fw fa-bullhorn" style="display:block;font-size:2em;margin: auto;"></i><span>Announcements</span></a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
+                        <div class="col-md-8 col-lg-9">
+                            <div class="media media-grid media-paper-shadow margin-top-none s-container">
+                                <div class="media-left">
+                                    <div class="icon-block half img-circle bg-grey-300">
+                                        <i class="fa fa-file-text text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <div class="panel panel-default paper-shadow" data-z="0.5">
+                                        <div class="panel-body">
+                                            <div class="pull-right">
+                                                <a href="website-blog-post.html" class="btn btn-white btn-flat"><i class="fa fa-comments fa-fw"></i> 5</a>
+                                            </div>
+                                            <h4 class="text-title media-heading">
+                                                <a href="website-blog-post.html" class="link-text-color">Am I learning the right way?</a>
+                                            </h4>
+                                            <p class="text-light text-caption">
+                                                posted by
+                                                <a href="#">
+                                                    <img src="images/people/110/guy-6.jpg" alt="person" class="img-circle width-20"> Adrian Demian
+                                                </a> &nbsp; | <i class="fa fa-clock-o fa-fw"></i> 5 mins
+                                            </p>
+                                            <p class="text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aperiam atque deserunt, dicta eius, fuga id illo ipsa ipsam minus neque non sunt, vitae. Animi aperiam beatae blanditiis dicta dolore eaque, ex excepturi explicabo laudantium nobis nulla praesentium quia voluptatem.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="media media-grid media-paper-shadow margin-top-none s-container">
+                                <div class="media-left">
+                                    <div class="icon-block half img-circle bg-grey-300">
+                                        <i class="fa fa-file-text text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <div class="panel panel-default paper-shadow" data-z="0.5">
+                                        <div class="panel-body">
+                                            <div class="pull-right">
+                                                <a href="website-blog-post.html" class="btn btn-white btn-flat"><i class="fa fa-comments fa-fw"></i> 10</a>
+                                            </div>
+                                            <h4 class="text-title media-heading">
+                                                <a href="website-blog-post.html" class="link-text-color">Can someone help me? I need a design advice</a>
+                                            </h4>
+                                            <p class="text-light text-caption">
+                                                posted by
+                                                <a href="#">
+                                                    <img src="images/people/110/woman-6.jpg" alt="person" class="img-circle width-20"> Jennifer Hudson
+                                                </a> &nbsp; | <i class="fa fa-clock-o fa-fw"></i> 5 mins
+                                            </p>
+                                            <p class="text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aperiam atque deserunt, dicta eius, fuga id illo ipsa ipsam minus neque non sunt, vitae. Animi aperiam beatae blanditiis dicta dolore eaque, ex excepturi explicabo laudantium nobis nulla praesentium quia voluptatem.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="pagination margin-top-none">
+                                <li class=""><a href="#">See More</a></li>
+                               
+                            </ul>
+                            <br>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="media v-middle margin-v-0-10">
+                                    <div class="media-body">
+                                        <p class="text-subhead">
+                                            <a href="#">
+                                                <img src="~/Content/LMS/guy-5.jpg" alt="person" class="width-30 img-circle"/>
+                                            </a> &nbsp;
+                                            <a href="#">mosaicpro</a>
+                                            <span class="text-caption text-light">56 min ago</span>
+                                        </p>
+                                    </div>
+                                    <div class="media-right">
+                                        <div class="width-50 text-right">
+                                            <a href="#" class="btn btn-white btn-xs"><i class="fa fa-reply"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias, blanditiis eligendi expedita ipsam minus non numquam quidem reiciendis ut?</p>
+                                <p class="text-light"><span class="caption">Course:</span> <a href="app-student-course.html">Basics Of HTML</a></p>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="media v-middle margin-v-0-10">
+                                    <div class="media-body">
+                                        <p class="text-subhead">
+                                            <a href="#">
+                                                <img src="~/Content/LMS/guy-1.jpg" alt="person" class="width-30 img-circle"/>
+                                            </a> &nbsp;
+                                            <a href="#">mosaicpro</a>
+                                            <span class="text-caption text-light">8 min ago</span>
+                                        </p>
+                                    </div>
+                                    <div class="media-right">
+                                        <div class="width-50 text-right">
+                                            <a href="#" class="btn btn-white btn-xs"><i class="fa fa-reply"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias, blanditiis eligendi expedita ipsam minus non numquam quidem reiciendis ut?</p>
+                                <p class="text-light"><span class="caption">Course:</span> <a href="app-student-course.html">Basics Of HTML</a></p>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="media v-middle margin-v-0-10">
+                                    <div class="media-body">
+                                        <p class="text-subhead">
+                                            <a href="#">
+                                                <img src="~/Content/LMS/guy-5.jpg" alt="person" class="width-30 img-circle" />
+                                            </a> &nbsp;
+                                            <a href="#">mosaicpro</a>
+                                            <span class="text-caption text-light">56 min ago</span>
+                                        </p>
+                                    </div>
+                                    <div class="media-right">
+                                        <div class="width-50 text-right">
+                                            <a href="#" class="btn btn-white btn-xs"><i class="fa fa-reply"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias, blanditiis eligendi expedita ipsam minus non numquam quidem reiciendis ut?</p>
+                                <p class="text-light"><span class="caption">Course:</span> <a href="app-student-course.html">Basics Of HTML</a></p>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -59,6 +59,9 @@ h5 > a{
 .progress {
     height: 5px;
 }
+.grid_3 grid_5 {
+    margin-left:50px;
+}
 @media(min-width:1200px) {
     .container{
         width:1230px;
@@ -72,5 +75,8 @@ h5 > a{
     .parallax-layer{
         padding-left:10px;
         
+    }
+    #myTabContent{
+        height:420px;
     }
 }
