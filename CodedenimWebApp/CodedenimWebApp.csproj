@@ -253,8 +253,10 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountJson.cs" />
     <Compile Include="Controllers\Api\AccountApiController.cs" />
+    <Compile Include="Controllers\Api\ConvertEmail.cs" />
     <Compile Include="Controllers\Api\CourseCategoriesController.cs" />
     <Compile Include="Controllers\Api\CoursesController.cs" />
+    <Compile Include="Controllers\Api\EnrollForCoursesController.cs" />
     <Compile Include="Controllers\Api\ForumAnswersController.cs" />
     <Compile Include="Controllers\Api\ForumQuestions1Controller.cs" />
     <Compile Include="Controllers\Api\ForumQuestionsController.cs" />
@@ -267,6 +269,7 @@
     <Compile Include="Controllers\Api\TopicQuizsController.cs" />
     <Compile Include="Controllers\Api\TopicsController.cs" />
     <Compile Include="Controllers\Api\TutorsController.cs" />
+    <Compile Include="Controllers\AssignCourseCategories1Controller.cs" />
     <Compile Include="Controllers\AssignCourseCategoriesController.cs" />
     <Compile Include="Controllers\CodeGenController.cs" />
     <Compile Include="Controllers\CourseCategoriesController.cs" />
@@ -294,9 +297,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710101524407_added_RegularStudents.cs" />
-    <Compile Include="Migrations\201710101524407_added_RegularStudents.Designer.cs">
-      <DependentUpon>201710101524407_added_RegularStudents.cs</DependentUpon>
+    <Compile Include="Migrations\201710162111596_added_EnrollForCourse.cs" />
+    <Compile Include="Migrations\201710162111596_added_EnrollForCourse.Designer.cs">
+      <DependentUpon>201710162111596_added_EnrollForCourse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710162122260_changed_intTOString_on_EnrollForCourse.cs" />
+    <Compile Include="Migrations\201710162122260_changed_intTOString_on_EnrollForCourse.Designer.cs">
+      <DependentUpon>201710162122260_changed_intTOString_on_EnrollForCourse.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1121,8 +1128,11 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710101524407_added_RegularStudents.resx">
-      <DependentUpon>201710101524407_added_RegularStudents.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710162111596_added_EnrollForCourse.resx">
+      <DependentUpon>201710162111596_added_EnrollForCourse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710162122260_changed_intTOString_on_EnrollForCourse.resx">
+      <DependentUpon>201710162122260_changed_intTOString_on_EnrollForCourse.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

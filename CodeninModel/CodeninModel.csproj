@@ -110,6 +110,7 @@
     <Compile Include="CourseCategory.cs" />
     <Compile Include="CourseEnrollment.cs" />
     <Compile Include="CourseRating.cs" />
+    <Compile Include="EnrollForCourse.cs" />
     <Compile Include="Enrollment.cs" />
     <Compile Include="File.cs" />
     <Compile Include="FilePath.cs" />

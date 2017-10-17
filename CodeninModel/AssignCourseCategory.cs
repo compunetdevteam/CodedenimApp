@@ -14,6 +14,7 @@ namespace CodeninModel
         public int CourseCategoryId { get; set; }
         public virtual Course Courses { get; set; } 
         public virtual CourseCategory CourseCategory { get; set; }
+        public virtual StudentAssignedCourse StudentAssignedCourse { get; set; }
 
 
 

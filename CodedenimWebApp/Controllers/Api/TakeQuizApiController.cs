@@ -46,7 +46,7 @@ namespace CodedenimWebApp.Controllers.Api
         {
             if (ModelState.IsValid)
             {
-                var convert = new Convert();
+                var convert = new ConvertEmail();
                 var studentemail = convert.ConvertEmailToId(email);
                 var studentId = studentemail;
 

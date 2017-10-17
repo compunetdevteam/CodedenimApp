@@ -15,6 +15,7 @@ using System.Web.Mvc;
 
 namespace CodedenimWebApp.Controllers
 {
+
     public class CourseCategoriesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

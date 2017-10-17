@@ -14,50 +14,68 @@ using CodeninModel;
 
 namespace CodedenimWebApp.Controllers.Api
 {
+    [System.Web.Http.RoutePrefix("api/CourseCategories")]
     public class CourseCategoriesController : ApiController
     {
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
+        [HttpGet]
+        [System.Web.Http.Route("CourseCategorys")]
+        [ResponseType(typeof(CourseCategory))]
         // GET: api/CourseCategories
-        public IQueryable GetCourseCategories()
+        //
+        // these method will get all the courses based on the student type 
+        // either Corper , undergraduate or regular student|
+        // the query is performed based on the email perimeter coming into the method\\
+        public async Task<IHttpActionResult> CourseCategorys(string email)
         {
-                return _db.CourseCategories.Select(x => new
-                {
-                    x.CategoryName,
-                    x.CourseCategoryId,              
-                    
-                });
+             var studentEmail = new ConvertEmail1();
+            var studentId = studentEmail.ConvertEmailToId(email);
+            var studentType =  _db.Students.AsNoTracking().Where(x => x.StudentId.Equals(studentId)).Select(x => x.AccountType).FirstOrDefault();
+            var assignedCourses = await   _db.CourseCategories.AsNoTracking().Where(x => x.StudentType.Equals(studentType))
+                                  .ToListAsync();
+            return Ok( assignedCourses);
+            //return _db.CourseCategories.Select(x => new
+            //{
+            //    x.CategoryName,
+            //    x.CourseCategoryId,             
+
+            //});
         }
 
+        //this method gets the courses based on the categoryId that comes i 
+        // as a peremeter into the method
         // GET: api/CourseCategories/5
         [ResponseType(typeof(CourseCategory))]
         public async Task<IHttpActionResult> GetCourseCategory(int id)
         {
-        //    var courseCategory = await _db.Courses.Where(x => x.CourseCategoryId.Equals(id))
-        //                                                        .Select(x => new
-        //                                                        {
-        //                                                            x.CourseId,
-        //                                                            x.CourseCode,
-        //                                                            x.CourseDescription,
-        //                                                            x.FileLocation,
-        //                                                            x.CourseName,
-        //                                                            x.CourseCategoryId,
-        //                                                            x.ExpectedTime,
-        //                                                            x.CourseCategory.CategoryName
+            var courseCategory = await _db.AssignCourseCategories.Where(x => x.CourseCategoryId.Equals(id))
+                                                                .Select(x => new
+                                                                {
+                                                                  x.CourseId,
+                                                                    
+                                                                //    //x.CourseCode,
+                                                                //    //x.CourseDescription,
+                                                                //    //x.FileLocation,
+                                                                //    //x.CourseName,
+                                                                    x.CourseCategoryId,
+                                                                //  //  x.ExpectedTime,
+                                                                    x.CourseCategory.CategoryName
 
-        //                                                        }).ToListAsync();
+                                                                })
+                                                                .ToListAsync();
 
-        //    //var courseCategory = await db.CourseCategories.Where(x => x.CourseCategoryId.Equals(id))
-        //    //                            .Select(x => new
-        //    //                            {
-        //    //                                x.Courses
-        //    //                            }).ToListAsync();
-        //    if (courseCategory == null)
-        //    {
-        //        return NotFound();
-        //    }
+            //var courseCategory = await db.CourseCategories.Where(x => x.CourseCategoryId.Equals(id))
+            //                            .Select(x => new
+            //                            {
+            //                                x.Courses
+            //                            }).ToListAsync();
+            if (courseCategory == null)
+            {
+                return NotFound();
+            }
 
-            return Ok(/*courseCategory*/);
+            return Ok(courseCategory);
         }
 
         // PUT: api/CourseCategories/5

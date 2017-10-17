@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Net.Http;
@@ -425,7 +425,7 @@ namespace CodedenimWebApp.Controllers.Api
             return url;
         }
 
-        // POST api/Account/RegisterCorper
+        // POST api/Account/RegisterUnderGraduate
         [System.Web.Http.AllowAnonymous]
         [System.Web.Http.Route("RegisterUnderGraduate")]
         public async Task<IHttpActionResult> RegisterUnderGraduate([FromBody] RegisterUnderGrad model)
@@ -464,7 +464,7 @@ namespace CodedenimWebApp.Controllers.Api
             };
             _db.Students.Add(student);
             await _db.SaveChangesAsync();
-            await this.UserManager.AddToRoleAsync(user.Id, "UnderGraduate");
+            await this.UserManager.AddToRoleAsync(user.Id, RoleName.UnderGraduate);
 
             var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
             // var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);

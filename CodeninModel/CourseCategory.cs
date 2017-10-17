@@ -13,5 +13,6 @@ namespace CodeninModel
         public decimal Amount { get; set; }
         public string StudentType { get;set; }
         public virtual ICollection<StudentPayment> StudentPayments { get; set; }
-    }
+        public virtual ICollection<EnrollForCourse> EnrollForCourse { get; set; }
+       }
 }
