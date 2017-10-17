@@ -563,6 +563,7 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\paper-dashboard.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\StyleSheet1.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
