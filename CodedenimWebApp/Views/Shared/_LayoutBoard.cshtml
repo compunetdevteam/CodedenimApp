@@ -12,9 +12,10 @@
     <!----- Compressed Vendor BUNDLE
     Includes vendor (3rd party) styling such as the customized Bootstrap and other 3rd party libraries used for the current theme/module -->
     <link href="~/Content/LMS/css/vendor.min.css" rel="stylesheet">
-    
+
+    <link href="~/Content/LMS/css/tutorstepsindicator.css" rel="stylesheet" />
     <!-- Compressed Theme BUNDLE
-    Note: The bundle includes all the custom styling required for the current theme, however
+    Note: The bundle includes all the custom styling required for the current themwevere, ho
     it was tweaked for the current theme/module and does NOT include ALL of the standalone modules;
     The bundle was generated using modern frontend development tools that are provided with the package
     To learn more about the development process, please refer to the documentation. -->
@@ -40,8 +41,8 @@
    <link href="~/Content/LMS/css/module-colors-background.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-colors-buttons.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-colors-text.min.css" rel="stylesheet" />
-
     
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
     WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!-- If you don't need support for Internet Explorer <= 8 you can safely remove these -->
@@ -49,6 +50,7 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+   
 </head>
 <body>
 
@@ -366,26 +368,59 @@
 
 }
 //The View only the Tutor can see and access
+//This section was edited by KELECHI to reflect changes in the tutors navbar
 else if (Request.IsAuthenticated && User.IsInRole("Tutor"))
 {
 
    
     <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
+    
     <div class="sidebar left sidebar-size-1 sidebar-mini-reveal sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
-        <div data-scrollable>
-            <ul class="sidebar-menu">
-                <li class="active"><a href="@Url.Action("TutorDashboard", "Tutors")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
-
-                <li class="active"><a href="@Url.Action("Create", "ForumQuestions")"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
-                @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>
-            <li><a href="app-instructor-courses.html"><i class="fa fa-mortar-board"></i><span>My Courses</span></a></li>
-            <li><a href="app-instructor-earnings.html"><i class="fa fa-bar-chart-o"></i><span>Earnings</span></a></li>
-            <li><a href="app-instructor-statement.html"><i class="fa fa-dollar"></i><span>Statement</span></a></li>*@
-            </ul>
- 
         
-        </div>
+
+            <div data-scrollable>
+
+
+
+                <ul class="sidebar-menu">
+                    <li class="">
+                        <a class="collapsible-header waves-effect arrow-r"><i class="fa fa-code"></i> Creators<i class="fa fa-angle-down rotate-icon"></i></a>
+                        <div class="collapsible-body" style="display: none; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
+                            <ul>
+                                <li>
+                                    <a href="modals.html" class="waves-effect">Modals</a>
+                                </li>
+                                <li>
+                                    <a href="page-create.html" class="waves-effect">Create Page</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+
+
+
+
+
+                    <li class="active"><a href="@Url.Action("TutorDashboard", "Tutors")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
+                    
+                    <li class="active"><a href="#"><i class="fa fa-home"></i><span>Questions</span></a></li>
+                    <li class="active"><a href="#"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
+                    <li class="active"><a href="#"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
+                    <li class="active"><a href="#"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
+
+                    @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>
+                    <li><a href="app-instructor-courses.html"><i class="fa fa-mortar-board"></i><span>My Courses</span></a></li>
+                    <li><a href="app-instructor-earnings.html"><i class="fa fa-bar-chart-o"></i><span>Earnings</span></a></li>
+                    <li><a href="app-instructor-statement.html"><i class="fa fa-dollar"></i><span>Statement</span></a></li>*@
+                </ul>
+
+
+
+            </div>
+        
     </div>
+
     <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
 
 
@@ -393,7 +428,6 @@ else if (Request.IsAuthenticated && User.IsInRole("Tutor"))
 
 
 
-   
 }
 else if (Request.IsAuthenticated && User.IsInRole("Corper"))
 {
@@ -532,9 +566,7 @@ else if (Request.IsAuthenticated && User.IsInRole("UnderGraduate"))
 </div>
 <!-- /st-pusher -->
 <!-- Footer -->
-@*<footer class="footer">
-            <strong>Learning</strong> v1.0.0 &copy; Copyright 2015
-        </footer>*@
+
 
 <!-- // Footer -
 

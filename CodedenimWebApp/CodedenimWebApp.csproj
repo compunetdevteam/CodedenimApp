@@ -445,6 +445,7 @@
     <Content Include="Content\LMS\css\theme-bundle.min.css" />
     <Content Include="Content\LMS\css\theme-core.css" />
     <Content Include="Content\LMS\css\theme-core.min.css" />
+    <Content Include="Content\LMS\css\tutorstepsindicator.css" />
     <Content Include="Content\LMS\css\vendor.css" />
     <Content Include="Content\LMS\css\vendor.min.css" />
     <Content Include="Content\LMS\fonts\fontawesome-webfont.svg" />
