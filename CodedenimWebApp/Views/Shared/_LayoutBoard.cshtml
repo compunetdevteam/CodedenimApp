@@ -25,6 +25,7 @@
     As a convenience, we provide the entire UI framework broke down in separate modules
     Some of the standalone modules may have not been used with the current theme/module
     but ALL modules are 100% compatible -->
+    
     <link href="~/Content/LMS/css/module-essentials.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-material.min.css" rel="stylesheet" />
     <link href="~/Content/module-layout.min.css" rel="stylesheet" />
@@ -188,7 +189,7 @@
 
 {
 
-    <!-- Fixed navbar -->
+    <!-- Fixed navbar TopNav -->
     <div class="navbar navbar-size-large navbar-default navbar-fixed-top" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -199,7 +200,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <div class="navbar-brand navbar-brand-primary navbar-brand-logo navbar-nav-padding-left">
+                <div class="navbar-brand navbar-brand-primary navbar-brand-logo navbar-nav-padding-left" style="background-color:#38a829;">
+
+                    <h3 style="font-family:Comic Sans MS; color:ghostwhite;padding-left:18px;">CODE DENIM</h3>
 
                 </div>
             </div>
@@ -262,55 +265,60 @@
                     </li>
                     <!-- // END notifications -->
                     <!-- User -->
+                    
                     <li class="dropdown">
+                        <a href="#" class="dropdown-toggle user" data-toggle="dropdown">
 
-                        <img src="@Url.Content("~/Profile_Pics/" + ViewBag.AdminProfile)" alt="Bill" class="img-circle" width="40"/>
 
-                        @using Microsoft.AspNet.Identity
-                        @if (Request.IsAuthenticated)
-                        {
-                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm", @class = "navbar-right"}))
-                            {
-                                @Html.AntiForgeryToken()
-
-                                <ul>
-                                    <li>
-                                        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage"})
-                                    </li>
-                                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-                                </ul>
-                            }
-                        }
-                        else
-                        {
-                            <ul>
-                                <li>@Html.ActionLink("Register Tutor", "Create", "Tutors", routeValues: null, htmlAttributes: new {id = "registerLink"})</li>
-                                <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new {id = "loginLink"})</li>
-                            </ul>
-                        }
-
-                        <span class="caret"></span>
-
-                        <ul class="dropdown-menu" role="menu">
-                            @*<li><a href="app-student-profile.html">Account</a></li>*@
-                            <li><a href="@Url.Action("Index", "Manage")">My Profile</a></li>
+                            <img src="@Url.Content("~/Profile_Pics/" + ViewBag.AdminProfile)" alt="Bill" class="img-circle" width="40" />
+                            <span class="caret"></span>
+                        </a>
 
                             @using Microsoft.AspNet.Identity
                             @if (Request.IsAuthenticated)
                             {
-
-                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm", style = "padding:4px;"}))
+                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                                 {
                                     @Html.AntiForgeryToken()
-                                    <li>
-                                        <a href="javascript:document.getElementById('logoutForm').submit()">
 
-                                            <p style="padding-left: 10px; color: #000">Logout</p>
-                                        </a>
-                                    </li>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                                        </li>
+                                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                                    </ul>
                                 }
                             }
-                        </ul>
+                            else
+                            {
+                                <ul>
+                                    <li>@Html.ActionLink("Register Tutor", "Create", "Tutors", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                                    <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                                </ul>
+                            }
+
+                          @* <span class="caret"></span>*@ 
+
+                            <ul class="dropdown-menu" role="menu">
+                                @*<li><a href="app-student-profile.html">Account</a></li>*@
+                                <li><a href="@Url.Action("Index", "Manage")">My Profile</a></li>
+
+                                @using Microsoft.AspNet.Identity
+                                @if (Request.IsAuthenticated)
+                                {
+
+                                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", style = "padding:4px;" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li>
+                                            <a href="javascript:document.getElementById('logoutForm').submit()">
+
+                                                <p style="padding-left: 10px; color: #000">Logout</p>
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
                     </li>
                 </ul>
             </div>
@@ -319,15 +327,15 @@
     </div>
 
 
-
+    @* The Black SideBar Navigation is seen below*@
 
     <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
-        <div class="sidebar left sidebar-size-1 sidebar-mini-reveal sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
+        <div class="sidebar left sidebar-size-3 sidebar-mini-reveal sidebar-offset-0 sidebar-visible-desktop sidebar-invisible-mobile sidebar-skin-dark"style="color:white;" id="sidebar-menu" data-type="collapse">
         <div data-scrollable>
-            <ul class="sidebar-menu">   
-                <li class="active"><a href="@Url.Action("AdminDashboard", "Home")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
+            <ul class="sidebar-menu icon-right">   
+                <li class="active"><a href="@Url.Action("AdminDashboard", "Home")"><i class="fa fa-bar-chart-o"></i><span>Dashboard</span></a></li>
                 <li class="active"><a href="@Url.Action("Create", "Tutors")"><i class="fa fa-home"></i><span>Create Tutor</span></a></li>
-                <li class="active"><a href="@Url.Action("Create", "TutorCourses")"><i class="fa fa-home"></i><span>Assign Tutor A Subject</span></a></li>
+                <li class="active"><a href="@Url.Action("Create", "TutorCourses")"><i class="fa fa-home"></i><span>Assign Subject</span></a></li>
                 <li class="active"><a href="@Url.Action("Create", "Forum")"><i class="fa fa-home"></i><span>Create Forum</span></a></li>
                 <hr/>
                 @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>*@
