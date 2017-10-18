@@ -27,6 +27,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <Use64BitIISExpress />
+    <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -451,6 +452,7 @@
     <Content Include="Content\LMS\css\theme-bundle.min.css" />
     <Content Include="Content\LMS\css\theme-core.css" />
     <Content Include="Content\LMS\css\theme-core.min.css" />
+    <Content Include="Content\LMS\css\tutorstepsindicator.css" />
     <Content Include="Content\LMS\css\vendor.css" />
     <Content Include="Content\LMS\css\vendor.min.css" />
     <Content Include="Content\LMS\fonts\fontawesome-webfont.svg" />
@@ -655,17 +657,6 @@
     <Content Include="fonts\roboto\Roboto-Thin.woff" />
     <Content Include="fonts\roboto\Roboto-Thin.woff2" />
     <Content Include="fonts\roboto\Roboto-Thind41d.eot" />
-    <Content Include="MaterialUpload\511052.jpg" />
-    <Content Include="MaterialUpload\a-brief-history-of-computer-network-technology_513d9ec01fd40.png" />
-    <Content Include="MaterialUpload\Addition of single precision floating point numbers.mp4" />
-    <Content Include="MaterialUpload\Boolean Logic &amp; Logic Gates- Crash Course Computer Science #3.mp4" />
-    <Content Include="MaterialUpload\Camera.jpg" />
-    <Content Include="MaterialUpload\cloud-computing.jpg" />
-    <Content Include="MaterialUpload\CodeDemin.png" />
-    <Content Include="MaterialUpload\Codedenim.png" />
-    <Content Include="MaterialUpload\Data Management_ What Is Master Data Management %28Mdm%29.mp4" />
-    <Content Include="MaterialUpload\myfile.mp4" />
-    <Content Include="MaterialUpload\WhatsApp Image 2017-08-14 at 5.15.22 PM.jpeg" />
     <Content Include="Profile_Pics\Computer.jpg" />
     <Content Include="Profile_Pics\WhatsApp Image 2017-08-14 at 5.15.22 PM.jpeg" />
     <Content Include="Scripts\bootstrap.js" />
@@ -788,10 +779,6 @@
     <Content Include="Content\font-awesome-4.7.0\scss\_stacked.scss" />
     <Content Include="Content\font-awesome-4.7.0\scss\_variables.scss" />
     <Content Include="Content\.DS_Store" />
-    <Content Include="MaterialUpload\CIT class work.docx" />
-    <Content Include="MaterialUpload\Entity_Framework_Code_First_Succinctly.pdf" />
-    <Content Include="MaterialUpload\graduation vesese.docx" />
-    <Content Include="MaterialUpload\myfile" />
     <Content Include="Content\LMS\css\fonts\slick.eot" />
     <Content Include="Content\LMS\css\fonts\slick.ttf" />
     <Content Include="Content\LMS\css\fonts\slick.woff" />
@@ -847,7 +834,7 @@
     <Content Include="Content\LMS\fonts\picto-foundry-weather.ttf" />
     <Content Include="Content\LMS\fonts\picto-foundry-weather.woff" />
     <Content Include="Content\LMS\js\data\google_maps\markers.json" />
-    <Content Include="MaterialUpload\How a CPU Works.mp4" />
+    <Content Include="Codedenim Requirement\mobile app synopsis.pdf" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1-vsdoc.js" />
@@ -1085,6 +1072,7 @@
     <Content Include="Views\CourseCategories\CourseCategoryPayment.cshtml" />
     <Content Include="Views\Courses\MyCoursesAsync.cshtml" />
     <Content Include="Views\Courses\CategoryContent.cshtml" />
+    <Content Include="Views\Shared\_LayoutMainAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1092,6 +1080,7 @@
     <Folder Include="Content\StudentFiles\" />
     <Folder Include="Content\TutorFiles\" />
     <Folder Include="Controllers\Api\ForumApi\" />
+    <Folder Include="MaterialUpload\" />
     <Folder Include="ProfilePics\" />
     <Folder Include="uploads\" />
     <Folder Include="Views\MultipleButtonAttribute\" />
@@ -1107,7 +1096,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeninModel\CodeninModel.csproj">

@@ -451,7 +451,7 @@ namespace CodedenimWebApp.Controllers
                     //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your Tutor account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
                     //ViewBag.Link = callbackUrl;
                     TempData["UserMessage"] = $"Registration is Successful for {user.UserName}, Please Confirm Your Email to Login.";
-                    return View("ConfirmRegistration");
+                    return View("ConfirmTutorRegistration");
 
 
 
