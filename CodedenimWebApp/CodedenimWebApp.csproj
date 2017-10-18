@@ -396,10 +396,17 @@
     <Content Include="Content\compiled.min.css" />
     <Content Include="Content\customizer.min.css" />
     <Content Include="Content\img\Corpers.jpg" />
+    <Content Include="Content\img\Course1.png" />
+    <Content Include="Content\img\courses.png" />
+    <Content Include="Content\img\Courses1.png" />
     <Content Include="Content\img\loading %281%29.gif" />
     <Content Include="Content\img\loading.gif" />
     <Content Include="Content\img\NYSC.jpg" />
     <Content Include="Content\img\Others.jpg" />
+    <Content Include="Content\img\Student.jpg" />
+    <Content Include="Content\img\students.jpg" />
+    <Content Include="Content\img\Topics.png" />
+    <Content Include="Content\img\Tutor.jpg" />
     <Content Include="Content\img\UnderG.jpg" />
     <Content Include="Content\LMS\css\ajax-loader.gif" />
     <Content Include="Content\LMS\css\fonts\slick.svg" />
