@@ -26,7 +26,7 @@ namespace CodedenimWebApp.Controllers.Api
         //
         // these method will get all the courses based on the student type 
         // either Corper , undergraduate or regular student|
-        // the query is performed based on the email perimeter coming into the method\\
+        // the query is performed based on the email parameter coming into the method
         public async Task<IHttpActionResult> CourseCategorys(string email)
         {
              var studentEmail = new ConvertEmail1();
@@ -34,7 +34,7 @@ namespace CodedenimWebApp.Controllers.Api
             var studentType =  _db.Students.AsNoTracking().Where(x => x.StudentId.Equals(studentId)).Select(x => x.AccountType).FirstOrDefault();
             var assignedCourses = await   _db.CourseCategories.AsNoTracking().Where(x => x.StudentType.Equals(studentType))
                                   .ToListAsync();
-            return Ok( assignedCourses);
+            return Ok(assignedCourses);
             //return _db.CourseCategories.Select(x => new
             //{
             //    x.CategoryName,

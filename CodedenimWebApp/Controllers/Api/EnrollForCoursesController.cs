@@ -35,7 +35,8 @@ namespace CodedenimWebApp.Controllers.Api
 
             var studentEmail = new ConvertEmail1();
             var studentId = studentEmail.ConvertEmailToId(email);
-            var enrollCategoryId = db.EnrollForCourses.AsNoTracking().Where(x => x.StudentId.Equals(studentId)).Select(x => x.CourseCategoryId).FirstOrDefault();
+            var enrollCategoryId = db.EnrollForCourses.AsNoTracking().Where(x => x.StudentId.Equals(studentId))
+                                     .Select(x => x.CourseCategoryId).FirstOrDefault();
 
             var courses = await db.AssignCourseCategories.AsNoTracking()
                 .Where(x => x.CourseCategoryId.Equals(enrollCategoryId)).ToListAsync();
