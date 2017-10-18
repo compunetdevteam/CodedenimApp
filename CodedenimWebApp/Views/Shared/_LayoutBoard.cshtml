@@ -8,14 +8,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Learning</title>
-    
-    <link href="~/Content/LMS/css/vendor.min.css" rel="stylesheet">  
-    <link href="~/Content/LMS/css/theme-core.min.css" rel="stylesheet">
-    
+    <title>CodeDenim</title>
+    <!----- Compressed Vendor BUNDLE
+    Includes vendor (3rd party) styling such as the customized Bootstrap and other 3rd party libraries used for the current theme/module -->
+    <link href="~/Content/LMS/css/vendor.min.css" rel="stylesheet">
+
+    <link href="~/Content/LMS/css/tutorstepsindicator.css" rel="stylesheet" />
+    <!-- Compressed Theme BUNDLE
+    Note: The bundle includes all the custom styling required for the current themwevere, ho
+    it was tweaked for the current theme/module and does NOT include ALL of the standalone modules;
+    The bundle was generated using modern frontend development tools that are provided with the package
+    To learn more about the development process, please refer to the documentation. -->
+    <!-- <link href="LMS/css/theme.bundle.min.css" rel="stylesheet"> -->
+    <!-- Compressed Theme CORE
+    This variant is to be used when loading the separate styling modules -->
+    <link href="~/Content/LMS/css/theme-core.css" rel="stylesheet">
+    <!-- Standalone Modules
+    As a convenience, we provide the entire UI framework broke down in separate modules
+    Some of the standalone modules may have not been used with the current theme/module
+    but ALL modules are 100% compatible -->
     <link href="~/Content/LMS/css/module-essentials.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-material.min.css" rel="stylesheet" />
-    <link href="~/Content/LMS/css/module-layout.min.css" rel="stylesheet" />
+    <link href="~/Content/module-layout.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-sidebar.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-sidebar-skins.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-navbar.min.css" rel="stylesheet" />
@@ -23,17 +37,20 @@
     <link href="~/Content/LMS/css/module-carousel-slick.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-charts.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-maps.min.css" rel="stylesheet" />
-    <link href="~/Content/LMS/css/module-colors-alerts.min.css" rel="stylesheet" />
-    <link href="~/Content/LMS/css/module-colors-background.min.css" rel="stylesheet" />
+    <link href="~/Content/module-colors-alerts.min.css" rel="stylesheet" />
+   <link href="~/Content/LMS/css/module-colors-background.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-colors-buttons.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-colors-text.min.css" rel="stylesheet" />
+    
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
     WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!-- If you don't need support for Internet Explorer <= 8 you can safely remove these -->
-    <!--[if lt IE 9]>
+    <!--[if lt IE 9] >
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+   
 </head>
 <body>
 
@@ -63,7 +80,7 @@
                         <i class="fa fa-bell-o"></i>
                         <span class="badge badge-primary">4</span>
                     </a>
-                    <ul class="dropdown-menu" role="">
+                    <ul class="dropdown-menu" role="notification">
                         <li class="dropdown-header">Notifications</li>
                         <li class="media">
                             <div class="pull-right">
@@ -134,6 +151,7 @@
                             else
                             {
                                 <ul>
+                                   
                                     <li>@Html.ActionLink("Register Tutor", "Create", "Tutors", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
                                     <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
                                 </ul>
@@ -187,8 +205,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <div class="navbar-brand navbar-brand-primary navbar-brand-logo navbar-nav-padding-left" style="background: #093;width:152%">
-                    <h3 class="text-center">CodeDenim</h3>
+                <div class="navbar-brand navbar-brand-primary navbar-brand-logo navbar-nav-padding-left">
+
                 </div>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -314,48 +332,33 @@
         <div data-scrollable>
             <ul class="sidebar-menu sm-icons-right">   
                 <li class="active"><a href="@Url.Action("AdminDashboard", "Home")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
-                <li class="active"><a href="@Url.Action("Create", "Tutors")"><i class="fa fa-user"></i><span>Create Tutor</span></a></li>
-                <li class="active"><a href="@Url.Action("Create", "TutorCourses")"><i class="fa fa-home"></i><span>Assign Subject</span></a></li>
+                @*<li class="active"><a href="@Url.Action("Create", "Tutors")"><i class="fa fa-home"></i><span>Create Tutor</span></a></li>*@
+                <li class="active"><a href="#createTutor" data-toggle="modal" data-target="#createTutor"><i class="fa fa-user-plus"></i><span>Create Tutor</span></a></li>
+                <li class="active"><a href="@Url.Action("Create", "TutorCourses")"><i class="fa fa-user"></i><span>Assign Course</span></a></li>
                 <li class="active"><a href="@Url.Action("Create", "Forum")"><i class="fa fa-forumbee"></i><span>Create Forum</span></a></li>
-                
+                <hr/>
                 @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>*@
-                <li class="active"><a href="@Url.Action("Create", "CourseCategories")"><i class="fa fa-mortar-board"></i><span>Create Category</span></a></li>
-                <li class="active"><a href="@Url.Action("Create", "AssignCourseCategories")"><i class="fa fa-mortar-board"></i><span>Assign Category</span></a></li>
+                <li><a href="@Url.Action("Create", "CourseCategories")"><i class="fa fa-folder"></i><span>Courses Category</span></a></li>
 
-                <li class="active"><a href="@Url.Action("Create", "Courses")"><i class="fa fa-bar-chart-o"></i><span>Create Courses</span></a></li>
-                <li class="active"><a href="@Url.Action("Create", "Modules")"><i class="fa fa-dollar"></i><span>Create Modules</span></a></li>
-                <li class="active"><a href="@Url.Action("Create", "Topics")"><i class="fa fa-dollar"></i><span>Create Topics</span></a></li>
-                <li class="active"><a href="@Url.Action("Create", "TopicMaterialUploads")"><i class="fa fa-dollar"></i><span>Create Topics Materials</span></a></li>
+                @*Commented out By Johnson*@
+                @*<li><a href="@Url.Action("Create", "AssignCourseCategories")"><i class="fa fa-mortar-board"></i><span>Assign Courses Category</span></a></li>*@
 
-                <li class="active"><a href="@Url.Action("Create", "QuizRules")"><i class="fa fa-list"></i><span>Quiz Rules</span></a></li>
-                <li class="active"><a href="@Url.Action("Create", "TopicQuizs")"><i class="fa fa-list"></i><span>Set Quiz</span></a></li>
+                <li><a href="@Url.Action("Create", "Courses")"><i class="fa fa-book"></i><span>Create Courses</span></a></li>
+                <li><a href="@Url.Action("Create", "Modules")"><i class="fa fa-pencil-square"></i><span>Create Modules</span></a></li>
+                <li><a href="@Url.Action("Create", "Topics")"><i class="fa fa-bookmark"></i><span>Create Topics</span></a></li>
+                <li><a href="@Url.Action("Create", "TopicMaterialUploads")"><i class="fa fa-leaf"></i><span>Create Materials</span></a></li>
+
+
                 <hr/>
-                <li class="active"><a href="@Url.Action("Create", "PaymentTypes")"><i class="fa fa-dollar"></i><span>Set Payements Amount</span></a></li>
+                <li><a href="@Url.Action("Create", "TopicQuizs")"><i class="fa fa-question-circle"></i><span>Set Quiz</span></a></li>
+                <li><a href="@Url.Action("Create", "QuizRules")"><i class="fa fa-question"></i><span>Quiz Rules</span></a></li>
+                
+
+                <hr/>
+                <li><a href="@Url.Action("Create", "PaymentTypes")"><i class="fa fa-money"></i><span>Set Payments</span></a></li>
                 <hr/>
             </ul>
-        </div>  
-         </div>
-    <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
-
-
-}
-//The View only the Tutor can see and access
-else if (Request.IsAuthenticated && User.IsInRole("Tutor"))
-{
-
-   
-    <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
-    <div class="sidebar left sidebar-size-1 sidebar-mini-reveal sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
-        <div data-scrollable>
-            <ul class="sidebar-menu">
-                <li class="active"><a href="@Url.Action("TutorDashboard", "Tutors")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
-
-                <li class="active"><a href="@Url.Action("Create", "ForumQuestions")"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
-                @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>
-            <li><a href="app-instructor-courses.html"><i class="fa fa-mortar-board"></i><span>My Courses</span></a></li>
-            <li><a href="app-instructor-earnings.html"><i class="fa fa-bar-chart-o"></i><span>Earnings</span></a></li>
-            <li><a href="app-instructor-statement.html"><i class="fa fa-dollar"></i><span>Statement</span></a></li>*@
-            </ul>
+           
  
         
         </div>
@@ -363,11 +366,68 @@ else if (Request.IsAuthenticated && User.IsInRole("Tutor"))
     <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
 
 
-
-
-
+}
+//The View only the Tutor can see and access
+//This section was edited by KELECHI to reflect changes in the tutors navbar
+else if (Request.IsAuthenticated && User.IsInRole("Tutor"))
+{
 
    
+    <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
+    
+    <div class="sidebar left sidebar-size-1 sidebar-mini-reveal sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
+        
+
+            <div data-scrollable>
+
+
+
+                <ul class="sidebar-menu">
+                    <li class="">
+                        <a class="collapsible-header waves-effect arrow-r"><i class="fa fa-code"></i> Creators<i class="fa fa-angle-down rotate-icon"></i></a>
+                        <div class="collapsible-body" style="display: none; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
+                            <ul>
+                                <li>
+                                    <a href="modals.html" class="waves-effect">Modals</a>
+                                </li>
+                                <li>
+                                    <a href="page-create.html" class="waves-effect">Create Page</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+
+
+
+
+
+                    <li class="active"><a href="@Url.Action("TutorDashboard", "Tutors")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
+                    
+                    <li class="active"><a href="#"><i class="fa fa-home"></i><span>Questions</span></a></li>
+                    <li class="active"><a href="#"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
+                    <li class="active"><a href="#"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
+                    <li class="active"><a href="#"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
+
+                    @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>
+                    <li><a href="app-instructor-courses.html"><i class="fa fa-mortar-board"></i><span>My Courses</span></a></li>
+                    <li><a href="app-instructor-earnings.html"><i class="fa fa-bar-chart-o"></i><span>Earnings</span></a></li>
+                    <li><a href="app-instructor-statement.html"><i class="fa fa-dollar"></i><span>Statement</span></a></li>*@
+                </ul>
+
+
+
+            </div>
+        
+    </div>
+
+    <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
+
+
+
+
+
+
 }
 else if (Request.IsAuthenticated && User.IsInRole("Corper"))
 {
@@ -494,7 +554,7 @@ else if (Request.IsAuthenticated && User.IsInRole("UnderGraduate"))
 
 }
 
-<div style="padding-left: 15%;" class="col-md-12">
+<div class="col-md-12">
     
     
     
@@ -506,9 +566,7 @@ else if (Request.IsAuthenticated && User.IsInRole("UnderGraduate"))
 </div>
 <!-- /st-pusher -->
 <!-- Footer -->
-@*<footer class="footer">
-            <strong>Learning</strong> v1.0.0 &copy; Copyright 2015
-        </footer>*@
+
 
 <!-- // Footer -
 
@@ -582,5 +640,50 @@ ONLY when using the standalone modules; -->
 <script src="~/Content/LMS/js/theme-core.min.js"></script>
 
 @RenderSection("scripts", required: false)
+
+    <!--MODALS-->
+    <!-- Modal For Department -->
+
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="createTutor" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Create Tutor</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row mt">
+                        <div class="col-lg-12">
+                            <div class="form-panel">
+
+                                <form class="" id="addDepartment" action="/OfficeManagementSystem/public/user/addNewDepartment" method="POST" role="form">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="exampleInputPassword2">Task</label>
+                                        <input type="text" name="department" class="form-control" id="exampleInputLastname" autocomplete="off" placeholder="Enter TutorId" required="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="exampleInputPassword2">Task</label>
+                                        <input type="text" name="department" class="form-control" id="exampleInputLastname" autocomplete="off" placeholder="Tutor FirstName" required="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="exampleInputPassword2">Task</label>
+                                        <input type="text" name="department" class="form-control" id="exampleInputLastname" autocomplete="off" placeholder="Tutor LastName" required="">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Create Tutor</button>
+                                    </div>
+                                </form>
+                            </div><!-- /form-panel -->
+                        </div><!-- /col-lg-12 -->
+                    </div><!-- /row -->
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Department Modal1 ENDS-->
 </body>
 </html>

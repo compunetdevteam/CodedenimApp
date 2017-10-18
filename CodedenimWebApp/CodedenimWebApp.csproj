@@ -450,6 +450,7 @@
     <Content Include="Content\LMS\css\theme-bundle.min.css" />
     <Content Include="Content\LMS\css\theme-core.css" />
     <Content Include="Content\LMS\css\theme-core.min.css" />
+    <Content Include="Content\LMS\css\tutorstepsindicator.css" />
     <Content Include="Content\LMS\css\vendor.css" />
     <Content Include="Content\LMS\css\vendor.min.css" />
     <Content Include="Content\LMS\fonts\fontawesome-webfont.svg" />
@@ -1077,6 +1078,7 @@
     <Content Include="Views\CourseCategories\CourseCategoryPayment.cshtml" />
     <Content Include="Views\Courses\MyCoursesAsync.cshtml" />
     <Content Include="Views\Courses\CategoryContent.cshtml" />
+    <Content Include="Views\Shared\_LayoutMainAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1100,7 +1102,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeninModel\CodeninModel.csproj">
