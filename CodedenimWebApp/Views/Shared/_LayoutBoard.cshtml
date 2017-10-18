@@ -9,25 +9,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Learning</title>
-    <!-- Compressed Vendor BUNDLE
-    Includes vendor (3rd party) styling such as the customized Bootstrap and other 3rd party libraries used for the current theme/module -->
-    <link href="~/Content/LMS/css/vendor.min.css" rel="stylesheet">
-    <!-- Compressed Theme BUNDLE
-    Note: The bundle includes all the custom styling required for the current theme, however
-    it was tweaked for the current theme/module and does NOT include ALL of the standalone modules;
-    The bundle was generated using modern frontend development tools that are provided with the package
-    To learn more about the development process, please refer to the documentation. -->
-    <!-- <link href="LMS/css/theme.bundle.min.css" rel="stylesheet"> -->
-    <!-- Compressed Theme CORE
-    This variant is to be used when loading the separate styling modules -->
+    
+    <link href="~/Content/LMS/css/vendor.min.css" rel="stylesheet">  
     <link href="~/Content/LMS/css/theme-core.min.css" rel="stylesheet">
-    <!-- Standalone Modules
-    As a convenience, we provide the entire UI framework broke down in separate modules
-    Some of the standalone modules may have not been used with the current theme/module
-    but ALL modules are 100% compatible -->
+    
     <link href="~/Content/LMS/css/module-essentials.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-material.min.css" rel="stylesheet" />
-    <link href="~/Content/module-layout.min.css" rel="stylesheet" />
+    <link href="~/Content/LMS/css/module-layout.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-sidebar.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-sidebar-skins.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-navbar.min.css" rel="stylesheet" />
@@ -35,7 +23,7 @@
     <link href="~/Content/LMS/css/module-carousel-slick.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-charts.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-maps.min.css" rel="stylesheet" />
-    <link href="~/Content/module-colors-alerts.min.css" rel="stylesheet" />
+    <link href="~/Content/LMS/css/module-colors-alerts.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-colors-background.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-colors-buttons.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-colors-text.min.css" rel="stylesheet" />
@@ -75,7 +63,7 @@
                         <i class="fa fa-bell-o"></i>
                         <span class="badge badge-primary">4</span>
                     </a>
-                    <ul class="dropdown-menu" role="notification">
+                    <ul class="dropdown-menu" role="">
                         <li class="dropdown-header">Notifications</li>
                         <li class="media">
                             <div class="pull-right">
@@ -199,8 +187,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <div class="navbar-brand navbar-brand-primary navbar-brand-logo navbar-nav-padding-left">
-
+                <div class="navbar-brand navbar-brand-primary navbar-brand-logo navbar-nav-padding-left" style="background: #093;width:152%">
+                    <h3 class="text-center">CodeDenim</h3>
                 </div>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -324,36 +312,29 @@
     <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
         <div class="sidebar left sidebar-size-1 sidebar-mini-reveal sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
         <div data-scrollable>
-            <ul class="sidebar-menu">   
+            <ul class="sidebar-menu sm-icons-right">   
                 <li class="active"><a href="@Url.Action("AdminDashboard", "Home")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
-                <li class="active"><a href="@Url.Action("Create", "Tutors")"><i class="fa fa-home"></i><span>Create Tutor</span></a></li>
-                <li class="active"><a href="@Url.Action("Create", "TutorCourses")"><i class="fa fa-home"></i><span>Assign Tutor A Subject</span></a></li>
-                <li class="active"><a href="@Url.Action("Create", "Forum")"><i class="fa fa-home"></i><span>Create Forum</span></a></li>
-                <hr/>
+                <li class="active"><a href="@Url.Action("Create", "Tutors")"><i class="fa fa-user"></i><span>Create Tutor</span></a></li>
+                <li class="active"><a href="@Url.Action("Create", "TutorCourses")"><i class="fa fa-home"></i><span>Assign Subject</span></a></li>
+                <li class="active"><a href="@Url.Action("Create", "Forum")"><i class="fa fa-forumbee"></i><span>Create Forum</span></a></li>
+                
                 @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>*@
-                <li><a href="@Url.Action("Create", "CourseCategories")"><i class="fa fa-mortar-board"></i><span>Create Courses Category</span></a></li>
-                <li><a href="@Url.Action("Create", "AssignCourseCategories")"><i class="fa fa-mortar-board"></i><span>Assign Courses Category</span></a></li>
+                <li class="active"><a href="@Url.Action("Create", "CourseCategories")"><i class="fa fa-mortar-board"></i><span>Create Category</span></a></li>
+                <li class="active"><a href="@Url.Action("Create", "AssignCourseCategories")"><i class="fa fa-mortar-board"></i><span>Assign Category</span></a></li>
 
-                <li><a href="@Url.Action("Create", "Courses")"><i class="fa fa-bar-chart-o"></i><span>Create Courses</span></a></li>
-                <li><a href="@Url.Action("Create", "Modules")"><i class="fa fa-dollar"></i><span>Create Modules</span></a></li>
-                <li><a href="@Url.Action("Create", "Topics")"><i class="fa fa-dollar"></i><span>Create Topics</span></a></li>
-                <li><a href="@Url.Action("Create", "TopicMaterialUploads")"><i class="fa fa-dollar"></i><span>Create Topics Materials</span></a></li>
+                <li class="active"><a href="@Url.Action("Create", "Courses")"><i class="fa fa-bar-chart-o"></i><span>Create Courses</span></a></li>
+                <li class="active"><a href="@Url.Action("Create", "Modules")"><i class="fa fa-dollar"></i><span>Create Modules</span></a></li>
+                <li class="active"><a href="@Url.Action("Create", "Topics")"><i class="fa fa-dollar"></i><span>Create Topics</span></a></li>
+                <li class="active"><a href="@Url.Action("Create", "TopicMaterialUploads")"><i class="fa fa-dollar"></i><span>Create Topics Materials</span></a></li>
 
-
+                <li class="active"><a href="@Url.Action("Create", "QuizRules")"><i class="fa fa-list"></i><span>Quiz Rules</span></a></li>
+                <li class="active"><a href="@Url.Action("Create", "TopicQuizs")"><i class="fa fa-list"></i><span>Set Quiz</span></a></li>
                 <hr/>
-
-                <li><a href="@Url.Action("Create", "QuizRules")"><i class="fa fa-dollar"></i><span>Quiz Rules</span></a></li>
-                <li><a href="@Url.Action("Create", "TopicQuizs")"><i class="fa fa-dollar"></i><span>Set Quiz</span></a></li>
-
-                <hr/>
-                <li><a href="@Url.Action("Create", "PaymentTypes")"><i class="fa fa-dollar"></i><span>Set Payements Amount</span></a></li>
+                <li class="active"><a href="@Url.Action("Create", "PaymentTypes")"><i class="fa fa-dollar"></i><span>Set Payements Amount</span></a></li>
                 <hr/>
             </ul>
-            <li><a href="app-student-dashboard.html"><i class="fa fa-bar-chart-o"></i><span>Dashboard</span></a></li>
- 
-        
-        </div>
-    </div>
+        </div>  
+         </div>
     <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
 
 
