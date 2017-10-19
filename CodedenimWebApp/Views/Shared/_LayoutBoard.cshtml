@@ -285,9 +285,9 @@
 
                                 <ul>
                                     <li>
-                                        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage"})
+                                        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage", style="color:white"})
                                     </li>
-                                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                                    <li><a href="javascript:document.getElementById('logoutForm').submit()" style="color: #ffffff">Log off</a></li>
                                 </ul>
                             }
                         }
@@ -337,7 +337,7 @@
             <ul class="sidebar-menu sm-icons-right">   
                 <li class="active"><a href="@Url.Action("AdminDashboard", "Home")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
                 @*<li class="active"><a href="@Url.Action("Create", "Tutors")"><i class="fa fa-home"></i><span>Create Tutor</span></a></li>*@
-                <li class="active"><a href="#createTutor" data-toggle="modal" data-target="#createTutor"><i class="fa fa-user-plus"></i><span>Create Tutor</span></a></li>
+                <li class="active"><a href="@Url.Action("Create","Tutors")"><i class="fa fa-user-plus"></i><span>Create Tutor</span></a></li>
                 <li class="active"><a href="@Url.Action("Create", "TutorCourses")"><i class="fa fa-user"></i><span>Assign Course</span></a></li>
                 <li class="active"><a href="@Url.Action("Create", "Forum")"><i class="fa fa-forumbee"></i><span>Create Forum</span></a></li>
                 <hr/>
