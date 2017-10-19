@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /CodedenimWebApp/MaterialUpload
+/CodedenimWebApp/App_Data/aspnet-Codedenim

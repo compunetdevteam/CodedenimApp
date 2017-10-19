@@ -195,7 +195,7 @@
 {
 
     <!-- Fixed navbar -->
-    <div class="navbar navbar-size-large navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-size-large navbar-default navbar-fixed-top" role="navigation" style="background: #093">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a href="#sidebar-menu" data-toggle="sidebar-menu" class="toggle pull-left visible-xs"><i class="fa fa-ellipsis-v"></i></a>
@@ -205,10 +205,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <div class="navbar-brand navbar-brand-primary navbar-brand-logo navbar-nav-padding-left">
-
+                <div class="navbar-brand navbar-brand-primary navbar-brand-logo navbar-nav-padding-left" style="background: #fff;width:200px">
+                    <h4 style="color: #093">
+                        <img src="~/Content/img/CodeDemin.png" height="50" width="100" />
+                        CodeDenim
+                    </h4>
                 </div>
             </div>
+
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="main-nav">
 
@@ -334,57 +338,8 @@
                 <li class="active"><a href="@Url.Action("AdminDashboard", "Home")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
                 @*<li class="active"><a href="@Url.Action("Create", "Tutors")"><i class="fa fa-home"></i><span>Create Tutor</span></a></li>*@
                 <li class="active"><a href="#createTutor" data-toggle="modal" data-target="#createTutor"><i class="fa fa-user-plus"></i><span>Create Tutor</span></a></li>
-                <li class="active"><a href="#"><i class="fa fa-user"></i><span>Assign Course</span></a></li>
-                <li class="active"><a href="#"><i class="fa fa-forumbee"></i><span> Forum Questions</span></a></li>
-                <hr/>
-                @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>*@
-                <li><a href="#"><i class="fa fa-folder"></i><span>Courses Category</span></a></li>
-
-                @*Commented out By Johnson*@
-                @*<li><a href="@Url.Action("Create", "AssignCourseCategories")"><i class="fa fa-mortar-board"></i><span>Assign Courses Category</span></a></li>*@
-
-                <li><a href="#"><i class="fa fa-book"></i><span>Create Courses</span></a></li>
-                <li><a href="#"><i class="fa fa-pencil-square"></i><span>Create Modules</span></a></li>
-                <li><a href="#"><i class="fa fa-bookmark"></i><span>Create Topics</span></a></li>
-                <li><a href="#"><i class="fa fa-leaf"></i><span>Create Materials</span></a></li>
-
-
-                <hr/>
-                <li><a href="#"><i class="fa fa-question-circle"></i><span>Create Quiz</span></a></li>
-                <li><a href="#"><i class="fa fa-question"></i><span>Quiz Rules</span></a></li>
-                
-
-                <hr/>
-                <li><a href="@Url.Action("Create", "PaymentTypes")"><i class="fa fa-money"></i><span>Set Payments</span></a></li>
-                <hr/>
-            </ul>
-           
- 
-        
-        </div>
-    </div>
-    <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
-
-
-}
-//The View only the Tutor can see and access
-//This section was edited by KELECHI to reflect changes in the tutors navbar
-
-
-else if (Request.IsAuthenticated && User.IsInRole("Tutor"))
-{
-
-   
-    <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
-    <div class="sidebar left sidebar-size-1 sidebar-mini-reveal sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
-        <div data-scrollable>
-            <ul class="sidebar-menu sm-icons-right">   
-                <li class="active"><a href="@Url.Action("TutorDashboard", "Tutors")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
-                @*<li class="active"><a href="@Url.Action("Create", "Tutors")"><i class="fa fa-home"></i><span>Create Tutor</span></a></li>*@
-                <li class="active"><a href="#createTutor" data-toggle="modal" data-target="#createTutor"><i class="fa fa-user-plus"></i><span>Create Tutor</span></a></li>
                 <li class="active"><a href="@Url.Action("Create", "TutorCourses")"><i class="fa fa-user"></i><span>Assign Course</span></a></li>
                 <li class="active"><a href="@Url.Action("Create", "Forum")"><i class="fa fa-forumbee"></i><span>Create Forum</span></a></li>
-                <li class="active"><a href="@Url.Action("TutorDashboard", "Tutors")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
                 <hr/>
                 @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>*@
                 <li><a href="@Url.Action("Create", "CourseCategories")"><i class="fa fa-folder"></i><span>Courses Category</span></a></li>
@@ -412,10 +367,69 @@ else if (Request.IsAuthenticated && User.IsInRole("Tutor"))
         
         </div>
     </div>
+    <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
 
 
+}
+//The View only the Tutor can see and access
+//This section was edited by KELECHI to reflect changes in the tutors navbar
+else if (Request.IsAuthenticated && User.IsInRole("Tutor"))
+{
+
+   
+    <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
+    
+    <div class="sidebar left sidebar-size-1 sidebar-mini-reveal sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
+        
+
+            <div data-scrollable>
+
+
+
+                <ul class="sidebar-menu">
+                    <li class="">
+                        <a class="collapsible-header waves-effect arrow-r"><i class="fa fa-code"></i> Creators<i class="fa fa-angle-down rotate-icon"></i></a>
+                        <div class="collapsible-body" style="display: none; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
+                            <ul>
+                                <li>
+                                    <a href="modals.html" class="waves-effect">Modals</a>
+                                </li>
+                                <li>
+                                    <a href="page-create.html" class="waves-effect">Create Page</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+
+
+
+
+
+                    <li class="active"><a href="@Url.Action("TutorDashboard", "Tutors")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
+                    
+                    <li class="active"><a href="#"><i class="fa fa-home"></i><span>Questions</span></a></li>
+                    <li class="active"><a href="#"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
+                    <li class="active"><a href="#"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
+                    <li class="active"><a href="#"><i class="fa fa-home"></i><span>Ask Question</span></a></li>
+
+                    @*<li><a href="app-instructor-messages.html"><i class="fa fa-paper-plane"></i><span>Messages</span></a></li>
+                    <li><a href="app-instructor-courses.html"><i class="fa fa-mortar-board"></i><span>My Courses</span></a></li>
+                    <li><a href="app-instructor-earnings.html"><i class="fa fa-bar-chart-o"></i><span>Earnings</span></a></li>
+                    <li><a href="app-instructor-statement.html"><i class="fa fa-dollar"></i><span>Statement</span></a></li>*@
+                </ul>
+
+
+
+            </div>
+        
+    </div>
 
     <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
+
+
+
+
 
 
 }
@@ -544,10 +558,11 @@ else if (Request.IsAuthenticated && User.IsInRole("UnderGraduate"))
 
 }
 
-@*<div class="col-md-12 ">
-      
-</div>*@
+<div class="col-md-12" style="margin-left:15%">
+   
+
     @RenderBody()
+</div>
 <!-- /st-pusher -->
 <!-- Footer -->
 
