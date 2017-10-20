@@ -195,7 +195,7 @@
 {
 
     <!-- Fixed navbar -->
-    <div class="navbar navbar-size-large navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-size-large navbar-default navbar-fixed-top" role="navigation" style="background: #093">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a href="#sidebar-menu" data-toggle="sidebar-menu" class="toggle pull-left visible-xs"><i class="fa fa-ellipsis-v"></i></a>
@@ -205,10 +205,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <div class="navbar-brand navbar-brand-primary navbar-brand-logo navbar-nav-padding-left">
-
+                <div class="navbar-brand navbar-brand-primary navbar-brand-logo navbar-nav-padding-left" style="background: #fff;width:200px">
+                    <h4 style="color: #093">
+                        <img src="~/Content/img/CodeDemin.png" height="50" width="100" />
+                        CodeDenim
+                    </h4>
                 </div>
             </div>
+
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="main-nav">
 
@@ -281,9 +285,9 @@
 
                                 <ul>
                                     <li>
-                                        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage"})
+                                        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage", style="color:white"})
                                     </li>
-                                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                                    <li><a href="javascript:document.getElementById('logoutForm').submit()" style="color: #ffffff">Log off</a></li>
                                 </ul>
                             }
                         }
@@ -333,7 +337,7 @@
             <ul class="sidebar-menu sm-icons-right">   
                 <li class="active"><a href="@Url.Action("AdminDashboard", "Home")"><i class="fa fa-home"></i><span>Dashboard</span></a></li>
                 @*<li class="active"><a href="@Url.Action("Create", "Tutors")"><i class="fa fa-home"></i><span>Create Tutor</span></a></li>*@
-                <li class="active"><a href="#createTutor" data-toggle="modal" data-target="#createTutor"><i class="fa fa-user-plus"></i><span>Create Tutor</span></a></li>
+                <li class="active"><a href="@Url.Action("Create","Tutors")"><i class="fa fa-user-plus"></i><span>Create Tutor</span></a></li>
                 <li class="active"><a href="@Url.Action("Create", "TutorCourses")"><i class="fa fa-user"></i><span>Assign Course</span></a></li>
                 <li class="active"><a href="@Url.Action("Create", "Forum")"><i class="fa fa-forumbee"></i><span>Create Forum</span></a></li>
                 <hr/>
@@ -383,19 +387,7 @@ else if (Request.IsAuthenticated && User.IsInRole("Tutor"))
 
 
                 <ul class="sidebar-menu">
-                    <li class="">
-                        <a class="collapsible-header waves-effect arrow-r"><i class="fa fa-code"></i> Creators<i class="fa fa-angle-down rotate-icon"></i></a>
-                        <div class="collapsible-body" style="display: none; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
-                            <ul>
-                                <li>
-                                    <a href="modals.html" class="waves-effect">Modals</a>
-                                </li>
-                                <li>
-                                    <a href="page-create.html" class="waves-effect">Create Page</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                    
 
 
 
@@ -554,13 +546,8 @@ else if (Request.IsAuthenticated && User.IsInRole("UnderGraduate"))
 
 }
 
-<div class="col-md-12">
-    
-    
-    
-  
-
-    
+<div class="col-md-10 col-lg-pull-1" style="margin-left:15%">
+   
 
     @RenderBody()
 </div>
