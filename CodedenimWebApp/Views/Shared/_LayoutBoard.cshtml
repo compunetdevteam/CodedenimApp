@@ -387,19 +387,7 @@ else if (Request.IsAuthenticated && User.IsInRole("Tutor"))
 
 
                 <ul class="sidebar-menu">
-                    <li class="">
-                        <a class="collapsible-header waves-effect arrow-r"><i class="fa fa-code"></i> Creators<i class="fa fa-angle-down rotate-icon"></i></a>
-                        <div class="collapsible-body" style="display: none; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
-                            <ul>
-                                <li>
-                                    <a href="modals.html" class="waves-effect">Modals</a>
-                                </li>
-                                <li>
-                                    <a href="page-create.html" class="waves-effect">Create Page</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                    
 
 
 
@@ -558,7 +546,7 @@ else if (Request.IsAuthenticated && User.IsInRole("UnderGraduate"))
 
 }
 
-<div class="col-md-12">
+<div class="col-md-10 col-lg-pull-1" style="margin-left:15%">
    
 
     @RenderBody()
