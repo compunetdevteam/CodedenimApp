@@ -11,7 +11,7 @@
 
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create","CourseCategories", FormMethod.Post, new { enctype = "multipart/form-data" })) 
 {
     @Html.AntiForgeryToken()
     <fieldset>
@@ -42,7 +42,12 @@
                     @Html.ValidationMessageFor(model => model.StudentType, "", new { @class = "text-danger" })
                 </div>
             </div>
-
+            <div class="form-group">
+                @Html.Label("Photo", new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    <input class="form-control" type="file" id="File" name="File" />
+                </div>
+            </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <button class="btn btn-success"><span>Create</span> <i class="fa fa-check-square-o"></i></button>

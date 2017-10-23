@@ -398,6 +398,7 @@ namespace CodedenimWebApp.Controllers.Api
                 PhoneNumber = model.MobileNumber,
                 StateOfService = model.NyscState.ToString(),
                Institution = model.Institution,
+               AccountType = "Corper",
                Batch = model.NyscBatch.ToString(),
                Discpline = model.Discpline
             };
@@ -457,6 +458,7 @@ namespace CodedenimWebApp.Controllers.Api
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
                 Gender = model.Gender,
+                AccountType = "UnderGraduate",
                 PhoneNumber = model.MobileNumber,
                 Institution = model.Institution,
                 Discpline = model.Discpline
@@ -525,6 +527,7 @@ namespace CodedenimWebApp.Controllers.Api
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
                 Gender = model.Gender,
+                AccountType = "RegularStudent",
                 PhoneNumber = model.MobileNumber,
                 Email = model.Email
                 

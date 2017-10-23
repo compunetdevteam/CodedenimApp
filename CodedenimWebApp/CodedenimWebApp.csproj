@@ -149,6 +149,7 @@
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -311,6 +312,10 @@
     <Compile Include="Migrations\201710162122260_changed_intTOString_on_EnrollForCourse.Designer.cs">
       <DependentUpon>201710162122260_changed_intTOString_on_EnrollForCourse.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710201439123_added_courseDescriptionToCategory.cs" />
+    <Compile Include="Migrations\201710201439123_added_courseDescriptionToCategory.Designer.cs">
+      <DependentUpon>201710201439123_added_courseDescriptionToCategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -326,6 +331,7 @@
     <Compile Include="Service\EmailSetupServices.cs" />
     <Compile Include="Service\MultipleButtonAttributeController.cs" />
     <Compile Include="Service\Registration.cs" />
+    <Compile Include="Service\UploadedFileProcessor.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ApiVm.cs" />
     <Compile Include="ViewModels\AssignedCourses.cs" />
@@ -1140,6 +1146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710162122260_changed_intTOString_on_EnrollForCourse.resx">
       <DependentUpon>201710162122260_changed_intTOString_on_EnrollForCourse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710201439123_added_courseDescriptionToCategory.resx">
+      <DependentUpon>201710201439123_added_courseDescriptionToCategory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

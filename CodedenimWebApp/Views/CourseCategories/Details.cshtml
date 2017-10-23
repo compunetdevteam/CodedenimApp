@@ -33,6 +33,10 @@
         <dd>
             @Html.DisplayFor(model => model.StudentType)
         </dd>
+        <dd>
+            <img src="~/MaterialUpload/@Model.ImageLocation" style="width: 20%;height: 29%;border: none;"> </img>
+            @*@Html.DisplayFor(model => model.ImageLocation)*@
+        </dd>
 
     </dl>
 </div>
@@ -40,3 +44,6 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.CourseCategoryId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+c:\users\dev-pc\documents\visual studio 2017\Projects\CodedenimApp\CodedenimWebApp\MaterialUpload\

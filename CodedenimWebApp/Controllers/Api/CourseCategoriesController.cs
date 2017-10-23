@@ -33,7 +33,8 @@ namespace CodedenimWebApp.Controllers.Api
             var studentId = studentEmail.ConvertEmailToId(email);
             var studentType =  _db.Students.AsNoTracking().Where(x => x.StudentId.Equals(studentId)).Select(x => x.AccountType).FirstOrDefault();
             var assignedCourses = await   _db.CourseCategories.AsNoTracking().Where(x => x.StudentType.Equals(studentType))
-                                  .ToListAsync();
+                                            .Select(x => new { x.CategoryName,x.Amount, x.CourseCategoryId, x.ImageLocation})
+                                            .ToListAsync();
             return Ok(assignedCourses);
             //return _db.CourseCategories.Select(x => new
             //{
@@ -43,9 +44,10 @@ namespace CodedenimWebApp.Controllers.Api
             //});
         }
 
-        //this method gets the courses based on the categoryId that comes i 
+        //this method gets the courses based on the categoryId that comes in 
         // as a peremeter into the method
         // GET: api/CourseCategories/5
+        [HttpGet]
         [ResponseType(typeof(CourseCategory))]
         public async Task<IHttpActionResult> GetCourseCategory(int id)
         {
@@ -60,7 +62,9 @@ namespace CodedenimWebApp.Controllers.Api
                                                                 //    //x.CourseName,
                                                                     x.CourseCategoryId,
                                                                 //  //  x.ExpectedTime,
-                                                                    x.CourseCategory.CategoryName
+                                                                    x.CourseCategory.CategoryName,
+                                                               
+                                                                   // x.CourseCategory.
 
                                                                 })
                                                                 .ToListAsync();
@@ -86,6 +90,8 @@ namespace CodedenimWebApp.Controllers.Api
             {
                 return BadRequest(ModelState);
             }
+
+  
 
             if (id != courseCategory.CourseCategoryId)
             {

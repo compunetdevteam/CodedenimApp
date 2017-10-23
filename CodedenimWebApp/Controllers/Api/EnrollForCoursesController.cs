@@ -27,6 +27,7 @@ namespace CodedenimWebApp.Controllers.Api
 
 
         // GET: api/EnrollForCourses/5
+        //this method gets the list of courses that the student has enrolled into 
         [HttpGet]
         [System.Web.Http.Route("EnrolledForCourses")]
         [ResponseType(typeof(EnrollForCourse))]
