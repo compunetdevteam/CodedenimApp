@@ -18,11 +18,11 @@
     //}
 
 }
-<link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
+@*<link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+<link href="~/Content/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />
 
-
-<div class="st-container"> 
-    <h2>Courses</h2>
+<div class="container-fluid" style="margin-left: 13%"> 
+    <h2>Courses</h2>  
 
     @*<p>
         @Html.ActionLink("ADD COURSE","Create", null, new{@class = "my-class; btn"})
@@ -123,6 +123,7 @@
     </div>
     <script src="~/Scripts/jquery-3.1.1.js"></script>
     <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.bootstrap4.js"></script>
     <script type="text/javascript">
         window.oTable = $("#Jdatatable").DataTable({
             "processing": true, // for show progress bar while loading
@@ -138,7 +139,7 @@
             },
             "columns": [
                 
-                //{ "data": "CourseCategoryId", "autoWidth": true },
+                { "data": "CourseCategoryId", "autoWidth": true },
                 { "data": "CourseCode", "autoWidth": true },
                 { "data": "CourseName", "autoWidth": true },
                 { "data": "CourseDescription", "autoWidth": true },

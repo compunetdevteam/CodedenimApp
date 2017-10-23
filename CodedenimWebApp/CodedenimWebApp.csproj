@@ -408,6 +408,8 @@
     <Content Include="Content\bootstrap1.min.css" />
     <Content Include="Content\compiled.min.css" />
     <Content Include="Content\customizer.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap.css" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap.min.css" />
     <Content Include="Content\img\Corpers.jpg" />
     <Content Include="Content\img\Course1.png" />
     <Content Include="Content\img\courses.png" />
@@ -489,6 +491,10 @@
     <Content Include="Content\LMS\fonts\picto-foundry-sports.svg" />
     <Content Include="Content\LMS\fonts\picto-foundry-vehicle-navigation.svg" />
     <Content Include="Content\LMS\fonts\picto-foundry-weather.svg" />
+    <Content Include="Content\LMS\guy-1.jpg" />
+    <Content Include="Content\LMS\guy-2.jpg" />
+    <Content Include="Content\LMS\guy-5.jpg" />
+    <Content Include="Content\LMS\guy-6.jpg" />
     <Content Include="Content\LMS\js\jplayer\addons\jquery.jplayer.swf" />
     <Content Include="Content\LMS\js\module-bundle-all.js" />
     <Content Include="Content\LMS\js\module-bundle-all.min.js" />
@@ -590,6 +596,7 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\paper-dashboard.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\StyleSheet1.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />

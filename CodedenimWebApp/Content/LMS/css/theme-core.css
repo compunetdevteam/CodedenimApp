@@ -5456,11 +5456,12 @@ a.list-group-item-danger.active:focus {
 .panel-primary {
   border-color: #42a5f5;
 }
-.panel-primary > .panel-heading {
-  color: #ffffff;
-  background-color: #42a5f5;
-  border-color: #42a5f5;
-}
+/* Changes Done By Kelechi for a little colour tweak on dashboard please accept*/
+   .panel-primary > .panel-heading {
+        color: #ffffff;
+        background-color: #4caf50;
+        border-color: #42a5f5;
+    }
 .panel-primary > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #42a5f5;
 }
