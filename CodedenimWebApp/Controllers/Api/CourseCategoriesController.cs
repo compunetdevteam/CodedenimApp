@@ -33,7 +33,7 @@ namespace CodedenimWebApp.Controllers.Api
             var studentId = studentEmail.ConvertEmailToId(email);
             var studentType =  _db.Students.AsNoTracking().Where(x => x.StudentId.Equals(studentId)).Select(x => x.AccountType).FirstOrDefault();
             var assignedCourses = await   _db.CourseCategories.AsNoTracking().Where(x => x.StudentType.Equals(studentType))
-                                            .Select(x => new { x.CategoryName,x.Amount, x.CourseCategoryId, x.ImageLocation})
+                                            .Select(x => new { x.CategoryName,x.Amount, x.CourseCategoryId, x.CategoryDescription, x.ImageLocation})
                                             .ToListAsync();
             return Ok(assignedCourses);
             //return _db.CourseCategories.Select(x => new
