@@ -395,6 +395,8 @@
     <Content Include="Content\bootstrap1.min.css" />
     <Content Include="Content\compiled.min.css" />
     <Content Include="Content\customizer.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap.css" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap.min.css" />
     <Content Include="Content\img\Corpers.jpg" />
     <Content Include="Content\img\Course1.png" />
     <Content Include="Content\img\courses.png" />
