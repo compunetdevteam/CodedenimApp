@@ -10,6 +10,8 @@ namespace CodedenimWebApp.ViewModels
     {
         public List<AssignCourseCategory> AssignCourseCategories { get; set; }
         public List<StudentPayment> Student { get; set; }
+        public List<CourseCategory> CourseCategories { get; set; }
+        public List<Student> StudentInfo { get; set; }
 
     }
 }

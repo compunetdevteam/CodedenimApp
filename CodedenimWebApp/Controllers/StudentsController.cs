@@ -154,16 +154,23 @@ namespace CodedenimWebApp.Controllers
 
         public async Task<ActionResult> CorperDashboard()
         {
-
+            var user = User.Identity.GetUserId();
 
 
 
             var corperCourses = await _db.AssignCourseCategories.Include(x => x.CourseCategory).Include(x => x.Courses)
                 .Where(x => x.CourseCategory.StudentType.Equals(RoleName.Corper))
                 .ToListAsync();
+            var courseCategory = await _db.CourseCategories.Where(x => x.StudentType.Equals(RoleName.Corper))
+                .ToListAsync();
+            var student = await _db.Students.Where(x => x.StudentId.Equals(user)).ToListAsync();
             var model = new DashboardVm()
             {
-                AssignCourseCategories = corperCourses
+                AssignCourseCategories = corperCourses,
+                CourseCategories = courseCategory,
+                StudentInfo = student
+
+
             };
 
             return View(model);

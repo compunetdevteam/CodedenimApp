@@ -1,4 +1,4 @@
-﻿    @model CodedenimWebApp.ViewModels.DashboardVm
+﻿    @using Microsoft.AspNet.Identity    @model CodedenimWebApp.ViewModels.DashboardVm
 @{
     ViewBag.Title = "Corper Dashboard";
     Layout = "~/Views/Shared/_LayoutBoard.cshtml";
@@ -91,8 +91,8 @@
             <div class="media v-middle">
                 <div class="media-left text-center">
                     <a href="#">
-                        <img src="~/Content/LMS/guy-6.jpg" alt="people" class="img-circle width-80" />
-                        @*<img src="images/people/110/guy-6.jpg" >*@
+                        @*<img src="~/Content/LMS/guy-6.jpg" alt="people" class="img-circle width-80" />*@
+                        <img src="~/Profile_Pics/@Model.)" >
                     </a>
                 </div>
                 <div class="media-body">
@@ -127,92 +127,50 @@
                 </div>
             </div>
         </div>
-        <div class="row" data-toggle="isotope" style="position: relative; height: 515.533px;">
-            <div class="item col-xs-12 col-sm-6 col-lg-4" style="position: absolute; left: 0px; top: 0px; z-index:0;">
-                <div class="panel panel-default paper-shadow" data-z="0.5">
-                    <div class="cover overlay cover-image-full hover" style="height: 150px;">
-                        <span class="img icon-block height-150 bg-purple"></span>
-                        <a href="app-student-course.html" class="padding-none overlay overlay-full icon-block bg-purple" style="height: 150px;">
-                            <span class="v-center">
-                                <i class="fa fa-jsfiddle"></i>
-                            </span>
-                        </a>
-                        <a href="app-student-course.html" class="overlay overlay-full overlay-hover overlay-bg-white" style="height: 150px;">
-                            <span class="v-center">
-                                <span class="btn btn-circle btn-purple-500 btn-lg"><i class="fa fa-graduation-cap"></i></span>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="panel-body">
-                        <h5 class="text-headline margin-v-0-10"><a href="app-instructor-course-edit-course.html">Browserify: Writing Modular JavaScript</a></h5>
-                    </div>
-                    <hr class="margin-none">
-                    <div class="panel-body">
-                        <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated="" href="#"><i class="fa fa-fw fa-angle-up"></i> 35% complete</a>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-success" style="width: 35%"><span class="sr-only">35% Complete (success)</span></div>
+       @foreach (var course in Model.CourseCategories)
+       {
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item col-xs-12 col-sm-6 col-lg-4" style="position: absolute; left: 359px; top: 0px;">
-                <div class="panel panel-default paper-shadow" data-z="0.5">
-                    <div class="cover overlay cover-image-full hover" style="height: 150px;">
-                        <span class="img icon-block height-150 bg-primary"></span>
-                        <a href="app-instructor-course-edit-course.html" class="padding-none overlay overlay-full icon-block bg-primary" style="height: 150px;">
-                            <span class="v-center">
-                                <i class="fa fa-css3"></i>
-                            </span>
-                        </a>
-                        <a href="app-instructor-course-edit-course.html" class="overlay overlay-full overlay-hover overlay-bg-white" style="height: 150px;">
-                            <span class="v-center">
-                                <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="panel-body">
-                        <h5 class="text-headline margin-v-0-10"><a href="app-instructor-course-edit-course.html">Awesome CSS with LESS Processing</a></h5>
-                    </div>
-                    <hr class="margin-none">
-                    <div class="panel-body">
-                        <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated="" href="#"><i class="fa fa-fw fa-angle-up"></i>50% complete</a>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-success" style="width: 50%"><span class="sr-only">50% Complete (success)</span></div>
 
-                        </div>
-                    </div>
-                </div>
-            </div>   
-            <div class="item col-xs-12 col-sm-6 col-lg-4" style="position: absolute; left: 719px; top: 0px;">
-                <div class="panel panel-default paper-shadow" data-z="0.5">
-                    <div class="cover overlay cover-image-full hover" style="height: 150px;">
-                        <span class="img icon-block height-150 bg-lightred"></span>
-                        <a href="app-instructor-course-edit-course.html" class="padding-none overlay overlay-full icon-block bg-lightred" style="height: 150px;">
-                            <span class="v-center">
-                                <i class="fa fa-windows"></i>
-                            </span>
-                        </a>
-                        <a href="app-instructor-course-edit-course.html" class="overlay overlay-full overlay-hover overlay-bg-white" style="height: 150px;">
-                            <span class="v-center">
-                                <span class="btn btn-circle btn-red-500 btn-lg"><i class="fa fa-graduation-cap"></i></span>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="panel-body">
-                        <h5 class="text-headline margin-v-0-10"><a href="app-instructor-course-edit-course.html">Vagrant Portable Environments</a></h5>
-                    </div>
-                    <hr class="margin-none">
-                    <div class="panel-body">
-                        <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated="" href="#"><i class="fa fa-fw fa-angle-up"></i>100% complete</a>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-success" style="width: 100%"><span class="sr-only">100% Complete (success)</span></div>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+           <div class="row" data-toggle="isotope" style="position: relative; height: 515.533px;">
+               <div class="item col-xs-12 col-sm-6 col-lg-4" style="position: absolute; left: 0px; top: 0px; z-index: 0;">
+                   <div class="panel panel-default paper-shadow" data-z="0.5">
+                       <div class="cover overlay cover-image-full hover" style="height: 150px;">
+                           <span class="img icon-block height-150 bg-purple"></span>
+                           <a href="app-student-course.html" class="padding-none overlay overlay-full icon-block bg-purple" style="height: 150px;">
+                               <span class="v-center">
+                                   @*<i class="fa fa-jsfiddle"></i>*@
+                                   <img src="~/Profile_Pics/@course.ImageLocation">
+                               </span>
+                           </a>
+                           <a href="app-student-course.html" class="overlay overlay-full overlay-hover overlay-bg-white" style="height: 150px;">
+                               <span class="v-center">
+                                   <span class="btn btn-circle btn-purple-500 btn-lg"><i class="fa fa-graduation-cap"></i></span>
+                               </span>
+                           </a>
+                       </div>
+                       <div class="panel-body">
+                           <h5 class="text-headline margin-v-0-10"><a href="app-instructor-course-edit-course.html">@course.CategoryName</a></h5>
+                       </div>
+                       <hr class="margin-none">
+                       <div class="panel-body">
+                           <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated="" href="#"><i class="fa fa-fw fa-angle-up"></i> N @course.Amount</a>
+                           <div class="progress">
+                               <div class="progress-bar progress-bar-success" style="width: 35%"><span class="sr-only">@course.Amount</span>
+                               </div>
+
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               
+    
+           </div>
+
+       }
+       
+      
         <br />
         <br />
     </div>
@@ -342,7 +300,7 @@
                 </ul>
             </div>
         </div>
-        <h4>New Courses</h4>
+        <h4>Market Place</h4>
         <div class="slick-basic slick-slider" data-items="1" data-items-lg="1" data-items-md="1" data-items-sm="1" data-items-xs="1">
             <div class="item">
                 <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated>
