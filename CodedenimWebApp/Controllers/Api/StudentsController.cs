@@ -36,7 +36,7 @@ namespace CodedenimWebApp.Controllers.Api
         public async Task<IHttpActionResult> GetStudent(string id)
         {
            // Student student = await db.Students.FindAsync(id);
-           var email = new Convert();
+         //  var email = new ConvertEmail();
            
             //var studentCourses = _db.StudentAssignedCourses.Include(x => x.Courses).Where(x => x.Student.Email.Equals(id))
             //                                                                     .Select(x =>new {
@@ -73,19 +73,19 @@ namespace CodedenimWebApp.Controllers.Api
         [System.Web.Http.Route("CheckIfStudentIsEnrolled")]
         public IHttpActionResult CheckIfStudentIsEnrolled(string email, int courseId)
         {
-            bool Enrolled;
-            var converter = new Convert();
-            var studentId = converter.ConvertEmailToId(email);
-            var isEnrolled = _db.StudentAssignedCourses.Any(x => x.StudentId.Equals(studentId) && x.CourseId.Equals(courseId));
+          //  bool Enrolled;
+          // var converter = new ConvertEmail();
+          //  var studentId = converter.ConvertEmailToId(email);
+          ////  var isEnrolled = _db.StudentAssignedCourses.Any(x => x.StudentId.Equals(studentId) && x.CourseId.Equals(courseId));
 
-            if(!isEnrolled)
-            {
-                Enrolled = true;
-            }
-            else
-            {
-                Enrolled = false;
-            }
+            //if(!isEnrolled)
+            //{
+            //    Enrolled = true;
+            //}
+            //else
+            //{
+            //    Enrolled = false;
+            //}
             return Ok();
         }
 

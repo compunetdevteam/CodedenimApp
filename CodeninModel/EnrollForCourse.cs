@@ -6,17 +6,12 @@ using System.Threading.Tasks;
 
 namespace CodeninModel
 {
-    public class AssignCourseCategory
+    public class EnrollForCourse
     {
-
-        public int AssignCourseCategoryId { get; set; }
-        public int CourseId { get; set; }
+        public int EnrollForCourseId { get; set; }
         public int CourseCategoryId { get; set; }
-        public virtual Course Courses { get; set; } 
+        public string StudentId { get; set; }
         public virtual CourseCategory CourseCategory { get; set; }
-        public virtual StudentAssignedCourse StudentAssignedCourse { get; set; }
-
-
-
+        public virtual Student Student { get; set; }
     }
 }

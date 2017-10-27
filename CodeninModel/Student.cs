@@ -51,5 +51,6 @@ namespace CodeninModel
         public virtual ICollection<ForumQuestion> ForumQuestions { get; set; }
         public virtual ICollection<CourseEnrollment> CourseEnrollement { get; set; }
         public virtual ICollection<StudentPayment> StudentPayments { get; set; }
+        public virtual ICollection<EnrollForCourse> EnrollForCourse { get; set; }
     }
 }

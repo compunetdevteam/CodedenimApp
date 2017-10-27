@@ -7,18 +7,18 @@ namespace CodedenimWebApp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class added_RegularStudents : IMigrationMetadata
+    public sealed partial class changed_intTOString_on_EnrollForCourse : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(added_RegularStudents));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(changed_intTOString_on_EnrollForCourse));
         
         string IMigrationMetadata.Id
         {
-            get { return "201710101524407_added_RegularStudents"; }
+            get { return "201710162122260_changed_intTOString_on_EnrollForCourse"; }
         }
         
         string IMigrationMetadata.Source
         {
-            get { return Resources.GetString("Source"); }
+            get { return null; }
         }
         
         string IMigrationMetadata.Target

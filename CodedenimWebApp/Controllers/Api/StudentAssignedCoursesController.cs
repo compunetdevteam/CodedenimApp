@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -21,7 +20,7 @@ namespace CodedenimWebApp.Controllers.Api
         // GET: api/StudentAssignedCourses
         public IEnumerable<StudentAssignedCourse> GetStudentAssignedCourses()
         {
-            return _db.StudentAssignedCourses.Include(t => t.Courses).ToList();
+            return _db.StudentAssignedCourses.ToList();
         }
         
         // GET: api/StudentAssignedCourses/5
@@ -59,14 +58,14 @@ namespace CodedenimWebApp.Controllers.Api
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StudentAssignedCourseExists(studentAssignedCourse.CourseId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                //if (!StudentAssignedCourseExists(studentAssignedCourse.CourseId))
+                //{
+                //    return NotFound();
+                //}
+                //else
+                //{
+                //    throw;
+                //}
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -80,24 +79,24 @@ namespace CodedenimWebApp.Controllers.Api
             {
                 return BadRequest(ModelState);
             }
-            var compare = new Convert();
+            var compare = new ConvertEmail();
             var studentId = compare.ConvertEmailToId(studentAssignedCourse.StudentId);
-            var courseId = studentAssignedCourse.CourseId;
+          //  var courseId = studentAssignedCourse.CourseId;
 
 
-            var isStudentCourseExist = _db.StudentAssignedCourses.Any(x => x.StudentId.Equals(studentId) &&
-                                                                       x.CourseId.Equals(courseId));
+           // var isStudentCourseExist = _db.StudentAssignedCourses.Any(x => x.StudentId.Equals(studentId) &&
+           //                                                            x.CourseId.Equals(courseId));
 
 
-            if (!isStudentCourseExist)
-            {
-                studentAssignedCourse.StudentId =studentId;
-                _db.StudentAssignedCourses.Add(studentAssignedCourse);
-                 _db.SaveChangesAsync();
+            //if (!isStudentCourseExist)
+            //{
+            //    studentAssignedCourse.StudentId =studentId;
+            //    _db.StudentAssignedCourses.Add(studentAssignedCourse);
+            //     _db.SaveChangesAsync();
 
-                return CreatedAtRoute("DefaultApi", new {id = studentAssignedCourse.StudentAssignedCourseId},
-                    studentAssignedCourse);
-            }
+            //    return CreatedAtRoute("DefaultApi", new {id = studentAssignedCourse.StudentAssignedCourseId},
+            //        studentAssignedCourse);
+            //}
             return Ok("Record Exist");
         }
 
@@ -131,22 +130,6 @@ namespace CodedenimWebApp.Controllers.Api
         private bool StudentAssignedCourseExists(int id)
         {
             return _db.StudentAssignedCourses.Count(e => e.StudentAssignedCourseId == id) > 0;
-        }
-    }
-
-    public class Convert
-    {
-        private ApplicationDbContext _db ;
-
-        public Convert()
-        {
-            _db = new ApplicationDbContext();
-        }
-        public string ConvertEmailToId(string email)
-        {
-            var studentEmail = _db.Students.Where(x => x.Email.Equals(email))
-                                            .Select(x => x.StudentId).FirstOrDefault().ToString();
-            return studentEmail;
         }
     }
 }

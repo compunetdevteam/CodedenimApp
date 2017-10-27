@@ -113,11 +113,18 @@ namespace CodedenimWebApp.Controllers
 
                 ViewBag.ForumQuestions = question;
             }
-           //var tutorInfo = new TutorDashboardVm();
+            var tutorInfo = new TutorDashboardVm
+            {
+              TutorCourses =  courses,
+
+
+            };
+
+          
             ViewBag.TutorProfile = db.Tutors.Where(x => x.TutorId.Equals(userId)).Select(x => x.ImageLocation).FirstOrDefault();
             ViewBag.TutorCourses = courses;
       
-            return View();  
+            return View(tutorInfo);  
         }
 
         // GET: Tutors/Details/5

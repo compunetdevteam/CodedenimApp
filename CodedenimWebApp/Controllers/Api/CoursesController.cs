@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Results;
 using CodedenimWebApp.Models;
 using CodeninModel;
 
@@ -22,20 +23,29 @@ namespace CodedenimWebApp.Controllers.Api
         //Get all the Courses to the client
         public IHttpActionResult GetCourses()
         {
-            //return _db.Courses.Select(x => new
-            //                        {
-            //                            x.CourseId,
-            //                            x.CourseCode,
-            //                            x.CourseDescription,
-            //                            x.CourseCategory.CategoryName,
-            //                            x.CourseName,
-            //                            x.ExpectedTime,
-            //                            x.CourseCategoryId,
-            //                            x.FileLocation
-                                       
-                                       
-            //                        });
-            return Ok(); //_db.Courses.Include(c => c.Modules).ToList();
+
+
+
+            var getCourses = _db.AssignCourseCategories.Include(x => x.CourseCategory)
+                .Include(x => x.Courses)
+                .Select(x => new
+                {
+                    x.CourseId,
+                    x.CourseCategoryId
+
+                    //x.CourseCode,
+                    //x.CourseDescription,
+                    //  x.CourseCategory.CategoryName,
+                    //x.CourseName,
+                    //x.ExpectedTime,
+                    // x.,
+                    // x.FileLocation
+
+
+                }).ToList();
+
+
+            return Ok();
         }
 
         // GET: api/Courses/5

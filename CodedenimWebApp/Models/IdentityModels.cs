@@ -94,6 +94,8 @@ namespace CodedenimWebApp.Models
 
         public System.Data.Entity.DbSet<CodeninModel.AssignCourseCategory> AssignCourseCategories { get; set; }
         public DbSet<StudentPayment> StudentPayments { get; set; }
+
+        public System.Data.Entity.DbSet<CodeninModel.EnrollForCourse> EnrollForCourses { get; set; }
         //public override int SaveChanges()
         //{
         //    try

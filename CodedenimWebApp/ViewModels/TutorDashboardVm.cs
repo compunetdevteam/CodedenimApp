@@ -9,7 +9,7 @@ namespace CodedenimWebApp.ViewModels
 {
     public class TutorDashboardVm
     { 
-        public TutorCourse TutorCourses { get; set; }
+        public List<TutorCourse> TutorCourses { get; set; }
         public List<string> ForumQuestions { get; set; }
        
     }

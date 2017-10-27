@@ -91,6 +91,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstractions\FilePath.cs" />
+    <Compile Include="Abstractions\IFilePathProcessor.cs" />
     <Compile Include="Assesment\QuestionAnswer.cs" />
     <Compile Include="Assesment\StudentAssesment.cs" />
     <Compile Include="Assesment\StudentQuestion.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="CourseCategory.cs" />
     <Compile Include="CourseEnrollment.cs" />
     <Compile Include="CourseRating.cs" />
+    <Compile Include="EnrollForCourse.cs" />
     <Compile Include="Enrollment.cs" />
     <Compile Include="File.cs" />
     <Compile Include="FilePath.cs" />

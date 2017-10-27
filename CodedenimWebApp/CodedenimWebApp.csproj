@@ -149,6 +149,7 @@
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -259,8 +260,10 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountJson.cs" />
     <Compile Include="Controllers\Api\AccountApiController.cs" />
+    <Compile Include="Controllers\Api\ConvertEmail.cs" />
     <Compile Include="Controllers\Api\CourseCategoriesController.cs" />
     <Compile Include="Controllers\Api\CoursesController.cs" />
+    <Compile Include="Controllers\Api\EnrollForCoursesController.cs" />
     <Compile Include="Controllers\Api\ForumAnswersController.cs" />
     <Compile Include="Controllers\Api\ForumQuestions1Controller.cs" />
     <Compile Include="Controllers\Api\ForumQuestionsController.cs" />
@@ -273,6 +276,7 @@
     <Compile Include="Controllers\Api\TopicQuizsController.cs" />
     <Compile Include="Controllers\Api\TopicsController.cs" />
     <Compile Include="Controllers\Api\TutorsController.cs" />
+    <Compile Include="Controllers\AssignCourseCategories1Controller.cs" />
     <Compile Include="Controllers\AssignCourseCategoriesController.cs" />
     <Compile Include="Controllers\CodeGenController.cs" />
     <Compile Include="Controllers\CourseCategoriesController.cs" />
@@ -300,9 +304,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710101524407_added_RegularStudents.cs" />
-    <Compile Include="Migrations\201710101524407_added_RegularStudents.Designer.cs">
-      <DependentUpon>201710101524407_added_RegularStudents.cs</DependentUpon>
+    <Compile Include="Migrations\201710162111596_added_EnrollForCourse.cs" />
+    <Compile Include="Migrations\201710162111596_added_EnrollForCourse.Designer.cs">
+      <DependentUpon>201710162111596_added_EnrollForCourse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710162122260_changed_intTOString_on_EnrollForCourse.cs" />
+    <Compile Include="Migrations\201710162122260_changed_intTOString_on_EnrollForCourse.Designer.cs">
+      <DependentUpon>201710162122260_changed_intTOString_on_EnrollForCourse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710201439123_added_courseDescriptionToCategory.cs" />
+    <Compile Include="Migrations\201710201439123_added_courseDescriptionToCategory.Designer.cs">
+      <DependentUpon>201710201439123_added_courseDescriptionToCategory.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -319,6 +331,7 @@
     <Compile Include="Service\EmailSetupServices.cs" />
     <Compile Include="Service\MultipleButtonAttributeController.cs" />
     <Compile Include="Service\Registration.cs" />
+    <Compile Include="Service\UploadedFileProcessor.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ApiVm.cs" />
     <Compile Include="ViewModels\AssignedCourses.cs" />
@@ -478,6 +491,10 @@
     <Content Include="Content\LMS\fonts\picto-foundry-sports.svg" />
     <Content Include="Content\LMS\fonts\picto-foundry-vehicle-navigation.svg" />
     <Content Include="Content\LMS\fonts\picto-foundry-weather.svg" />
+    <Content Include="Content\LMS\guy-1.jpg" />
+    <Content Include="Content\LMS\guy-2.jpg" />
+    <Content Include="Content\LMS\guy-5.jpg" />
+    <Content Include="Content\LMS\guy-6.jpg" />
     <Content Include="Content\LMS\js\jplayer\addons\jquery.jplayer.swf" />
     <Content Include="Content\LMS\js\module-bundle-all.js" />
     <Content Include="Content\LMS\js\module-bundle-all.min.js" />
@@ -579,6 +596,7 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\paper-dashboard.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\StyleSheet1.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -1130,8 +1148,14 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710101524407_added_RegularStudents.resx">
-      <DependentUpon>201710101524407_added_RegularStudents.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710162111596_added_EnrollForCourse.resx">
+      <DependentUpon>201710162111596_added_EnrollForCourse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710162122260_changed_intTOString_on_EnrollForCourse.resx">
+      <DependentUpon>201710162122260_changed_intTOString_on_EnrollForCourse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710201439123_added_courseDescriptionToCategory.resx">
+      <DependentUpon>201710201439123_added_courseDescriptionToCategory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

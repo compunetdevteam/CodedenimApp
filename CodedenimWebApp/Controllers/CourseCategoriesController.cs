@@ -11,10 +11,14 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
+using CodedenimWebApp.Service;
+using CodeninModel.Abstractions;
 
 namespace CodedenimWebApp.Controllers
 {
+
     public class CourseCategoriesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -222,10 +226,14 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "CourseCategoryId,CategoryName,Amount,StudentType")] CourseCategory courseCategory)
+        public async Task<ActionResult> Create([Bind(Include = "CourseCategoryId,CategoryName,Amount,StudentType")] CourseCategory courseCategory, HttpPostedFileBase File)
         {
+            var fp = new UploadedFileProcessor();
+
+            var path = fp.ProcessFilePath(File);
             if (ModelState.IsValid)
             {
+                courseCategory.ImageLocation = path.Path;
                 db.CourseCategories.Add(courseCategory);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");

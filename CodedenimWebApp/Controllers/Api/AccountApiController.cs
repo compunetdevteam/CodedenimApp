@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Net.Http;
@@ -398,6 +398,7 @@ namespace CodedenimWebApp.Controllers.Api
                 PhoneNumber = model.MobileNumber,
                 StateOfService = model.NyscState.ToString(),
                Institution = model.Institution,
+               AccountType = "Corper",
                Batch = model.NyscBatch.ToString(),
                Discpline = model.Discpline
             };
@@ -425,7 +426,7 @@ namespace CodedenimWebApp.Controllers.Api
             return url;
         }
 
-        // POST api/Account/RegisterCorper
+        // POST api/Account/RegisterUnderGraduate
         [System.Web.Http.AllowAnonymous]
         [System.Web.Http.Route("RegisterUnderGraduate")]
         public async Task<IHttpActionResult> RegisterUnderGraduate([FromBody] RegisterUnderGrad model)
@@ -457,6 +458,7 @@ namespace CodedenimWebApp.Controllers.Api
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
                 Gender = model.Gender,
+                AccountType = "UnderGraduate",
                 PhoneNumber = model.MobileNumber,
                 Institution = model.Institution,
                 Discpline = model.Discpline
@@ -464,7 +466,7 @@ namespace CodedenimWebApp.Controllers.Api
             };
             _db.Students.Add(student);
             await _db.SaveChangesAsync();
-            await this.UserManager.AddToRoleAsync(user.Id, "UnderGraduate");
+            await this.UserManager.AddToRoleAsync(user.Id, RoleName.UnderGraduate);
 
             var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
             // var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
@@ -525,6 +527,7 @@ namespace CodedenimWebApp.Controllers.Api
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
                 Gender = model.Gender,
+                AccountType = "RegularStudent",
                 PhoneNumber = model.MobileNumber,
                 Email = model.Email
                 
