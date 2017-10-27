@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstractions\FilePath.cs" />
+    <Compile Include="Abstractions\IExcelUpload.cs" />
     <Compile Include="Abstractions\IFilePathProcessor.cs" />
     <Compile Include="Assesment\QuestionAnswer.cs" />
     <Compile Include="Assesment\StudentAssesment.cs" />

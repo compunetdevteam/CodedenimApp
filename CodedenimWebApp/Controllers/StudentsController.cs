@@ -164,11 +164,15 @@ namespace CodedenimWebApp.Controllers
             var courseCategory = await _db.CourseCategories.Where(x => x.StudentType.Equals(RoleName.Corper))
                 .ToListAsync();
             var student = await _db.Students.Where(x => x.StudentId.Equals(user)).ToListAsync();
+
+            var forumQuestion = _db.ForumQuestions.Where(x => x.StudentId.Equals(user))
+                             .ToList();
             var model = new DashboardVm()
             {
                 AssignCourseCategories = corperCourses,
                 CourseCategories = courseCategory,
-                StudentInfo = student
+                StudentInfo = student,
+                ForumQuestion = forumQuestion
 
 
             };

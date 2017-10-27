@@ -33,7 +33,12 @@ namespace CodedenimWebApp.Controllers.Api
             var studentId = studentEmail.ConvertEmailToId(email);
             var studentType =  _db.Students.AsNoTracking().Where(x => x.StudentId.Equals(studentId)).Select(x => x.AccountType).FirstOrDefault();
             var assignedCourses = await   _db.CourseCategories.AsNoTracking().Where(x => x.StudentType.Equals(studentType))
-                                            .Select(x => new { x.CategoryName,x.Amount, x.CourseCategoryId, x.CategoryDescription, x.ImageLocation})
+                                            .Select(x => new { x.CategoryName,
+                                                x.Amount,
+                                                x.CourseCategoryId,
+                                                x.CategoryDescription,
+                                                x.StudentType,
+                                                x.ImageLocation})
                                             .ToListAsync();
             return Ok(assignedCourses);
             //return _db.CourseCategories.Select(x => new
@@ -55,14 +60,25 @@ namespace CodedenimWebApp.Controllers.Api
                                                                 .Select(x => new
                                                                 {
                                                                   x.CourseId,
+                                                                  x.Courses.CourseCode,
+                                                                  x.Courses.CourseName,
+                                                                  x.Courses.CourseDescription,
+                                                                  x.Courses.ExpectedTime,
+                                                                  x.Courses.Points,
+                                                                  x.Courses.FileLocation,
                                                                     
                                                                 //    //x.CourseCode,
                                                                 //    //x.CourseDescription,
                                                                 //    //x.FileLocation,
-                                                                //    //x.CourseName,
-                                                                    x.CourseCategoryId,
-                                                                //  //  x.ExpectedTime,
-                                                                    x.CourseCategory.CategoryName,
+                                                                    //x.Courses.CourseName,
+                                                                    //x.Courses.CourseDescription,
+                                                                    //x.Courses.FileLocation,
+                                                                //    x.CourseCategoryId,
+                                                                ////  //  x.ExpectedTime,
+                                                                //    x.CourseCategory.CategoryName,
+
+                                                                //    x.CourseCategory.CategoryDescription,
+                                                                //    x.CourseCategory.ImageLocation
                                                                
                                                                    // x.CourseCategory.
 

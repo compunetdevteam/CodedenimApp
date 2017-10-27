@@ -316,6 +316,10 @@
     <Compile Include="Migrations\201710201439123_added_courseDescriptionToCategory.Designer.cs">
       <DependentUpon>201710201439123_added_courseDescriptionToCategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710251102385_Add_courseCategory.cs" />
+    <Compile Include="Migrations\201710251102385_Add_courseCategory.Designer.cs">
+      <DependentUpon>201710251102385_Add_courseCategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -329,6 +333,7 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Services\ExcelValidation.cs" />
     <Compile Include="Service\EmailSetupServices.cs" />
+    <Compile Include="Service\ExcelUploadProcessor.cs" />
     <Compile Include="Service\MultipleButtonAttributeController.cs" />
     <Compile Include="Service\Registration.cs" />
     <Compile Include="Service\UploadedFileProcessor.cs" />
@@ -682,6 +687,23 @@
     <Content Include="fonts\roboto\Roboto-Thin.woff" />
     <Content Include="fonts\roboto\Roboto-Thin.woff2" />
     <Content Include="fonts\roboto\Roboto-Thind41d.eot" />
+    <Content Include="MaterialUpload\09. Better Man.mp3" />
+    <Content Include="MaterialUpload\AI.jpg" />
+    <Content Include="MaterialUpload\Android.png" />
+    <Content Include="MaterialUpload\carpentry and joinary.jpg" />
+    <Content Include="MaterialUpload\cisco.jpg" />
+    <Content Include="MaterialUpload\cloud-computing.jpg" />
+    <Content Include="MaterialUpload\Codedenim.png" />
+    <Content Include="MaterialUpload\Computer.jpg" />
+    <Content Include="MaterialUpload\csharp.png" />
+    <Content Include="MaterialUpload\Data Management_ What Is Master Data Management %28Mdm%29.mp4" />
+    <Content Include="MaterialUpload\Deadlock.png" />
+    <Content Include="MaterialUpload\LoginPic.jpg" />
+    <Content Include="MaterialUpload\Networking.jpg" />
+    <Content Include="MaterialUpload\python.jpg" />
+    <Content Include="MaterialUpload\tree.jpg" />
+    <Content Include="MaterialUpload\Ux Design.jpg" />
+    <Content Include="MaterialUpload\You Are Mine- Third Day.mp4" />
     <Content Include="Profile_Pics\Computer.jpg" />
     <Content Include="Profile_Pics\WhatsApp Image 2017-08-14 at 5.15.22 PM.jpeg" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1106,6 +1128,7 @@
     <Content Include="Views\Courses\MyCoursesAsync.cshtml" />
     <Content Include="Views\Courses\CategoryContent.cshtml" />
     <Content Include="Views\Shared\_LayoutMainAdmin.cshtml" />
+    <Content Include="Views\CourseCategories\Error2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1113,7 +1136,6 @@
     <Folder Include="Content\StudentFiles\" />
     <Folder Include="Content\TutorFiles\" />
     <Folder Include="Controllers\Api\ForumApi\" />
-    <Folder Include="MaterialUpload\" />
     <Folder Include="ProfilePics\" />
     <Folder Include="uploads\" />
     <Folder Include="Views\MultipleButtonAttribute\" />
@@ -1156,6 +1178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710201439123_added_courseDescriptionToCategory.resx">
       <DependentUpon>201710201439123_added_courseDescriptionToCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710251102385_Add_courseCategory.resx">
+      <DependentUpon>201710251102385_Add_courseCategory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -10,18 +10,20 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using CodedenimWebApp.Models;
+using CodedenimWebApp.Services;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
 using Microsoft.AspNet.Identity;
+using OfficeOpenXml;
 using Xamarin.Forms;
 
 namespace CodedenimWebApp.Controllers
 {
     public class CoursesController : Controller
     {
-        
+
         private ApplicationDbContext db = new ApplicationDbContext();
-    
+
         // GET: Courses
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Index(int? SelectedCategory)
@@ -35,7 +37,7 @@ namespace CodedenimWebApp.Controllers
             //    .OrderBy(d => d.CourseId)
             //    .Include(d => d.CourseCategory);
             //var courses = db.Courses.Include(c => c.CourseCategory);
-            return View(/*courses.ToList()*/);
+            return View( /*courses.ToList()*/);
         }
 
         public async Task<ActionResult> ListCourses()
@@ -49,7 +51,7 @@ namespace CodedenimWebApp.Controllers
         {
 
 
-           
+
 
             var corperCourses = await db.AssignCourseCategories.Include(x => x.CourseCategory).Include(x => x.Courses)
                 .Where(x => x.CourseCategory.StudentType.Equals(RoleName.Corper))
@@ -90,6 +92,7 @@ namespace CodedenimWebApp.Controllers
 
             return PartialView(model);
         }
+
         /// <summary>
         /// course Category is what comes into these method
         /// </summary>
@@ -100,10 +103,10 @@ namespace CodedenimWebApp.Controllers
             var userId = User.Identity.GetUserId();
 
             var categoryVm = new CategoryVm();
-           // var course = new List<int>();
+            // var course = new List<int>();
 
             var categoriesPaidFor = db.StudentPayments.Where(x => x.StudentId.Equals(userId))
-                                     .Select(x => x.CourseCategoryId).FirstOrDefault();
+                .Select(x => x.CourseCategoryId).FirstOrDefault();
             //foreach (var category in categoriesPaidFor)
             //{
             //   course.Add(category); 
@@ -117,32 +120,34 @@ namespace CodedenimWebApp.Controllers
             return View(categoryVm);
         }
 
-/// <summary>
-/// course id is what come into these  method
-/// </summary>
-/// <param name="id"></param>
-/// <returns></returns>
+        /// <summary>
+        /// course id is what come into these  method
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Content(int? id)
         {
             var viewModel = new CourseContentVm
             {
-                Modules =  db.Modules.Include(x => x.Topics).Include(x => x.Course).Where(x => x.CourseId.Equals((int)id)).ToList(),
-                Topics =  db.Topics.Include(x => x.MaterialUploads).ToList(),
-        };
-            
+                Modules = db.Modules.Include(x => x.Topics).Include(x => x.Course)
+                    .Where(x => x.CourseId.Equals((int) id)).ToList(),
+                Topics = db.Topics.Include(x => x.MaterialUploads).ToList(),
+            };
+
 
             //viewModel.Modules =  db.Modules.Include(x => x.Topics).Include(x => x.Course).Where(x => x.CourseId.Equals((int)id)).ToListAsync();
 
-            
+
             //viewModel.Topics =  db.Topics.Include(x => x.MaterialUploads).ToListAsync();
             //var courseList = new CourseContentVm();
             //courseList.Modules = courses
-            return View( viewModel);
+            return View(viewModel);
         }
 
-        public  async Task<ActionResult> GetIndex()
+        public async Task<ActionResult> GetIndex()
         {
             #region Server Side filtering
+
             //Get parameter for sorting from grid table
             // get Start (paging start index) and length (page size for paging)
             var draw = Request.Form.GetValues("draw").FirstOrDefault();
@@ -150,7 +155,9 @@ namespace CodedenimWebApp.Controllers
             var length = Request.Form.GetValues("length").FirstOrDefault();
             //Get Sort columns values when we click on Header Name of column
             //getting column name
-            var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var sortColumn = Request.Form
+                .GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]")
+                .FirstOrDefault();
             //Soring direction(either desending or ascending)
             var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
             string search = Request.Form.GetValues("search[value]").FirstOrDefault();
@@ -160,7 +167,16 @@ namespace CodedenimWebApp.Controllers
             int totalRecords = 0;
 
             //var v = Db.Subjects.Where(x => x.SchoolId != userSchool).Select(s => new { s.SubjectId, s.SubjectCode, s.SubjectName }).ToList();
-            var v = db.Courses.Select(s => new { s.CourseCode, s.CourseName, s.CourseDescription, s.ExpectedTime,s.DateAdded,s.Points, s.CourseImage }).ToList();
+            var v = db.Courses.Select(s => new
+            {
+                s.CourseCode,
+                s.CourseName,
+                s.CourseDescription,
+                s.ExpectedTime,
+                s.DateAdded,
+                s.Points,
+                s.CourseImage
+            }).ToList();
 
             //var v = Db.Subjects.Where(x => x.SchoolId.Equals(userSchool)).Select(s => new { s.SubjectId, s.SubjectCode, s.SubjectName }).ToList();
             //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
@@ -171,13 +187,26 @@ namespace CodedenimWebApp.Controllers
             if (!string.IsNullOrEmpty(search))
             {
                 //v = v.OrderBy(sortColumn + " " + sortColumnDir);
-                v = db.Courses.Where(x => ( x.CourseCode.Equals(search) || x.CourseName.Equals(search) || x.CourseDescription.Equals(search) || x.ExpectedTime.Equals(search) || x.DateAdded.Equals(search) || x.Points.Equals(search)))
-                    .Select(s => new { s.CourseCode, s.CourseName, s.CourseDescription, s.ExpectedTime, s.DateAdded, s.Points, s.CourseImage }).ToList();
+                v = db.Courses.Where(x => (x.CourseCode.Equals(search) || x.CourseName.Equals(search) ||
+                                           x.CourseDescription.Equals(search) || x.ExpectedTime.Equals(search) ||
+                                           x.DateAdded.Equals(search) || x.Points.Equals(search)))
+                    .Select(s => new
+                    {
+                        s.CourseCode,
+                        s.CourseName,
+                        s.CourseDescription,
+                        s.ExpectedTime,
+                        s.DateAdded,
+                        s.Points,
+                        s.CourseImage
+                    }).ToList();
             }
             totalRecords = v.Count();
             var data = v.Skip(skip).Take(pageSize).ToList();
 
-            return Json(new { draw = draw, recordsFiltered = totalRecords, recordsTotal = totalRecords, data = data }, JsonRequestBehavior.AllowGet);
+            return Json(new {draw = draw, recordsFiltered = totalRecords, recordsTotal = totalRecords, data = data},
+                JsonRequestBehavior.AllowGet);
+
             #endregion
 
             //return Json(new { data = await Db.Subjects.AsNoTracking().Select(s => new { s.SubjectId, s.SubjectCode, s.SubjectName }).ToListAsync() }, JsonRequestBehavior.AllowGet);
@@ -189,6 +218,7 @@ namespace CodedenimWebApp.Controllers
             ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName");
             return PartialView();
         }
+
         [HttpPost]
         public async Task<PartialViewResult> CreateCoursePartial(Course course)
         {
@@ -220,7 +250,7 @@ namespace CodedenimWebApp.Controllers
         }
 
 
-      
+
         // GET: Courses/Create
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
@@ -236,7 +266,10 @@ namespace CodedenimWebApp.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")] Course course, HttpPostedFileBase File)
+        public async Task<ActionResult> Create(
+            [Bind(Include =
+                "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")]
+            Course course, HttpPostedFileBase File)
         {
             if (ModelState.IsValid)
             {
@@ -262,7 +295,8 @@ namespace CodedenimWebApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName"/*, course.CourseCategoryId*/);
+            ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId",
+                "CategoryName" /*, course.CourseCategoryId*/);
             return View(course);
         }
 
@@ -289,7 +323,10 @@ namespace CodedenimWebApp.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")] Course course)
+        public async Task<ActionResult> Edit(
+            [Bind(Include =
+                "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")]
+            Course course)
         {
             if (ModelState.IsValid)
             {
@@ -297,7 +334,7 @@ namespace CodedenimWebApp.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-           // ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName", course.CourseCategoryId);
+            // ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName", course.CourseCategoryId);
             return View(course);
         }
 
@@ -342,7 +379,97 @@ namespace CodedenimWebApp.Controllers
         {
             var userId = User.Identity.GetUserId();
             var mycourses = await db.StudentPayments.Where(x => x.StudentId.Equals(userId)).ToArrayAsync();
-           return View(mycourses);
+            return View(mycourses);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ExcelUpload(HttpPostedFileBase excelfile)
+        {
+            if (excelfile == null || excelfile.ContentLength == 0)
+            {
+                ViewBag.Error = "Please Select a excel file <br/>";
+                return View();
+            }
+            HttpPostedFileBase file = Request.Files["excelfile"];
+            if (excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
+            {
+                string lastrecord = "";
+                int recordCount = 0;
+                string message = "";
+                string fileContentType = file.ContentType;
+                byte[] fileBytes = new byte[file.ContentLength];
+                var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                // Read data from excel file
+                using (var package = new ExcelPackage(file.InputStream))
+                {
+                    var currentSheet = package.Workbook.Worksheets;
+                    foreach (var sheet in currentSheet)
+                    {
+                        ExcelValidation myExcel = new ExcelValidation();
+                        //var workSheet = currentSheet.First();
+                        var noOfCol = sheet.Dimension.End.Column;
+                        var noOfRow = sheet.Dimension.End.Row;
+                        int requiredField = 7;
+
+                        string validCheck = myExcel.ValidateExcel(noOfRow, sheet, requiredField);
+                        if (!validCheck.Equals("Success"))
+                        {
+
+                            string[] ssizes = validCheck.Split(' ');
+                            string[] myArray = new string[2];
+                            for (int i = 0; i < ssizes.Length; i++)
+                            {
+                                myArray[i] = ssizes[i];
+                            }
+                            string lineError =
+                                $"Please Check sheet {sheet}, Line/Row number {myArray[0]}  and column {myArray[1]} is not rightly formatted, Please Check for anomalies ";
+                            //ViewBag.LineError = lineError;
+                            TempData["UserMessage"] = lineError;
+                            TempData["Title"] = "Error.";
+                            return View();
+                        }
+
+                        for (int row = 2; row <= noOfRow; row++)
+                        {
+                            string CourseCode = sheet.Cells[row, 1].Value.ToString().ToUpper().Trim();
+                            string CourseName = sheet.Cells[row, 2].Value.ToString().ToUpper().Trim();
+                            string CourseDescription = sheet.Cells[row, 3].Value.ToString().Trim().ToUpper();
+                            int ExpectedTime = Int32.Parse(sheet.Cells[row, 4].Value.ToString().Trim().ToUpper());
+                            var DateAdded = DateTime.Parse(sheet.Cells[row, 5].Value.ToString().Trim());
+                            int Points = Int32.Parse(sheet.Cells[row, 6].Value.ToString().ToUpper().Trim());
+                            string FileName = sheet.Cells[row, 7].Value.ToString().Trim();
+
+                            //var subjectName = db.Subjects.Where(x => x.SubjectCode.Equals(subjectValue))
+                            //    .Select(c => c.SubjectId).FirstOrDefault();
+
+                            var courses = db.Courses.Where(x => x.CourseCode.Equals(CourseCode));
+                            var countFromDb = await courses.CountAsync();
+                            if (countFromDb >= 1)
+                            {
+                                return View("Error2");
+                            }
+                            var mycontinuousAssessment = new Course
+                            {
+                                CourseCode = CourseCode,
+                                CourseName = CourseName,
+                                CourseDescription = CourseDescription,
+                                ExpectedTime = ExpectedTime,
+                                DateAdded = DateAdded,
+                                Points = Points,
+
+                                FileLocation = FileName,
+
+                            };
+                            db.Courses.Add(mycontinuousAssessment);
+
+                            recordCount++;
+//lastrecord = $"The last Updated record has the Student Id {studentId} and Subject Name is {subjectName}. Please Confirm!!!";
+                        }
+                    }
+                }
+                await db.SaveChangesAsync();
+            }
+            return View("Index");
         }
     }
 

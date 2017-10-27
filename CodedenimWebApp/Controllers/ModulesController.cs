@@ -8,7 +8,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CodedenimWebApp.Models;
+using CodedenimWebApp.Services;
 using CodeninModel;
+using OfficeOpenXml;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -180,5 +182,107 @@ namespace CodedenimWebApp.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> ExcelUpload(HttpPostedFileBase excelfile)
+        {
+            if (excelfile == null || excelfile.ContentLength == 0)
+            {
+                ViewBag.Error = "Please Select a excel file <br/>";
+                return View();
+            }
+            HttpPostedFileBase file = Request.Files["excelfile"];
+            if (excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
+            {
+                string lastrecord = "";
+                int recordCount = 0;
+                string message = "";
+                string fileContentType = file.ContentType;
+                byte[] fileBytes = new byte[file.ContentLength];
+                var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                // Read data from excel file
+                using (var package = new ExcelPackage(file.InputStream))
+                {
+                    var currentSheet = package.Workbook.Worksheets;
+                    foreach (var sheet in currentSheet)
+                    {
+                        ExcelValidation myExcel = new ExcelValidation();
+                        //var workSheet = currentSheet.First();
+                        var noOfCol = sheet.Dimension.End.Column;
+                        var noOfRow = sheet.Dimension.End.Row;
+                        int requiredField = 4;
+
+                        string validCheck = myExcel.ValidateExcel(noOfRow, sheet, requiredField);
+                        if (!validCheck.Equals("Success"))
+                        {
+
+                            string[] ssizes = validCheck.Split(' ');
+                            string[] myArray = new string[2];
+                            for (int i = 0; i < ssizes.Length; i++)
+                            {
+                                myArray[i] = ssizes[i];
+                            }
+                            string lineError =
+                                $"Please Check sheet {sheet}, Line/Row number {myArray[0]}  and column {myArray[1]} is not rightly formatted, Please Check for anomalies ";
+                            //ViewBag.LineError = lineError;
+                            TempData["UserMessage"] = lineError;
+                            TempData["Title"] = "Error.";
+                            return View();
+                        }
+                      
+                        for (int row = 2; row <= noOfRow; row++)
+                        {
+                            var course = sheet.Cells[row, 1].Value.ToString().Trim();
+                            var courseName = db.Courses.Where(x => x.CourseName.Equals(course)).Select(x => x.CourseId).FirstOrDefault();
+
+                            int courseId = courseName;
+                            string moduleName = sheet.Cells[row, 2].Value.ToString().ToUpper().Trim();
+                            string moduleDescription = sheet.Cells[row, 3].Value.ToString().Trim().ToUpper();
+                            var expectedTime = Int32.Parse(sheet.Cells[row, 4].Value.ToString().Trim());
+
+                            //var subjectName = db.Subjects.Where(x => x.SubjectCode.Equals(subjectValue))
+                            //    .Select(c => c.SubjectId).FirstOrDefault();
+
+                          //  var category = db.Modules.Where(x => x.CourseId.Equals(courseName) && x.ModuleName.Equals(moduleName));
+//var countFromDb = await category.CountAsync();
+                            //if (countFromDb >= 1)
+                            //{
+                            //    return View("Error2");
+                            //}
+
+
+                            //foreach (var courseIdInExce in courseName)
+                            //{
+                               // var cs = courseIdInExce;
+
+                                var myModule = new Module()
+                                    {
+
+
+
+                                        CourseId = courseId,
+
+
+                                        ModuleName = moduleName,
+                                        ModuleDescription = moduleDescription,
+                                        ExpectedTime = expectedTime
+
+
+
+                                    }
+
+                                    ;
+                                db.Modules.Add(myModule);
+                            }
+                            recordCount++;
+                            //lastrecord = $"The last Updated record has the Student Id {studentId} and Subject Name is {subjectName}. Please Confirm!!!";
+                        }
+                    }
+                }
+                await db.SaveChangesAsync();
+           // }
+            return View("Index");
+        }
+
     }
 }

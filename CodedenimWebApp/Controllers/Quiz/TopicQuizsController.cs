@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using CodedenimWebApp.Controllers.Api.ForumApi;
 using CodedenimWebApp.Models;
+using CodedenimWebApp.Services;
 using CodeninModel;
 using CodeninModel.Quiz;
+using OfficeOpenXml;
 
 namespace CodedenimWebApp.Controllers.Quiz
 {
@@ -135,6 +138,102 @@ namespace CodedenimWebApp.Controllers.Quiz
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+        //excel upload for the quiz
+
+        [HttpPost]
+        public async Task<ActionResult> ExcelUpload(HttpPostedFileBase excelfile)
+        {
+            if (excelfile == null || excelfile.ContentLength == 0)
+            {
+                ViewBag.Error = "Please Select a excel file <br/>";
+                return View();
+            }
+            HttpPostedFileBase file = Request.Files["excelfile"];
+            if (excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
+            {
+                string lastrecord = "";
+                int recordCount = 0;
+                string message = "";
+                string fileContentType = file.ContentType;
+                byte[] fileBytes = new byte[file.ContentLength];
+                var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                // Read data from excel file
+                using (var package = new ExcelPackage(file.InputStream))
+                {
+                    var currentSheet = package.Workbook.Worksheets;
+                    foreach (var sheet in currentSheet)
+                    {
+                        ExcelValidation myExcel = new ExcelValidation();
+                        //var workSheet = currentSheet.First();
+                        var noOfCol = sheet.Dimension.End.Column;
+                        var noOfRow = sheet.Dimension.End.Row;
+                        int requiredField = 5;
+
+                        string validCheck = myExcel.ValidateExcel(noOfRow, sheet, requiredField);
+                        if (!validCheck.Equals("Success"))
+                        {
+
+                            string[] ssizes = validCheck.Split(' ');
+                            string[] myArray = new string[2];
+                            for (int i = 0; i < ssizes.Length; i++)
+                            {
+                                myArray[i] = ssizes[i];
+                            }
+                            string lineError =
+                                $"Please Check sheet {sheet}, Line/Row number {myArray[0]}  and column {myArray[1]} is not rightly formatted, Please Check for anomalies ";
+                            //ViewBag.LineError = lineError;
+                            TempData["UserMessage"] = lineError;
+                            TempData["Title"] = "Error.";
+                            return View();
+                        }
+
+                        for (int row = 2; row <= noOfRow; row++)
+                        {
+                            var topicName = sheet.Cells[row, 1].Value.ToString().Trim();
+                            var topicId = db.Topics.Where(x => x.TopicName.Equals(topicName)).Select(x => x.TopicId)
+                                .FirstOrDefault();
+                            int Topic = topicId;
+                            string questionName = sheet.Cells[row, 2].Value.ToString().ToUpper().Trim();
+                            string option1 = sheet.Cells[row, 3].Value.ToString().Trim().ToUpper();
+                            string  option2 = sheet.Cells[row, 4].Value.ToString().ToUpper().Trim();
+                            string option3 = sheet.Cells[row, 5].Value.ToString().Trim();
+                            string option4 = sheet.Cells[row, 6].Value.ToString().Trim();
+                            string answer = sheet.Cells[row, 7].Value.ToString().Trim();
+
+
+                            //var subjectName = db.Subjects.Where(x => x.SubjectCode.Equals(subjectValue))
+                            //    .Select(c => c.SubjectId).FirstOrDefault();
+
+                            var category = db.TopicQuizs.Where(x => x.TopicId.Equals(topicId) && x.Question.Equals(questionName));
+                            var countFromDb = await category.CountAsync();
+                            if (countFromDb >= 1)
+                            {
+                                return View("Error2");
+                            }
+                            var quiz = new TopicQuiz()
+                            {
+                                Question = questionName,
+                                Option1 = option1,
+                                Option2 = option2,
+                                Option3 = option3,
+                                Option4 = option4,
+                                Answer = answer
+
+
+                            };
+                            db.TopicQuizs.Add(quiz);
+
+                            recordCount++;
+                            //lastrecord = $"The last Updated record has the Student Id {studentId} and Subject Name is {subjectName}. Please Confirm!!!";
+                        }
+                    }
+                }
+                await db.SaveChangesAsync();
+            }
+            return View("Index");
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using CodeninModel;
+using CodeninModel.Forums;
 
 namespace CodedenimWebApp.ViewModels
 {
@@ -12,6 +13,7 @@ namespace CodedenimWebApp.ViewModels
         public List<StudentPayment> Student { get; set; }
         public List<CourseCategory> CourseCategories { get; set; }
         public List<Student> StudentInfo { get; set; }
-
+        public List<ForumQuestion> ForumQuestion { get; set; }
+            
     }
 }

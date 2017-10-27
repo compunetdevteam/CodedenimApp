@@ -14,7 +14,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using CodedenimWebApp.Service;
+using CodedenimWebApp.Services;
 using CodeninModel.Abstractions;
+using OfficeOpenXml;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -309,6 +311,98 @@ namespace CodedenimWebApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        /// <summary>
+        /// Action to Upload course categories using excel files.
+        /// </summary>
+        /// <param name="excelfile">HttpPostedFieBase</param>
+        /// <returns>ActionResult</returns>
+        [HttpPost]
+        public async Task<ActionResult> ExcelUpload(HttpPostedFileBase excelfile)
+        {
+            if (excelfile == null || excelfile.ContentLength == 0)
+            {
+                ViewBag.Error = "Please Select a excel file <br/>";
+                return View();
+            }
+            HttpPostedFileBase file = Request.Files["excelfile"];
+            if (excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
+            {
+                string lastrecord = string.Empty;
+                int recordCount = 0;
+                string message = string.Empty;
+                string fileContentType = file.ContentType;
+                byte[] fileBytes = new byte[file.ContentLength];
+                var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                // Read data from excel file
+                using (var package = new ExcelPackage(file.InputStream))
+                {
+                    var currentSheet = package.Workbook.Worksheets;
+                    foreach (var sheet in currentSheet)
+                    {
+                        ExcelValidation myExcel = new ExcelValidation();
+                        //var workSheet = currentSheet.First();
+                        var noOfCol = sheet.Dimension.End.Column;
+                        var noOfRow = sheet.Dimension.End.Row;
+                        int requiredField = 5;
+
+                        string validCheck = myExcel.ValidateExcel(noOfRow, sheet, requiredField);
+                        if (!validCheck.Equals("Success"))
+                        {
+
+                            string[] ssizes = validCheck.Split(' ');
+                            string[] myArray = new string[2];
+                            for (int i = 0; i < ssizes.Length; i++)
+                            {
+                                myArray[i] = ssizes[i];
+                            }
+                            string lineError =
+                                $"Please Check sheet {sheet}, Line/Row number {myArray[0]}  and column {myArray[1]} is not rightly formatted, Please Check for anomalies ";
+                            //ViewBag.LineError = lineError;
+                            TempData["UserMessage"] = lineError;
+                            TempData["Title"] = "Error.";
+                            return View();
+                        }
+
+                        for (int row = 2; row <= noOfRow; row++)
+                        {
+                            string studentType = sheet.Cells[row, 1].Value.ToString().Trim();
+                            string categoryName = sheet.Cells[row, 2].Value.ToString().ToUpper().Trim();
+                            string courseDescription = sheet.Cells[row, 3].Value.ToString().Trim().ToUpper();                         
+                            int amount = Int32.Parse(sheet.Cells[row, 4].Value.ToString().ToUpper().Trim());
+                            string imageLocation = sheet.Cells[row, 5].Value.ToString().Trim();
+
+                            //var subjectName = db.Subjects.Where(x => x.SubjectCode.Equals(subjectValue))
+                            //    .Select(c => c.SubjectId).FirstOrDefault();
+
+                            var category = db.CourseCategories.Where(x => x.CategoryName.Equals(categoryName) && x.StudentType.Equals(studentType));
+                            var countFromDb = await category.CountAsync();
+                            if (countFromDb >= 1)
+                            {
+                                return View("Error2");
+                            }
+                            var mycontinuousAssessment = new CourseCategory()
+                            {
+                                CategoryName = categoryName,
+                       
+                                Amount = amount,
+                                StudentType = studentType,
+                                CategoryDescription = courseDescription,
+                                ImageLocation = imageLocation,
+
+
+                            };
+                            db.CourseCategories.Add(mycontinuousAssessment);
+
+                            recordCount++;
+                            //lastrecord = $"The last Updated record has the Student Id {studentId} and Subject Name is {subjectName}. Please Confirm!!!";
+                        }
+                    }
+                }
+                await db.SaveChangesAsync();
+            }
+            return View("Index");
         }
     }
 }

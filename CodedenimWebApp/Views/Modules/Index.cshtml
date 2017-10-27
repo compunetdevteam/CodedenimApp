@@ -10,6 +10,20 @@
 
     <h2>MODULES</h2>
     <br />
+    
+
+    @using (Html.BeginForm("ExcelUpload", "Modules", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <input class="form-control" type="file" id="File" name="excelfile" class="btn btn-default btn-md" />
+
+        <input type="submit" value="submit">
+
+    }
+
+
+    
+
     <p>
         @Html.ActionLink("CREATE MODULE", "Create", null, new { @class = "my-class" })
     </p>
