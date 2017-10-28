@@ -1,7 +1,11 @@
 ﻿using CodedenimWebApp.Models;
+using CodedenimWebApp.Service;
+using CodedenimWebApp.Services;
+using CodedenimWebApp.ViewModels;
 using CodeninModel;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json.Linq;
+using OfficeOpenXml;
 using PayStack.Net;
 using System;
 using System.Collections.Generic;
@@ -13,10 +17,6 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using CodedenimWebApp.Service;
-using CodedenimWebApp.Services;
-using CodeninModel.Abstractions;
-using OfficeOpenXml;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -31,11 +31,20 @@ namespace CodedenimWebApp.Controllers
             return View(await db.CourseCategories.ToListAsync());
         }
 
+        public PartialViewResult CategoryPartial()
+        {
+            var courseCategories = db.CourseCategories.ToList();
+            return PartialView(courseCategories);
+        }
+
+        [Authorize]
         public async Task<ActionResult> CourseCategoryPayment()
         {
             var userId = User.Identity.GetUserId();
+
+
             var student = await db.Students.FindAsync(userId);
-                
+
             var model = new List<CourseCategory>();
 
             var assignedCourse = await db.AssignCourseCategories.Include(i => i.CourseCategory).Include(i => i.Courses)
@@ -84,7 +93,7 @@ namespace CodedenimWebApp.Controllers
                 else
                 {
                     amount = db.CourseCategories.Where(x => x.CourseCategoryId.Equals((int)id)).Select(x => x.Amount).FirstOrDefault();
-                    id = (int) id;
+                    id = (int)id;
                 }
 
 
@@ -201,16 +210,25 @@ namespace CodedenimWebApp.Controllers
         // GET: CourseCategories/Details/5
         public async Task<ActionResult> Details(int? id)
         {
+            var userId = User.Identity.GetUserId();
+            var userType = db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.AccountType).FirstOrDefault();
+            // var userRole = User.IsInRole(userType);
+            var enrolledCourses = db.AssignCourseCategories.Where(x => x.CourseCategory.StudentType.Equals(userType)).ToList();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            var categoryVm = new CategoryVm
+            {
+                Courses = enrolledCourses
+            };
             CourseCategory courseCategory = await db.CourseCategories.FindAsync(id);
             if (courseCategory == null)
             {
                 return HttpNotFound();
             }
-            return View(courseCategory);
+            return View(categoryVm);
         }
 
         // GET: CourseCategories/Create
@@ -369,7 +387,7 @@ namespace CodedenimWebApp.Controllers
                         {
                             string studentType = sheet.Cells[row, 1].Value.ToString().Trim();
                             string categoryName = sheet.Cells[row, 2].Value.ToString().ToUpper().Trim();
-                            string courseDescription = sheet.Cells[row, 3].Value.ToString().Trim().ToUpper();                         
+                            string courseDescription = sheet.Cells[row, 3].Value.ToString().Trim().ToUpper();
                             int amount = Int32.Parse(sheet.Cells[row, 4].Value.ToString().ToUpper().Trim());
                             string imageLocation = sheet.Cells[row, 5].Value.ToString().Trim();
 
@@ -385,7 +403,7 @@ namespace CodedenimWebApp.Controllers
                             var mycontinuousAssessment = new CourseCategory()
                             {
                                 CategoryName = categoryName,
-                       
+
                                 Amount = amount,
                                 StudentType = studentType,
                                 CategoryDescription = courseDescription,

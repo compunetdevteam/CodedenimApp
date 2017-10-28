@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using CodedenimWebApp.Models;
+﻿using CodedenimWebApp.Models;
 using CodeninModel.Forums;
 using Microsoft.AspNet.Identity;
 using PagedList;
+using System;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -39,7 +37,7 @@ namespace CodedenimWebApp.Controllers
         {
             var userId = User.Identity.GetUserId();
 
-            ViewBag.MyQuestion = await db.ForumQuestions.Where(x => x.StudentId.Equals(userId)).Select(x => new{ x.QuestionName,x.ForumQuestionId}).ToListAsync();
+            ViewBag.MyQuestion = await db.ForumQuestions.Where(x => x.StudentId.Equals(userId)).Select(x => new { x.QuestionName, x.ForumQuestionId }).ToListAsync();
             return View();
         }
 
@@ -64,7 +62,13 @@ namespace CodedenimWebApp.Controllers
             var userId = User.Identity.GetUserId();
 
             var student = db.Students.Where(x => x.StudentId.Equals(userId)).ToList();
-           
+
+            //var enrolledCoursesId = db.CorperEnrolledCourses.Where(x => x.StudentId.Equals(userId))
+            //                           .Select(x => x.CourseCategoryId).FirstOrDefault();
+            //var courseId = db.AssignCourseCategories.Where(x => x.CourseCategoryId.Equals(enrolledCoursesId))
+            //                        .Select(x => x.CourseId);
+
+
             ViewBag.CourseId = new SelectList(db.Fora, "CourseId", "ForumName");
             ViewBag.ForumQuestionId = new SelectList(db.ForumQuestionViews, "ForumQuestionId", "ForumQuestionId");
             ViewBag.StudentId = new SelectList(student, "StudentId", "FullName");
@@ -163,6 +167,11 @@ namespace CodedenimWebApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public async Task<ActionResult> ForumThread()
+        {
+            return View();
         }
     }
 }

@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<CodeninModel.Quiz.TopicQuiz>
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Courses";
+    ViewBag.Courses = "class = active";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+
+
 }
 
 <div class="container-fluid" style="margin-left: 13%">
@@ -101,3 +105,11 @@
 
 </table>
 </div>
+
+
+
+
+        <!-- extra div for emulating position:fixed of the menu -->
+   
+
+        <!-- /st-content-inner -->

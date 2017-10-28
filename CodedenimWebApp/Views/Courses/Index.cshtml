@@ -4,24 +4,12 @@
 @{
     ViewBag.Title = "Courses";
     ViewBag.Courses = "class = active";
-    //if (Roles.IsUserInRole(RoleName.Admin))
-    //{
-    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
-    //}
-    //if (Roles.IsUserInRole(RoleName.Tutor))
-    //{
-    //    Layout = "~/Views/Shared/_LayoutTutor.cshtml";
-    //}
-    //else
-    //{
-    //    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
-    //}
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+  
 
 }
 @*<link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />*@
 <link href="~/Content/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />
-
-<div class="container-fluid" style="margin-left: 13%"> 
     <h2>Courses</h2>  
 
     @*<p>
@@ -185,4 +173,4 @@
 
         });
     </script>
-    </div>
+ 

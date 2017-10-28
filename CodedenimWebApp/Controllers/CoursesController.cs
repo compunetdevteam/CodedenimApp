@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Hosting;
-using System.Web.Mvc;
-using CodedenimWebApp.Models;
+﻿using CodedenimWebApp.Models;
 using CodedenimWebApp.Services;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
 using Microsoft.AspNet.Identity;
 using OfficeOpenXml;
-using Xamarin.Forms;
+using System;
+using System.Data;
+using System.Data.Entity;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Hosting;
+using System.Web.Mvc;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -47,50 +45,37 @@ namespace CodedenimWebApp.Controllers
             return View(courses);
         }
 
-        public async Task<PartialViewResult> _ListCoursesPartial(int? categoryId)
+        public async Task<ActionResult> _ListCoursesPartial(int? categoryId)
         {
-
-
-
-
             var corperCourses = await db.AssignCourseCategories.Include(x => x.CourseCategory).Include(x => x.Courses)
-                .Where(x => x.CourseCategory.StudentType.Equals(RoleName.Corper))
-                .ToListAsync();
-            var model = new DashboardVm()
+                                        .ToListAsync();
+
+            if (categoryId != null)
             {
-                AssignCourseCategories = corperCourses
-            };
+                corperCourses = corperCourses.Where(x => x.CourseCategoryId.Equals((int)categoryId)).ToList();
+            }
 
-            //var userId = User.Identity.GetUserId();
-            //var courseCategoryId = await db.StudentPayments.Include(i => i.CourseCategory)
-            //    .Where(x => x.StudentId.Equals(userId)).ToListAsync()
-            //    /*.Select(x => x.CourseCategoryId).ToListAsync()*/;
-            ////var course = new List<int>();
+            if (User.IsInRole(RoleName.Corper))
+            {
 
-            //var model = new CorperDashboard1Vm();
+                corperCourses = corperCourses.Where(x => x.CourseCategory.StudentType.Equals(RoleName.Corper))
+                    .ToList();
+            }
+            if (User.IsInRole(RoleName.UnderGraduate))
+            {
 
-            //foreach (var courses in courseCategoryId)
-            //{
-            //    {
-            //        model.CourseCategories.Add(courses.CourseCategory);
+                corperCourses = corperCourses.Where(x => x.CourseCategory.StudentType.Equals(RoleName.UnderGraduate))
+                    .ToList();
 
-            //    }
-            //}
-            ////var category = await db.Courses.Where(x => x.CourseId.Equals(course)).ToListAsync();
-            ////if (category != null)
-            ////{
-            ////    var courses = new CorperDashboard1Vm
-            ////    {
-            ////        Courses = category
+            }
+            if (User.IsInRole(RoleName.OtherStudent))
+            {
 
-            ////    };
-            ////    return View(courses);
+                corperCourses = corperCourses.Where(x => x.CourseCategory.StudentType.Equals(RoleName.OtherStudent))
+                    .ToList();
+            }
 
-            ////}
-
-
-
-            return PartialView(model);
+            return PartialView(corperCourses);
         }
 
         /// <summary>
@@ -104,6 +89,12 @@ namespace CodedenimWebApp.Controllers
 
             var categoryVm = new CategoryVm();
             // var course = new List<int>();
+            var corperEnrollment = new CorperEnrolledCourses
+            {
+                StudentId = userId,
+                CourseCategoryId = id
+            };
+
 
             var categoriesPaidFor = db.StudentPayments.Where(x => x.StudentId.Equals(userId))
                 .Select(x => x.CourseCategoryId).FirstOrDefault();
@@ -116,6 +107,10 @@ namespace CodedenimWebApp.Controllers
                 .Where(x => x.CourseCategoryId.Equals(categoriesPaidFor)).ToList();
             categoryVm.CourseCategory = db.CourseCategories.Where(x => x.CourseCategoryId.Equals(categoriesPaidFor))
                 .Select(x => x.CategoryName).FirstOrDefault();
+
+            db.CorperEnrolledCourses.Add(corperEnrollment);
+            db.SaveChanges();
+
 
             return View(categoryVm);
         }
@@ -130,8 +125,9 @@ namespace CodedenimWebApp.Controllers
             var viewModel = new CourseContentVm
             {
                 Modules = db.Modules.Include(x => x.Topics).Include(x => x.Course)
-                    .Where(x => x.CourseId.Equals((int) id)).ToList(),
+                    .Where(x => x.CourseId.Equals((int)id)).ToList(),
                 Topics = db.Topics.Include(x => x.MaterialUploads).ToList(),
+
             };
 
 
@@ -204,7 +200,7 @@ namespace CodedenimWebApp.Controllers
             totalRecords = v.Count();
             var data = v.Skip(skip).Take(pageSize).ToList();
 
-            return Json(new {draw = draw, recordsFiltered = totalRecords, recordsTotal = totalRecords, data = data},
+            return Json(new { draw = draw, recordsFiltered = totalRecords, recordsTotal = totalRecords, data = data },
                 JsonRequestBehavior.AllowGet);
 
             #endregion
@@ -381,6 +377,13 @@ namespace CodedenimWebApp.Controllers
             var mycourses = await db.StudentPayments.Where(x => x.StudentId.Equals(userId)).ToArrayAsync();
             return View(mycourses);
         }
+        public async Task<ActionResult> MyCourses()
+        {
+            var userId = User.Identity.GetUserId();
+            var mycourses = await db.CorperEnrolledCourses.Where(x => x.StudentId.Equals(userId)).ToListAsync();
+            return View(mycourses);
+        }
+
 
         [HttpPost]
         public async Task<ActionResult> ExcelUpload(HttpPostedFileBase excelfile)
@@ -448,7 +451,7 @@ namespace CodedenimWebApp.Controllers
                             {
                                 return View("Error2");
                             }
-                            var mycontinuousAssessment = new Course
+                            var course = new Course
                             {
                                 CourseCode = CourseCode,
                                 CourseName = CourseName,
@@ -460,10 +463,10 @@ namespace CodedenimWebApp.Controllers
                                 FileLocation = FileName,
 
                             };
-                            db.Courses.Add(mycontinuousAssessment);
+                            db.Courses.Add(course);
 
                             recordCount++;
-//lastrecord = $"The last Updated record has the Student Id {studentId} and Subject Name is {subjectName}. Please Confirm!!!";
+                            //lastrecord = $"The last Updated record has the Student Id {studentId} and Subject Name is {subjectName}. Please Confirm!!!";
                         }
                     }
                 }

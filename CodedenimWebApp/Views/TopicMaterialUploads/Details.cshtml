@@ -4,7 +4,9 @@
 
 @{
     ViewBag.Title = "Topic Material Details";
-    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
+
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
 }
 <br /><br /><br /><br /><br />
 
@@ -71,7 +73,9 @@
         @Html.ActionLink("Back to List", "Index")*@
     </p>
 
-
+        @*<audio controls="controls">
+            <source src="~/MaterialUpload/09.%20Better%20Man.mp3" type="audio/mpeg" />
+        </audio>*@
 
 
     <div class="col-md-4">
@@ -106,30 +110,30 @@
         else if (Model.FileType == FileType.MP3)
         {
 
-            @*<audio controls="controls" id="video1" width="420">
-                <source src="~/MaterialUpload/@Model.FileLocation" type="audio/mp3">
+            <audio controls="controls" id="video1" width="420">
+                <source src="~/MaterialUpload/@Model.FileLocation" type="audio/mpeg">
 
-            </audio>*@
-<audio controls = "controls">
+            </audio>
+@*<audio controls = "controls">
  <source src = "~/MaterialUpload/09.%20Better%20Man.mp3" type = "audio/mpeg"/>
-    </audio>
+    </audio>*@
         }
     </div>
     
-<div class="col-md-3">
-<div class="panel panel-default" data-toggle="panel-collapse" data-open="true">
-    <div class="panel-heading panel-collapse-trigger">
-        <h4 class="panel-title">List Of Videos</h4>
-    </div>
-    <div class="panel-body list-group">
-        <ul class="list-group list-group-menu">
-            <li class="list-group-item"><a class="link-text-color" href="website-instructor-dashboard.html">Dashboard</a></li>
-           
-        </ul>
-    </div>
-</div>
-    @*@Html.ActionLink("Back to Topics", "Content","Courses", new{ id = Model.Course.Module.CourseId})*@
-</div>
+@*<div class="col-md-3 pull-5">
+    <div class="panel panel-default" data-toggle="panel-collapse" data-open="true">
+        <div class="panel-heading panel-collapse-trigger">
+            <h4 class="panel-title">List Of Videos</h4>
+        </div>
+        <div class="panel-body list-group">
+            <ul class="list-group list-group-menu">
+                <li class="list-group-item"><a class="link-text-color" href="website-instructor-dashboard.html">Dashboard</a></li>
+
+            </ul>
+        </div>
+    </div>@*
+        @*Html.ActionLink("Back to Topics", "Content","Courses", new{ id = Model.Course.Module.CourseId})*@
+@*</div>*@
 </div>
 @*<p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.TopicMaterialUploadId }) |

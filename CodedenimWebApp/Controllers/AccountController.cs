@@ -68,7 +68,8 @@ namespace CodedenimWebApp.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            // var url = returnUrl;
+            return View(); ;
         }
 
         //
@@ -104,7 +105,7 @@ namespace CodedenimWebApp.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("CustomDashboard", new { username = user.UserName });
+                    return RedirectToAction("CustomDashboard", new { username = user.UserName, returnUrl = returnUrl });
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -117,8 +118,13 @@ namespace CodedenimWebApp.Controllers
         }
 
 
-        public ActionResult CustomDashboard(string username)
+        public ActionResult CustomDashboard(string username, string returnUrl)
         {
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                return RedirectToLocal(returnUrl);
+            }
+
             if (User.IsInRole(RoleName.Admin))
             {
                 TempData["UserMessage"] = $"Login Successful, Welcome {username}";
@@ -940,6 +946,14 @@ namespace CodedenimWebApp.Controllers
         // POST: /Account/LogOff
         [System.Web.Mvc.HttpPost]
         public ActionResult LogOff()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Index", "Home");
+        }
+
+        // POST: /Account/LogOff
+        [System.Web.Mvc.HttpGet]
+        public ActionResult LogOut()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");

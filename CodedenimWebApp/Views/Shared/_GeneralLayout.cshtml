@@ -1,0 +1,218 @@
+﻿@using CodedenimWebApp.Controllers
+@using CodedenimWebApp.Models
+
+<!DOCTYPE html>
+<html class="transition-navbar-scroll top-navbar-xlarge bottom-footer" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Learning</title>
+    
+    
+    <link href="~/Content/LMS/css/vendor.min.css" rel="stylesheet">
+    <link href="~/Content/LMS/css/theme-core.min.css" rel="stylesheet">
+
+
+    <link href="~/Content/LMS/css/module-essentials.min.css" rel="stylesheet" />
+    <link href="~/Content/LMS/css/module-material.min.css" rel="stylesheet" />
+    <link href="~/Content/LMS/css/module-layout.min.css" rel="stylesheet" />
+    <link href="~/Content/LMS/css/module-sidebar.min.css" rel="stylesheet" />
+    <link href="~/Content/LMS/css/module-sidebar-skins.min.css" rel="stylesheet" />
+    <link href="~/Content/LMS/css/module-navbar.min.css" rel="stylesheet" />
+    <link href="~/Content/LMS/css/module-messages.min.css" rel="stylesheet" />
+    <link href="~/Content/LMS/css/module-carousel-slick.min.css" rel="stylesheet" />
+    <link href="~/Content/LMS/css/module-charts.min.css" rel="stylesheet" />
+    <link href="~/Content/LMS/css/module-maps.min.css" rel="stylesheet" />
+    <link href="~/Content/LMS/css/module-colors-alerts.min.css" rel="stylesheet" />
+    <link href="~/Content/LMS/css/module-colors-background.min.css" rel="stylesheet" />
+    <link href="~/Content/LMS/css/module-colors-buttons.min.css" rel="stylesheet" />
+    <link href="~/Content/LMS/css/module-colors-text.min.css" rel="stylesheet" />
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top navbar-size-large navbar-size-xlarge paper-shadow" data-z="0" data-animated role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+                <div class="navbar-brand navbar-brand-logo">
+                        <img src="~/Content/img/CodeDemin.png" height="50" width="100" />
+                </div>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="main-nav">
+            <ul class="nav navbar-nav navbar-nav-margin-left">
+                <li><a href="@Url.Action("Index","Courses")">Courses</a></li>
+                <li><a href="@Url.Action("About","Home")">About</a></li>
+                <li><a href="@Url.Action("Contact","Home")">Contact</a></li>
+            </ul>
+            <div class="navbar-right">
+                <ul class="nav navbar-nav navbar-nav-bordered navbar-nav-margin-right">
+                    <!-- user -->
+                @if (Request.IsAuthenticated)
+                {
+                    <li class="dropdown user">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="images/people/110/guy-6.jpg" alt="" class="img-circle"/> Bill<span class="caret"></span>
+                        </a>
+
+                        <ul class="dropdown-menu" role="menu">
+                            @if (User.IsInRole(RoleName.UnderGraduate) || User.IsInRole(RoleName.Corper) || User.IsInRole(RoleName.OtherStudent))
+                            {
+                                <li><a href="@Url.Action("DashBoard","Students")"><i class="fa fa-bar-chart-o"></i> Dashboard</a></li>
+                                <li><a href="@Url.Action("Index","AssignCourseCategories")"><i class="fa fa-mortar-board"></i> My Courses</a></li>
+                                <li><a href="@Url.Action("Details","Students")"><i class="fa fa-user"></i> Profile</a></li>
+                            }
+                            else if (User.IsInRole(RoleName.Tutor))
+                            {
+
+                                <li><a href="@Url.Action("DashBoard","Tutors")"><i class="fa fa-bar-chart-o"></i> Dashboard</a></li>
+                                <li><a href="@Url.Action("Index","TutorCourses")"><i class="fa fa-mortar-board"></i> My Courses</a></li>
+                                <li><a href="@Url.Action("Details","Tutors")"><i class="fa fa-user"></i> Profile</a></li>
+                            }
+
+
+                            <li><a href="@Url.Action("LogOut", "Account")"><i class="fa fa-sign-out"></i> Logout</a></li>
+                        </ul>
+
+                    </li>
+                }
+                    <!-- // END user -->
+                </ul>
+                <a href="@Url.Action("Login","Account")" class="navbar-btn btn btn-primary">Log In</a>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div>
+
+@RenderBody()
+
+<section class="footer-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-3">
+                <h4 class="text-headline text-light">Corporate</h4>
+                <ul class="list-unstyled">
+                    <li><a href="#">About the company</a></li>
+                    <li><a href="#">Company offices</a></li>
+                    <li><a href="#">Partners</a></li>
+                    <li><a href="#">Terms of use</a></li>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Contact us</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <h4 class="text-headline text-light">Explore</h4>
+                <ul class="list-unstyled">
+                    <li><a href="">Courses</a></li>
+                    <li><a href="">Tutors</a></li>
+                    <li><a href="">Pricing</a></li>
+                    <li><a href="">Become Tutor</a></li>
+                    <li><a href="">Sign Up</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <h4 class="text-headline text-light">Newsletter</h4>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Enter email here...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-grey-800" type="button">Subscribe</button>
+                        </span>
+                    </div>
+                </div>
+                <br/>
+                <p>
+                    <a href="#" class="btn btn-indigo-500 btn-circle"><i class="fa fa-facebook"></i></a>
+                    <a href="#" class="btn btn-pink-500 btn-circle"><i class="fa fa-dribbble"></i></a>
+                    <a href="#" class="btn btn-blue-500 btn-circle"><i class="fa fa-twitter"></i></a>
+                    <a href="#" class="btn btn-danger btn-circle"><i class="fa fa-google-plus"></i></a>
+                </p>
+                <p class="text-subhead">
+                    &copy; 2015 Learning App by mosaicpro.
+                </p>
+            </div>
+        </div>
+    </div>
+</section> 
+
+<footer class="footer">
+    <strong>Learning</strong> v1.0.0 &copy; Copyright @DateTime.Now.Year
+</footer>
+
+    
+
+<script>
+    var colors = {
+        "danger-color": "#e74c3c",
+        "success-color": "#81b53e",
+        "warning-color": "#f0ad4e",
+        "inverse-color": "#2c3e50",
+        "info-color": "#2d7cb5",
+        "default-color": "#6e7882",
+        "default-light-color": "#cfd9db",
+        "purple-color": "#9D8AC7",
+        "mustard-color": "#d4d171",
+        "lightred-color": "#e15258",
+        "body-bg": "#f6f6f6"
+    };
+    var config = {
+        theme: "html",
+        skins: {
+            "default": {
+                "primary-color": "#42a5f5"
+            }
+        }
+    };
+    </script>
+<!-- Separate Vendor Script Bundles -->
+<script src="~/Content/LMS/js/vendor-core.min.js"></script>
+<script src="~/Content/LMS/js/vendor-countdown.min.js"></script>
+<script src="~/Content/LMS/js/vendor-tables.min.js"></script>
+<script src="~/Content/LMS/js/vendor-forms.min.js"></script>
+<script src="~/Content/LMS/js/vendor-carousel-slick.min.js"></script>
+<script src="~/Content/LMS/js/vendor-player.min.js"></script>
+<script src="~/Content/LMS/js/vendor-charts-flot.min.js"></script>
+<script src="~/Content/LMS/js/vendor-nestable.min.js"></script>
+<!-- <script src="js/vendor-angular.min.js"></script> -->
+<!-- Compressed Vendor Scripts Bundle
+Includes all of the 3rd party JavaScript libraries above.
+The bundle was generated using modern frontend development tools that are provided with the package
+To learn more about the development process, please refer to the documentation.
+Do not use it simultaneously with the separate bundles above. -->
+<!-- <script src="js/vendor-bundle-all.min.js"></script> -->
+<!-- Compressed App Scripts Bundle
+Includes Custom Application JavaScript used for the current theme/module;
+Do not use it simultaneously with the standalone modules below. -->
+<!-- <script src="js/module-bundle-main.min.js"></script> -->
+<!-- Standalone Modules
+As a convenience, we provide the entire UI framework broke down in separate modules
+Some of the standalone modules may have not been used with the current theme/module
+but ALL the modules are 100% compatible -->
+<script src="~/Content/LMS/js/module-essentials.min.js"></script>
+<script src="~/Content/LMS/js/module-material.min.js"></script>
+<script src="~/Content/LMS/js/module-layout.min.js"></script>
+<script src="~/Content/LMS/js/module-sidebar.min.js"></script>
+<script src="~/Content/LMS/js/module-carousel-slick.min.js"></script>
+<script src="~/Content/LMS/js/module-player.min.js"></script>
+<script src="~/Content/LMS/js/module-messages.min.js"></script>
+<script src="~/Content/LMS/js/module-maps-google.min.js"></script>
+<script src="~/Content/LMS/js/module-charts-flot.min.js"></script>
+<!-- [html] Core Theme Script:
+Includes the custom JavaScript for this theme/module;
+The file has to be loaded in addition to the UI modules above;
+module-bundle-main.js already includes theme-core.js so this should be loaded
+ONLY when using the standalone modules; -->
+<script src="~/Content/LMS/js/theme-core.min.js"></script>    
+
+@RenderSection("scripts", required: false)
+
+</body>
+</html>

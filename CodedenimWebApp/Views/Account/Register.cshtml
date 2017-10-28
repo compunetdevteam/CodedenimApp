@@ -2,227 +2,102 @@
 
 @{
     ViewBag.Title = "Register";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
-<style>
-    .demo-card-square.mdl-card {
-        width: 320px;
-        height: 320px;
-        margin-left: 30px;
-        border-bottom-right-radius: 50px;
-        border-top-left-radius: 50px;
-        background: radial-gradient(circle,#093, white);
-    }
-    .demo-card-square > .mdl-card__title {
-        color: #eee;
-        background-color: #093;
-    }
 
-    .color {
-        color: black;
-
-    }
-</style>
-<br />
-<br /><br />
-<br />
-
-@*@using (Html.BeginForm("Register", "Account", FormMethod.Post))
-{
- 
-
-    @Html.AntiForgeryToken()
-
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-        </div>
-    </div>
+<div id="content">
+<div class="container-fluid">
+    <div class="lock-container">
+        <div class="panel panel-default text-center paper-shadow" data-z="0.5">
+            <h1 class="text-display-1">Create account</h1>
+            <div class="panel-body">
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
 
 
+                    @Html.AntiForgeryToken()
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.AccountType, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EnumDropDownListFor(model => model.AccountType, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.AccountType, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                    <label for="exampleInputFirstName">First name</label>
+                    <div class="form-control-material">
 
 
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button class="btn btn-success js-submit">Create</button>
-        </div>
-    </div>
-}*@
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "exampleInputFirstName", @placeholder = "Your first name" } })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                  
+                    </div>
 
 
 
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new{ @class= "form-horizontal" }))
-{
+                    <label for="exampleInputLastName">Last name</label>
+                    <div class="form-control-material">
 
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id = "exampleInputLastName", @placeholder = "Your Last name" } })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            
+                        @*<input type="email" class="form-control" id="exampleInputLastName" placeholder="Your last name">
+                            <label for="exampleInputLastName">Last name</label>*@
+                    </div>
 
-    @Html.AntiForgeryToken()
-
-    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-
-<div class="container">
-<div class="page-section">
-<div class="row">
-<div class="col-md-9">
-    <!-- Tabbable Widget -->
-    <div class="tabbable paper-shadow relative" data-z="0.5">
-        <!-- Tabs -->
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="website-student-profile.html"><i class="fa fa-fw fa-lock"></i> <span class="hidden-sm hidden-xs">Register Account</span></a></li>
-     </ul>
-        <!-- // END Tabs -->
-        <!-- Panes -->
-        <div class="tab-content">
-            <div id="account" class="tab-pane active">
-
-
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-md-2 control-label">Full Name</label>
-                    <div class="col-md-8">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-control-material">
-
-                                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "exampleInputFirstName", @placeholder = "Your first name" } })
-                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-                                    <label for="exampleInputFirstName">First name</label>
-
-
-
+                    <label for="inputEmail3">Email address</label>
+                            <div class="form-control-material">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "exampleInputEmailName", @type = "email", @placeholder = "Your Email name" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                    @*<input type="email" class="form-control" id="inputEmail3" placeholder="Email">*@
+                               
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-control-material">
+         
 
-                                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id = "exampleInputLastName", @placeholder = "Your Last name" } })
-                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-                                    <label for="exampleInputLastName">Last name</label>
-                                    @*<input type="email" class="form-control" id="exampleInputLastName" placeholder="Your last name">
-                                <label for="exampleInputLastName">Last name</label>*@
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-md-2 control-label">Email</label>
-                    <div class="col-md-6">
-                        <div class="form-control-material">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "exampleInputEmailName", @type = "email", @placeholder = "Your Email name" } })
-                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                                @*<input type="email" class="form-control" id="inputEmail3" placeholder="Email">*@
-                                <label for="inputEmail3">Email address</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AccountType, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-6">
-                        <div class="form-control-material">
-                            <div class="form-group">
-                                <div class="col-md-10">
-                                    @Html.EnumDropDownListFor(model => model.AccountType, htmlAttributes: new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.AccountType, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                            <div class="form-group">
-                                <label for="inputPassword3" class="col-md-2 control-label"> Password</label>
-                                <div class="col-md-6">
-                                    <div class="form-control-material">
-
-                                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                                        <label for="inputPassword3">Password</label>
-                                        @*<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                                    <label for="inputPassword3">Password</label>*@
+                    <label for="inputPassword3">Account Type</label>
+                            <div class="form-control-material">
+                                <div class="form-group">
+                                    <div class="col-md-10">
+                                        @Html.EnumDropDownListFor(model => model.AccountType, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.AccountType, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
+                  
+                    <label for="inputPassword3">Password</label>
+                            <div class="form-control-material">
 
-                            <div class="form-group">
-                                <label for="inputPassword3" class="col-md-2 control-label">Confirm Password</label>
-                                <div class="col-md-6">
-                                    <div class="form-control-material">
-                                        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-                                        @*<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                              
+                                @*<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
                                     <label for="inputPassword3">Password</label>*@
-                                    </div>
-                                </div>
                             </div>
-                    
-
-
-
-                            <div class="form-group margin-none">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <button class="btn btn-primary js-submit paper-shadow relative" data-z="0.5" data-hover-z="1" data-animated>Register</button>
-                                </div>
+                 
+               
+                    <label for="inputPassword3"> Confirm Password</label>
+                            <div class="form-control-material">
+                                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                @*<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                *@  
+                           
                             </div>
+              
 
+
+
+                    <div class="form-group margin-none">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button class="btn btn-primary js-submit paper-shadow relative" data-z="0.5" data-hover-z="1" data-animated>Register</button>
                         </div>
                     </div>
-                    <!-- // END Panes -->
-                </div>
-                <!-- // END Tabbable Widget -->
-                <br />
-                <br />
+
+
+                }
             </div>
-
+        </div>
+    </div>
 </div>
 </div>
-</div>
-            }

@@ -2508,7 +2508,7 @@ output {
   font-size: 13px;
   line-height: 1.42857143;
   color: #333333;
- 
+  background-color: #f7f7f7;
   background-image: none;
   border: 1px solid #efefef;
   border-radius: 2px;
@@ -5456,12 +5456,11 @@ a.list-group-item-danger.active:focus {
 .panel-primary {
   border-color: #42a5f5;
 }
-/* Changes Done By Kelechi for a little colour tweak on dashboard please accept*/
-   .panel-primary > .panel-heading {
-        color: #ffffff;
-        background-color: #4caf50;
-        border-color: #42a5f5;
-    }
+.panel-primary > .panel-heading {
+  color: #ffffff;
+  background-color: #42a5f5;
+  border-color: #42a5f5;
+}
 .panel-primary > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #42a5f5;
 }
