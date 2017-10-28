@@ -29,5 +29,6 @@
 
         public virtual Student Student { get; set; }
         public virtual Topic Topic { get; set; }
+
     }
 }

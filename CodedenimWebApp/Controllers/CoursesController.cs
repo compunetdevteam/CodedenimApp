@@ -85,9 +85,15 @@ namespace CodedenimWebApp.Controllers
         /// <returns></returns>
         public ActionResult CategoryContent(int id)
         {
+
             var userId = User.Identity.GetUserId();
 
             var categoryVm = new CategoryVm();
+            if (id != null)
+            {
+                var categoryId = db.CorperEnrolledCourses.FirstOrDefault(x => x.Equals(id));
+
+            }
             // var course = new List<int>();
             var corperEnrollment = new CorperEnrolledCourses
             {

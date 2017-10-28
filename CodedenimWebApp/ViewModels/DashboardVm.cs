@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using CodeninModel;
+﻿using CodeninModel;
 using CodeninModel.Forums;
+using CodeninModel.Quiz;
+using System.Collections.Generic;
 
 namespace CodedenimWebApp.ViewModels
 {
@@ -14,6 +12,7 @@ namespace CodedenimWebApp.ViewModels
         public List<CourseCategory> CourseCategories { get; set; }
         public List<Student> StudentInfo { get; set; }
         public List<ForumQuestion> ForumQuestion { get; set; }
-            
+        public List<QuizLog> StudentQuiz { get; set; }
+
     }
 }

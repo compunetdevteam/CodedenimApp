@@ -2,12 +2,9 @@
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
 using Microsoft.AspNet.Identity;
-using Newtonsoft.Json.Linq;
 using PagedList;
-using PayStack.Net;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -18,7 +15,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
-using CodedenimWebApp.Migrations;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -78,12 +74,12 @@ namespace CodedenimWebApp.Controllers
         {
             var userId = User.Identity.GetUserId();
             var email = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).FirstOrDefault();
-           // var studentType = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.AccountType).FirstOrDefault();
+            // var studentType = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.AccountType).FirstOrDefault();
             var paymentRecord = _db.StudentPayments.FirstOrDefault(x => x.StudentId.Equals(userId) && x.IsPayed.Equals(true));
 
             if (User.IsInRole(RoleName.Corper))
             {
-            
+
                 return RedirectToAction("CorperDashboard", "Students");
 
 
@@ -92,16 +88,16 @@ namespace CodedenimWebApp.Controllers
             {
                 if (paymentRecord == null)
                 {
-                    return RedirectToAction("CourseCategoryPayment","CourseCategories");
+                    return RedirectToAction("CourseCategoryPayment", "CourseCategories");
                 }
-                
+
                 var student = _db.AssignCourseCategories.Include(x => x.CourseCategory)
                     .Include(x => x.Courses)
                     .Where(x => x.CourseCategory.StudentType.Equals(RoleName.UnderGraduate))
                     .ToList();
                 return RedirectToAction("MyCoursesAsync", "Courses", student);
             }
-           
+
 
             //ViewBag.UserCourseName = _db.StudentPayments.Where(x => x.IsPayed == true && x.StudentId.Equals(userId))
             //    .Select(x => x.).FirstOrDefault();
@@ -119,8 +115,8 @@ namespace CodedenimWebApp.Controllers
             //   var course = db.db.ProfessionalPayments.Where(x => x.Email.Equals(vUserCourseName)).Select(x => x.CoursePayedFor).FirstOrDefault(),.Where(x => x.Email.Equals(email)).Select(x => x.CoursePayedFor).FirstOrDefault(),
             var email = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).SingleOrDefault();
             var studentId = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.StudentId).FirstOrDefault();
-            var callUpNumber =_db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.CallUpNo).FirstOrDefault();
-             
+            var callUpNumber = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.CallUpNo).FirstOrDefault();
+
             if ((courseId != null) && (callUpNumber != null))
             {
 
@@ -137,11 +133,11 @@ namespace CodedenimWebApp.Controllers
             }
             else if (callUpNumber == null)
             {
-                return RedirectToAction("Edit","Students");
+                return RedirectToAction("Edit", "Students");
             }
-           
+
             ViewBag.UserCourseName = _db.CorperEnrolledCourses.Where(x => x.StudentId.Equals(userId)).Select(x => x.CourseId);
-          //  ViewBag.CourseId = db.Courses.Where(x => x.CourseName.Equals(UserCourseName)).Select(x => x.CourseId);
+            //  ViewBag.CourseId = db.Courses.Where(x => x.CourseName.Equals(UserCourseName)).Select(x => x.CourseId);
             //var userCourseDetail = new List<UserCourseDetail>
             //{
             //   UserCourseName = db.ProfessionalPayments.Where(x =>  x.Email.Equals(email)).Select(x => x.CoursePayedFor).FirstOrDefault(),
@@ -167,12 +163,15 @@ namespace CodedenimWebApp.Controllers
 
             var forumQuestion = _db.ForumQuestions.Where(x => x.StudentId.Equals(user))
                              .ToList();
+            var quiz = _db.QuizLogs.Where(x => x.StudentId.Equals(user)).ToList();
+
             var model = new DashboardVm()
             {
                 AssignCourseCategories = corperCourses,
                 CourseCategories = courseCategory,
                 StudentInfo = student,
-                ForumQuestion = forumQuestion
+                ForumQuestion = forumQuestion,
+                StudentQuiz = quiz
 
 
             };
@@ -189,7 +188,7 @@ namespace CodedenimWebApp.Controllers
         /// <returns></returns>
         public async Task<ActionResult> CorperDashboard1()
         {
-            var categories = await  _db.CourseCategories.ToListAsync();
+            var categories = await _db.CourseCategories.ToListAsync();
 
             var corperDashboard1 = new CorperDashboard1Vm
             {
@@ -198,7 +197,7 @@ namespace CodedenimWebApp.Controllers
             return View(corperDashboard1);
         }
 
-       
+
 
         // GET: Students/Details/5
 

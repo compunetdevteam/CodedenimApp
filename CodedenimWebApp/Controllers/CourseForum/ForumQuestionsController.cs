@@ -169,9 +169,13 @@ namespace CodedenimWebApp.Controllers
             base.Dispose(disposing);
         }
 
-        public async Task<ActionResult> ForumThread()
+        public async Task<ActionResult> ForumThread(int? page)
         {
-            return View();
+            int pageNo = (page ?? 1);
+            int PerPageSize = 5;
+            var forumQuestions = await db.ForumQuestions.Include(f => f.Forum).Include(f => f.ForumQuestionView).Include(f => f.Students).Include(x => x.ForumAnswers).ToListAsync();
+            return View(forumQuestions.OrderBy(x => x.PostDate).ToPagedList(pageNo, PerPageSize));
+
         }
     }
 }

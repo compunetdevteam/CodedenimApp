@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CodeninModel.Quiz
+﻿namespace CodeninModel.Quiz
 {
     public class QuizLog
     {
@@ -20,5 +14,6 @@ namespace CodeninModel.Quiz
         public bool ExamTaken { get; set; }
         public virtual Student Student { get; set; }
         public virtual Topic Topic { get; set; }
+
     }
 }

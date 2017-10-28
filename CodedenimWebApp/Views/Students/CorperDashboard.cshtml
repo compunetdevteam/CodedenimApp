@@ -627,7 +627,7 @@
 
         </ul>
         <div class="panel-footer text-right">
-            <a href="app-student-courses.html" class="btn btn-white paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="#"> View all</a>
+            <a class="btn btn-white paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("Mycourses","Courses")"> View all</a>
         </div>
     </div>
 </div>
@@ -682,51 +682,26 @@
             <p class="text-subhead text-light">Your recent performance</p>
         </div>
         <ul class="list-group">
-            <li class="list-group-item media v-middle">
-                <div class="media-body">
-                    <h4 class="text-subhead margin-none">
-                        <a href="app-take-quiz.html" class="list-group-link">Title of quiz goes here?</a>
-                    </h4>
-                    <div class="caption">
-                        <span class="text-light">Course:</span>
-                        <a href="app-take-course.html">Basics of HTML</a>
+            @foreach (var quiz in Model.StudentQuiz)
+            {
+                <li class="list-group-item media v-middle">
+                    <div class="media-body">
+                        <h4 class="text-subhead margin-none">
+                            <a href="app-take-quiz.html" class="list-group-link">@quiz.Topic.TopicName</a>
+                        </h4>
+                        <div class="caption">
+                            <span class="text-light">Course:</span>
+                            <a href="app-take-course.html">@quiz.Topic.Module.Course.CourseName</a>
+                        </div>
                     </div>
-                </div>
-                <div class="media-right text-center">
-                    <div class="text-display-1">5.8</div>
-                    <span class="caption text-light">Good</span>
-                </div>
-            </li>
-            <li class="list-group-item media v-middle">
-                <div class="media-body">
-                    <h4 class="text-subhead margin-none">
-                        <a href="app-take-quiz.html" class="list-group-link">Directives & Routing</a>
-                    </h4>
-                    <div class="caption">
-                        <span class="text-light">Course:</span>
-                        <a href="app-take-course.html">Angular in Steps</a>
+                    <div class="media-right text-center">
+                        <div class="text-display-0.6">@quiz.Score / @quiz.TotalScore</div>
+                        <span class="caption text-light"> Good</span>
                     </div>
-                </div>
-                <div class="media-right text-center">
-                    <div class="text-display-1 text-green-300">9.8</div>
-                    <span class="caption text-light">Great</span>
-                </div>
-            </li>
-            <li class="list-group-item media v-middle">
-                <div class="media-body">
-                    <h4 class="text-subhead margin-none">
-                        <a href="app-take-quiz.html" class="list-group-link">Responsive & Retina</a>
-                    </h4>
-                    <div class="caption">
-                        <span class="text-light">Course:</span>
-                        <a href="app-take-course.html">Bootstrap Foundations</a>
-                    </div>
-                </div>
-                <div class="media-right text-center">
-                    <div class="text-display-1 text-red-300">3.4</div>
-                    <span class="caption text-light">Failed</span>
-                </div>
-            </li>
+                </li> 
+            }
+        
+
         </ul>
         <div class="panel-footer">
             <a href="app-student-quizzes.html" class="btn btn-primary paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="#"> Go to Results</a>
@@ -737,86 +712,55 @@
     <h4 class="text-headline margin-none">Forum Activity</h4>
     <p class="text-subhead text-light">Latest forum topics & comments</p>
     <ul class="list-group relative paper-shadow" data-hover-z="0.5" data-animated>
-        <li class="list-group-item paper-shadow">
-            <div class="media v-middle">
-                <div class="media-left">
-                    <a href="#">
-                        <img src="images/people/110/guy-3.jpg" alt="person" class="img-circle width-40" />
-                    </a>
-                </div>
-                <div class="media-body">
-                    <a href="app-forum-thread.html" class="text-subhead link-text-color">Can someone help me with AngularJS?</a>
-                    <div class="text-light">
-                        Topic: <a href="app-forum-category.html">AngularJS</a> &nbsp; By: <a href="#">Adrian Demian</a>
+        @if (Model.ForumQuestion != null)
+        {
+            foreach(var forumQuestions in Model.ForumQuestion)
+             {
+                 <li class="list-group-item paper-shadow">
+                     <div class="media v-middle">
+                         <div class="media-left">
+                             <a href="#">
+                                 <img src="~/Content/LMS/images/people/110/guy-3.jpg" alt="person" class="img-circle width-40"/>
+                             </a>
+                         </div>
+                         <div class="media-body">
+                             <a href="@Url.Action("ForumQuestion","ForumQuestions",new{id = forumQuestions.ForumQuestionId})" class="text-subhead link-text-color">@forumQuestions.QuestionName</a>
+                             <div class="text-light">
+                                 Topic: <a href="@Url.Action("ForumQuestion","ForumQuestions",new{id = forumQuestions.ForumQuestionId})">@forumQuestions.Forum.Course.CourseName</a> &nbsp; By: <a href="#">@forumQuestions.Students.FullName</a>
+                             </div>
+                         </div>
+                         <div class="media-right">
+                             <div class="width-60 text-right">
+                                 <span class="text-caption text-light">@forumQuestions.PostDate.Date</span>
+                             </div>
+                         </div>
+                     </div>
+                 </li>
+             }
+        }
+        else
+        {
+            <li class="list-group-item paper-shadow">
+                <div class="media v-middle">
+                    <div class="media-left">
+                       
+                    </div>
+                    <div class="media-body">
+                        <div class="text-light">
+                            No Content
+                        </div>
+                    </div>
+                    <div class="media-right">
+                        <div class="width-60 text-right">
+                            <span class="text-caption text-light">1 hr ago</span>
+                        </div>
                     </div>
                 </div>
-                <div class="media-right">
-                    <div class="width-60 text-right">
-                        <span class="text-caption text-light">1 hr ago</span>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="list-group-item paper-shadow">
-            <div class="media v-middle">
-                <div class="media-left">
-                    <a href="#">
-                        <img src="images/people/110/guy-6.jpg" alt="person" class="img-circle width-40" />
-                    </a>
-                </div>
-                <div class="media-body">
-                    <a href="app-forum-thread.html" class="text-subhead link-text-color">Can someone help me with AngularJS?</a>
-                    <div class="text-light">
-                        Topic: <a href="app-forum-category.html">AngularJS</a> &nbsp; By: <a href="#">Adrian Demian</a>
-                    </div>
-                </div>
-                <div class="media-right">
-                    <div class="width-60 text-right">
-                        <span class="text-caption text-light">2 hrs ago</span>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="list-group-item paper-shadow">
-            <div class="media v-middle">
-                <div class="media-left">
-                    <a href="#">
-                        <img src="images/people/110/guy-5.jpg" alt="person" class="img-circle width-40" />
-                    </a>
-                </div>
-                <div class="media-body">
-                    <a href="app-forum-thread.html" class="text-subhead link-text-color">Can someone help me with AngularJS?</a>
-                    <div class="text-light">
-                        Topic: <a href="app-forum-category.html">AngularJS</a> &nbsp; By: <a href="#">Adrian Demian</a>
-                    </div>
-                </div>
-                <div class="media-right">
-                    <div class="width-60 text-right">
-                        <span class="text-caption text-light">3 hr ago</span>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="list-group-item paper-shadow">
-            <div class="media v-middle">
-                <div class="media-left">
-                    <a href="#">
-                        <img src="images/people/110/guy-4.jpg" alt="person" class="img-circle width-40" />
-                    </a>
-                </div>
-                <div class="media-body">
-                    <a href="app-forum-thread.html" class="text-subhead link-text-color">Can someone help me with AngularJS?</a>
-                    <div class="text-light">
-                        Topic: <a href="app-forum-category.html">AngularJS</a> &nbsp; By: <a href="#">Adrian Demian</a>
-                    </div>
-                </div>
-                <div class="media-right">
-                    <div class="width-60 text-right">
-                        <span class="text-caption text-light">4 hr ago</span>
-                    </div>
-                </div>
-            </div>
-        </li>
+            </li> 
+        }
+
+
+
     </ul>
 </div>
 </div>
