@@ -366,23 +366,15 @@
                 <li><a href="@Url.Action("Create", "Tutors")"><i class="fa fa-bar-chart-o"></i><span>Create Tutor</span></a></li>
                 <li><a href="@Url.Action("Create", "AssignCourseCategories")"><i class="fa fa-bar-chart-o"></i><span>Assign Tutor Course</span></a></li>
 
-                <li class="hasSubmenu">
-                    <a href="#"><i class="fa fa-mortar-board"></i><span>Course Category</span></a>
-                    <ul id="cat-menu">
-
-                        <li><a href="@Url.Action("Create", "CourseCategories")"><span>Create</span></a></li>
-                        <li class="active"><a href="@Url.Action("Index", "CourseCategories")"><span>List</span></a></li>
-                        @*<li><a href=""><span>Take Course</span></a></li>*@
-
-                    </ul>
-                </li>
+            
 
                 <li class="hasSubmenu active open">
                     <a href="#course-menu"><i class="fa fa-mortar-board"></i><span>Courses</span></a>
                     <ul id="course-menu" class="in">
-
-                        <li><a href="@Url.Action("Create", "Courses")"><span>Create</span></a></li>
-                        <li class="active"><a href="@Url.Action("Index", "Courses")"><span>List</span></a></li>
+                        <li><a href="@Url.Action("Create", "CourseCategories")"><span>Create Category</span></a></li>
+                        <li class="active"><a href="@Url.Action("Index", "CourseCategories")"><span>List Category</span></a></li>
+                        <li><a href="@Url.Action("Create", "Courses")"><span>Create Courses</span></a></li>
+                        <li class="active"><a href="@Url.Action("Index", "Courses")"><span>List Courses</span></a></li>
                         @*<li><a href=""><span>Take Course</span></a></li>*@
                         <li><a href="@Url.Action("index", "ForumQuestions")"><span>Course Forums</span></a></li>
                       
@@ -465,7 +457,7 @@
 <!-- /st-pusher -->
 <!-- Footer -->
 <footer class="footer">
-    <strong>Learning</strong> v1.0.0 &copy; Copyright @DateTime.Now.Year
+    <strong>Compunet</strong> v1.0.0 &copy; Copyright @DateTime.Now.Year
 </footer>
 <!-- // Footer -->
 </div>

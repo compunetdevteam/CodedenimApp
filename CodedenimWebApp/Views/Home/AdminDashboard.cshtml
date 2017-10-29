@@ -6,11 +6,42 @@
 }
 
 
-<div class="container-fluid" style="margin-left: 14%">
+<div class="container-fluid">
   
-        <div class="row" style="background-color:#ffffff;border:1px solid #e2e9e6; margin-right:20%">
-            <br />
-            <div class="col-lg-3 col-sm-6">
+    <div class="row" style="background-color: #ffffff; border: 1px solid #e2e9e6; margin-right: 20%" data-toggle="gridalicious">
+        
+        <br/>
+        
+        @*<div class="row" data-toggle="gridalicious">*@
+            <div class="media">
+                <div class="media-left padding-none">
+                    <div class="bg-green-300 text-white">
+                        <div class="panel-body">
+                            <i class="fa fa-book fa-2x fa-fw"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="media-body">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-headline">COURSES</div>
+                            @if (ViewBag.TotalCourss != null)
+                            {
+                                <h3 @ViewBag.TotalCourses+></h3>
+                            }
+                            else
+                            {
+                                <h6>No Course yet</h6>
+                            }
+                        
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            @*<div class="col-lg-3 col-sm-6">
                 <div class="card mycard">
                     <div class="content">
                         <div class="row">
@@ -26,32 +57,88 @@
 
                     </div>
                 </div>
+            </div>*@
+        
+        
+            <div class="media">
+                <div class="media-left padding-none">
+                    <div class="bg-purple-300 text-white">
+                        <div class="panel-body">
+                            <i class="fa fa-users fa-2x fa-fw"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="media-body">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-headline">STUDENTS</div>
+                            @if (ViewBag.TotalStudent != null)
+                            {
+                                @ViewBag.TotalStudents 
+                            }
+                            else
+                            {
+                                <h6>No Student Yet</h6>  
+                            }
+                            @*<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur aut culpa fugiat iusto, molestias nemo nostrum quia rerum temporibus voluptatum.</p>*@
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-lg-3 col-sm-6">
-                <div class="card mycard">
-                    <div class="content">
-                        <div class="row">
+        @*<div class="col-lg-3 col-sm-6">
+            <div class="card mycard">
+                <div class="content">
+                    <div class="row">
 
-                            <div class="col-xs-12">
-                                <div class="numbers">
-                                    <p><i class="fa fa-pencil fa-1x"></i><span> &nbsp;<b>TOPICS</b></span></p>&nbsp;&nbsp;
-                                    @ViewBag.TotalTopics
-                                </div>
+                        <div class="col-xs-12">
+                            <div class="numbers">
+                                <p><i class="fa fa-pencil fa-1x"></i><span> &nbsp;<b>TOPICS</b></span>
+                                </p>&nbsp;&nbsp;
+                                @ViewBag.TotalTopics
                             </div>
                         </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>*@
+        
+        <div class="media">
+            <div class="media-left padding-none">
+                <div class="bg-orange-400 text-white">
+                    <div class="panel-body">
+                        <i class="fa fa-user fa-2x fa-fw"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="media-body">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="text-headline">TUTORS</div>
+                        @if (ViewBag.TotalTutors != null)
+                        {
+                            @ViewBag.TotalTutors
+                        }
+                        else
+                        {
+                            <h6>No Tutors yet</h6>
+                        }
 
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-6">
+        </div>
+
+        @*<div class="col-lg-3 col-sm-6">
                 <div class="card mycard">
                     <div class="content">
                         <div class="row">
 
                             <div class="col-xs-12">
                                 <div class="numbers">
-                                    <p><i class="fa fa-user fa-1x"></i><span> &nbsp;<b>STUDENTS</b></span></p>&nbsp;&nbsp;
+                                    <p><i class="fa fa-user fa-1x"></i><span> &nbsp;<b>STUDENTS</b></span>
+                                    </p>&nbsp;&nbsp;
                                     @ViewBag.TotalStudents+
                                 </div>
                             </div>
@@ -59,15 +146,16 @@
 
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
+            </div>*@
+            @*<div class="col-lg-3 col-sm-6">
                 <div class="card mycard">
                     <div class="content">
                         <div class="row">
 
                             <div class="col-xs-12">
                                 <div class="numbers">
-                                    <p><i class="fa fa-users fa-1x"></i><span> &nbsp;<b>TUTORS</b></span></p>&nbsp;&nbsp;
+                                    <p><i class="fa fa-users fa-1x"></i><span> &nbsp;<b>TUTORS</b></span>
+                                    </p>&nbsp;&nbsp;
                                     @ViewBag.TotalTutors +
                                 </div>
                             </div>
@@ -75,82 +163,71 @@
 
                     </div>
                 </div>
-            </div>
+            </div>*@
         </div>
-        <div class="row" style="padding-bottom:60px; padding-top:35px; clear: both;margin-right: 15%">
-            <div class="col-lg-12 col-sm-12">
-
-                <div class="row">
-                    <div class="col-lg-3 col-sm-3" style="margin-bottom:20px">
-                        <div style="box-shadow:0px 0px 1px #000">
-                            <div class="" style="padding-bottom:10px; padding-top:10px; text-align:center;background-color:#38a829;"><h2 style="margin:0px;color:aliceblue"><b>COURSES</b></h2></div>
-                            <div class=""><a href="@Url.Action("Index","Courses")"><img src="~/Content/img/courses.png" width="300" height="200" /></a></div>
-
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-3" style="margin-bottom:20px">
-                        <div style="box-shadow:0px 0px 1px #000">
-                            <div class="" style="padding-bottom:10px; padding-top:10px; text-align:center;background-color:#38a829;"><h2 style="margin:0px;color:aliceblue"><b>TOPICS</b></h2></div><br />
-                            <div class=""><a href="@Url.Action("Index","Topics")"><img src="~/Content/img/Topics.png" width="250" height="180" /></a></div>
-
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-3" style="margin-bottom:20px">
-                        <div style="box-shadow:0px 0px 1px #000">
-                            <div class="" style="padding-bottom:10px; padding-top:10px; text-align:center;background-color:#38a829;"><h2 style="margin:0px;color:aliceblue"><b>STUDENTS</b></h2></div><br />
-                            <div class=""><a href="@Url.Action("Index","Students")"><img src="~/Content/img/student.jpg" width="255" height="180" /></a></div>
-
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-3" style="margin-bottom:20px">
-                        <div style="box-shadow:0px 0px 1px #000">
-                            <div class="" style="padding-bottom:10px; padding-top:10px; text-align:center;background-color:#38a829;"><h2 style="margin:0px;color:aliceblue"><b>TUTORS</b></h2></div><br />
-                            <div class=""><a href="@Url.Action("Index","Tutors")"><img src="~/Content/img/Tutor.jpg" height="180" width="250" /></a></div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    @*</div>*@
+       
 
     </div>
 
-
-
-
-
-
-                 @*<div class="row">
-
-        <div class="col-md-12">
-            <div class="card">
-                <div class="header">
-                    <h4 class="title">Our Video Intro</h4>
-                    <p class="category">24 Hours Tutorials</p>
-                </div>
-                <div class="content">
-                    <div id="chartHours">
-                        <video height="550" width="1000" poster="" controls="controls">
-                            <source src="~/Content/Videos/Beach-Ball.mp4" type="video/mp4" media="all" />
-                        </video>
+<h4 class="page-section-heading">Student Types</h4>
+<div class="table-pricing-3">
+    <ul class="list-unstyled row">
+        <li class="col-md-4">
+            <div class="innerAll">
+                <h3>Corper</h3>
+                <div class="pricing-body">
+                    <div class="price" >
+                        <img src="~/Content/img/NYSC.jpg" style="height:120px"/>
                     </div>
                 </div>
-                <div class="footer">
-                    <div class="chart-legend">
-                        <i class="fa fa-circle text-info"></i> Open
-                        <i class="fa fa-circle text-danger"></i> Click
-                        <i class="fa fa-circle text-warning"></i> Click Second Time
-                    </div>
-                    <hr>
-                    <div class="stats">
-                        <i class="ti-reload"></i> Updated 3 minutes ago
-                    </div>
-                </div>46
+                <div class="pricing-features">
+                 Number of Corpers
+                </div>
+                <div class="pricing-footer">
+                    <a href="#" class="btn btn-success">View Student</a>
+                </div>
             </div>
-        </div>
-    </div>*@   
-                
+        </li>
+        <li class="col-md-4 active">
+            <div class="innerAll">
+                <h3>UnderGraduate Students</h3>
+                <div class="pricing-body">
+                    <div class="price">
+                        <img src="~/Content/img/Student.jpg"  style="height:120px"/>
+                    </div>
+                </div>
+                <div class="pricing-features">
+             Number of UnderGraduate Students
+                </div>
+                <div class="pricing-footer">
+                    <a href="#" class="btn btn-success">VIEW STUDENTS</a>
+                </div>
+            </div>
+        </li>
+        <li class="col-md-4">
+            <div class="innerAll">
+                <h3>Other Students</h3>
+                <div class="pricing-body">
+                    <div class="price">
+                        <span class="figure">&euro;49</span>
+                        <span class="term">per month</span>
+                    </div>
+                </div>
+                <div class="pricing-features">
+                 Number of other students
+                </div>
+                <div class="pricing-footer">
+                    <a href="#" class="btn btn-success">VIEW STUDENTS</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
 
+
+
+    
 
 
                

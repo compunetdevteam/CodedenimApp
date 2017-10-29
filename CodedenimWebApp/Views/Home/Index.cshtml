@@ -2,14 +2,16 @@
     ViewBag.Title = "Codedenim Home";
     Layout = "~/Views/Shared/_GeneralLayout.cshtml";
 }
+
 <div class="parallax cover overlay cover-image-full home">
-    <img class="parallax-layer" src="images/photodune-4161018-group-of-students-m.jpg" alt="Learning Cover" />
+    <img class="parallax-layer" src="~/Content/Videos/codedeninLogo1.jpg" />
+    @*<img class="parallax-layer" src="~/Content/LMS/images/photodune-4161018-group-of-students-m.jpg" alt="Learning Cover" />*@
     <div class="parallax-layer overlay overlay-full overlay-bg-white bg-transparent" data-speed="8" data-opacity="true">
         <div class="v-center">
             <div class="page-section overlay-bg-white-strong relative paper-shadow" data-z="1">
-                <h1 class="text-display-2 margin-v-0-15 display-inline-block">Courses for Web &amp; Mobile</h1>
-                <p class="text-subhead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur consectetur consequatur distinctio earum ipsam.</p>
-                <a class="btn btn-green-500 btn-lg paper-shadow" data-hover-z="2" data-animated data-toggle="modal" href="#modal-overlay-signup">Sign Up - Only &dollar;19.00/mo</a>
+                <h1 class="text-display-2 margin-v-0-15 display-inline-block">CODE DENIM</h1>
+                <p class="text-subhead">Concentrated Dedicated Deliberate Network Intent Media</p>
+                <a class="btn btn-green-500 btn-lg paper-shadow" data-hover-z="2" data-animated data-toggle="modal" href="@Url.Action("Register","Account")">Sign Up - </a>
             </div>
         </div>
     </div>
@@ -340,7 +342,7 @@
 </div>
 <div class="parallax cover overlay height-300 margin-none">
 
-    @*<img class="parallax-layer" data-auto-offset="true" data-auto-size="false" src="images/photodune-6745579-modern-creative-man-relaxing-on-workspace-m.jpg" alt="Learning Cover" />*@
+    <img class="parallax-layer" data-auto-offset="true" data-auto-size="false" src="~/Content/LMS/images/photodune-6745579-modern-creative-man-relaxing-on-workspace-m.jpg" alt="Learning Cover" />
     <div class="parallax-layer overlay overlay-full overlay-bg-white bg-transparent" data-opacity="true" data-speed="8">
         <div class="v-center">
             <div class="page-section">
