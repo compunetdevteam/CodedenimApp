@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
+<br/>
 
 <div class="container-fluid">
   
@@ -178,14 +179,14 @@
                 <h3>Corper</h3>
                 <div class="pricing-body">
                     <div class="price" >
-                        <img src="~/Content/img/NYSC.jpg" style="height:120px"/>
+                        <img src="~/Content/img/NYSC.jpg" width="120" class="img-circle"/>
                     </div>
                 </div>
                 <div class="pricing-features">
                  Number of Corpers
                 </div>
                 <div class="pricing-footer">
-                    <a href="#" class="btn btn-success">View Student</a>
+                    <a href="@Url.Action("ListCorper","Home")" class="btn btn-success">View Student</a>
                 </div>
             </div>
         </li>
@@ -194,14 +195,14 @@
                 <h3>UnderGraduate Students</h3>
                 <div class="pricing-body">
                     <div class="price">
-                        <img src="~/Content/img/Student.jpg"  style="height:120px"/>
+                        <img src="~/Content/img/Student.jpg"  width="180" class="img-circle"/>
                     </div>
                 </div>
                 <div class="pricing-features">
              Number of UnderGraduate Students
                 </div>
                 <div class="pricing-footer">
-                    <a href="#" class="btn btn-success">VIEW STUDENTS</a>
+                    <a href="@Url.Action("ListUnderGrad","Home")" class="btn btn-success">VIEW STUDENTS</a>
                 </div>
             </div>
         </li>
@@ -210,15 +211,15 @@
                 <h3>Other Students</h3>
                 <div class="pricing-body">
                     <div class="price">
-                        <span class="figure">&euro;49</span>
-                        <span class="term">per month</span>
+                        <img src="~/Content/img/UnderG.jpg" width="180" class="img-circle" />
+                       
                     </div>
                 </div>
                 <div class="pricing-features">
                  Number of other students
                 </div>
                 <div class="pricing-footer">
-                    <a href="#" class="btn btn-success">VIEW STUDENTS</a>
+                    <a href="@Url.Action("OtherStudent","Home")" class="btn btn-success">VIEW STUDENTS</a>
                 </div>
             </div>
         </li>

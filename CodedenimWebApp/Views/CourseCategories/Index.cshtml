@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<div class="container-fluid" style="margin-left: 13%"> 
+
 <h2>Index</h2>
     
-    
+    Excel upload
     @using (Html.BeginForm("ExcelUpload", "CourseCategories", FormMethod.Post, new {enctype = "multipart/form-data"}))
     {
         @Html.AntiForgeryToken()
@@ -21,38 +21,70 @@
     <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Amount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StudentType)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StudentType)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.CourseCategoryId }) |
-                @Html.ActionLink("Details", "Details", new { id=item.CourseCategoryId }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.CourseCategoryId })
-            </td>
-        </tr>
-    }
 
-</table>
+
+<h4 class="page-section-heading"> Course Categories</h4>
+<div class="panel panel-default">
+    <!-- Progress table -->
+    <div class="table-responsive">
+        <table class="table v-middle">
+            <thead>
+            <tr>
+                <th width="20">
+                    <div class="checkbox checkbox-single margin-none">
+                        <input id="checkAll" data-toggle="check-all" data-target="#responsive-table-body" type="checkbox" checked>
+                        <label for="checkAll">Check All</label>
+                    </div>
+                </th>
+                <th>Category Name</th>
+                <th>Amount</th>
+                <th>Student Type</th>
+           
+
+                <th class="text-right">Action</th>
+            </tr>
+            </thead>
+            <tbody id="responsive-table-body">
+            @foreach (var item in Model)
+            {
+                 
+                <tr>
+
+                <td>
+                    <div class="checkbox checkbox-single">
+                        <input id="checkbox1" type="checkbox" checked>
+                        <label for="checkbox1">Label</label>
+                    </div>
+                </td>
+                <td><span class="label label-default">@item.CategoryName</span></td>
+                <td><i class="fa fa-money">@item.Amount</i></td>
+
+                <td>
+                    <i class="fa fa-user"></i> @item.StudentType
+                </td>
+
+                <td class="text-right">
+                    <a href="@Url.Action("Edit", "CourseCategories", new {id = @item.CourseCategoryId})" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                    <a href="@Url.Action("Delete", "CourseCategories", new {id = @item.CourseCategoryId})" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Delete"><i
+                                                                                                                                                                                                       class="fa fa-times"></i></a>
+                </td>
+             
+            </tr>
+            }
+            </tbody>    
+        </table>
+    </div>
+    <!-- // Progress table -->
+    <div class="panel-footer padding-none text-center">
+        <ul class="pagination">
+            <li class="disabled"><a href="#">&laquo;</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </div>
 </div>

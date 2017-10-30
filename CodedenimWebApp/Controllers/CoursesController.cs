@@ -91,17 +91,21 @@ namespace CodedenimWebApp.Controllers
             var categoryVm = new CategoryVm();
             if (id != null)
             {
-                var categoryId = db.CorperEnrolledCourses.FirstOrDefault(x => x.Equals(id));
+                categoryVm.CourseCategoryId = db.CorperEnrolledCourses.FirstOrDefault(x => x.CourseCategoryId.Equals(id));
 
             }
-            // var course = new List<int>();
-            var corperEnrollment = new CorperEnrolledCourses
+            var corperEnrollment = new CorperEnrolledCourses();
+            var hasEnrolled = db.CorperEnrolledCourses.Any(x => x.CourseCategoryId.Equals(id));
+            if (!hasEnrolled == true)
             {
-                StudentId = userId,
-                CourseCategoryId = id
-            };
 
 
+                corperEnrollment.StudentId = userId;
+                corperEnrollment.CourseCategoryId = id;
+                db.CorperEnrolledCourses.Add(corperEnrollment);
+                db.SaveChanges();
+
+            }
             var categoriesPaidFor = db.StudentPayments.Where(x => x.StudentId.Equals(userId))
                 .Select(x => x.CourseCategoryId).FirstOrDefault();
             //foreach (var category in categoriesPaidFor)
@@ -114,8 +118,7 @@ namespace CodedenimWebApp.Controllers
             categoryVm.CourseCategory = db.CourseCategories.Where(x => x.CourseCategoryId.Equals(categoriesPaidFor))
                 .Select(x => x.CategoryName).FirstOrDefault();
 
-            db.CorperEnrolledCourses.Add(corperEnrollment);
-            db.SaveChanges();
+         
 
 
             return View(categoryVm);
@@ -171,13 +174,14 @@ namespace CodedenimWebApp.Controllers
             //var v = Db.Subjects.Where(x => x.SchoolId != userSchool).Select(s => new { s.SubjectId, s.SubjectCode, s.SubjectName }).ToList();
             var v = db.Courses.Select(s => new
             {
+             
                 s.CourseCode,
                 s.CourseName,
                 s.CourseDescription,
                 s.ExpectedTime,
                 s.DateAdded,
                 s.Points,
-                s.CourseImage
+               
             }).ToList();
 
             //var v = Db.Subjects.Where(x => x.SchoolId.Equals(userSchool)).Select(s => new { s.SubjectId, s.SubjectCode, s.SubjectName }).ToList();
@@ -194,13 +198,14 @@ namespace CodedenimWebApp.Controllers
                                            x.DateAdded.Equals(search) || x.Points.Equals(search)))
                     .Select(s => new
                     {
+                      
                         s.CourseCode,
                         s.CourseName,
                         s.CourseDescription,
                         s.ExpectedTime,
                         s.DateAdded,
-                        s.Points,
-                        s.CourseImage
+                        s.Points
+                     
                     }).ToList();
             }
             totalRecords = v.Count();
@@ -233,6 +238,44 @@ namespace CodedenimWebApp.Controllers
 
 
             return PartialView();
+        }
+
+
+        /// <summary>
+        /// Partial Views For Creating Modules
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public PartialViewResult CreatePartial(int? id)
+        {
+            if (id != null)
+            {
+                ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(id.Value)).ToList(), "CourseId", "CourseName");
+                /// ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode");
+
+            }
+            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName");
+            //  ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(id.Value)).ToList(), "CourseId", "CourseCode");
+
+
+            return PartialView();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<PartialViewResult> CreatePartial([Bind(Include = "ModuleId,CourseId,ModuleName,ModuleDescription,ExpectedTime")] Module module)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Modules.Add(module);
+                await db.SaveChangesAsync();
+                // Redirect();
+            }
+
+            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", module.CourseId);
+            return PartialView(module);
         }
 
         // GET: Courses/Details/5

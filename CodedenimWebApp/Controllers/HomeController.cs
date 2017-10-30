@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CodedenimWebApp.Models;
+using CodedenimWebApp.ViewModels;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -43,7 +44,59 @@ namespace CodedenimWebApp.Controllers
             return View();
 		}
 
-		public ActionResult About()
+
+	    public ActionResult DisplayStudentType()
+	    {
+	       
+	        var corper = _db.Students.Where(x => x.AccountType.Equals(RoleName.Corper)).ToList();
+            var undergraduate = _db.Students.Where(x => x.AccountType.Equals(RoleName.UnderGraduate)).ToList();
+            var otherStudent = _db.Students.Where(x => x.AccountType.Equals(RoleName.OtherStudent)).ToList();
+	        var studenType = new StudentTypeVm
+	        {
+	            Corpers = corper,
+	            Undergraduate = undergraduate,
+                OtherStudent = otherStudent
+	        };
+	        
+            return View(studenType);
+	    }
+
+	    public ActionResult ListCorper()
+	    {
+	        var corper = _db.Students.Where(x => x.AccountType.Equals(RoleName.Corper)).ToList();
+	        var studenType = new StudentTypeVm
+	        {
+	            Corpers = corper,	           
+	        };
+
+	        return View(studenType);
+	    }
+
+	    public ActionResult ListUnderGrad()
+	    {
+            
+	        var undergraduate = _db.Students.Where(x => x.AccountType.Equals(RoleName.UnderGraduate)).ToList();
+	        var studenType = new StudentTypeVm
+	        {
+	            Undergraduate = undergraduate
+	        };
+	        return View(studenType);
+	    }
+
+	    public ActionResult OtherStudent()
+	    {
+
+	  
+	        var otherStudent = _db.Students.Where(x => x.AccountType.Equals(RoleName.Student)).ToList();
+	        var studenType = new StudentTypeVm
+	        {
+	            OtherStudent = otherStudent
+	        };
+
+	        return View(studenType);
+	    }
+
+        public ActionResult About()
 		{
 			ViewBag.Message = "Your application description page.";
 

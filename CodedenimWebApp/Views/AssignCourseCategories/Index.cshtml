@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
 <h2>Index</h2>
@@ -10,34 +10,66 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseCategory.CategoryName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Courses.CourseCode)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseCategory.CategoryName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Courses.CourseName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AssignCourseCategoryId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AssignCourseCategoryId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AssignCourseCategoryId })
-        </td>
-    </tr>
-}
-
-</table>
 
 
 
+
+<h4 class="page-section-heading">Assigned Course Categories</h4>
+<div class="panel panel-default">
+    <!-- Progress table -->
+    <div class="table-responsive">
+        <table class="table v-middle">
+            <thead>
+            <tr>
+                <th width="20">
+                    <div class="checkbox checkbox-single margin-none">
+                        <input id="checkAll" data-toggle="check-all" data-target="#responsive-table-body" type="checkbox" checked>
+                        <label for="checkAll">Check All</label>
+                    </div>
+                </th>
+                <th>Category Name</th>
+                <th>Assigned Course</th>
+
+                <th class="text-right">Action</th>
+            </tr>
+            </thead>
+            <tbody id="responsive-table-body">
+            <tr>
+            @foreach (var item in Model)
+            {
+                <td>
+                    <div class="checkbox checkbox-single">
+                        <input id="checkbox1" type="checkbox" checked>
+                        <label for="checkbox1">Label</label>
+                    </div>
+                </td>
+                <td><span class="label label-default">@item.CourseCategory.CategoryName</span></td>
+              
+                <td>
+                    <img src="~/MaterialUpload/@item.CourseCategory.ImageLocation" width="40" class="img-circle"/> @item.Courses.CourseName
+                </td>
+
+                <td class="text-right">
+                    <a href="@Url.Action("Edit","AssignCourseCategories",new{id = @item.AssignCourseCategoryId})" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                    <a href="@Url.Action("Delete","AssignCourseCategories",new{id = @item.AssignCourseCategoryId})" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Delete"><i
+                                                                                                                            class="fa fa-times"></i></a>
+                </td>
+            }
+            </tr>
+      
+            </tbody>
+        </table>
+    </div>
+    <!-- // Progress table -->
+    <div class="panel-footer padding-none text-center">
+        <ul class="pagination">
+            <li class="disabled"><a href="#">&laquo;</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </div>
+</div>
