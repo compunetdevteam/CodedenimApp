@@ -202,6 +202,7 @@ namespace CodedenimWebApp.Controllers.Quiz
                             string option3 = sheet.Cells[row, 5].Value.ToString().Trim();
                             string option4 = sheet.Cells[row, 6].Value.ToString().Trim();
                             string answer = sheet.Cells[row, 7].Value.ToString().Trim();
+                            string questionType = sheet.Cells[row, 8].Value.ToString().Trim();
 
 
                             //var subjectName = db.Subjects.Where(x => x.SubjectCode.Equals(subjectValue))
@@ -220,7 +221,8 @@ namespace CodedenimWebApp.Controllers.Quiz
                                 Option2 = option2,
                                 Option3 = option3,
                                 Option4 = option4,
-                                Answer = answer
+                                Answer = answer,
+                                QuestionType = questionType
 
 
                             };

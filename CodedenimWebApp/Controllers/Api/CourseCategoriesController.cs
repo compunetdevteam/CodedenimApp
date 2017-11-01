@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using CodedenimWebApp.Models;
+using CodedenimWebApp.ViewModels;
 using CodeninModel;
 
 namespace CodedenimWebApp.Controllers.Api
@@ -98,6 +99,33 @@ namespace CodedenimWebApp.Controllers.Api
             return Ok(courseCategory);
         }
 
+        /// <summary>
+        /// method to check the student account type and display mycourse
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="courseCategory"></param>
+        /// <returns>enrolled courses</returns>
+        [HttpGet]
+        [System.Web.Http.Route("MyCourses")]
+        [ResponseType(typeof(CourseCategory))]
+        public async Task<IHttpActionResult> MyCourses(string email)
+        {
+            var student = new ConvertEmail();
+            var studentEmail = student.ConvertEmailToId(email);
+            var studentId = studentEmail;
+            var studentType = _db.Students.Where(x => x.Email.Equals(email)).Select(x => x.AccountType).FirstOrDefault();
+            var myCourses = new MyCoursesVm();
+            if (studentType == RoleName.Corper)
+            {
+                myCourses.CorperCourses = _db.CorperEnrolledCourses.Where(x => x.StudentId.Equals(studentId)).ToList();
+
+            }
+            else
+            {
+                myCourses.StudentCourses = _db.StudentPayments.Where(x => x.StudentId.Equals(studentId)).ToList();
+            }
+            return Ok(myCourses);
+        }
         // PUT: api/CourseCategories/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutCourseCategory(int id, CourseCategory courseCategory)

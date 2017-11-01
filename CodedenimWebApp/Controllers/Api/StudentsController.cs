@@ -35,9 +35,9 @@ namespace CodedenimWebApp.Controllers.Api
         [ResponseType(typeof(Student))]
         public async Task<IHttpActionResult> GetStudent(string id)
         {
-           // Student student = await db.Students.FindAsync(id);
-         //  var email = new ConvertEmail();
-           
+            // Student student = await db.Students.FindAsync(id);
+            //  var email = new ConvertEmail();
+
             //var studentCourses = _db.StudentAssignedCourses.Include(x => x.Courses).Where(x => x.Student.Email.Equals(id))
             //                                                                     .Select(x =>new {
             //                                                                        x.CourseId,
@@ -48,8 +48,8 @@ namespace CodedenimWebApp.Controllers.Api
             //                                                                         x.Courses.CourseCategory.CategoryName,
             //                                                                         x.Courses.CourseCategoryId,
             //                                                                         x.Courses.FileLocation
-                                                                                 
-                                                                                                
+
+
             //                                                                     }).ToList();
             ////var studentCourses = db.StudentAssignedCourses.Where(x => x.StudentId.Equals(student.StudentId))
             ////                                              .Select(s => s.Courses);
@@ -67,26 +67,51 @@ namespace CodedenimWebApp.Controllers.Api
         /// </summary>
         /// <param name="email"></param>
         /// <param name="courseId"></param>
-        /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(Student))]
         [System.Web.Http.Route("CheckIfStudentIsEnrolled")]
-        public IHttpActionResult CheckIfStudentIsEnrolled(string email, int courseId)
+        public async Task<IHttpActionResult> CheckIfStudentIsEnrolled(string email, int courseId)
         {
-          //  bool Enrolled;
-          // var converter = new ConvertEmail();
-          //  var studentId = converter.ConvertEmailToId(email);
-          ////  var isEnrolled = _db.StudentAssignedCourses.Any(x => x.StudentId.Equals(studentId) && x.CourseId.Equals(courseId));
+            //var student = new ConvertEmail();
+            //var studentId = student.ConvertEmailToId(email);
+            //var type = new Converter();
+            var student = new ConvertEmail();
+            var studentEmail = student.ConvertEmailToId(email);
+            var studentId = studentEmail;
+            var studentType = _db.Students.Where(x => x.Email.Equals(email)).Select(x => x.AccountType).FirstOrDefault();
+           // var studentType = type.UserType(email);
 
-            //if(!isEnrolled)
-            //{
-            //    Enrolled = true;
-            //}
-            //else
-            //{
-            //    Enrolled = false;
-            //}
-            return Ok();
+            //execute this block of code if the user is a corper
+            if (studentType == RoleName.Corper)
+            {
+
+
+                var corperEnrollment = _db.CorperEnrolledCourses.Any(x => x.StudentId.Equals(studentId) &&
+                                                       x.Category.CourseCategoryId.Equals(courseId));
+                var enrollStudent = new CorperEnrolledCourses();
+                //if corper has not enrolled the enroll the corper using
+                //the if statement block
+                if (corperEnrollment != true)
+                {
+                    enrollStudent.StudentId = studentId;
+                    enrollStudent.CourseCategoryId = courseId;
+                    _db.CorperEnrolledCourses.Add(enrollStudent);
+                    _db.SaveChanges();
+                    return Ok("Enrollment was successful");
+                }
+                return Ok("No need to Enroll because you have enrolled");
+            }
+  
+                var hasStudentPayed = _db.StudentPayments.Any(x => x.StudentId.Equals(studentId) && x.IsPayed.Equals(true) && x.CourseCategoryId.Equals(courseId));
+                if (hasStudentPayed != true)
+                {
+
+                    return Ok("Redirect User to Pay on the Web");
+                }
+                return Ok("student Has Enrolled for this course");
+        
+
+     
         }
 
 
@@ -98,7 +123,7 @@ namespace CodedenimWebApp.Controllers.Api
         public IHttpActionResult GetTopicMaterial()
         {
             var location = _db.TopicMaterialUploads.FirstOrDefault(x => x.TopicMaterialUploadId.Equals(2));
-          //  var topicDetail = HttpContext.Current.Server.MapPath("~/MaterialUpload/Data Management_ What Is Master Data Management (Mdm).mp4");
+            //  var topicDetail = HttpContext.Current.Server.MapPath("~/MaterialUpload/Data Management_ What Is Master Data Management (Mdm).mp4");
             return Ok(location);
         }
 

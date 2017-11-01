@@ -349,6 +349,7 @@
     <Compile Include="ViewModels\DashboardVm.cs" />
     <Compile Include="ViewModels\DisplayQuestionViewModel.cs" />
     <Compile Include="ViewModels\ForumQA_Vm.cs" />
+    <Compile Include="ViewModels\MyCoursesVm.cs" />
     <Compile Include="ViewModels\RegularStudentVm.cs" />
     <Compile Include="ViewModels\StudentTypeVm.cs" />
     <Compile Include="ViewModels\StudentVm.cs" />
@@ -757,6 +758,24 @@
     <Content Include="fonts\roboto\Roboto-Thin.woff" />
     <Content Include="fonts\roboto\Roboto-Thin.woff2" />
     <Content Include="fonts\roboto\Roboto-Thind41d.eot" />
+    <Content Include="MaterialUpload\09. Better Man.mp3" />
+    <Content Include="MaterialUpload\AI.jpg" />
+    <Content Include="MaterialUpload\Android.png" />
+    <Content Include="MaterialUpload\carpentry and joinary.jpg" />
+    <Content Include="MaterialUpload\cisco.jpg" />
+    <Content Include="MaterialUpload\cloud-computing.jpg" />
+    <Content Include="MaterialUpload\Codedenim.png" />
+    <Content Include="MaterialUpload\Computer.jpg" />
+    <Content Include="MaterialUpload\csharp.png" />
+    <Content Include="MaterialUpload\Data Management_ What Is Master Data Management %28Mdm%29.mp4" />
+    <Content Include="MaterialUpload\Deadlock.png" />
+    <Content Include="MaterialUpload\LoginPic.jpg" />
+    <Content Include="MaterialUpload\Networking.jpg" />
+    <Content Include="MaterialUpload\philosophy pics.png" />
+    <Content Include="MaterialUpload\python.jpg" />
+    <Content Include="MaterialUpload\tree.jpg" />
+    <Content Include="MaterialUpload\Ux Design.jpg" />
+    <Content Include="MaterialUpload\You Are Mine- Third Day.mp4" />
     <Content Include="Profile_Pics\Computer.jpg" />
     <Content Include="Profile_Pics\WhatsApp Image 2017-08-14 at 5.15.22 PM.jpeg" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1196,6 +1215,8 @@
     <Content Include="Views\Home\OtherStudent.cshtml" />
     <Content Include="Views\Courses\CreateCoursePartial.cshtml" />
     <Content Include="Views\Courses\CreatePartial.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\DetailsContent.cshtml" />
+    <Content Include="Views\Shared\Invalid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1204,7 +1225,6 @@
     <Folder Include="Content\StudentFiles\" />
     <Folder Include="Content\TutorFiles\" />
     <Folder Include="Controllers\Api\ForumApi\" />
-    <Folder Include="MaterialUpload\" />
     <Folder Include="ProfilePics\" />
     <Folder Include="uploads\" />
     <Folder Include="Views\MultipleButtonAttribute\" />

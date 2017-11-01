@@ -375,6 +375,7 @@
                         <li class="active"><a href="@Url.Action("Index", "CourseCategories")"><span>List Category</span></a></li>
                         <li><a href="@Url.Action("Create", "Courses")"><span>Create Courses</span></a></li>
                         <li class="active"><a href="@Url.Action("Index", "Courses")"><span>List Courses</span></a></li>
+                        <li class="active"><a href="@Url.Action("Create", "AssignCourseCategories")"><span>Assign Course</span></a></li>
                         @*<li><a href=""><span>Take Course</span></a></li>*@
                         <li><a href="@Url.Action("index", "ForumQuestions")"><span>Course Forums</span></a></li>
                       
@@ -386,6 +387,14 @@
                         <li><a href="@Url.Action("Create","Forum")"><span>Create Forum</span></a></li>
                         <li><a href="#"><span>Forum Category</span></a></li>
                         <li><a href="@Url.Action("ForumThread", "ForumQuestions")"><span>Forum Thread</span></a></li>
+                    </ul>
+                </li>
+                <li class="hasSubmenu">
+                    <a href="#Quiz-menu"><i class="fa fa-quiz"></i><span> Quiz</span></a>
+                    <ul id="Quiz-menu">
+                        <li><a href="@Url.Action("Create","QuizRules")"><span>Set Quiz Rules</span></a></li>
+                        <li><a href="@Url.Action("Create", "TopicQuizs")"><span>Forum Thread</span></a></li>
+                        <li><a href="@Url.Action("Index","TopicQuizs")"><span></span></a></li>
                     </ul>
                 </li>
                 <li class="hasSubmenu">

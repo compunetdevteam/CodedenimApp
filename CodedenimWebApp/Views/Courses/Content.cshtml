@@ -53,7 +53,7 @@
 
                     <div class="panel panel-default curriculum open paper-shadow" data-z="0.5">
 
-                        <div class="panel-heading panel-heading-gray" data-toggle="collapse" data-target="#curriculum-1">
+                        <div class="panel-heading panel-heading-gray" data-toggle="collapse" data-target="#curriculum-@item.ModuleId">
                             <div class="media">
 
                                 <div class="media-left">
@@ -61,14 +61,14 @@
                                 </div>
                                 <div class="media-body">
                                     <h4 class="text-headline">@item.ModuleName</h4>
-                                    <p>@item.ModuleDescription</p>
+                                    <p>@item.ModuleDescription</p>  
                                 </div>
                             </div>
                             <span class="collapse-status collapse-open">Open</span>
                             <span class="collapse-status collapse-close">Close</span>
                         </div>
 
-                        <div class="list-group collapse in" id="curriculum-1">
+                        <div class="list-group collapse in" id="curriculum-@item.ModuleId">
                             @foreach (var topics in Model.Topics.Where(x => x.ModuleId.Equals(item.ModuleId)))
                             {
                                 <div class="list-group-item media"  @*data-target="#edit-modal" data-toggle="modal" id="@item.ModuleId"*@>

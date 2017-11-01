@@ -22,6 +22,7 @@ namespace CodedenimWebApp.Controllers
 		// GET: TopicMaterialUploads
 		public async Task<ActionResult> Index()
 		{
+            
 			var topicMaterialUploads = db.TopicMaterialUploads.Include(t => t.Course);
 			return View(await topicMaterialUploads.ToListAsync());
 		}
@@ -62,8 +63,30 @@ namespace CodedenimWebApp.Controllers
 			return View(topicMaterialUpload);
 		}
 
-		// GET: TopicMaterialUploads/Create
-		public ActionResult Create()
+
+	    // GET: TopicMaterialUploads/Details/5
+        /// <summary>
+        /// this will display the content of the course for a student
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>topic material</returns>
+	    public PartialViewResult DetailsContent(int? id)
+	    {
+	        if (id == null)
+	        {
+	            return PartialView("Invalid");
+	        }
+	        TopicMaterialUpload topicMaterialUpload = db.TopicMaterialUploads.Find(id);
+	        if (topicMaterialUpload == null)
+	        {
+	            return PartialView("NoContent");
+	        }
+	        return PartialView(topicMaterialUpload);
+	    }
+
+
+        // GET: TopicMaterialUploads/Create
+        public ActionResult Create()
 		{
 		   // var user = User.Identity.GetUserName();
           
