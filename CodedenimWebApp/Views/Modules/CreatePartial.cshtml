@@ -3,17 +3,16 @@
 
 @{
     ViewBag.Title = "Create Module";
-    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    //Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
 <div class="container-fluid">
 
     <h2>Create</h2>
+<form id="myform" onsubmit="return false;">
 
-
-    @using(Html.BeginForm(@*"CreatePartial","Modules",new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "replace", InsertionMode = InsertionMode.Replace,
-        OnSuccess = "function() { alert('success'); }" }*@))
-    {
+    @*@using(Html.BeginForm())
+    {*@
         @Html.AntiForgeryToken()
             
         <div class="form-horizontal">
@@ -53,24 +52,55 @@
                 </div>
             </div>
 
-            @*<div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>*@
-            @Ajax.ActionLink("Create","CreatePartial", "Modules", 
+            @if (Model != null && Model.CourseId > 0)
+            {
+                <input id="btnsubmit" type="submit" value="Update" class="btn btn-info" />
+            }
+            else
+            {
+                <input id="btnsubmit" type="submit" value="Save" class="btn btn-info" />
+            }
+            <a href="#" class="btn btn-danger" data-dismiss="modal">Cancel</a>
+            @*@Ajax.ActionLink("Create","CreatePartial", "Modules", 
                 new AjaxOptions {
-                     HttpMethod = "POST", UpdateTargetId = "replace", InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "POST", UpdateTargetId = "replace", InsertionMode = InsertionMode.Replace,
                     OnSuccess = "function() { alert('success'); }"
-                })
+                })*@
         </div>
-    }
+    </form>
 
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>
 
-    @Scripts.Render("~/bundles/jqueryval")
-        
+       
 </div>
+
+<script type="text/javascript">
+
+    $("#btnsubmit").click(function () {
+
+        var data = $("#myform").serialize();
+       // window.alert(data);
+        $.ajax({
+            type: "POST",
+            url: "/Modules/CreatePartial",
+            data: data,
+            success: function (data) {
+                if (data.status) {
+                    $('#CreateModule').modal("hide");
+                    $('#myform')[0].reset();
+                    toastr["success"](data.message);
+                } else {
+                    //$('#actionsList').modal("hide");
+                    toastr["error"]("required field where not completed");
+                }
+
+            }
+        });
+    });
+
+
+</script>
+
 

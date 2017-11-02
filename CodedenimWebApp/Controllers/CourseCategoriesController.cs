@@ -262,6 +262,24 @@ namespace CodedenimWebApp.Controllers
             return View(courseCategory);
         }
 
+        /// <summary>
+        /// the create category partial
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public PartialViewResult CreateCategoryPartial(int categoryId)
+        {
+
+            return PartialView();
+        }
+        [HttpPost]
+        public PartialViewResult CreateCategoryPartial(Course course)
+        {
+
+            return PartialView();
+        }
+
         // GET: CourseCategories/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {

@@ -1217,6 +1217,8 @@
     <Content Include="Views\Courses\CreatePartial.cshtml" />
     <Content Include="Views\TopicMaterialUploads\DetailsContent.cshtml" />
     <Content Include="Views\Shared\Invalid.cshtml" />
+    <Content Include="Views\CourseCategories\CreateCategoryPartial.cshtml" />
+    <Content Include="Views\Courses\CreateCoursePartial1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

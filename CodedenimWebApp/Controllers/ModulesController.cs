@@ -75,36 +75,28 @@ namespace CodedenimWebApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", module.CourseId);
+            ViewBag.CourseId = new SelectList(db.Modules, "CourseId", "CourseCode", module.CourseId);
             return View(module);
         }
 
 
-        public PartialViewResult CreatePartial(int? id)
+        public PartialViewResult CreatePartial(int id)
         {
-            if (id != null)
-            {
-                ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(id.Value)).ToList(), "CourseId", "CourseName");
-                /// ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode");
-
-            }
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName");
-            //  ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(id.Value)).ToList(), "CourseId", "CourseCode");
-
-
+            ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals((int)id)).ToList(), "CourseId", "CourseName");
             return PartialView();
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<PartialViewResult> CreatePartial([Bind(Include = "ModuleId,CourseId,ModuleName,ModuleDescription,ExpectedTime")] Module module)
+        public async Task<ActionResult> CreatePartial(Module module)
         {
             if (ModelState.IsValid)
             {
                 db.Modules.Add(module);
                 await db.SaveChangesAsync();
-               // Redirect();
+                return new JsonResult { Data = new { status = true, message = "Saved Succesfully" } };
+                // RedirectToAction("Index","Courses");
             }
 
             ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", module.CourseId);

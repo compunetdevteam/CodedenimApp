@@ -35,7 +35,7 @@ namespace CodedenimWebApp.Controllers
             //    .OrderBy(d => d.CourseId)
             //    .Include(d => d.CourseCategory);
             //var courses = db.Courses.Include(c => c.CourseCategory);
-            return View( /*courses.ToList()*/);
+            return View( db.Courses.AsNoTracking().Include(x => x.Modules).ToList());
         }
 
         public async Task<ActionResult> ListCourses()
@@ -251,9 +251,7 @@ namespace CodedenimWebApp.Controllers
         {
             if (id != null)
             {
-                ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(id.Value)).ToList(), "CourseId", "CourseName");
-                /// ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode");
-
+                ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals((int)id)).ToList(), "CourseId", "CourseName");
             }
             ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName");
             //  ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(id.Value)).ToList(), "CourseId", "CourseCode");
@@ -342,8 +340,54 @@ namespace CodedenimWebApp.Controllers
 
             ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId",
                 "CategoryName" /*, course.CourseCategoryId*/);
-            return View(course);
+            return View();
         }
+
+
+        /// <summary>
+        /// this method is to create the courses partial from the coursecategory
+        /// index by passing a couses id
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public PartialViewResult CreateCoursePartial1(int id)
+        {
+            var courseCategory = db.CourseCategories.FirstOrDefault(x => x.CourseCategoryId.Equals(id));
+            ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName");
+            return PartialView(courseCategory);
+        }
+        [HttpPost]
+        public PartialViewResult CreateCoursePartial1(Course course, HttpPostedFileBase File)
+        {
+            if (ModelState.IsValid)
+            {
+
+                string _FileName = String.Empty;
+                if (File.ContentLength > 0)
+                {
+                    _FileName = Path.GetFileName(File.FileName);
+                    string path = HostingEnvironment.MapPath("~/MaterialUpload/") + _FileName;
+                    course.FileLocation = path;
+                    var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/MaterialUpload/"));
+                    if (directory.Exists == false)
+                    {
+                        directory.Create();
+                    }
+                    File.SaveAs(path);
+                }
+                course.FileLocation = _FileName;
+
+
+                db.Courses.Add(course);
+                 db.SaveChangesAsync();
+                //return RedirectToAction("Index");
+            }
+            ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName");
+            return PartialView();
+        }
+
+
 
         // GET: Courses/Edit/5
         [Authorize(Roles = "Admin")]

@@ -142,6 +142,18 @@
         );
 
     });
+
+
+
+    function Edit(subjecId) {
+        var url = "/Classes/Save?id=" + subjecId;
+        //$('#actionsList').modal("show");
+        //window.alert(url);
+        $('#myModalDivBody').load(url,
+            function () {
+                $('#actionsList').modal("show");
+            });
+    };
 </script> 
 
 
