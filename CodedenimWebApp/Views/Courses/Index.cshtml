@@ -56,20 +56,24 @@
                             <label for="checkbox1">Label</label>
                         </div>
                     </td>
-                    <td><span class="label label-default">@item.CourseName</span></td>
-                    <td><i class="fa fa-money">@item.ExpectedTime</i></td>
+               
+                <td>
+                    <a href="@Url.Action("Details","Courses",new{id = item.CourseId})"><span class="label label-default" data-toggle="tooltip" data-placement="top" title="View Course Detail">@item.CourseName</span></a>
+                </td>
+
+                                       <td><i class="fa fa-clock-o"> @item.ExpectedTime</i> </td>
                     <td>@item.Modules.Count</td>
                     <td>
                         <i class="fa fa-user"></i> @item.Points
                     </td>
 
                     <td class="text-right">
-                        <a href="#CreateModule" onclick="CreateModules(@item.CourseId)" class="btn btn-default btn-xs" data-toggle="modal" data-placement="top" title="Create ModulesS"><i class="fa fa-file"></i></a>
-                        <a href="@Url.Action("Edit", "Courses", new {id = @item.CourseId})" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
-                        @*<a href="#createCourse" onclick="AddCourse(@item.CourseId)" data-toggle="modal" class="btn btn-default btn-xs" data-placement="top" title="Create Course"><i class="fa fa-file"></i></a>*@
+                        @*<a href="#CreateModule" onclick="CreateModules(@item.CourseId)" class="btn btn-default btn-xs" data-toggle="modal" data-placement="top" title="Create Modules"><i class="fa fa-file"></i></a>*@
+                        @*<a href="@Url.Action("Edit", "Courses", new {id = @item.CourseId})" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>*@
+                        <a href="#EditModule"onclick="EditModules(@item.CourseId)" class="btn btn-default btn-xs" data-toggle="modal" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
 
-                        <a href="@Url.Action("Delete", "Courses", new {id = @item.CourseId})" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Delete"><i
-                                                                                                                                                                                          class="fa fa-times"></i></a>
+                        @*<a href="@Url.Action("Delete", "Courses", new {id = @item.CourseId})" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Delete"><i*@
+                        <a href="#EditModule"onclick="DeleteModules(@item.CourseId)" class="btn btn-danger btn-xs" data-toggle="modal" data-placement="top" title="Delete"><i class="fa fa-times"></i></a>
                     </td>
              
                 </tr>
@@ -94,16 +98,16 @@
 
 
 
-<div class="modal grow modal-backdrop-white fade" id="CreateModule">
+<div class="modal grow modal-backdrop-white fade" id="EditModule">
     <div class="modal-dialog modal-lg">
         <div class="v-cell">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Create Course</h4>
+                    <h4 class="modal-title">Course</h4>
                 </div>
                 <div class="modal-body">
-                    <div id="LoadCreateModule">
+                    <div id="LoadEditModule">
                        
                     </div>
                     
@@ -146,8 +150,13 @@
 
 
     <script type="text/javascript">
-   function CreateModules(courseId) {
-       var url = "/Modules/CreatePartial?id=" + courseId;
-       $("#LoadCreateModule").load(url);
+   function EditModules(courseId) {
+       var url = "/Courses/EditPartial?id=" + courseId;
+       $("#LoadEditModule").load(url);
+        }
+
+   function DeleteModules(courseId) {
+       var url = "/Courses/DeletePartial?id=" + courseId;
+       $("#LoadEditModule").load(url);
    }
         </script>

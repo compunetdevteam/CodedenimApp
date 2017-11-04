@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.Services;
+using CodedenimWebApp.ViewModels;
 using CodeninModel;
 using OfficeOpenXml;
 
@@ -37,12 +38,22 @@ namespace CodedenimWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var moduleInfo = new CourseContentVm();
             Module module = await db.Modules.FindAsync(id);
+ 
+            var course = await db.Courses.FindAsync(id);
+            var modeules = await db.Modules.Where(x => x.CourseId.Equals((int)id)).ToListAsync();
+            var topics = await db.Topics.Where(x => x.ModuleId.Equals((int)id)).ToListAsync();
+            moduleInfo.CoursesAD = course;
+            moduleInfo.Modules = modeules;
+            moduleInfo.Topics = topics;
+            moduleInfo.ModulesAD = module;
+
             if (module == null)
             {
                 return HttpNotFound();
             }
-            return View(module);
+            return View(moduleInfo);
         }
 
         //GET: Modules/Create

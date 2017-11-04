@@ -284,12 +284,18 @@ namespace CodedenimWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = await db.Courses.FindAsync(id);
+            var courseInfo = new CourseContentVm();
+            var course = await db.Courses.FindAsync(id);
+            var modeules = await db.Modules.Where(x => x.CourseId.Equals((int)id)).ToListAsync();
+            courseInfo.CoursesAD = course;
+            courseInfo.Modules = modeules;
+
+
             if (course == null)
             {
                 return HttpNotFound();
             }
-            return View(course);
+            return View(courseInfo);
         }
 
 
@@ -427,6 +433,51 @@ namespace CodedenimWebApp.Controllers
             return View(course);
         }
 
+        /// <summary>
+        /// Partial View for editing courses on the course index page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> EditPartial(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Course course = await db.Courses.FindAsync(id);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            //ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName", course.CourseCategoryId);
+            return PartialView(course);
+        }
+
+
+
+        /// <summary>
+        /// Post Version of the Partial Edit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditPartial([Bind(Include ="CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")]
+            Course course)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(course).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            // ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName", course.CourseCategoryId);
+            return PartialView(course);
+        }
+
         // GET: Courses/Delete/5
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int? id)
@@ -454,6 +505,42 @@ namespace CodedenimWebApp.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+
+        /// <summary>
+        /// Delete Partial for the partial view of course
+        /// </summary>
+        /// <param name="id"></param>
+        // GET: Courses/Delete/5
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> DeletePartial(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Course course = await db.Courses.FindAsync(id);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView(course);
+        }
+        /// <summary>
+        /// Confirm delete Partial 
+        /// </summary>
+        /// <param name="id"></param>
+        // POST: Courses/Delete/5
+        [HttpPost, ActionName("DeletePartial")]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmedPartial(int id)
+        {
+            Course course = await db.Courses.FindAsync(id);
+            db.Courses.Remove(course);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
 
         protected override void Dispose(bool disposing)
         {

@@ -22,12 +22,101 @@
     }
 
 
-    
+    <div class="panel panel-default">
+        <!-- Progress table -->
+        <div class="table-responsive">
+            <table class="table v-middle">
+                <thead>
+                <tr>
+                    <th width="20">
+                        <div class="checkbox checkbox-single margin-none">
+                            <input id="checkAll" data-toggle="check-all" data-target="#responsive-table-body" type="checkbox" checked>
+                            <label for="checkAll">Check All</label>
+                        </div>
+                    </th>
+                    <th>Course Name</th>
+                    @*<th>Course Description</th>*@
+                    <th>Expected Time</th>
+                    <th>Number Of Topics</th>
+                    <th>Points</th>
+                    <th>Action</th>
+           
+                </tr>
+                </thead>
+                <tbody id="responsive-table-body">
+                @foreach (var item in Model)
+                {
+                 
+                    <tr>
+
+                        <td>
+                            <div class="checkbox checkbox-single">
+                                <input id="checkbox1" type="checkbox" checked>
+                                <label for="checkbox1">Label</label>
+                            </div>
+                        </td>
+                        <td><span class="label label-default">@item.Course.CourseName</span></td>
+                        <td><i class="fa fa-money">@item.ModuleName</i></td>
+                        
+                        <td>@item.Topics.Count</td>
+                        <td>
+                            <i class="fa fa-user"></i> @item.ExpectedTime
+                        </td>
+
+                        <td class="text-right">
+                            <a href="#CreateTopics" onclick="CreateTopic(@item.ModuleId)" class="btn btn-default btn-xs" data-toggle="modal" data-placement="top" title="Create Topic"><i class="fa fa-file"></i></a>
+                            <a href="@Url.Action("Edit", "Topics", new {id = @item.ModuleId})" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                            @*<a href="#createCourse" onclick="AddCourse(@item.CourseId)" data-toggle="modal" class="btn btn-default btn-xs" data-placement="top" title="Create Course"><i class="fa fa-file"></i></a>*@
+
+                            <a href="@Url.Action("Delete", "TOpics", new {id = @item.ModuleId})" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Delete"><i
+                                                                                                                                                                                             class="fa fa-times"></i></a>
+                        </td>
+             
+                    </tr>
+                }
+                </tbody>    
+            </table>
+        </div>
+        <!-- // Progress table -->
+        <div class="panel-footer padding-none text-center">
+            <ul class="pagination">
+                <li class="disabled"><a href="#">&laquo;</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+
+
+    <div class="modal grow modal-backdrop-white fade" id="CreateTopics">
+        <div class="modal-dialog modal-lg">
+            <div class="v-cell">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Create Topics</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="LoadCreateTopics">
+                       
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <p>
         @Html.ActionLink("CREATE MODULE", "Create", null, new { @class = "my-class" })
     </p>
-    <table class="table">
+    @*<table class="table">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Course.CourseCode)
@@ -66,6 +155,21 @@
                 </td>
             </tr>}
 
-    </table>
+    </table>*@
 </div>
+
+<script src="~/Scripts/jquery-3.1.1.js"></script>
+<script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/DataTables/dataTables.bootstrap4.js"></script>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+
+
+<script type="text/javascript">
+    function CreateTopic(moduleId) {
+        var url = "/Topics/CreatePartial?id=" + moduleId;
+        $("#LoadCreateTopics").load(url);
+    }
+</script>
+
 

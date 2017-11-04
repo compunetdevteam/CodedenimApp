@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.Services;
+using CodedenimWebApp.ViewModels;
 using CodeninModel;
 using CodeninModel.Quiz;
 using OfficeOpenXml;
@@ -100,12 +101,17 @@ namespace CodedenimWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var topics = new CourseContentVm();
             Topic topic = await db.Topics.FindAsync(id);
+            
+            var topicContent = await db.Topics.Where(x => x.TopicId.Equals((int)id)).ToListAsync();
+            topics.Topics = topicContent;
+            topics.TopicsAD = topic;
             if (topic == null)
             {
                 return HttpNotFound();
             }
-            return View(topic);
+            return View(topics);
         }
 
         // GET: Topics/Create
@@ -133,7 +139,35 @@ namespace CodedenimWebApp.Controllers
             return View(topic);
         }
 
+
+        /// <summary>
+        /// Create Partial for topic pop-up
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: Topics/Edit/5
+        public PartialViewResult CreatePartial(int id)
+        {
+            ViewBag.ModuleId = new SelectList(db.Modules.Where(x => x.ModuleId.Equals((int)id)).ToList(), "ModuleId", "ModuleName");
+            return PartialView();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreatePartial(Topic topic)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Topics.Add(topic);
+                await db.SaveChangesAsync();
+                return new JsonResult { Data = new { status = true, message = "Saved Succesfully" } };
+                // RedirectToAction("Index","Courses");
+            }
+
+            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", topic.ModuleId);
+            return PartialView(topic);
+        }
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
