@@ -200,6 +200,45 @@ namespace CodedenimWebApp.Controllers
             return View(topic);
         }
 
+
+        /// <summary>
+        /// Partial for edit topic
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<ActionResult> EditPartial(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Topic topic = await db.Topics.FindAsync(id);
+            if (topic == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ModuleId = new SelectList(db.Modules.Where(x => x.ModuleId.Equals(topic.ModuleId)).ToList(), "ModuleId", "ModuleName", topic.ModuleId);
+
+            //ViewBag.ModuleId = new SelectList(db.Modules, "ModuleId", "ModuleName", topic.ModuleId);
+            return PartialView(topic);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditPartial(Topic topic)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(topic).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Details","Modules",new{id = topic.ModuleId});
+            }
+            ViewBag.ModuleId = new SelectList(db.Modules, "ModuleId", "ModuleName", topic.ModuleId);
+            return PartialView(topic);
+        }
+
+
+
         // GET: Topics/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
@@ -225,6 +264,35 @@ namespace CodedenimWebApp.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+
+
+
+        // GET: Topics/Delete/5
+        public async Task<ActionResult> DeletePartial(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Topic topic = await db.Topics.FindAsync(id);
+            if (topic == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView(topic);
+        }
+
+        // POST: Topics/Delete/5
+        [HttpPost, ActionName("DeletePartial")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmedPartial(int id)
+        {
+            Topic topic = await db.Topics.FindAsync(id);
+            db.Topics.Remove(topic);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Details","Modules",new{id = topic.ModuleId});
+        }
+
 
         protected override void Dispose(bool disposing)
         {

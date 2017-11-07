@@ -122,22 +122,29 @@
                 @foreach(var course in Model.Modules)
                 {
                     <li class="list-group-item">
-                        <a href="@Url.Action("Details","Modules", new{id = course.ModuleId})">
-                        <div class="media v-middle">
-                            <div class="media-left">
+                        <a href="@Url.Action("Details","Modules", new{id = course.ModuleId})" class="clearfix">
+                            <div class="media v-middle">
+                                <div class="media-left">
                                
-                                <div class="icon-block s30 bg-red-300 text-white img-circle">
-                                    <i class="fa fa-star"></i>
+                                    <div class="icon-block s30 bg-red-300 text-white img-circle">
+                                        <i class="fa fa-star"></i>
+                                    </div>
                                 </div>
-                            </div>
                         
-                            <div class="media-body text-body-2">
-                                @course.ModuleName
-                            </div>
+                                <div class="media-body text-body-2">
+                                    @course.ModuleName
+                                </div>
                   
+                            </div>
+                        </a>
+                        <a href="#CreateModule" onclick="EditModules(@course.ModuleId)" data-toggle="modal" class="clearfix">
+
+                        <div class="icon-block s30 bg-red-300 text-white img-circle">
+                            <i class="fa fa-pencil"></i>
                         </div>
-                    </a>
+                        </a>
                     </li>
+             
                 }
                
                 @*<li class="list-group-item paper-shadow">
@@ -379,7 +386,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Create Course</h4>
+                    <h4 class="modal-title">Module</h4>
                 </div>
                 <div class="modal-body">
                     <div id="LoadCreateModule">
@@ -403,6 +410,13 @@
 <script type="text/javascript">
     function CreateModules(courseId) {
         var url = "/Modules/CreatePartial?id=" + courseId;
+        $("#LoadCreateModule").load(url);
+
+   
+    }
+
+    function EditModules(courseId) {
+        var url = "/Modules/EditPartial?id=" + courseId;
         $("#LoadCreateModule").load(url);
 
    

@@ -39,6 +39,9 @@ namespace CodedenimWebApp.Controllers.Api
             var enrollCategoryId = db.EnrollForCourses.AsNoTracking().Where(x => x.StudentId.Equals(studentId))
                                      .Select(x => x.CourseCategoryId).FirstOrDefault();
 
+            var PaidCourses = db.EnrollForCourses.AsNoTracking().Where(x => x.StudentId.Equals(studentId))
+                .Select(x => x.CourseCategoryId).FirstOrDefault();
+
             var courses = await db.AssignCourseCategories.AsNoTracking()
                 .Where(x => x.CourseCategoryId.Equals(enrollCategoryId)).ToListAsync();
             //EnrollForCourse enrollForCourse = await db.EnrollForCourses.FindAsync(email);

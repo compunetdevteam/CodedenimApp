@@ -1,95 +1,98 @@
 ﻿
 
 @using CodeninModel
-@model CodeninModel.TopicMaterialUpload
-@*@model CodedenimWebApp.ViewModels.CourseContentVm*@
+@*@model CodeninModel.TopicMaterialUpload*@
+@model CodedenimWebApp.ViewModels.CourseContentVm
 
 
 
 <h2>Details</h2>
 <div class="row panel panel-default">
 
-
+@foreach (var content in Model.Materials)
+{
 
     <div class="col-xs-12 col-md-8 ">
-        @if (Model.FileType == FileType.MP4)
+
+        if (content.FileType == FileType.MP4)
         {
-            <div style="text-align:center">
-                <button onclick="playPause()">Play/Pause</button>
-                <button onclick="makeBig()">Big</button>
-                <button onclick="makeSmall()">Small</button>
-                <button onclick="makeNormal()">Normal</button>
-                <br><br>
-            
-                <video controls="controls" id="video1" width="420">
-                    <source src="~/MaterialUpload/@Model.FileLocation" type="video/mp4">
-                    Your browser does not support HTML5 video.
-                </video>
-            </div>
+        <div style="text-align: center">
+            <button onclick="playPause()">Play/Pause</button>
+            <button onclick="makeBig()">Big</button>
+            <button onclick="makeSmall()">Small</button>
+            <button onclick="makeNormal()">Normal</button>
+            <br><br>
+
+            <video controls="controls" id="video1" width="420">
+                <source src="~/MaterialUpload/@content.FileLocation" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+        </div>
         }
-        else if (Model.FileType == FileType.PDF)
+        else if (content.FileType == FileType.PDF)
         {
-            <object data="~/MaterialUpload/@Model.FileLocation" type="application/pdf">
-                <iframe src="~/MaterialUpload/@Model.FileLocation" style="width: 100%;height: 100%;border: none;"> </iframe>
+        <object data="~/MaterialUpload/@content.FileLocation" type="application/pdf">
+            <iframe src="~/MaterialUpload/@content.FileLocation" style="width: 100%; height: 100%; border: none;"> </iframe>
 
 
-            </object>
-
-        }
-        else if (Model.FileType == FileType.MP3)
-        {
-
-            <audio controls="controls" id="video1" width="420">
-                <source src="~/MaterialUpload/@Model.FileLocation" type="audio/mpeg">
-
-            </audio>
+        </object>
 
         }
+        else if (content.FileType == FileType.MP3)
+        {
+
+        <audio controls="controls" id="video1" width="420">
+            <source src="~/MaterialUpload/@content.FileLocation" type="audio/mpeg">
+
+        </audio>
+
+        }
+
     </div>
-    
+
     <div class="col-xs-6 col-md-4 ">
         <h4>Topic Material Upload</h4>
-        <hr />
+        <hr/>
         <dl class="dl-horizontal">
             <dt class="label label-default">
-                @Html.DisplayNameFor(model => model.Course.TopicName)
+                @Html.DisplayNameFor(model => content.Course.TopicName)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Course.TopicName)
+                @Html.DisplayFor(model => content.Course.TopicName)
             </dd>
-            <hr />
+            <hr/>
             <dt class="label label-default">
-                @Html.DisplayNameFor(model => model.Tutor)
+                @Html.DisplayNameFor(model => content.Tutor)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Tutor)
+                @Html.DisplayFor(model => content.Tutor)
             </dd>
-            <hr />
+            <hr/>
             <dt class="label label-default">
-                @Html.DisplayNameFor(model => model.FileType)
+                @Html.DisplayNameFor(model => content.FileType)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.FileType)
+                @Html.DisplayFor(model => content.FileType)
             </dd>
-            <hr />
+            <hr/>
             <dt class="label label-default">
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => content.Name)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Name)
+                @Html.DisplayFor(model => content.Name)
             </dd>
 
-             
-            
+
+
 
 
         </dl>
     </div>
-
+}  
 </div>
 <script>
 
@@ -114,3 +117,4 @@
         myVideo.width = 420;
     }
 </script>
+content

@@ -1,4 +1,6 @@
 ﻿@*@model CodeninModel.Module*@
+@using System.Security.AccessControl
+@using System.Web.UI.WebControls
 @model CodedenimWebApp.ViewModels.CourseContentVm
 @{
     ViewBag.Title = "Module Details";
@@ -78,7 +80,7 @@
     <div id="lessons" class="tab-pane active">
         <div class="media v-middle s-container">
             <div class="media-body">
-                <h5 class="text-subhead text-light">3 Lessons</h5>
+                <h5 class="text-subhead text-light"></h5>
             </div>
             <div class="media-right">
                 <a class="btn btn-primary paper-shadow relative" href="#CreateTopics" onclick="CreateTopics(@Model.ModulesAD.ModuleId)" data-toggle="modal" data-placement="top" title="Create Topic">Add Topic</a>
@@ -88,9 +90,10 @@
             <ul class="nestable-list">
                 @foreach (var topics in Model.Topics)
                 {
+                 @Html.HiddenFor(x => x.ModulesAD.ModuleId)
                     <li class="nestable-item nestable-item-handle" data-id="2">
-                        <div class="nestable-handle"><i class="md md-menu"></i></div>
-                        <div class="nestable-content">
+                        <a href="@Url.Action("Create","TopicMaterialUploads",new{id = topics.TopicId})" class="btn btn-white btn-flat">Add Content</a>
+                        <div class="nestable-content">  
                             <div class="media v-middle">
                                 <div class="media-left">
                                     <div class="icon-block half bg-blue-400 text-white">
@@ -99,12 +102,14 @@
                                 </div>
                                 <div class="media-body">
                                     <h4 class="text-title media-heading margin-none">
-                                        <a href="" class="link-text-color">@topics.TopicName</a>
+                                        <a href="@Url.Action("Details","TopicMaterialUploads",new{id = topics.TopicId})" class="link-text-color">@topics.TopicName</a>
                                     </h4>
                                     @*<div class="text-caption">@topics.</div>*@
                                 </div>
                                 <div class="media-right">
-                                    <a href="" class="btn btn-white btn-flat"><i class="fa fa-pencil fa-fw"></i> Edit</a>
+                                    <a href="#CreateTopics" onclick="EditTopics(@topics.TopicId)" data-toggle="modal" class="btn btn-white btn-flat"><i class="fa fa-pencil fa-fw"></i> Edit</a>
+                                    <a href="#CreateTopics" onclick="DeleteTopics(@topics.TopicId)" data-toggle="modal" class="btn btn-white btn-flat"><i class="fa fa-times btn-danger"></i> Delete</a>
+                               
                                 </div>
                             </div>
                         </div>
@@ -150,6 +155,20 @@
 <script type="text/javascript">
     function CreateTopics(moduleId) {
         var url = "/Topics/CreatePartial?id=" + moduleId;
+        $("#LoadCreateTopics").load(url);
+
+
+    }
+
+    function EditTopics(moduleId) {
+        var url = "/Topics/EditPartial?id=" + moduleId;
+        $("#LoadCreateTopics").load(url);
+
+
+    }
+
+    function DeleteTopics(moduleId) {
+        var url = "/Topics/DeletePartial?id=" + moduleId;
         $("#LoadCreateTopics").load(url);
 
 

@@ -1,4 +1,4 @@
-﻿    using System;
+﻿	using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -7,11 +7,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
-    using System.Web.Hosting;
-    using System.Web.Mvc;
+	using System.Web.Hosting;
+	using System.Web.Mvc;
 using CodedenimWebApp.Models;
-using CodeninModel;
-    using Microsoft.AspNet.Identity;
+	using CodedenimWebApp.ViewModels;
+	using CodeninModel;
+	using Microsoft.AspNet.Identity;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -22,7 +23,7 @@ namespace CodedenimWebApp.Controllers
 		// GET: TopicMaterialUploads
 		public async Task<ActionResult> Index()
 		{
-            
+			
 			var topicMaterialUploads = db.TopicMaterialUploads.Include(t => t.Course);
 			return View(await topicMaterialUploads.ToListAsync());
 		}
@@ -47,55 +48,67 @@ namespace CodedenimWebApp.Controllers
 		}
 
 
-
+        /// <summary>
+        /// this method takes in a topic id and 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 		// GET: TopicMaterialUploads/Details/5
 		public async Task<ActionResult> Details(int? id)
 		{
-			if (id == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
-			TopicMaterialUpload topicMaterialUpload = db.TopicMaterialUploads.Find(id);
-			if (topicMaterialUpload == null)
-			{
-				return View("NoContent");
-			}
-			return View(topicMaterialUpload);
-		}
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            TopicMaterialUpload topicMaterialUpload = db.TopicMaterialUploads.Find(id);
+            if (topicMaterialUpload == null)
+            {
+                return View("NoContent");
+            }
+            return View(topicMaterialUpload);
 
 
-	    // GET: TopicMaterialUploads/Details/5
+        }
+
+
+        // GET: TopicMaterialUploads/Details/5
         /// <summary>
         /// this will display the content of the course for a student
         /// </summary>
         /// <param name="id"></param>
         /// <returns>topic material</returns>
-	    public PartialViewResult DetailsContent(int? id)
-	    {
-	        if (id == null)
-	        {
-	            return PartialView("Invalid");
-	        }
-	        TopicMaterialUpload topicMaterialUpload = db.TopicMaterialUploads.Find(id);
-	        if (topicMaterialUpload == null)
-	        {
-	            return PartialView("NoContent");
-	        }
-	        return PartialView(topicMaterialUpload);
-	    }
+        public PartialViewResult DetailsContent(int? id)
+		{
+			if (id == null)
+			{
+				return PartialView("Invalid");
+			}
+		    var topic = db.Topics.Find(id);
+		    var topicContent = db.TopicMaterialUploads.Where(x => x.TopicId.Equals(id)).ToList();
+		    var contents = new CourseContentVm();
+            TopicMaterialUpload topicMaterialUpload = db.TopicMaterialUploads.Find(id);
+		    contents.Materials = topicContent;
+			if (topicMaterialUpload == null)
+			{
+				return PartialView("NoContent");
+			}
+		    return PartialView(contents);
+           // return PartialView(topicMaterialUpload);
+		}
 
 
-        // GET: TopicMaterialUploads/Create
-        public ActionResult Create()
+	
+		public ActionResult Create(int id)
 		{
 		   // var user = User.Identity.GetUserName();
-          
+		    var topicMaterial = db.Topics.Find(id);
 
 
-			ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName");
-		    ViewBag.UserName =  User.Identity.GetUserName();
+			ViewBag.TopicId = new SelectList(db.Topics.Where(x => x.TopicId.Equals(id)), "TopicId", "TopicName");
+			ViewBag.UserName =  User.Identity.GetUserName();
 
-            return View();
+			return View();
 		}
 
 		// POST: TopicMaterialUploads/Create
@@ -108,26 +121,27 @@ namespace CodedenimWebApp.Controllers
 			if (ModelState.IsValid)
 			{
 			   // var tutorId = User.Identity.GetUserId();
+			    var topicId = topicMaterialUpload.TopicId;
+			    var moduleId = db.Topics.Where(x => x.TopicId.Equals(topicId)).Select(x => x.ModuleId).FirstOrDefault();
+				string _FileName = String.Empty;
+				if (File.ContentLength > 0)
+				{
+					_FileName = Path.GetFileName(File.FileName);
+					string path = HostingEnvironment.MapPath("~/MaterialUpload/") + _FileName;
+					topicMaterialUpload.FileLocation = path;
+					var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/MaterialUpload/"));
+					if (directory.Exists == false)
+					{
+						directory.Create();
+					}
+					File.SaveAs(path);
+				}
+				topicMaterialUpload.FileLocation = _FileName;
 
-			    string _FileName = String.Empty;
-			    if (File.ContentLength > 0)
-			    {
-			        _FileName = Path.GetFileName(File.FileName);
-			        string path = HostingEnvironment.MapPath("~/MaterialUpload/") + _FileName;
-			        topicMaterialUpload.FileLocation = path;
-			        var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/MaterialUpload/"));
-			        if (directory.Exists == false)
-			        {
-			            directory.Create();
-			        }
-			        File.SaveAs(path);
-			    }
-			    topicMaterialUpload.FileLocation = _FileName;
 
-
-                db.TopicMaterialUploads.Add(topicMaterialUpload);
+				db.TopicMaterialUploads.Add(topicMaterialUpload);
 				await db.SaveChangesAsync();
-				return RedirectToAction("Index");
+				return RedirectToAction("Details","Modules",new{id= moduleId});
 			}
 
 			ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", topicMaterialUpload.TopicId);

@@ -353,6 +353,7 @@
     <Compile Include="ViewModels\RegularStudentVm.cs" />
     <Compile Include="ViewModels\StudentTypeVm.cs" />
     <Compile Include="ViewModels\StudentVm.cs" />
+    <Compile Include="ViewModels\TopicMaterialVm.cs" />
     <Compile Include="ViewModels\TutorCreateVm.cs" />
     <Compile Include="ViewModels\TutorDashboardVm.cs" />
     <Compile Include="ViewModels\TutorRegisterVm.cs" />
@@ -1222,6 +1223,9 @@
     <Content Include="Views\Topics\CreatePartial.cshtml" />
     <Content Include="Views\Courses\EditPartial.cshtml" />
     <Content Include="Views\Courses\DeletePartial.cshtml" />
+    <Content Include="Views\Modules\EditPartial.cshtml" />
+    <Content Include="Views\Topics\EditPartial.cshtml" />
+    <Content Include="Views\Topics\DeletePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

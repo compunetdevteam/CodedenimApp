@@ -151,6 +151,52 @@ namespace CodedenimWebApp.Controllers
             return View(module);
         }
 
+
+        /// <summary>
+        /// Partial Edit for Modules 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        // GET: Modules/Edit/5
+        public async Task<ActionResult> EditPartial(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var module = await db.Modules.FindAsync((int) id);
+            if (module == null)
+            {
+                return HttpNotFound();
+            }
+
+           // ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", module.CourseId);
+            ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(module.CourseId)).ToList(), "CourseId", "CourseName", module.CourseId);
+            return PartialView(module);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditPartial(Module module)
+        {
+            //ViewBag.CourseId = new SelectList(db.Modules.Where(x => x.ModuleId.Equals((int)id)).Select(x => x.CourseId).ToList(), "CourseId", "CourseName", module.CourseId);
+
+            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", module.CourseId);
+            if (ModelState.IsValid)
+            {
+                //module.ModuleId = (int)ViewBag.CourseId;
+                db.Entry(module).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+               return RedirectToAction("Details","Courses",new {id = module.CourseId});
+            }
+           
+            return PartialView(module);
+        }
+
+
+
         // GET: Modules/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
