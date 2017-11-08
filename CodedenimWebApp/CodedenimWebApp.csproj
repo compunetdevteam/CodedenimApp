@@ -955,7 +955,7 @@
     <Content Include="Content\LMS\fonts\picto-foundry-weather.ttf" />
     <Content Include="Content\LMS\fonts\picto-foundry-weather.woff" />
     <Content Include="Content\LMS\js\data\google_maps\markers.json" />
-    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\codedenim - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1-vsdoc.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
