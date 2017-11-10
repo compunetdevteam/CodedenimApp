@@ -18,5 +18,10 @@ namespace CodedenimWebApp.ViewModels
         public  string TutorId { get; set; }
         public int[] CourseId { get; set; }
     }
+    public class AssignCourseToCategory
+    {
+        public int CourseCategoryId { get; set; }
+        public int[] CourseId { get; set; }
+    }
         
  }

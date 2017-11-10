@@ -40,13 +40,13 @@
                              <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
                          </span>
                      </a>
-                 </div>
-                 <div class="panel-body">
-                     <h4 class="text-headline margin-v-0-10"><a href="@Url.Action("CategoryContent","Courses")">@item.CategoryName</a></h4>
-                 </div>
+                 </div> 
+                 @*<div class="panel-body">
+                     <h4 class="text-headline margin-v-0-10"><a href="@Url.Action("StartPayment","CourseCategories")">@item.CategoryName</a></h4>
+                 </div>*@
                  <hr class="margin-none"/>
                  <div class="panel-body">
-                     <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("CategoryContent","Courses", new {id = item.CourseCategoryId})">Go to courses</a>
+                     <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("StartPayment","CourseCategories", new {id = item.CourseCategoryId})">Go to courses</a>
                  </div>
              </div>
          </div>

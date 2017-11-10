@@ -321,6 +321,22 @@
     <Compile Include="Migrations\201710251102385_Add_courseCategory.Designer.cs">
       <DependentUpon>201710251102385_Add_courseCategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711091555184_changed_intTo_intOFArrayIn_assignCourses.cs" />
+    <Compile Include="Migrations\201711091555184_changed_intTo_intOFArrayIn_assignCourses.Designer.cs">
+      <DependentUpon>201711091555184_changed_intTo_intOFArrayIn_assignCourses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711092014501_RemoveIntArrayIn_assignCourse.cs" />
+    <Compile Include="Migrations\201711092014501_RemoveIntArrayIn_assignCourse.Designer.cs">
+      <DependentUpon>201711092014501_RemoveIntArrayIn_assignCourse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711092052042_changed_intTo_intOFArrayIn_assignCourses1.cs" />
+    <Compile Include="Migrations\201711092052042_changed_intTo_intOFArrayIn_assignCourses1.Designer.cs">
+      <DependentUpon>201711092052042_changed_intTo_intOFArrayIn_assignCourses1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711092203318_RemoveIntArrayIn_assignCourse1.cs" />
+    <Compile Include="Migrations\201711092203318_RemoveIntArrayIn_assignCourse1.Designer.cs">
+      <DependentUpon>201711092203318_RemoveIntArrayIn_assignCourse1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CreteCourseVm.cs" />
@@ -759,24 +775,6 @@
     <Content Include="fonts\roboto\Roboto-Thin.woff" />
     <Content Include="fonts\roboto\Roboto-Thin.woff2" />
     <Content Include="fonts\roboto\Roboto-Thind41d.eot" />
-    <Content Include="MaterialUpload\09. Better Man.mp3" />
-    <Content Include="MaterialUpload\AI.jpg" />
-    <Content Include="MaterialUpload\Android.png" />
-    <Content Include="MaterialUpload\carpentry and joinary.jpg" />
-    <Content Include="MaterialUpload\cisco.jpg" />
-    <Content Include="MaterialUpload\cloud-computing.jpg" />
-    <Content Include="MaterialUpload\Codedenim.png" />
-    <Content Include="MaterialUpload\Computer.jpg" />
-    <Content Include="MaterialUpload\csharp.png" />
-    <Content Include="MaterialUpload\Data Management_ What Is Master Data Management %28Mdm%29.mp4" />
-    <Content Include="MaterialUpload\Deadlock.png" />
-    <Content Include="MaterialUpload\LoginPic.jpg" />
-    <Content Include="MaterialUpload\Networking.jpg" />
-    <Content Include="MaterialUpload\philosophy pics.png" />
-    <Content Include="MaterialUpload\python.jpg" />
-    <Content Include="MaterialUpload\tree.jpg" />
-    <Content Include="MaterialUpload\Ux Design.jpg" />
-    <Content Include="MaterialUpload\You Are Mine- Third Day.mp4" />
     <Content Include="Profile_Pics\Computer.jpg" />
     <Content Include="Profile_Pics\WhatsApp Image 2017-08-14 at 5.15.22 PM.jpeg" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1234,6 +1232,7 @@
     <Folder Include="Content\StudentFiles\" />
     <Folder Include="Content\TutorFiles\" />
     <Folder Include="Controllers\Api\ForumApi\" />
+    <Folder Include="MaterialUpload\" />
     <Folder Include="ProfilePics\" />
     <Folder Include="uploads\" />
     <Folder Include="Views\MultipleButtonAttribute\" />
@@ -1279,6 +1278,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710251102385_Add_courseCategory.resx">
       <DependentUpon>201710251102385_Add_courseCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711091555184_changed_intTo_intOFArrayIn_assignCourses.resx">
+      <DependentUpon>201711091555184_changed_intTo_intOFArrayIn_assignCourses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711092014501_RemoveIntArrayIn_assignCourse.resx">
+      <DependentUpon>201711092014501_RemoveIntArrayIn_assignCourse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711092052042_changed_intTo_intOFArrayIn_assignCourses1.resx">
+      <DependentUpon>201711092052042_changed_intTo_intOFArrayIn_assignCourses1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711092203318_RemoveIntArrayIn_assignCourse1.resx">
+      <DependentUpon>201711092203318_RemoveIntArrayIn_assignCourse1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

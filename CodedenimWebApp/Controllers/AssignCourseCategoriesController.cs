@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using CodedenimWebApp.Models;
 using CodeninModel;
+using CodedenimWebApp.ViewModels;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -42,7 +43,7 @@ namespace CodedenimWebApp.Controllers
         public ActionResult Create()
         {
             ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName");
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName");
+            ViewBag.CourseId = new MultiSelectList(db.Courses.ToList(), "CourseId", "CourseName");
             return View();
         }
 
@@ -51,18 +52,28 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "AssignCourseCategoryId,CourseId,CourseCategoryId")] AssignCourseCategory assignCourseCategory)
+        public async Task<ActionResult> Create(AssignCourseToCategory assignCourseCategory)
         {
+           
             if (ModelState.IsValid)
             {
-                db.AssignCourseCategories.Add(assignCourseCategory);
+                foreach (var item in assignCourseCategory.CourseId)
+                {
+                    var assignedCourses = new AssignCourseCategory();
+                    assignedCourses.CourseCategoryId = assignCourseCategory.CourseCategoryId;
+                    assignedCourses.CourseId = item;
+                    db.AssignCourseCategories.Add(assignedCourses);
+                }
+                //assignedCourses.CourseCategoryId = assignCourseCategory.CourseCategoryId;
+                //assignedCourses.CourseId = assignCourseCategory.CourseId;
+
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
             ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName", assignCourseCategory.CourseCategoryId);
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", assignCourseCategory.CourseId);
-            return View(assignCourseCategory);
+            ViewBag.CourseId = new MultiSelectList(db.Courses.ToList(), "CourseId", "CourseCode");
+            return View();
         }
 
         // GET: AssignCourseCategories/Edit/5

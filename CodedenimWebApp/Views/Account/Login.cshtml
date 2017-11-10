@@ -3,75 +3,7 @@
      ViewBag.Title = "Login";
      Layout = "~/Views/Shared/_LoginLayout.cshtml";
  }
-@*<div class="row">
-    <div class="col-md-6 col-lg-5 login-form mx-auto float-none">
 
-        <!--Form with header-->
-        <div class="card" style="width: 75%; margin-left:10%">
-            <div class="card-block">
-                
-                <!--Header-->
-                <!--Header-->
-                <div class="form-header" style="height: 120px !important; padding:5px;">
-                    <h3>
-                        <a href="@Url.Action("Index","Home")"><img src="~/Content/img/CodeDemin.png" width="60" height="50" style="margin-left:45%"/>Code-Denim</a></h3>
-                </div>
-
-                <!--Body-->
-            @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
-            {
-
-                @Html.AntiForgeryToken()
-                <div class="md-form">
-                    <i class="fa fa-envelope prefix"></i>
-                    <input type="text" id="Email" name="Email" class="form-control" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required.">
-                    <label for="Email">Your Email</label>
-                    <span class="field-validation-valid text-danger" data-valmsg-for="Email" data-valmsg-replace="true"></span>
-                </div>
-
-                <div class="md-form">
-                    <i class="fa fa-lock prefix"></i>
-                    <input type="password" id="Password" name="Password" class="form-control" data-val="true" data-val-Password="The Password field is required." data-val-required="The Password field is required.">
-                    <label for="Password">Your Password</label>
-                    <span class="field-validation-valid text-danger" data-valmsg-for="Password" data-valmsg-replace="true"></span>
-                </div>
-
-                <fieldset class="form-group">
-                    &nbsp;<input type="checkbox" id="RememberMe" name="RememberMe">
-                    <label for="RememberMe"> &nbsp;Remember Me</label>
-                </fieldset>
-
-                <div class="text-center">
-                    <button class="btn btn-default" style="background-color: #093 !important">Login</button>
-                </div>
-                <div class="modal-footer text-center">
-                    <a href="@Url.Action("ForgotPassword", "Account")"><b style="color: #093">Forgot Password?</b></a>
-                </div>
-
-                    @*<div class="row my-3 d-flex justify-content-center">
-                    <!--Facebook-->
-                    <button type="button" class="btn btn grey btn-rounded mr-md-3 z-depth-1a"><i class="fa fa-facebook blue-text text-center"></i></button>
-                    <!--Twitter-->
-                    <button type="button" class="btn btn-white btn-rounded mr-md-3 z-depth-1a"><i class="fa fa-twitter blue-text"></i></button>
-                    <!--Google +-->
-                    <button type="button" class="btn btn-white btn-rounded z-depth-1a"><i class="fa fa-google-plus blue-text"></i></button>
-                </div>
-            }
-            </div>
-        </div>
-        
-      
-    
-        <!--/Form with header-->
-
-    </div>
-    
-    <div class="col-md-2 ">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
-</div>*@
 <div  class="login">
     <div id="content">
     @using (Html.BeginForm("Login", "Account", new {returnUrl = ViewBag.ReturnUrl}, FormMethod.Post))
@@ -89,7 +21,7 @@
                             <label for="Email">Username</label>
 
                             <div class="form-control-material">
-                                <input class="form-control" id="Email" name="Email" type="text" placeholder="Username">
+                                <input class="form-control md-vertical-align-center text-center" id="Email" name="Email" type="text" placeholder="Username" >
 
                             </div>
                         </div>
@@ -97,7 +29,7 @@
                             <label for="Password">Password</label>
 
                             <div class="form-control-material">
-                                <input class="form-control" id="Password" name="Password" type="password" placeholder="Enter Password">
+                                <input class="form-control md-vertical-align-center text-center" id="Password" name="Password" type="password" placeholder="Enter Password">
 
                             </div>
                         </div>

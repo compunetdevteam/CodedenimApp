@@ -77,17 +77,17 @@ namespace CodedenimWebApp.Controllers
             // var studentType = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.AccountType).FirstOrDefault();
             var paymentRecord = _db.StudentPayments.FirstOrDefault(x => x.StudentId.Equals(userId) && x.IsPayed.Equals(true));
 
-            if (User.IsInRole(RoleName.Corper))
-            {
+            //if (User.IsInRole(RoleName.Corper))
+            //{
 
-                return RedirectToAction("CorperDashboard", "Students");
+            //    return RedirectToAction("CorperDashboard", "Students");
 
 
-            }
-            if (User.IsInRole(RoleName.UnderGraduate) || User.IsInRole(RoleName.Student))
+            //}
+            if (User.IsInRole(RoleName.UnderGraduate) || User.IsInRole(RoleName.Student) || User.IsInRole(RoleName.Corper))
             {
                 if (paymentRecord == null)
-                {
+                {   
                     return RedirectToAction("CourseCategoryPayment", "CourseCategories");
                 }
 
@@ -152,11 +152,18 @@ namespace CodedenimWebApp.Controllers
         {
             var user = User.Identity.GetUserId();
 
+            var payedCourses = await _db.StudentPayments.Where(x => x.StudentId.Equals(user)).Select(x => x.CourseCategoryId).ToListAsync();
+            var categoryId = new List<AssignCourseCategory>();
+            foreach (var item in payedCourses)
+            {
+                var corperCourses = await _db.AssignCourseCategories.Include(x => x.CourseCategory).Include(x => x.Courses)
+              .Where(x => x.CourseCategoryId.Equals(item))
+              .FirstOrDefaultAsync();
+                categoryId.Add(corperCourses);
+            }
 
-
-            var corperCourses = await _db.AssignCourseCategories.Include(x => x.CourseCategory).Include(x => x.Courses)
-                .Where(x => x.CourseCategory.StudentType.Equals(RoleName.Corper))
-                .ToListAsync();
+          
+                
             var courseCategory = await _db.CourseCategories.Where(x => x.StudentType.Equals(RoleName.Corper))
                 .ToListAsync();
             var student = await _db.Students.Where(x => x.StudentId.Equals(user)).ToListAsync();
@@ -167,7 +174,7 @@ namespace CodedenimWebApp.Controllers
 
             var model = new DashboardVm()
             {
-                AssignCourseCategories = corperCourses,
+                AssignCourseCategories = categoryId,
                 CourseCategories = courseCategory,
                 StudentInfo = student,
                 ForumQuestion = forumQuestion,

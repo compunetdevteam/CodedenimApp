@@ -60,7 +60,7 @@ namespace CodedenimWebApp.Controllers.Api
             var courseCategory = await _db.AssignCourseCategories.Where(x => x.CourseCategoryId.Equals(id))
                                                                 .Select(x => new
                                                                 {
-                                                                  x.CourseId,
+                                                                  x.CourseId,                                                                   
                                                                   x.Courses.CourseCode,
                                                                   x.Courses.CourseName,
                                                                   x.Courses.CourseDescription,
