@@ -11,7 +11,7 @@ namespace CodedenimWebApp.ViewModels
     public class CourseContentVm
     {
         public List<Module> Modules { get; set; }
-        public Module ModulesAD { get; set; }
+        public Module ModulesAD { get; set; }   
         public List<Topic> Topics { get; set; }
         public Topic TopicsAD { get; set; }
         public List<TopicMaterialUpload> Materials { get; set; }

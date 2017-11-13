@@ -54,19 +54,28 @@ namespace CodedenimWebApp.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
 		// GET: TopicMaterialUploads/Details/5
-		public async Task<ActionResult> Details(int? id)
+		public async Task<ActionResult> Details(int id)
 		{
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
 
-            TopicMaterialUpload topicMaterialUpload = db.TopicMaterialUploads.Find(id);
-            if (topicMaterialUpload == null)
-            {
-                return View("NoContent");
-            }
-            return View(topicMaterialUpload);
+            //TopicMaterialUpload topicMaterialUpload = db.TopicMaterialUploads.Find(id);
+            //if (topicMaterialUpload == null)
+            //{
+            //    return View("NoContent");
+            //}
+		    var topicContent = db.TopicMaterialUploads.Where(x => x.TopicId.Equals(id)).ToList();
+		    if (!topicContent.Any())
+		    {
+		        return View("NoContent");
+
+		    }
+		    var contents = new CourseContentVm();
+		    contents.Materials = topicContent;
+		    // PartialView(contents);
+            return View(contents);
 
 
         }
@@ -78,22 +87,21 @@ namespace CodedenimWebApp.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>topic material</returns>
-        public PartialViewResult DetailsContent(int? id)
+        public PartialViewResult DetailsContent(int id)
 		{
-			if (id == null)
-			{
-				return PartialView("Invalid");
-			}
-		    var topic = db.Topics.Find(id);
+		
+		  //  var topic = db.Topics.Find(id);
 		    var topicContent = db.TopicMaterialUploads.Where(x => x.TopicId.Equals(id)).ToList();
 		    var contents = new CourseContentVm();
-            TopicMaterialUpload topicMaterialUpload = db.TopicMaterialUploads.Find(id);
+            //TopicMaterialUpload topicMaterialUpload = db.TopicMaterialUploads.Find(id);
+		 
+			//if (topicMaterialUpload == null)
+			//{
+			//	return PartialView("NoContent");
+			//}
+
 		    contents.Materials = topicContent;
-			if (topicMaterialUpload == null)
-			{
-				return PartialView("NoContent");
-			}
-		    return PartialView(contents);
+            return PartialView(contents);
            // return PartialView(topicMaterialUpload);
 		}
 

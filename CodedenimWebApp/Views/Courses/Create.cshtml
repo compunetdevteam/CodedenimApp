@@ -4,8 +4,21 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
+@using (Html.BeginForm("ExcelUpload", "Courses", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group pull-right">
+        <legend><h4><b>Upload Course</b></h4></legend>
+        <div class="col-md-12">
+            <input class=" form-control" type="file" name="excelfile" />
+            <input class=" btn btn-success" type="submit" value="Submit" />
+        </div>
+    </div>
+}
+<br/>
 <!-- // END Tabbable Widget -->
-<h4 class="page-section-heading">Upload Courses</h4>
+@*<h4 class="page-section-heading">Upload Courses</h4>*@
+
+
 <!-- Tabbable Widget -->
 <div class="tabbable tabs-primary">
     <!-- Tabs -->
