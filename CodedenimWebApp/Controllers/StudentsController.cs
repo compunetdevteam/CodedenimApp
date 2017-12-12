@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -22,6 +23,7 @@ namespace CodedenimWebApp.Controllers
     {
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
+        private int _progress;
         // GET: Students
         public async Task<ActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
@@ -148,10 +150,15 @@ namespace CodedenimWebApp.Controllers
 
         }
 
+
+        /// <summary>
+        /// This dashbaord is used for all students not only corpers
+        /// </summary>
+        /// <returns></returns>
         public async Task<ActionResult> CorperDashboard()
         {
             var user = User.Identity.GetUserId();
-
+         
             var payedCourses = await _db.StudentPayments.Where(x => x.StudentId.Equals(user)).Select(x => x.CourseCategoryId).ToListAsync();
             var categoryId = new List<AssignCourseCategory>();
             foreach (var item in payedCourses)
@@ -162,7 +169,7 @@ namespace CodedenimWebApp.Controllers
                 categoryId.Add(corperCourses);
             }
 
-          
+            var quizTaken = _progress;
                 
             var courseCategory = await _db.CourseCategories.Where(x => x.StudentType.Equals(RoleName.Corper))
                 .ToListAsync();
@@ -170,7 +177,18 @@ namespace CodedenimWebApp.Controllers
 
             var forumQuestion = _db.ForumQuestions.Where(x => x.StudentId.Equals(user))
                              .ToList();
-            var quiz = _db.QuizLogs.Where(x => x.StudentId.Equals(user)).ToList();
+            var quiz = _db.QuizLogs.Where(x => x.StudentId.Equals(user)).Take(1).ToList();
+            var quizTakenList = _db.QuizLogs.Where(x => x.StudentId.Equals(user)).AsEnumerable().DistinctBy(x => x.ModuleId).Count();
+            if (quizTakenList != 0)
+            {
+                _progress = (quizTakenList * 100) / quizTakenList;
+            }
+            else
+            {
+                _progress = 0;
+            }
+           
+            // var profilePics = GetImage();
 
             var model = new DashboardVm()
             {
@@ -178,13 +196,38 @@ namespace CodedenimWebApp.Controllers
                 CourseCategories = courseCategory,
                 StudentInfo = student,
                 ForumQuestion = forumQuestion,
-                StudentQuiz = quiz
+                StudentQuiz = quiz,
+                Progress = _progress
+                // Profile = profilePics
 
 
             };
 
             return View(model);
         }
+
+      
+        //
+        public ActionResult Certificate()
+        {
+            return View();
+        }
+
+        //this is a method that prints the certificate
+        public PartialViewResult GenerateCertificate()
+        {
+            return PartialView();
+        }
+
+        //public byte[] GetImage()
+        //{
+        //    var user = User.Identity.GetUserId();
+        //    var profilePics = _db.Students.Where(x => x.StudentId.Equals(user)).Select(x => x.Passport).FirstOrDefault();
+
+        //    string path = Server.MapPath("~/Profile_Pics/" + profilePics);
+        //    byte[] imageByteData = System.IO.File.ReadAllBytes(path);
+        //    return imageByteData ;
+        //}
 
         /// <summary>
         /// CorperDashboard1 is the First Dashboard 

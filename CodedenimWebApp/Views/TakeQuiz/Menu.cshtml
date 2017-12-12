@@ -11,13 +11,13 @@
     {
         @*@Html.ActionLink(item.QuestionNumber.ToString(), "Exam", new { questionNo = item.QuestionNumber, courseId = item.CourseId, studentid = item.StudentId, examtype = item.ExamTypeId }, 
        new { @class = "btn-success" })*@
-        <a href="#" onclick="Edit(@item.QuestionNumber, @item.TopicId, '@item.StudentId')" class="btn btn-xm ink-reaction btn-raised btn-danger"> @item.QuestionNumber</a>
+        <a href="#" onclick="Edit(@item.QuestionNumber, @item.ModuleId, '@item.StudentId')" class="btn btn-xm ink-reaction btn-raised btn-danger"> @item.QuestionNumber</a>
     }
     else if (item.SelectedAnswer != null || !String.IsNullOrEmpty(item.FilledAnswer))
     {
         @*@Html.ActionLink(item.QuestionNumber.ToString(), "Exam", new { questionNo = item.QuestionNumber, courseId = item.CourseId, studentid = item.StudentId, examtype = item.ExamTypeId })*@
         @*<a href="@Url.Action("Exam","TakeExam", new{ questionNo = item.QuestionNumber, courseId = item.CourseId, studentid = item.StudentId, examtype = item.ExamTypeId })" class="btn ink-reaction btn-raised btn-primary"> @item.QuestionNumber</a>*@
-        <a href="#" onclick="Edit(@item.QuestionNumber, @item.TopicId, '@item.StudentId')" class="btn btn-xm ink-reaction btn-raised btn-primary"> @item.QuestionNumber</a>
+        <a href="#" onclick="Edit(@item.QuestionNumber, @item.ModuleId, '@item.StudentId')" class="btn btn-xm ink-reaction btn-raised btn-primary"> @item.QuestionNumber</a>
 
     }
 

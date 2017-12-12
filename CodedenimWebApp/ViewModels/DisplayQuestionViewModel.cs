@@ -27,6 +27,7 @@ namespace CodedenimWebApp.ViewModels
         public bool IsMultiChoiceAnswer { get; set; }
 
         public int TopicId { get; set; }
+        public int ModuleId { get; set; }
 
         public string StudentId { get; set; }
     }

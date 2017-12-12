@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="media-body">
                                     <h4 class="text-title media-heading margin-none">
-                                        <a href="@Url.Action("Details","TopicMaterialUploads",new{id = topics.TopicId})" class="link-text-color">@topics.TopicName</a>
+                                        <a href="@Url.Action("Details","TopicMaterialUploads",new{id = topics.TopicId, courseId = Model.CourseIdentifier})" class="link-text-color">@topics.TopicName</a>
                                     </h4>
                                     @*<div class="text-caption">@topics.</div>*@
                                 </div>

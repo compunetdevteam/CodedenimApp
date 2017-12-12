@@ -15,15 +15,15 @@ using CodeninModel.Quiz;
 using OfficeOpenXml;
 
 namespace CodedenimWebApp.Controllers.Quiz
-{
+{   
     public class TopicQuizsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: TopicQuizs
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index() 
         {
-            var topicQuizs = db.TopicQuizs.Include(t => t.Topic);
+            var topicQuizs = db.TopicQuizs;
             return View(await topicQuizs.ToListAsync());
         }
 
@@ -45,7 +45,7 @@ namespace CodedenimWebApp.Controllers.Quiz
         // GET: TopicQuizs/Create
         public ActionResult Create()
         {
-            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName");
+            ViewBag.ModuleId = new SelectList(db.Modules, "ModuleId", "ModuleName");
             var questionType = from QuestionType s in Enum.GetValues(typeof(QuestionType))
                 select new {ID = s, Name = s.ToString()};
             ViewBag.QuestionType = new SelectList(questionType, "Name", "Name");
@@ -59,7 +59,7 @@ namespace CodedenimWebApp.Controllers.Quiz
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "TopicQuizId,TopicId,Question,Option1,Option2,Option3,Option4,Answer,QuestionHint,QuestionType,IsFillInTheGag,IsMultiChoiceAnswer,IsSingleChoiceAnswer")] TopicQuiz topicQuiz)
+        public async Task<ActionResult> Create(TopicQuiz topicQuiz)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace CodedenimWebApp.Controllers.Quiz
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", topicQuiz.TopicId);
+            ViewBag.ModuleId = new SelectList(db.Modules, "ModuleId", "ModuleName", topicQuiz.ModuleId);
             return View(topicQuiz);
         }
 
@@ -84,7 +84,7 @@ namespace CodedenimWebApp.Controllers.Quiz
             {
                 return HttpNotFound();
             }
-            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", topicQuiz.TopicId);
+            ViewBag.TopicId = new SelectList(db.Modules, "ModuleId", "ModuleName", topicQuiz.ModuleId);
             return View(topicQuiz);
         }
 
@@ -93,7 +93,7 @@ namespace CodedenimWebApp.Controllers.Quiz
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "TopicQuizId,TopicId,Question,Option1,Option2,Option3,Option4,Answer,QuestionHint,QuestionType,IsFillInTheGag,IsMultiChoiceAnswer,IsSingleChoiceAnswer")] TopicQuiz topicQuiz)
+        public async Task<ActionResult> Edit([Bind(Include = "TopicQuizId,ModuleId,Question,Option1,Option2,Option3,Option4,Answer,QuestionHint,QuestionType,IsFillInTheGag,IsMultiChoiceAnswer,IsSingleChoiceAnswer")] TopicQuiz topicQuiz)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +101,7 @@ namespace CodedenimWebApp.Controllers.Quiz
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", topicQuiz.TopicId);
+            ViewBag.TopicId = new SelectList(db.Modules, "ModuleId", "ModuleName", topicQuiz.ModuleId);
             return View(topicQuiz);
         }
 
@@ -192,10 +192,10 @@ namespace CodedenimWebApp.Controllers.Quiz
 
                         for (int row = 2; row <= noOfRow; row++)
                         {
-                            var topicName = sheet.Cells[row, 1].Value.ToString().Trim();
-                            var topicId = db.Topics.Where(x => x.TopicName.Equals(topicName)).Select(x => x.TopicId)
+                            var ModuleName = sheet.Cells[row, 1].Value.ToString().Trim();
+                            var moduleId = db.Modules.Where(x => x.ModuleName.Equals(ModuleName)).Select(x => x.ModuleId)
                                 .FirstOrDefault();
-                            int Topic = topicId;
+                       
                             string questionName = sheet.Cells[row, 2].Value.ToString().ToUpper().Trim();
                             string option1 = sheet.Cells[row, 3].Value.ToString().Trim().ToUpper();
                             string  option2 = sheet.Cells[row, 4].Value.ToString().ToUpper().Trim();
@@ -208,7 +208,7 @@ namespace CodedenimWebApp.Controllers.Quiz
                             //var subjectName = db.Subjects.Where(x => x.SubjectCode.Equals(subjectValue))
                             //    .Select(c => c.SubjectId).FirstOrDefault();
 
-                            var category = db.TopicQuizs.Where(x => x.TopicId.Equals(topicId) && x.Question.Equals(questionName));
+                            var category = db.TopicQuizs.Where(x => x.ModuleId.Equals(moduleId) && x.Question.Equals(questionName));
                             var countFromDb = await category.CountAsync();
                             if (countFromDb >= 1)
                             {
@@ -216,6 +216,7 @@ namespace CodedenimWebApp.Controllers.Quiz
                             }
                             var quiz = new TopicQuiz()
                             {
+                                ModuleId = moduleId,
                                 Question = questionName,
                                 Option1 = option1,
                                 Option2 = option2,

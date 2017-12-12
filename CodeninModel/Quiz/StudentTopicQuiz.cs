@@ -5,7 +5,8 @@
         public int StudentTopicQuizId { get; set; }
         public int StudentQuestionId { get; set; }
         public string StudentId { get; set; }
-        public int TopicId { get; set; }
+        //public int TopicId { get; set; }
+        public int ModuleId { get; set; }
         public string Question { get; set; }
         public string Option1 { get; set; }
         public string Option2 { get; set; }
@@ -28,7 +29,8 @@
         public int ExamTime { get; set; }
 
         public virtual Student Student { get; set; }
-        public virtual Topic Topic { get; set; }
+        //public virtual Topic Topic { get; set; }
+        public virtual Module Module { get; set; }
 
     }
 }

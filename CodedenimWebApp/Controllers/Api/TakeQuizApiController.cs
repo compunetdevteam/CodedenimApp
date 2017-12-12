@@ -30,10 +30,10 @@ namespace CodedenimWebApp.Controllers.Api
                 .OrderBy(o => o.QuestionNumber).ToListAsync();
             return Ok(questionNumber);
         }
-        public IHttpActionResult Menu(string studentId, int topicId)
+        public IHttpActionResult Menu(string studentId, int ModuleId)
         {
             var questionNumber = _db.StudentTopicQuizs.AsNoTracking().Where(x => x.StudentId.Equals(studentId)
-                                                                                 && x.TopicId.Equals(topicId))
+                                                                                 && x.ModuleId.Equals(ModuleId))
                 .OrderBy(o => o.QuestionNumber);
 
             return Ok(questionNumber);
@@ -42,7 +42,7 @@ namespace CodedenimWebApp.Controllers.Api
 
         // [Authorize(Roles = RoleName.Student)]
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetSelectSubject(int topicId, string email)
+        public IHttpActionResult GetSelectSubject(int ModuleId, string email)
         {
             if (ModelState.IsValid)
             {
@@ -51,12 +51,12 @@ namespace CodedenimWebApp.Controllers.Api
                 var studentId = studentemail;
 
                 var questionExist =  _db.StudentTopicQuizs.AsNoTracking().Count(x => x.StudentId.Equals(studentId)
-                                                                                          && x.TopicId.Equals(topicId));
+                                                                                          && x.ModuleId.Equals(ModuleId));
                 var questionNo = 1;
                 
                 if (questionExist > 1)
                 {
-                    return Exam(questionNo, topicId, studentId);
+                    return Exam(questionNo, ModuleId, studentId);
                     //return RedirectToRoute("Exam", new
                     //{
                     //    questionNo = 1,
@@ -68,7 +68,7 @@ namespace CodedenimWebApp.Controllers.Api
                 //var r = new Random();
 
                 Random rnd = new Random();
-                var myquestion = _db.TopicQuizs.AsNoTracking().Where(x => x.TopicId.Equals(topicId))
+                var myquestion = _db.TopicQuizs.AsNoTracking().Where(x => x.ModuleId.Equals(ModuleId))
                     .OrderBy(x => Guid.NewGuid()).Take(2)
                     .DistinctBy(d => d.TopicQuizId).ToList();
                 // var myquestion = bquestion.OrderBy(x => Guid.NewGuid()).Take(totalQuestion).ToList();
@@ -80,7 +80,7 @@ namespace CodedenimWebApp.Controllers.Api
                     var studentQuestion = new StudentTopicQuiz()
                     {
                         StudentId = studentId,
-                        TopicId = question.TopicId,
+                        ModuleId = question.ModuleId,
                         Question = question.Question,
                         Option1 = question.Option1,
                         Option2 = question.Option2,
@@ -102,7 +102,7 @@ namespace CodedenimWebApp.Controllers.Api
 
 
                  _db.SaveChangesAsync();
-                return Exam(questionNo,topicId, studentId);
+                return Exam(questionNo,ModuleId, studentId);
                 //return RedirectToRoute("Exam", new
                 //{
                 //    questionNo = 1,
@@ -116,12 +116,12 @@ namespace CodedenimWebApp.Controllers.Api
         }
 
         [System.Web.Http.HttpGet]
-        public IHttpActionResult Exam(int questionNo, int topicId, string studentid)
+        public IHttpActionResult Exam(int questionNo, int ModuleId, string studentid)
         {
             int myno = questionNo;
             var question =  _db.StudentTopicQuizs.AsNoTracking()
                 .FirstOrDefaultAsync(s => s.StudentId.Equals(studentid)
-                                          && s.TopicId.Equals(topicId) && s.QuestionNumber.Equals(myno));
+                                          && s.ModuleId.Equals(ModuleId) && s.QuestionNumber.Equals(myno));
             //if (question != null)
             //{
             //    if (Session["Rem_Time"] == null)

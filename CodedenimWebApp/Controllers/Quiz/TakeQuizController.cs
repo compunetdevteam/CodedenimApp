@@ -33,12 +33,13 @@ namespace CodedenimWebApp.Controllers
             var studentName = User.Identity.GetUserName();
             var questionNumber = await _db.StudentTopicQuizs.AsNoTracking().Where(x => x.StudentId.Equals(studentName))
                 .OrderBy(o => o.QuestionNumber).ToListAsync();
-            return View(questionNumber);
+            ViewBag.QuestionNumber = questionNumber;
+            return View();
         }
         public PartialViewResult Menu(string studentId, int topicId)
         {
             var questionNumber = _db.StudentTopicQuizs.AsNoTracking().Where(x => x.StudentId.Equals(studentId)
-                                                                                  && x.TopicId.Equals(topicId))
+                                                                                  && x.ModuleId.Equals(topicId))
                 .OrderBy(o => o.QuestionNumber);
 
             return PartialView(questionNumber);
@@ -51,8 +52,13 @@ namespace CodedenimWebApp.Controllers
         }
 
        // [Authorize(Roles = RoleName.Student)]
+       /// <summary>
+       /// the courseId is what is sent into this method
+       /// </summary>
+       /// <param name="topicId"></param>
+       /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> SelectSubject(int topicId)
+        public async Task<ActionResult> SelectSubject(int moduleId)
         {
             if (ModelState.IsValid)
             {
@@ -63,22 +69,26 @@ namespace CodedenimWebApp.Controllers
                 string studentName = User.Identity.GetUserId();
 
                 var questionExist = await _db.StudentTopicQuizs.AsNoTracking().Where(x => x.StudentId.Equals(studentName)
-                                                                                           && x.TopicId.Equals(topicId)).CountAsync();
+                                                                                           && x.ModuleId.Equals(moduleId)).CountAsync();
                 if (questionExist > 1)
                 {
                     return RedirectToAction("Exam", new
                     {
                         questionNo = 1,
-                        topicId = topicId,
+                        moduleId = moduleId,
                         studentid = studentName
                     });
                 }
+                
+                //get the number of question student should answer
+                var numberOfQuestion = _db.QuizRules.Where(x => x.ModuleId.Equals(moduleId)).Select(x => x.TotalQuestion).FirstOrDefault();
 
-                //var r = new Random();
-
+                //get the total number of question uploaded for this module and take the number of question stuent should
+                //answer for the quizrule table.
+                //var number = _db.TopicQuizs.Take(numberOfQuestion).Count(x => x.ModuleId.Equals(moduleId));
                 Random rnd = new Random();
-                var myquestion = _db.TopicQuizs.AsNoTracking().Where(x => x.TopicId.Equals(topicId))
-                    .OrderBy(x => Guid.NewGuid()).Take(2)
+                var myquestion = _db.TopicQuizs.AsNoTracking().Where(x => x.Module.ModuleId.Equals(moduleId))
+                    .OrderBy(x => Guid.NewGuid()).Take(numberOfQuestion)
                     .DistinctBy(d => d.TopicQuizId).ToList();
                 // var myquestion = bquestion.OrderBy(x => Guid.NewGuid()).Take(totalQuestion).ToList();
                 //var tenRandomUser = listUsr.OrderBy(u => r.Next()).Take(10);
@@ -89,7 +99,7 @@ namespace CodedenimWebApp.Controllers
                     var studentQuestion = new StudentTopicQuiz()
                     {
                         StudentId = studentName,
-                        TopicId = question.TopicId,
+                        ModuleId = question.ModuleId,
                         Question = question.Question,
                         Option1 = question.Option1,
                         Option2 = question.Option2,
@@ -114,7 +124,7 @@ namespace CodedenimWebApp.Controllers
                 return RedirectToAction("Exam", new
                 {
                     questionNo = 1,
-                    topicId = topicId,
+                    moduleId = moduleId,
                     studentid = studentName,
                 });
             }
@@ -123,13 +133,15 @@ namespace CodedenimWebApp.Controllers
             return View();
         }
 
+        
+
         [HttpGet]
-        public async Task<ActionResult> Exam(int questionNo, int topicId, string studentid)
+        public async Task<ActionResult> Exam(int questionNo, int moduleId, string studentid)
         {
             int myno = questionNo;
             var question = await _db.StudentTopicQuizs.AsNoTracking()
                 .FirstOrDefaultAsync(s => s.StudentId.Equals(studentid)
-                                          && s.TopicId.Equals(topicId) && s.QuestionNumber.Equals(myno));
+                                          && s.ModuleId.Equals(moduleId) && s.QuestionNumber.Equals(myno));
             if (question != null)
             {
                 if (Session["Rem_Time"] == null)
@@ -181,7 +193,7 @@ namespace CodedenimWebApp.Controllers
                             new
                             {
                                 questionNo = ++questionId,
-                                topicId = model.TopicId,
+                                moduleId = model.ModuleId,
                                 studentid = model.StudentId
 
                             });
@@ -224,7 +236,7 @@ namespace CodedenimWebApp.Controllers
                             new
                             {
                                 questionNo = nextQuestion,
-                                topicId = model.TopicId,
+                                moduleId = model.ModuleId,
                                 studentid = model.StudentId
 
                             });
@@ -234,11 +246,11 @@ namespace CodedenimWebApp.Controllers
 
             ViewBag.SubjectName = new SelectList(_db.Courses, "CourseId", "CourseCode");
 
-            return RedirectToAction("Exam", new { questionNo = nextQuestion, topicId = model.TopicId, studentid = model.StudentId });
+            return RedirectToAction("Exam", new { questionNo = nextQuestion, moduleId = model.ModuleId, studentid = model.StudentId });
         }
 
 
-
+        
 
         [HttpPost]
         [ValidateInput(false)]
@@ -259,7 +271,7 @@ namespace CodedenimWebApp.Controllers
                         return RedirectToAction("Exam", "TakeQuiz", new
                         {
                             questionNo = ++questionId,
-                            topicId = model.TopicId,
+                            moduleId = model.ModuleId,
                             studentid = model.StudentId
 
                         });
@@ -302,7 +314,7 @@ namespace CodedenimWebApp.Controllers
                             new
                             {
                                 questionNo = --questionId,
-                                topicId = model.TopicId,
+                                moduleId = model.ModuleId,
                                 studentid = model.StudentId
                             });
                     }
@@ -310,7 +322,7 @@ namespace CodedenimWebApp.Controllers
             }
 
             ViewBag.SubjectName = new SelectList(_db.Courses, "CourseId", "CourseCode");
-            return RedirectToAction("Exam", new { questionNo = --questionId, topicId = model.TopicId, studentid = model.StudentId });
+            return RedirectToAction("Exam", new { questionNo = --questionId, moduleId = model.ModuleId, studentid = model.StudentId });
         }
 
 
@@ -381,15 +393,15 @@ namespace CodedenimWebApp.Controllers
             #endregion
 
             scoreCount = await _db.StudentTopicQuizs.AsNoTracking().Where(x => x.StudentId.Equals(model.StudentId)
-                                                                                && x.TopicId.Equals(model.TopicId))
+                                                                                && x.ModuleId.Equals(model.ModuleId))
                 .CountAsync(c => c.IsCorrect.Equals(true));
 
             var studentdetails = _db.StudentTopicQuizs.AsNoTracking().FirstOrDefault(x => x.StudentId.Equals(model.StudentId)
-                                                                                           && x.TopicId.Equals(model.TopicId));
+                                                                                           && x.ModuleId.Equals(model.ModuleId));
 
             if (studentdetails != null)
             {
-                await ProcessResult(model.TopicId, studentdetails, scoreCount);
+                await ProcessResult(model.ModuleId, studentdetails, scoreCount);
             }
 
             //return RedirectToAction("Index", "ExamLogs", new
@@ -420,7 +432,7 @@ namespace CodedenimWebApp.Controllers
             var examLog = new QuizLog()
             {
                 StudentId = studentdetails.StudentId,
-                TopicId = studentdetails.TopicId,
+                ModuleId = studentdetails.ModuleId,
                 Score = total,
                 TotalScore = sum,
                 ExamTaken = true
@@ -508,7 +520,7 @@ namespace CodedenimWebApp.Controllers
         }
 
 
-        public async Task<ActionResult> SubmitExam(string studentId, int topicId, int examType)
+        public async Task<ActionResult> SubmitExam(string studentId, int moduleId, int examType)
         {
             double scoreCount = 0;
             //string myStudentId = studentId.Trim();
@@ -525,14 +537,14 @@ namespace CodedenimWebApp.Controllers
 
 
 
-            scoreCount = await _db.StudentTopicQuizs.AsNoTracking().Where(x => x.StudentId.Equals(studentId) && x.TopicId.Equals(topicId))
+            scoreCount = await _db.StudentTopicQuizs.AsNoTracking().Where(x => x.StudentId.Equals(studentId) && x.ModuleId.Equals(moduleId))
                 .CountAsync(c => c.IsCorrect.Equals(true));
             var studentdetails = _db.StudentTopicQuizs.AsNoTracking().FirstOrDefault(x => x.StudentId.Equals(studentId)
-                                                                                           && x.TopicId.Equals(topicId));
+                                                                                           && x.ModuleId.Equals(moduleId));
 
             if (studentdetails != null)
             {
-                await ProcessResult(topicId, studentdetails, scoreCount);
+                await ProcessResult(moduleId, studentdetails, scoreCount);
             }
 
 
@@ -547,11 +559,11 @@ namespace CodedenimWebApp.Controllers
             return RedirectToAction("LogOff", "Account");
         }
 
-        public async Task<ActionResult> ExamIndex(string studentId, int? topicId, string score)
+        public async Task<ActionResult> ExamIndex(string studentId, int? moduleId, string score)
         {
 
             ViewBag.StudentId = studentId;
-            ViewBag.topicId = topicId;
+            ViewBag.moduleId = moduleId;
             ViewBag.Score = score;
 
             Session["Rem_Time"] = null;

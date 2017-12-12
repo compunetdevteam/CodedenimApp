@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
+using PayStack.Net.Apis;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -48,6 +49,7 @@ namespace CodedenimWebApp.Controllers
         public async Task<ActionResult> _ListCoursesPartial(int? categoryId)
         {
             var corperCourses = await db.AssignCourseCategories.Include(x => x.CourseCategory).Include(x => x.Courses)
+                                        //.Where(x =>x.CourseCategoryId.Equals((int)categoryId))
                                         .ToListAsync();
 
             if (categoryId != null)
@@ -131,22 +133,31 @@ namespace CodedenimWebApp.Controllers
         /// <returns></returns>
         public ActionResult Content(int? id)
         {
-            var viewModel = new CourseContentVm
+            if (id != null)
             {
-                Modules = db.Modules.Include(x => x.Topics).Include(x => x.Course)
-                    .Where(x => x.CourseId.Equals((int)id)).ToList(),
-                Topics = db.Topics.Include(x => x.MaterialUploads).ToList(),
+                var viewModel = new CourseContentVm
+                {
+                    Modules = db.Modules.Include(x => x.Topics).Include(x => x.Course)
+                        .Where(x => x.CourseId.Equals((int)id)).ToList(),
+                    Topics = db.Topics.Include(x => x.MaterialUploads).ToList(),
+                    CourseId = (int)id
 
-            };
+                };
+
+              RedirectToAction("CalculatePercentage","Students", new
+                {
+                    courseId = id,
+              
+                });
+                //viewModel.Modules =  db.Modules.Include(x => x.Topics).Include(x => x.Course).Where(x => x.CourseId.Equals((int)id)).ToListAsync();
 
 
-            //viewModel.Modules =  db.Modules.Include(x => x.Topics).Include(x => x.Course).Where(x => x.CourseId.Equals((int)id)).ToListAsync();
-
-
-            //viewModel.Topics =  db.Topics.Include(x => x.MaterialUploads).ToListAsync();
-            //var courseList = new CourseContentVm();
-            //courseList.Modules = courses
-            return View(viewModel);
+                //viewModel.Topics =  db.Topics.Include(x => x.MaterialUploads).ToListAsync();
+                //var courseList = new CourseContentVm();
+                //courseList.Modules = courses
+                return View(viewModel);
+            }
+            return View();
         }
 
         public async Task<ActionResult> GetIndex()
@@ -600,7 +611,7 @@ namespace CodedenimWebApp.Controllers
 
                             string[] ssizes = validCheck.Split(' ');
                             string[] myArray = new string[2];
-                            for (int i = 0; i < ssizes.Length; i++)
+                            for (int i = 0; i <ssizes.Length; i++)
                             {
                                 myArray[i] = ssizes[i];
                             }

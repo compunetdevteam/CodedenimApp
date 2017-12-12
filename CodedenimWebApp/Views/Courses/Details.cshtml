@@ -9,72 +9,10 @@
  
 }
 
-@*<div class="container">
-    <h2>Details</h2>
 
-    <div>
-        <h4>Course</h4>
-        <hr />
-        <dl class="dl-horizontal">
-  
-
-            <dt>
-                @Html.DisplayNameFor(model => model.CourseCode)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.CourseCode)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.CourseName)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.CourseName)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.CourseDescription)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.CourseDescription)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.ExpectedTime)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.ExpectedTime)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.DateAdded)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.DateAdded)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Points)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Points)
-            </dd>
-
-        </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</div>*@
    
 <br />
+@* Start of Course Name header *@
 <div class="parallax bg-white page-section">
     <div class="parallax-layer container" data-opacity="true">
         <div class="media v-middle">
@@ -89,6 +27,7 @@
         </div>
     </div>
 </div>
+@* End of Course Name header *@
 <div class="container">
 <div class="row">
 <div class="col-lg-9 col-md-8">
@@ -96,7 +35,7 @@
     <div class="width-350 width-300-md width-100pc-xs paragraph-inline">
         <div class="embed-responsive embed-responsive-16by9">
             
-           <img  class="embed-responsive-item" src="~/MaterialUpload/@Model.CoursesAD.FileLocation">
+            <img  class="embed-responsive-item" src="~/MaterialUpload/@Model.CoursesAD.FileLocation">
         </div>
     </div>
     <p>
@@ -104,20 +43,40 @@
     </p>
    
     <br/>
-     <br/>
+    <br/>
 
 </div>
+    
+    
+
 <div class="page-section">
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-9">
             <h2 class="text-headline margin-none">What you'll learn</h2>
             <p class="text-subhead text-light">Modules under this course</p>
-            <p>
-                <a class="btn btn-success btn-lg paper-shadow relative" data-z="1" data-hover-z="2" data-animated href="#CreateModule" onclick="CreateModules(@Model.CoursesAD.CourseId)" data-toggle="modal" data-placement="top" title="Create Modules">
-                    Add Module
-                </a>
-            </p> 
+               
+            @using (Html.BeginForm("ExcelUpload", "TopicQuizs", FormMethod.Post, new {enctype = "multipart/form-data"}))
+            {
+                    
+                <legend><h4><b>Upload Course</b></h4></legend>
+                <div class="col-md-5">
+                    <input class=" form-control" type="file" name="excelfile"/>
+                    <input class=" btn btn-success" type="submit" value="Submit"/>
+                </div>  
+                
+            }   
+            <div class="">
+                <p class="clearfix">
+                    <a class="btn btn-success btn-lg paper-shadow relative" data-z="1" data-hover-z="2" data-animated href="#CreateModule" onclick="CreateModules(@Model.CoursesAD.CourseId)" data-toggle="modal" data-placement="top" title="Create Modules">
+                        Add Module
+                    </a>
+                </p> 
+                <p>
+             
 
+
+                </p> 
+            </div>
             <ul class="list-group relative paper-shadow" data-hover-z="0.5" data-animated>
                 @foreach(var course in Model.Modules)
                 {
@@ -138,10 +97,16 @@
                             </div>
                         </a>
                         <a href="#CreateModule" onclick="EditModules(@course.ModuleId)" data-toggle="modal" class="clearfix">
-
-                        <div class="icon-block s30 bg-red-300 text-white img-circle">
-                            <i class="fa fa-pencil"></i>
-                        </div>
+                       
+                            <div class="icon-block s30 bg-red-300 text-white img-circle">
+                                <i class="fa fa-pencil"></i>
+                            </div>
+                        </a>
+                        
+                        <a href="#CreateModule" onclick="DeleteModules(@course.ModuleId)" data-toggle="modal" class="clearfix">
+                            <div class="icon-block s30 bg-red-300 text-white img-circle">
+                                <i class="fa fa-trash"></i>
+                            </div>
                         </a>
                     </li>
              
@@ -417,6 +382,13 @@
 
     function EditModules(courseId) {
         var url = "/Modules/EditPartial?id=" + courseId;
+        $("#LoadCreateModule").load(url);
+
+   
+    }
+
+    function DeleteModules(courseId) {
+        var url = "/Modules/DeletePartial?id=" + courseId;
         $("#LoadCreateModule").load(url);
 
    

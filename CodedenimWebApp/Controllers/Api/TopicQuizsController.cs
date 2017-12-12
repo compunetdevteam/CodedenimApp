@@ -24,7 +24,7 @@ namespace CodedenimWebApp.Controllers.Api
             var topicQuiz = db.TopicQuizs.Select(x => new
                                                         {
                                                                x.TopicQuizId,
-                                                               x.TopicId,
+                                                               x.ModuleId,
                                                                 
                                                                x.Question,
                                                                x.Option1,

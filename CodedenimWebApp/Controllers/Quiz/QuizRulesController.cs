@@ -19,7 +19,7 @@ namespace CodedenimWebApp.Controllers.Quiz
         // GET: QuizRules
         public async Task<ActionResult> Index()
         {
-            var quizRules = db.QuizRules.Include(q => q.Topic);
+            var quizRules = db.QuizRules;
             return View(await quizRules.ToListAsync());
         }
 
@@ -41,7 +41,7 @@ namespace CodedenimWebApp.Controllers.Quiz
         // GET: QuizRules/Create
         public ActionResult Create()
         {
-            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName");
+            ViewBag.ModuleId = new SelectList(db.Modules, "ModuleId", "ModuleName");
             return View();
         }
 
@@ -50,7 +50,7 @@ namespace CodedenimWebApp.Controllers.Quiz
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "QuizRuleId,TopicId,ScorePerQuestion,TotalQuestion,MaximumTime")] QuizRule quizRule)
+        public async Task<ActionResult> Create([Bind(Include = "QuizRuleId,ModuleId,ScorePerQuestion,TotalQuestion,MaximumTime")] QuizRule quizRule)
         {
             if (ModelState.IsValid)
             {
@@ -59,7 +59,7 @@ namespace CodedenimWebApp.Controllers.Quiz
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", quizRule.TopicId);
+            ViewBag.ModuleId = new SelectList(db.Modules, "ModuleId", "TopicName", quizRule.ModuleId);
             return View(quizRule);
         }
 
@@ -75,7 +75,7 @@ namespace CodedenimWebApp.Controllers.Quiz
             {
                 return HttpNotFound();
             }
-            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", quizRule.TopicId);
+            ViewBag.ModuleId = new SelectList(db.Modules, "ModuleId", "ModuleName", quizRule.ModuleId);
             return View(quizRule);
         }
 
@@ -84,7 +84,7 @@ namespace CodedenimWebApp.Controllers.Quiz
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "QuizRuleId,TopicId,ScorePerQuestion,TotalQuestion,MaximumTime")] QuizRule quizRule)
+        public async Task<ActionResult> Edit([Bind(Include = "QuizRuleId,ModuleId,ScorePerQuestion,TotalQuestion,MaximumTime")] QuizRule quizRule)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace CodedenimWebApp.Controllers.Quiz
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", quizRule.TopicId);
+            ViewBag.ModuleId = new SelectList(db.Modules, "ModuleId", "ModuleName", quizRule.ModuleId);
             return View(quizRule);
         }
 

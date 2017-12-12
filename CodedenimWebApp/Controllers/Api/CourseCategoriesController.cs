@@ -76,6 +76,7 @@ namespace CodedenimWebApp.Controllers.Api
                                                                     //x.Courses.FileLocation,
                                                                 //    x.CourseCategoryId,
                                                                 ////  //  x.ExpectedTime,
+                                                                /// 
                                                                 //    x.CourseCategory.CategoryName,
 
                                                                 //    x.CourseCategory.CategoryDescription,
@@ -114,16 +115,41 @@ namespace CodedenimWebApp.Controllers.Api
             var studentEmail = student.ConvertEmailToId(email);
             var studentId = studentEmail;
             var studentType = _db.Students.Where(x => x.Email.Equals(email)).Select(x => x.AccountType).FirstOrDefault();
-            var myCourses = new MyCoursesVm();
-            if (studentType == RoleName.Corper)
-            {
-                myCourses.CorperCourses = _db.CorperEnrolledCourses.Where(x => x.StudentId.Equals(studentId)).ToList();
+            var myCourses = new List<MyCourseCategoryVm>();
+            //if (studentType == RoleName.Corper)
+            //{
+            //    var category = _db.CorperEnrolledCourses.Where(x => x.StudentId.Equals(studentId))
+            //                         .Select(x => x.CorperEnrolledCoursesId).ToList();
+            //    foreach (var categoryId in category)
+            //    {
+            //         myCourses.CorperCourses = await _db.CorperEnrolledCourses.Where(x => x.CourseCategoryId.Equals(categoryId)).ToListAsync();
+            //    }
+            //    //myCourses.CorperCourses = _db.CorperEnrolledCourses.Where(x => x.StudentId.Equals(studentId)).ToList();
 
-            }
-            else
-            {
-                myCourses.StudentCourses = _db.StudentPayments.Where(x => x.StudentId.Equals(studentId)).ToList();
-            }
+            //}
+            //else
+            //{
+                var category = _db.StudentPayments.Where(x => x.StudentId.Equals(studentId))
+                                .Select(x => x.CourseCategoryId).ToList();
+
+                foreach (var categoryId in category)
+                {
+                   var couseCategory = await _db.CourseCategories
+                        .Where(x => x.CourseCategoryId.Equals(categoryId))
+                        .FirstOrDefaultAsync();
+                    var vm = new MyCourseCategoryVm
+                    {
+                        CourseCategoryId = couseCategory.CourseCategoryId,
+                        CategoryName = couseCategory.CategoryName,
+                        StudentType = couseCategory.StudentType,
+                        ImageLocation = couseCategory.ImageLocation,
+                        CategoryDescription = couseCategory.CategoryDescription,
+                        Amount = couseCategory.Amount
+                    };
+                    myCourses.Add(vm);
+                }
+                //myCourses.StudentCourses = await _db.StudentPayments.Where(x => x.StudentId.Equals(studentId)).ToListAsync();
+            //}
             return Ok(myCourses);
         }
         // PUT: api/CourseCategories/5

@@ -10,15 +10,19 @@ using System.Web;
 	using System.Web.Hosting;
 	using System.Web.Mvc;
 using CodedenimWebApp.Models;
+	using CodedenimWebApp.Service;
 	using CodedenimWebApp.ViewModels;
 	using CodeninModel;
 	using Microsoft.AspNet.Identity;
+	using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace CodedenimWebApp.Controllers
 {
 	public class TopicMaterialUploadsController : Controller
 	{
 		private ApplicationDbContext db = new ApplicationDbContext();
+	    private int moduleId = 0;
+        BlobService _blobService = new BlobService();
 
 		// GET: TopicMaterialUploads
 		public async Task<ActionResult> Index()
@@ -27,6 +31,21 @@ namespace CodedenimWebApp.Controllers
 			var topicMaterialUploads = db.TopicMaterialUploads.Include(t => t.Course);
 			return View(await topicMaterialUploads.ToListAsync());
 		}
+        /// <summary>
+        ///topic id is what comes into these method
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+	    public PartialViewResult _StudentContent(int? id)
+	    {
+	        var viewModel = new CourseContentVm
+	        {
+	            Modules = db.Modules.Where(x => x.ModuleId.Equals(id)).ToList(),
+	            Topics = db.Topics.Include(x => x.MaterialUploads).ToList(),
+
+	        };
+            return PartialView(viewModel);
+	    }
 
 
 		[HttpPost]
@@ -49,31 +68,43 @@ namespace CodedenimWebApp.Controllers
 
 
         /// <summary>
-        /// this method takes in a topic id and 
+        /// this method takes in a topic id and  a courseId
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
 		// GET: TopicMaterialUploads/Details/5
-		public async Task<ActionResult> Details(int id)
-		{
+		public async Task<ActionResult> Details(int id,int? courseId)
+        {
+
+         
             //if (id == null)
             //{
             //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             //}
 
-            //TopicMaterialUpload topicMaterialUpload = db.TopicMaterialUploads.Find(id);
+            //TopicMaterialUpload topicMaterialUpload = db.TopicMaterialUploads.Find(id);k
             //if (topicMaterialUpload == null)
             //{
-            //    return View("NoContent");
+            //    return View("NoContent");3
             //}
-		    var topicContent = db.TopicMaterialUploads.Where(x => x.TopicId.Equals(id)).ToList();
+            var topicContent = db.TopicMaterialUploads.Where(x => x.TopicId.Equals(id)).ToList();
+		    var ModuleName = db.Topics.Where(x => x.TopicId.Equals(id)).Select(x => x.Module.ModuleName).FirstOrDefault();
+		   RedirectToAction("SideBarContentForMaterial",new{topidId = id});
+            List<Module> moduleDetail = null;
+            if (courseId != null)
+		    {
+		         moduleDetail = db.Modules.Include(x => x.Topics).Where(x => x.CourseId.Equals((int)courseId)).ToList();
+            }
+		   
 		    if (!topicContent.Any())
 		    {
 		        return View("NoContent");
 
 		    }
 		    var contents = new CourseContentVm();
+		    contents.ModulesName = ModuleName;
 		    contents.Materials = topicContent;
+		    contents.Modules = moduleDetail;
 		    // PartialView(contents);
             return View(contents);
 
@@ -91,19 +122,32 @@ namespace CodedenimWebApp.Controllers
 		{
 		
 		  //  var topic = db.Topics.Find(id);
-		    var topicContent = db.TopicMaterialUploads.Where(x => x.TopicId.Equals(id)).ToList();
+		    var topicContent = db.TopicMaterialUploads.FirstOrDefault(x => x.TopicMaterialUploadId.Equals(id));
 		    var contents = new CourseContentVm();
+		    var fileName = db.TopicMaterialUploads.Where(x => x.TopicMaterialUploadId.Equals(id)).Select(x => x.FileLocation).FirstOrDefault();
+		    CloudBlobContainer blobContainer = _blobService.GetCloudBlobContainer();
+		    CloudBlockBlob blob = blobContainer.GetBlockBlobReference(fileName);
+		   
+            contents.Blob = blob.OpenRead();
             //TopicMaterialUpload topicMaterialUpload = db.TopicMaterialUploads.Find(id);
-		 
-			//if (topicMaterialUpload == null)
-			//{
-			//	return PartialView("NoContent");
-			//}
 
-		    contents.Materials = topicContent;
+            //if (topicMaterialUpload == null)
+            //{
+            //	return PartialView("NoContent");
+            //}
+
+            contents.Material = topicContent;
             return PartialView(contents);
            // return PartialView(topicMaterialUpload);
 		}
+
+	    public PartialViewResult SideBarContentForMaterial(int id)
+	    {
+	        var contents = new CourseContentVm();
+            var topicContent = db.TopicMaterialUploads.Where(x => x.TopicId.Equals(id)).ToList();
+	        contents.Materials = topicContent;
+            return PartialView(contents);
+	    }
 
 
 	
@@ -132,19 +176,46 @@ namespace CodedenimWebApp.Controllers
 			    var topicId = topicMaterialUpload.TopicId;
 			    var moduleId = db.Topics.Where(x => x.TopicId.Equals(topicId)).Select(x => x.ModuleId).FirstOrDefault();
 				string _FileName = String.Empty;
-				if (File.ContentLength > 0)
-				{
-					_FileName = Path.GetFileName(File.FileName);
-					string path = HostingEnvironment.MapPath("~/MaterialUpload/") + _FileName;
-					topicMaterialUpload.FileLocation = path;
-					var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/MaterialUpload/"));
-					if (directory.Exists == false)
-					{
-						directory.Create();
-					}
-					File.SaveAs(path);
-				}
-				topicMaterialUpload.FileLocation = _FileName;
+                if (File.ContentLength > 0)
+                {
+                    _FileName = Path.GetFileName(File.FileName);
+                    string path = HostingEnvironment.MapPath("~/MaterialUpload/") + _FileName;
+                    topicMaterialUpload.FileLocation = path;
+                    var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/MaterialUpload/"));
+                    if (directory.Exists == false)
+                    {
+                        directory.Create();
+                    }
+                    File.SaveAs(path);
+                    //CloudBlobContainer blobContainer = _blobService.GetCloudBlobContainer();
+                    //List<string> blobs = new List<string>();
+                    //foreach (var blobItem in blobContainer.ListBlobs())
+                    //{
+                    //    blobs.Add(blobItem.Uri.ToString());
+
+                    //}
+                    //foreach (string item in Request.Files)
+                    //{
+
+                   // if (File.ContentLength == 0)
+                   // {
+                   //     ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", topicMaterialUpload.TopicId);
+                   //     return View(topicMaterialUpload);
+                   // }
+                       
+
+                   //     if (File.ContentLength > 0)
+                   //     {
+
+                   //         CloudBlobContainer blobContainer = _blobService.GetCloudBlobContainer();
+                   //         CloudBlockBlob blob = blobContainer.GetBlockBlobReference(File.FileName);
+                   //         blob.UploadFromStream(File.InputStream);
+                   //     }
+                   //// }
+                    //return RedirectToAction("Upload");
+                }
+               
+                topicMaterialUpload.FileLocation = _FileName;
 
 
 				db.TopicMaterialUploads.Add(topicMaterialUpload);
@@ -205,13 +276,26 @@ namespace CodedenimWebApp.Controllers
 		}
 
 		// POST: TopicMaterialUploads/Delete/5
+        /// <summary>
+        /// this the a method that deletes from the azure blob container
+        /// it takes an id of TopicMaterialUpload
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
 		public async Task<ActionResult> DeleteConfirmed(int id)
 		{
 			TopicMaterialUpload topicMaterialUpload = await db.TopicMaterialUploads.FindAsync(id);
 			db.TopicMaterialUploads.Remove(topicMaterialUpload);
-			await db.SaveChangesAsync();
+            var Name = db.TopicMaterialUploads.Where(x => x.TopicMaterialUploadId.Equals(id)).Select(x => x.FileLocation).FirstOrDefault();
+            Uri uri = new Uri(BlobService.BlobUri +"/" + Name);
+            string filename = Path.GetFileName(uri.LocalPath);
+            CloudBlobContainer blobContainer = _blobService.GetCloudBlobContainer();
+            CloudBlockBlob blob = blobContainer.GetBlockBlobReference(filename);
+            blob.Delete();
+
+            await db.SaveChangesAsync();
 			return RedirectToAction("Index");
 		}
 		

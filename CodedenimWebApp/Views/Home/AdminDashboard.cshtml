@@ -7,13 +7,14 @@
 
 <br/>
 
+
 <div class="container-fluid">
-  
-    <div class="row" style="background-color: #ffffff; border: 1px solid #e2e9e6; margin-right: 20%" data-toggle="gridalicious">
-        
-        <br/>
-        
-        @*<div class="row" data-toggle="gridalicious">*@
+    <centre>
+        <div class="row" style="background-color: #ffffff; border: 1px solid #e2e9e6; margin-right: " data-toggle="gridalicious">
+
+            <br />
+
+            @*<div class="row" data-toggle="gridalicious">*@
             <div class="media">
                 <div class="media-left padding-none">
                     <div class="bg-green-300 text-white">
@@ -26,22 +27,22 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="text-headline">COURSES</div>
-                            @if (ViewBag.TotalCourss != null)
-                            {
-                                <h3 @ViewBag.TotalCourses+></h3>
-                            }
-                            else
-                            {
-                                <h6>No Course yet</h6>
-                            }
-                        
+                            @if (ViewBag.TotalCourses != null)
+                        {
+                            <h3> @ViewBag.TotalCourses +</h3>
+                    }
+                    else
+                    {
+                        <h6>No Course yet</h6>
+                }
+
 
 
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             @*<div class="col-lg-3 col-sm-6">
                 <div class="card mycard">
                     <div class="content">
@@ -59,8 +60,8 @@
                     </div>
                 </div>
             </div>*@
-        
-        
+
+
             <div class="media">
                 <div class="media-left padding-none">
                     <div class="bg-purple-300 text-white">
@@ -73,65 +74,65 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="text-headline">STUDENTS</div>
-                            @if (ViewBag.TotalStudent != null)
-                            {
-                                @ViewBag.TotalStudents 
-                            }
-                            else
-                            {
-                                <h6>No Student Yet</h6>  
-                            }
+                            @if (ViewBag.TotalStudents != null)
+                        {
+                            @ViewBag.TotalStudents
+                    }
+                    else
+                    {
+                        <h6>No Student Yet</h6>
+                }
                             @*<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur aut culpa fugiat iusto, molestias nemo nostrum quia rerum temporibus voluptatum.</p>*@
                         </div>
                     </div>
                 </div>
             </div>
 
-        @*<div class="col-lg-3 col-sm-6">
-            <div class="card mycard">
-                <div class="content">
-                    <div class="row">
+            @*<div class="col-lg-3 col-sm-6">
+                <div class="card mycard">
+                    <div class="content">
+                        <div class="row">
 
-                        <div class="col-xs-12">
-                            <div class="numbers">
-                                <p><i class="fa fa-pencil fa-1x"></i><span> &nbsp;<b>TOPICS</b></span>
-                                </p>&nbsp;&nbsp;
-                                @ViewBag.TotalTopics
+                            <div class="col-xs-12">
+                                <div class="numbers">
+                                    <p><i class="fa fa-pencil fa-1x"></i><span> &nbsp;<b>TOPICS</b></span>
+                                    </p>&nbsp;&nbsp;
+                                    @ViewBag.TotalTopics
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                </div>
-            </div>
-        </div>*@
-        
-        <div class="media">
-            <div class="media-left padding-none">
-                <div class="bg-orange-400 text-white">
-                    <div class="panel-body">
-                        <i class="fa fa-user fa-2x fa-fw"></i>
                     </div>
                 </div>
-            </div>
-            <div class="media-body">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="text-headline">TUTORS</div>
-                        @if (ViewBag.TotalTutors != null)
+            </div>*@
+
+            <div class="media">
+                <div class="media-left padding-none">
+                    <div class="bg-orange-400 text-white">
+                        <div class="panel-body">
+                            <i class="fa fa-user fa-2x fa-fw"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="media-body">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-headline">TUTORS</div>
+                            @if (ViewBag.TotalTutors != null)
                         {
                             @ViewBag.TotalTutors
-                        }
-                        else
-                        {
-                            <h6>No Tutors yet</h6>
-                        }
+                    }
+                    else
+                    {
+                        <h6>No Tutors yet</h6>
+                }
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        @*<div class="col-lg-3 col-sm-6">
+            @*<div class="col-lg-3 col-sm-6">
                 <div class="card mycard">
                     <div class="content">
                         <div class="row">
@@ -165,13 +166,15 @@
                     </div>
                 </div>
             </div>*@
+
         </div>
-    @*</div>*@
-       
+        @*</div>*@
+    </centre>
 
-    </div>
 
-<h4 class="page-section-heading">Student Types</h4>
+</div>
+
+<h2 class="page-section-heading" style="color:green">Student Types</h2>
 <div class="table-pricing-3">
     <ul class="list-unstyled row">
         <li class="col-md-4">

@@ -8,7 +8,7 @@
 
 <h2>Index</h2>
     
-    @*Excel upload
+    Excel upload
     @using (Html.BeginForm("ExcelUpload", "CourseCategories", FormMethod.Post, new {enctype = "multipart/form-data"}))
     {
         @Html.AntiForgeryToken()
@@ -16,7 +16,7 @@
 
         <input type="submit" value="submit">
   
-    }*@
+    }
 
     <p>
     @Html.ActionLink("Create New", "Create")

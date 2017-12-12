@@ -19,7 +19,7 @@ namespace CodedenimWebApp.Controllers.Quiz
         // GET: StudentTopicQuizs
         public async Task<ActionResult> Index()
         {
-            var studentTopicQuizs = db.StudentTopicQuizs.Include(s => s.Student).Include(s => s.Topic);
+            var studentTopicQuizs = db.StudentTopicQuizs.Include(s => s.Student).Include(s => s.ModuleId);
             return View(await studentTopicQuizs.ToListAsync());
         }
 
@@ -61,7 +61,7 @@ namespace CodedenimWebApp.Controllers.Quiz
             }
 
             ViewBag.StudentId = new SelectList(db.Students, "StudentId", "Institution", studentTopicQuiz.StudentId);
-            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", studentTopicQuiz.TopicId);
+            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", studentTopicQuiz.ModuleId);
             return View(studentTopicQuiz);
         }
 
@@ -78,7 +78,7 @@ namespace CodedenimWebApp.Controllers.Quiz
                 return HttpNotFound();
             }
             ViewBag.StudentId = new SelectList(db.Students, "StudentId", "Institution", studentTopicQuiz.StudentId);
-            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", studentTopicQuiz.TopicId);
+            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", studentTopicQuiz.ModuleId);
             return View(studentTopicQuiz);
         }
 
@@ -96,7 +96,7 @@ namespace CodedenimWebApp.Controllers.Quiz
                 return RedirectToAction("Index");
             }
             ViewBag.StudentId = new SelectList(db.Students, "StudentId", "Institution", studentTopicQuiz.StudentId);
-            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", studentTopicQuiz.TopicId);
+            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", studentTopicQuiz.ModuleId);
             return View(studentTopicQuiz);
         }
 

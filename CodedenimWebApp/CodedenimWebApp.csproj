@@ -27,7 +27,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <Use64BitIISExpress />
-    <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -96,10 +96,22 @@
     <Reference Include="Microsoft.AspNet.TelemetryCorrelation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.0\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.8.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.8.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.8.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
@@ -127,6 +139,9 @@
     <Reference Include="Microsoft.Owin.Security.Twitter, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.1.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=8.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.8.6.0\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
     <Reference Include="MiniProfiler, Version=3.2.0.157, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
       <HintPath>..\packages\MiniProfiler.3.2.0.157\lib\net40\MiniProfiler.dll</HintPath>
     </Reference>
@@ -149,6 +164,9 @@
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Spatial, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.8.2\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -279,7 +297,9 @@
     <Compile Include="Controllers\Api\TutorsController.cs" />
     <Compile Include="Controllers\AssignCourseCategories1Controller.cs" />
     <Compile Include="Controllers\AssignCourseCategoriesController.cs" />
-    <Compile Include="Controllers\CodeGenController.cs" />
+    <Compile Include="Service\BlobConnection.cs" />
+    <Compile Include="Service\BlobService.cs" />
+    <Compile Include="Service\CodeGenController.cs" />
     <Compile Include="Controllers\CourseCategoriesController.cs" />
     <Compile Include="Controllers\CourseForum\ForumAnswersController.cs" />
     <Compile Include="Controllers\CourseForum\ForumController.cs" />
@@ -337,6 +357,14 @@
     <Compile Include="Migrations\201711092203318_RemoveIntArrayIn_assignCourse1.Designer.cs">
       <DependentUpon>201711092203318_RemoveIntArrayIn_assignCourse1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711161035089_ChangeTopicQuiz_to_ModuleQuiz.cs" />
+    <Compile Include="Migrations\201711161035089_ChangeTopicQuiz_to_ModuleQuiz.Designer.cs">
+      <DependentUpon>201711161035089_ChangeTopicQuiz_to_ModuleQuiz.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711191649416_added_moduleIdTo_StudentTestLogs.cs" />
+    <Compile Include="Migrations\201711191649416_added_moduleIdTo_StudentTestLogs.Designer.cs">
+      <DependentUpon>201711191649416_added_moduleIdTo_StudentTestLogs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CreteCourseVm.cs" />
@@ -352,7 +380,7 @@
     <Compile Include="Services\ExcelValidation.cs" />
     <Compile Include="Service\EmailSetupServices.cs" />
     <Compile Include="Service\ExcelUploadProcessor.cs" />
-    <Compile Include="Service\MultipleButtonAttributeController.cs" />
+    <Compile Include="Controllers\MultipleButtonAttributeController.cs" />
     <Compile Include="Service\Registration.cs" />
     <Compile Include="Service\UploadedFileProcessor.cs" />
     <Compile Include="Startup.cs" />
@@ -712,15 +740,6 @@
     <Content Include="fonts\roboto\Roboto-Thin.woff" />
     <Content Include="fonts\roboto\Roboto-Thin.woff2" />
     <Content Include="fonts\roboto\Roboto-Thind41d.eot" />
-    <Content Include="MaterialUpload\c#.png" />
-    <Content Include="MaterialUpload\c++.png" />
-    <Content Include="MaterialUpload\cisco security.jfif" />
-    <Content Include="MaterialUpload\css.jfif" />
-    <Content Include="MaterialUpload\html.png" />
-    <Content Include="MaterialUpload\java.png" />
-    <Content Include="MaterialUpload\javascript.png" />
-    <Content Include="MaterialUpload\marketing.jpg" />
-    <Content Include="MaterialUpload\routing.png" />
     <Content Include="Profile_Pics\Computer.jpg" />
     <Content Include="Profile_Pics\WhatsApp Image 2017-08-14 at 5.15.22 PM.jpeg" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1170,6 +1189,13 @@
     <Content Include="Views\Modules\EditPartial.cshtml" />
     <Content Include="Views\Topics\EditPartial.cshtml" />
     <Content Include="Views\Topics\DeletePartial.cshtml" />
+    <Content Include="Views\Modules\DeletePartial.cshtml" />
+    <Content Include="Views\Shared\ExcelUpload.cshtml" />
+    <Content Include="Views\Shared\StudentContentLayout.cshtml" />
+    <Content Include="Views\Shared\_StudentContent.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\SideBarContentForMaterial.cshtml" />
+    <Content Include="Views\Students\GenerateCertificate.cshtml" />
+    <Content Include="Views\Students\Certificate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1178,8 +1204,10 @@
     <Folder Include="Content\StudentFiles\" />
     <Folder Include="Content\TutorFiles\" />
     <Folder Include="Controllers\Api\ForumApi\" />
+    <Folder Include="MaterialUpload\" />
     <Folder Include="ProfilePics\" />
     <Folder Include="uploads\" />
+    <Folder Include="Views\BlobConnection\" />
     <Folder Include="Views\MultipleButtonAttribute\" />
     <Folder Include="Views\Students\Corper\" />
   </ItemGroup>
@@ -1235,6 +1263,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711092203318_RemoveIntArrayIn_assignCourse1.resx">
       <DependentUpon>201711092203318_RemoveIntArrayIn_assignCourse1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711161035089_ChangeTopicQuiz_to_ModuleQuiz.resx">
+      <DependentUpon>201711161035089_ChangeTopicQuiz_to_ModuleQuiz.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711191649416_added_moduleIdTo_StudentTestLogs.resx">
+      <DependentUpon>201711191649416_added_moduleIdTo_StudentTestLogs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

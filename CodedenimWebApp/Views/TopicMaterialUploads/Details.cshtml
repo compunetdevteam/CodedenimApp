@@ -2,108 +2,176 @@
 @using CodeninModel
 @*@using CodedenimWebApp.ViewModels.CourseContentVm*@
 @*@model CodeninModel.TopicMaterialUpload*@
-@*@model CodedenimWebApp.ViewModels.CourseContentVm*@
+@model CodedenimWebApp.ViewModels.CourseContentVm
 @{
     ViewBag.Title = "Topic Material Details";
 
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
-
+      
 }
 
 
-    <h2>Details</h2>
-<div class="row panel panel-default">
-
-    @Html.Partial("DetailsContent")
-</div>
-<div>
-        @*@foreach (var item in Model.Modules)
-        {
-            @item.ModuleName
-        }*@
-
-    @*<div class="col-xs-12 col-md-8 ">
-        @if (Model.FileType == FileType.MP4)
-        {
-            <div style="text-align:center">
-                <button onclick="playPause()">Play/Pause</button>
-                <button onclick="makeBig()">Big</button>
-                <button onclick="makeSmall()">Small</button>
-                <button onclick="makeNormal()">Normal</button>
-                <br><br>
-            
-                <video controls="controls" id="video1" width="420">
-                    <source src="~/MaterialUpload/@Model.FileLocation" type="video/mp4">
-                    Your browser does not support HTML5 video.
-                </video>
-            </div>
-        }
-        else if (Model.FileType == FileType.PDF)
-        {
-            <object data="~/MaterialUpload/@Model.FileLocation" type="application/pdf">
-                <iframe src="~/MaterialUpload/@Model.FileLocation" style="width: 100%;height: 100%;border: none;"> </iframe>
-
-
-            </object>
-
-        }
-        else if (Model.FileType == FileType.MP3)
-        {
-
-            <audio controls="controls" id="video1" width="420">
-                <source src="~/MaterialUpload/@Model.FileLocation" type="audio/mpeg">
-
-            </audio>
-
-        }
-    </div>
     
-        <div class="col-xs-6 col-md-4 ">
-            <h4>Topic Material Upload</h4>
-            <hr />
-            <dl class="dl-horizontal">
-                <dt class="label label-default">
-                    @Html.DisplayNameFor(model => model.Course.TopicName)
-                </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Course.TopicName)
-                </dd>
-                <hr />
-                <dt class="label label-default">
-                    @Html.DisplayNameFor(model => model.Tutor)
-                </dt>
+@*<h2>Details of  @Model.ModulesName</h2>*@
 
-                <dd>
-                    @Html.DisplayFor(model => model.Tutor)
-                </dd>
-                <hr />
-                <dt class="label label-default">
-                    @Html.DisplayNameFor(model => model.FileType)
-                </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.FileType)
-                </dd>
-                <hr />
-                <dt class="label label-default">
-                    @Html.DisplayNameFor(model => model.Name)
-                </dt>
+    
+<div class="row ">
+    
 
-                <dd>
-                    @Html.DisplayFor(model => model.Name)
-                </dd>
 
-             
+    <div class="panel panel-default">
+        <div class="media v-middle">
+            <div class="media-left">
+                <div class="bg-green-400 text-white">
+                    <div class="panel-body" id="loadTopicContent">
+                        @foreach (var material in Model.Materials)
+                        {
+                            <div id="topicContents">
             
+                                <dt class="btn label label-default" onclick="loadContent(@material.TopicMaterialUploadId)">
+                                    @Html.DisplayNameFor(model => material.Name)
+                                
+                                    <b> @Html.DisplayFor(model => material.Name) </b>
+                               
+                                <hr/>
+                            </div>
+             
+                        }
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+      
+
+    <div class="col-md-2" >
+      
+        
+        
+        <div >
+        
+            @*@foreach (var material in Model.Materials)
+            {
+                <div id="topicContents">
+            
+                    <dt class="btn label label-default" onclick="loadContent(@material.TopicMaterialUploadId)">
+                        @Html.DisplayNameFor(model => material.Name)
+                    </dt>
+                    <dd>
+                        <b> @Html.DisplayFor(model => material.Name) </b>
+                    </dd>
+                    <hr/>
+                </div>
+             
+            }*@
+        </div>
+        </div>
+    
 
 
-            </dl>
-        </div>*@
 
+    <div class="col-md-10" id="MaterialContent">
+
+   
+    </div>
 </div>
-<script>
 
+
+<div class="sidebar right sidebar-size-3 sidebar-offset-0 sidebar-visible-desktop sidebar-skin-white" id="sidebar-library">
+    <div data-scrollable>
+        <h4 class="category">Modules</h4>             
+        -
+        @foreach (var item in Model.Modules)
+                    {
+                        <div class="sidebar-block">
+                            <div class="form-group input-group">
+                                <div class="row margin-none">
+                                    <div> @item.ModuleName</div>
+                                </div>
+                                @foreach (var topicContent in item.Topics.Where(x => x.ModuleId.Equals(item.ModuleId)))
+                                {
+                                    <button type="button" class="btn btn-primary" onclick="material(@topicContent.TopicId)"><i class="fa fa-book"></i></button>
+                                }
+                                @*@foreach (var topicId in Model.Materials)
+                                {
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-primary" onclick="material(@topicId.TopicId)"><i class="fa fa-book"></i></button>
+                                    </div>      
+                                }*@
+                                
+                            </div>
+                        </div>
+                    }
+
+        @*<h4 class="category">View</h4>
+        <div class="sidebar-block">
+            <div class="form-group">
+                <select class="selectpicker">
+                    <option>List</option>
+                    <option>Grid</option>
+                </select>
+            </div>
+        </div>
+        <h4 class="category">Price</h4>
+        <div class="sidebar-block">
+            <div class="form-group input-group">
+                <div class="row margin-none">
+                    <div class="col-xs-6 padding-none">
+                        <input class="form-control" type="text" placeholder="Min .."/>
+                    </div>
+                    <div class="col-xs-6 padding-none">
+                        <input class="form-control" type="text" placeholder="Max .."/>
+                    </div>
+                </div>
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </div>*@
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$('#ContentId').click(function () {
+        //    var contentId = $(this).attr('value');
+        //    $('#MaterialContent').load("/TopicMaterialUploads/DetailsContent/" + contentId);
+        //});
+
+       
+    });
+    //function material(Moduleid,CourseId) {
+    //    $('loadTopicContent').load("/TopicMaterialUploads/Details/id?" + id + "/courseId?" +CourseId);
+    //}
+
+    function material(topicId) {
+    
+        $('#loadTopicContent').load("/TopicMaterialUploads/SideBarContentForMaterial/" + topicId);
+    }
+    function loadContent(contentId) {
+        $('#MaterialContent').load("/TopicMaterialUploads/DetailsContent/" + contentId);
+    }
+    //$("#ContentId").click(function () {
+
+    //    //alert("i am nigeria");
+    //    $("#MaterialContent").load("i am Nigeria ");
+    //});
+    @*function changeMaterial(contentId) {
+<a href="~/Controllers/TutorsController.cs">~/Controllers/TutorsController.cs</a>
+        alert(contentId);
+<a href="~/Codedenim Requirement/mobile app synopsis.pdf">~/Codedenim Requirement/mobile app synopsis.pdf</a>
+        $("#Content").change(function() {
+          //  var categoryId = $("#Content").val();
+
+            $("#MaterialContent").load('@(Url.Action("DetailsContent", "TopicMaterialUploads"))?contentId=' + contentId);
+        });
+    };*@
+</script>
+<script>
     var myVideo = document.getElementById("video1");
 
     function playPause() {

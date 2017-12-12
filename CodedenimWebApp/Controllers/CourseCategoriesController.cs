@@ -31,9 +31,15 @@ namespace CodedenimWebApp.Controllers
             return View(await db.CourseCategories.ToListAsync());
         }
 
-        public PartialViewResult CategoryPartial()
+        public PartialViewResult CategoryPartial(int? id)
         {
             var courseCategories = db.CourseCategories.ToList();
+            if (id != null)
+            {
+                courseCategories = db.CourseCategories.Where(x => x.CourseCategoryId.Equals((int) id)).ToList();
+                return PartialView(courseCategories);
+            }
+          
             return PartialView(courseCategories);
         }
 
@@ -164,9 +170,7 @@ namespace CodedenimWebApp.Controllers
                         {
                             PaymentDateTime = DateTime.Now,
                             CourseCategoryId = coureCat.CourseCategoryId,
-                            StudentId = convertedValues.Where(x => x.key.Equals("studentid")).Select(s => s.value)
-                                .FirstOrDefault(),
-                            ReferenceNo = reference,
+                            StudentId = convertedValues.Where(x => x.key.Equals("studentid")).Select(s => s.value).FirstOrDefault(),
                             Amount = KoboToNaira.ConvertKoboToNaira(verifyResponse.Data.Amount),
                             IsPayed = true,
                             AmountPaid = KoboToNaira.ConvertKoboToNaira(verifyResponse.Data.Amount),
@@ -420,7 +424,7 @@ namespace CodedenimWebApp.Controllers
                             {
                                 return View("Error2");
                             }
-                            var mycontinuousAssessment = new CourseCategory()
+                            var mycategory = new CourseCategory()
                             {
                                 CategoryName = categoryName,
 
@@ -431,7 +435,7 @@ namespace CodedenimWebApp.Controllers
 
 
                             };
-                            db.CourseCategories.Add(mycontinuousAssessment);
+                            db.CourseCategories.Add(mycategory);
 
                             recordCount++;
                             //lastrecord = $"The last Updated record has the Student Id {studentId} and Subject Name is {subjectName}. Please Confirm!!!";

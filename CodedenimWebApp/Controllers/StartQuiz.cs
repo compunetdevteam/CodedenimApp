@@ -29,7 +29,7 @@ namespace CodedenimWebApp.Controllers
             var examLog = new QuizLog()
             {
                 StudentId = studentdetails.StudentId,
-                TopicId = studentdetails.TopicId,
+                ModuleId = studentdetails.ModuleId,
                 Score = total,
                 TotalScore = sum,
                 ExamTaken = true
@@ -45,7 +45,7 @@ namespace CodedenimWebApp.Controllers
         public async Task SaveAnswer(DisplayQuestionViewModel model, string studentId, int questionId, string answer)
         {
             var question = await _db.StudentTopicQuizs.AsNoTracking().FirstOrDefaultAsync
-            (s => s.StudentId.Equals(studentId) && s.TopicId.Equals(model.TopicId)
+            (s => s.StudentId.Equals(studentId) && s.ModuleId.Equals(model.ModuleId)
                   && s.QuestionNumber.Equals(questionId));
             if (question.Answer.ToUpper().Equals(answer.ToUpper()))
             {
@@ -79,7 +79,7 @@ namespace CodedenimWebApp.Controllers
         {
             var question = _db.StudentTopicQuizs.AsNoTracking().FirstOrDefault(s => s.StudentId.Equals(model.StudentId)
                                                                                     && s.QuestionNumber.Equals(model.QuestionNo)
-                                                                                    && s.TopicId.Equals(model.TopicId));
+                                                                                    && s.ModuleId.Equals(model.ModuleId));
             string[] myAnswer = question.Answer.Split(',');
             StringBuilder answerbuilder = new StringBuilder();
 
@@ -148,7 +148,7 @@ namespace CodedenimWebApp.Controllers
         {
             var questionType = _db.StudentTopicQuizs.FirstOrDefault(x => x.QuestionNumber.Equals(model.QuestionNo)
                                                                          && x.StudentId.Equals(model.StudentId) &&
-                                                                         x.TopicId.Equals(model.TopicId));
+                                                                         x.ModuleId.Equals(model.ModuleId));
             return questionType;
         }
         //protected override void Dispose(bool disposing)

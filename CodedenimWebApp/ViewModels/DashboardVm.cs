@@ -13,6 +13,8 @@ namespace CodedenimWebApp.ViewModels
         public List<Student> StudentInfo { get; set; }
         public List<ForumQuestion> ForumQuestion { get; set; }
         public List<QuizLog> StudentQuiz { get; set; }
+        public byte[] Profile { get; set; }
+        public int Progress { get; set; }
 
     }
 }

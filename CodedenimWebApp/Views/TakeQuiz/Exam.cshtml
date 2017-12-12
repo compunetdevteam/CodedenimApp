@@ -1,9 +1,11 @@
 ﻿@model CodeninModel.Quiz.StudentTopicQuiz
 @{
-    Layout = "~/Views/Shared/_LayoutBoard.cshtml"; 
-    ViewBag.Title = "Exam";
-    ViewBag.StudentId = @Model.StudentId;
-    ViewBag.CourseId = Model.TopicId;
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
+    //ViewBag.Title = "Exam";
+        ViewBag.Title = @Model.StudentId;
+    //ViewBag.StudentId = "4ee04a8e-e369-4e1b-ad4d-6c74e5b6f741";
+    //ViewBag.CourseId = 7;
+    ViewBag.CourseId = Model.ModuleId;
     //ViewBag.LevelId = Model.LevelId;
 
 }
@@ -49,7 +51,7 @@
     <form action="" method="post" id="myform">
 
         @Html.HiddenFor(model => model.QuestionNumber)
-        @Html.HiddenFor(model => model.TopicId)
+        @Html.HiddenFor(model => model.ModuleId)
         @Html.HiddenFor(model => model.StudentId)
         @Html.HiddenFor(model => model.Option1)
         @Html.HiddenFor(model => model.Option2)

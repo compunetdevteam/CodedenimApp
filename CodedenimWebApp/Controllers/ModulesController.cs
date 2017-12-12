@@ -42,12 +42,14 @@ namespace CodedenimWebApp.Controllers
             Module module = await db.Modules.FindAsync(id);
  
             var course = await db.Courses.FindAsync(id);
+            var courseId = await db.Modules.Where(x => x.ModuleId.Equals((int)id)).Select(x => x.CourseId).FirstOrDefaultAsync();
             var modeules = await db.Modules.Where(x => x.CourseId.Equals((int)id)).ToListAsync();
             var topics = await db.Topics.Where(x => x.ModuleId.Equals((int)id)).ToListAsync();
             moduleInfo.CoursesAD = course;
             moduleInfo.Modules = modeules;
             moduleInfo.Topics = topics;
             moduleInfo.ModulesAD = module;
+            moduleInfo.CourseIdentifier = courseId;
 
             if (module == null)
             {
@@ -113,7 +115,7 @@ namespace CodedenimWebApp.Controllers
             ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", module.CourseId);
             return PartialView(module);
         }
-
+            
         public ActionResult Redirect()
         {
             return RedirectToAction("TutorDashBoard","Tutors");
@@ -221,6 +223,33 @@ namespace CodedenimWebApp.Controllers
             db.Modules.Remove(module);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+
+        // GET: Modules/Delete/5
+        public async Task<ActionResult> DeletePartial(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Module module = await  db.Modules.FindAsync(id);
+            if (module == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView(module);
+        }
+
+
+        [HttpPost, ActionName("DeletePartial")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeletePartial(int id)
+        {
+            Module module = await db.Modules.FindAsync(id);
+            db.Modules.Remove(module);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Details","Courses", new{id = module.CourseId});
         }
 
         protected override void Dispose(bool disposing)
