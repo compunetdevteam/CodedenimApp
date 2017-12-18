@@ -364,7 +364,7 @@ namespace CodedenimWebApp.Controllers.Api
         [System.Web.Http.AllowAnonymous]
         [System.Web.Http.Route("RegisterCorper")]
         [System.Web.Http.HttpPost]
-        public async Task<IHttpActionResult> RegisterCorper([FromBody] RegisterCorperModel model)
+        public async Task<IHttpActionResult> RegisterCorper(RegisterCorperModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -429,7 +429,7 @@ namespace CodedenimWebApp.Controllers.Api
         // POST api/Account/RegisterUnderGraduate
         [System.Web.Http.AllowAnonymous]
         [System.Web.Http.Route("RegisterUnderGraduate")]
-        public async Task<IHttpActionResult> RegisterUnderGraduate([FromBody] RegisterUnderGrad model)
+        public async Task<IHttpActionResult> RegisterUnderGraduate(RegisterUnderGrad model)
         {
             if (!ModelState.IsValid)
             {

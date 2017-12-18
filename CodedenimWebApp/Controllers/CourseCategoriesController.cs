@@ -110,7 +110,8 @@ namespace CodedenimWebApp.Controllers
                 {
                     //Reference = "SwifKampus",
                     AmountInKobo = convertedamount,
-                    CallbackUrl = "http://localhost:64301/CourseCategories/ConfrimPayment",
+                    //CallbackUrl = "http://localhost:64301/CourseCategories/ConfrimPayment",
+                    CallbackUrl = "http://codedenim.azurewebsites.net/CourseCategories/ConfrimPayment",
                     Email = student.Email,
                     Bearer = "Application fee",
 

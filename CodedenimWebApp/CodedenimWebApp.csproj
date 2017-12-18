@@ -297,6 +297,10 @@
     <Compile Include="Controllers\Api\TutorsController.cs" />
     <Compile Include="Controllers\AssignCourseCategories1Controller.cs" />
     <Compile Include="Controllers\AssignCourseCategoriesController.cs" />
+    <Compile Include="Migrations\201712130442269_newMigration.cs" />
+    <Compile Include="Migrations\201712130442269_newMigration.Designer.cs">
+      <DependentUpon>201712130442269_newMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Service\BlobConnection.cs" />
     <Compile Include="Service\BlobService.cs" />
     <Compile Include="Service\CodeGenController.cs" />
@@ -740,6 +744,13 @@
     <Content Include="fonts\roboto\Roboto-Thin.woff" />
     <Content Include="fonts\roboto\Roboto-Thin.woff2" />
     <Content Include="fonts\roboto\Roboto-Thind41d.eot" />
+    <Content Include="MaterialUpload\C1-M1.m4a" />
+    <Content Include="MaterialUpload\C1-M2.m4a" />
+    <Content Include="MaterialUpload\C1-M3.m4a" />
+    <Content Include="MaterialUpload\C1-M4.m4a" />
+    <Content Include="MaterialUpload\C1-M5.m4a" />
+    <Content Include="MaterialUpload\C1-M6.m4a" />
+    <Content Include="MaterialUpload\C1-M7.m4a" />
     <Content Include="Profile_Pics\Computer.jpg" />
     <Content Include="Profile_Pics\WhatsApp Image 2017-08-14 at 5.15.22 PM.jpeg" />
     <Content Include="Scripts\bootstrap.js" />
@@ -918,6 +929,13 @@
     <Content Include="Content\LMS\fonts\picto-foundry-weather.ttf" />
     <Content Include="Content\LMS\fonts\picto-foundry-weather.woff" />
     <Content Include="Content\LMS\js\data\google_maps\markers.json" />
+    <Content Include="MaterialUpload\C1_Module 1.pdf" />
+    <Content Include="MaterialUpload\C1_Module 2.pdf" />
+    <Content Include="MaterialUpload\C1_Module 3.pdf" />
+    <Content Include="MaterialUpload\C1_Module 4.pdf" />
+    <Content Include="MaterialUpload\C1_Module 5.pdf" />
+    <Content Include="MaterialUpload\C1_Module 6.pdf" />
+    <Content Include="MaterialUpload\C1_Module 7.pdf" />
     <None Include="Properties\PublishProfiles\codedenim - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1-vsdoc.js" />
@@ -1204,7 +1222,6 @@
     <Folder Include="Content\StudentFiles\" />
     <Folder Include="Content\TutorFiles\" />
     <Folder Include="Controllers\Api\ForumApi\" />
-    <Folder Include="MaterialUpload\" />
     <Folder Include="ProfilePics\" />
     <Folder Include="uploads\" />
     <Folder Include="Views\BlobConnection\" />
@@ -1269,6 +1286,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711191649416_added_moduleIdTo_StudentTestLogs.resx">
       <DependentUpon>201711191649416_added_moduleIdTo_StudentTestLogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712130442269_newMigration.resx">
+      <DependentUpon>201712130442269_newMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

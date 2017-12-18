@@ -62,6 +62,10 @@ namespace CodedenimWebApp.Controllers.Api
         {
             if (!ModelState.IsValid)
             {
+
+
+
+              
                 return BadRequest(ModelState);
             }
 

@@ -168,7 +168,7 @@ namespace CodedenimWebApp.Controllers
               .FirstOrDefaultAsync();
                 categoryId.Add(corperCourses);
             }
-
+            
             var quizTaken = _progress;
                 
             var courseCategory = await _db.CourseCategories.Where(x => x.StudentType.Equals(RoleName.Corper))
@@ -187,9 +187,22 @@ namespace CodedenimWebApp.Controllers
             {
                 _progress = 0;
             }
-           
-            // var profilePics = GetImage();
 
+            // var profilePics = GetImage();
+            var certificate = new List<Course>();
+            foreach (var item in categoryId)
+            {              
+                var myModule = _db.Modules.Where(x => x.CourseId.Equals(item.CourseId)).Count();
+                foreach (var modules in item.Courses.Modules)
+                {
+                    var moduleQuizTaken = _db.StudentTopicQuizs.Include(x => x.Module).Where(x => x.ModuleId.Equals(modules.CourseId) && x.StudentId.Equals(user)).Count();
+                    if (myModule == moduleQuizTaken)
+                    {
+                        certificate.Add(item.Courses);
+                    }
+                }
+               
+            }
             var model = new DashboardVm()
             {
                 AssignCourseCategories = categoryId,
@@ -197,7 +210,9 @@ namespace CodedenimWebApp.Controllers
                 StudentInfo = student,
                 ForumQuestion = forumQuestion,
                 StudentQuiz = quiz,
-                Progress = _progress
+                Progress = _progress,
+                CourseCertificate = certificate,
+
                 // Profile = profilePics
 
 
@@ -216,6 +231,7 @@ namespace CodedenimWebApp.Controllers
         //this is a method that prints the certificate
         public PartialViewResult GenerateCertificate()
         {
+          
             return PartialView();
         }
 

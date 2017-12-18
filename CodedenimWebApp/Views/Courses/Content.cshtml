@@ -47,7 +47,7 @@
 
     <h5 class="text-subhead-2 text-light">Learning Path</h5>
     @*@if(User.Identity,GetRoles)*@
-    @foreach (var item in Model.Modules)
+    @foreach (var item in Model.Module)
     {
 
 
@@ -84,10 +84,19 @@
                                    
                     </div>
                 }
-                <div class="media-body">
-                    @*<i class="fa fa-fw fa-circle text-green-300"></i> <a href="@Url.Action("selectsubject","takeQuiz", new {id = item.CourseId})"> Take Quiz</a>*@
+                    <div class="media-body">
+   @if(item.IsModuleTaken == true)
+        {
+                    <i class="fa fa-fw fa-circle text-blue-300"></i> <span>Quiz Taken</span>
+}
+else
+{
                     <i class="fa fa-fw fa-circle text-green-300"></i> <a href="@Url.Action("SelectSubject","takeQuiz", new {@moduleId =@item.ModuleId})"> Take Quiz</a>
-                </div>
+}
+
+                        @*<i class="fa fa-fw fa-circle text-green-300"></i> <a href="@Url.Action("selectsubject","takeQuiz", new {id = item.CourseId})"> Take Quiz</a>*@
+
+                    </div>
             </div>
         </div>
 

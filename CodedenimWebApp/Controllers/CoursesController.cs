@@ -15,6 +15,7 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using PayStack.Net.Apis;
+using System.Collections.Generic;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -135,14 +136,28 @@ namespace CodedenimWebApp.Controllers
         {
             if (id != null)
             {
-                var viewModel = new CourseContentVm
-                {
-                    Modules = db.Modules.Include(x => x.Topics).Include(x => x.Course)
-                        .Where(x => x.CourseId.Equals((int)id)).ToList(),
-                    Topics = db.Topics.Include(x => x.MaterialUploads).ToList(),
-                    CourseId = (int)id
+                var userId = User.Identity.GetUserId();
+                var viewModel = new CourseContentVm();
+                var myVar = new List<ModulesVm>();
 
-                };
+                var modules = db.Modules.Include(x => x.Topics).Include(x => x.Course)
+                    .Where(x => x.CourseId.Equals((int)id)).ToList();
+               
+                foreach (var item in modules)
+                {
+                    var modulesVm = new ModulesVm();
+                    modulesVm.ModuleId = item.ModuleId;
+                    modulesVm.ModuleName = item.ModuleName;
+                    modulesVm.ExpectedTime = item.ExpectedTime;
+                    modulesVm.ModuleDescription = item.ModuleDescription;
+                    modulesVm.IsModuleTaken = db.StudentTopicQuizs.Where(x => x.ModuleId.Equals(item.ModuleId) && x.StudentId.Equals(userId)).Any();
+                    myVar.Add(modulesVm);
+                }
+                viewModel.Module = myVar;
+                viewModel.Topics = db.Topics.Include(x => x.MaterialUploads).ToList();
+                viewModel.CourseId = (int)id;
+
+                
 
               RedirectToAction("CalculatePercentage","Students", new
                 {
@@ -611,7 +626,7 @@ namespace CodedenimWebApp.Controllers
 
                             string[] ssizes = validCheck.Split(' ');
                             string[] myArray = new string[2];
-                            for (int i = 0; i <ssizes.Length; i++)
+                            for (int i = 0; i < ssizes.Length; i++)
                             {
                                 myArray[i] = ssizes[i];
                             }
