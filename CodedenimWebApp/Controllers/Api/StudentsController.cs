@@ -113,8 +113,30 @@ namespace CodedenimWebApp.Controllers.Api
 
      
         }
-
-
+        /// <summary>
+        /// method that checks if the student has paid
+        /// this method takes in the student id and the categoryId and check for the payment 
+        /// on the student payment table and check if the status is true
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="learningPathId"></param>
+        /// <returns></returns>
+        //GET: api/Student
+        //[ResponseType(typeof(Student))]
+        [HttpGet]
+        [ResponseType(typeof(Student))]
+        [System.Web.Http.Route("PaymentStatus")]
+        public async Task<IHttpActionResult> GetPaymentStatus(string email, int courseCategoryId)
+        {
+            var studentEmail = new ConvertEmail1();
+            var studentId = studentEmail.ConvertEmailToId(email);
+            var payment = _db.StudentPayments.Where(x => x.StudentId.Equals(studentId) && x.CourseCategoryId.Equals(courseCategoryId) && x.IsPayed.Equals(true)).FirstOrDefault();
+            if (payment != null)
+            {
+                return Ok("Has Paid");
+            }
+            return Unauthorized();
+        }
 
 
         //GET: api/Student

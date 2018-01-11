@@ -2,102 +2,275 @@
 
 @{
     ViewBag.Title = "Register";
-    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    Layout = "~/Views/Shared/_LoginLayoutNew.cshtml";
 }
 
 
-<div id="content">
-<div class="container-fluid">
-    <div class="lock-container">
-        <div class="panel panel-default text-center paper-shadow" data-z="0.5">
-            <h1 class="text-display-1">Create account</h1>
-            <div class="panel-body">
-                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
-                {
+@*<div id="content">
+    <div class="container-fluid">
+        <div class="lock-container">
+            <div class="panel panel-default text-center paper-shadow" data-z="0.5">
+                <h1 class="text-display-1">Create account</h1>
+                <div class="panel-body">
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
 
 
-                    @Html.AntiForgeryToken()
+                        @Html.AntiForgeryToken()
 
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-
-                    <label for="exampleInputFirstName">First name</label>
-                    <div class="form-control-material">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
-                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "exampleInputFirstName", @placeholder = "Your first name" } })
-                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-                  
-                    </div>
+                        <label for="exampleInputFirstName">First name</label>
+                        <div class="form-control-material">
+
+
+                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "exampleInputFirstName", @placeholder = "Your first name" } })
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+
+                        </div>
 
 
 
 
-                    <label for="exampleInputLastName">Last name</label>
-                    <div class="form-control-material">
+                        <label for="exampleInputLastName">Last name</label>
+                        <div class="form-control-material">
 
-                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id = "exampleInputLastName", @placeholder = "Your Last name" } })
-                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-            
-                        @*<input type="email" class="form-control" id="exampleInputLastName" placeholder="Your last name">
-                            <label for="exampleInputLastName">Last name</label>*@
-                    </div>
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id = "exampleInputLastName", @placeholder = "Your Last name" } })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
 
-                    <label for="inputEmail3">Email address</label>
-                            <div class="form-control-material">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "exampleInputEmailName", @type = "email", @placeholder = "Your Email name" } })
-                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                                    @*<input type="email" class="form-control" id="inputEmail3" placeholder="Email">*@
-                               
-                                </div>
-                            </div>
-         
 
-                    <label for="inputPassword3">Account Type</label>
-                            <div class="form-control-material">
-                                <div class="form-group">
-                                    <div class="col-md-10">
-                                        @Html.EnumDropDownListFor(model => model.AccountType, htmlAttributes: new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.AccountType, "", new { @class = "text-danger" })
+                        </div>
+
+                        <label for="inputEmail3">Email address</label>
+                                <div class="form-control-material">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "exampleInputEmailName", @type = "email", @placeholder = "Your Email name" } })
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+
                                     </div>
                                 </div>
+
+
+                        <label for="inputPassword3">Account Type</label>
+                                <div class="form-control-material">
+                                    <div class="form-group">
+                                        <div class="col-md-10">
+                                            @Html.EnumDropDownListFor(model => model.AccountType, htmlAttributes: new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.AccountType, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                        <label for="inputPassword3">Password</label>
+                                <div class="form-control-material">
+
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                                </div>
+
+
+                        <label for="inputPassword3"> Confirm Password</label>
+                                <div class="form-control-material">
+                                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+
+
+                                </div>
+
+
+
+
+                        <div class="form-group margin-none">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button class="btn btn-primary js-submit paper-shadow relative" data-z="0.5" data-hover-z="1" data-animated>Register</button>
                             </div>
-                  
-                    <label for="inputPassword3">Password</label>
-                            <div class="form-control-material">
-
-                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                              
-                                @*<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                                    <label for="inputPassword3">Password</label>*@
-                            </div>
-                 
-               
-                    <label for="inputPassword3"> Confirm Password</label>
-                            <div class="form-control-material">
-                                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-                                @*<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                                *@  
-                           
-                            </div>
-              
-
-
-
-                    <div class="form-group margin-none">
-                        <div class="col-md-offset-2 col-md-10">
-                            <button class="btn btn-primary js-submit paper-shadow relative" data-z="0.5" data-hover-z="1" data-animated>Register</button>
                         </div>
-                    </div>
 
 
-                }
+                    }
+                </div>
             </div>
         </div>
     </div>
+    </div>*@
+
+
+
+
+
+<div class="row">
+    <div class="col-xs-10 col-sm-10 col-md-3 col-lg-4 hidden-xs hidden-sm">
+        @*<h1 class="txt-color-red login-header-big">Codedenim</h1>
+        <div class="hero">
+
+            <div class="pull-left login-desc-box-l">
+                <h4 class="paragraph-header">It's Okay to be Smart. Experience the simplicity of Learning with Codedenim, everywhere you go!</h4>
+                <div class="login-app-icons">
+                  
+                </div>
+            </div>
+
+            <img src="~/Content/LoginAssets/img/demo/iphoneview.png" alt="" class="pull-right display-image" style="width:210px">
+
+        </div>*@
+
+      
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+        <div class="well no-padding">
+
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "smart-form client-form", role = "form", @id = "smart-form-register" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                <header>
+                    Registration is FREE*
+                </header>
+
+                <fieldset>
+                    @*<section>
+                            <label class="input">
+                                <i class="icon-append fa fa-user"></i>
+                                <input type="text" name="username" placeholder="Username">
+                                <b class="tooltip tooltip-bottom-right">Needed to enter the website</b>
+                            </label>
+                        </section>*@
+
+                    <section>
+                        <label class="input">
+                            <i class="icon-append fa fa-envelope"></i>
+                            <input type="email" name="Email" asp-for="Email" placeholder="Email address">
+                            <b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
+                        </label>
+                    </section>
+
+                    <section>
+                        <label class="input">
+                            <i class="icon-append fa fa-lock"></i>
+                            <input type="password" name="Password" asp-for="Password" placeholder="Password" id="password">
+                            <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
+                        </label>
+                    </section>
+
+                    <section>
+                        <label class="input">
+                            <i class="icon-append fa fa-lock"></i>
+                            <input type="password" name="ConfirmPassword" placeholder="Confirm password">
+                            <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
+                        </label>
+                    </section>
+                </fieldset>
+
+                <fieldset>
+                    <div class="row">
+                        <section class="col col-6">
+                            <label class="input">
+                                <input type="text" name="Firstname" placeholder="First name">
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="input">
+                                <input type="text" name="Lastname" placeholder="Last name">
+                            </label>
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        @*<section class="col col-6">
+                            <label class="select">
+                                <select name="gender">
+                                    <option value="0" selected="" disabled="">Gender</option>
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
+                                    <option value="3">Prefer not to answer</option>
+                                </select> <i></i>
+                            </label>
+                        </section>*@
+
+
+                        <section class="col col-6">
+                            <label class="select">
+                                @Html.EnumDropDownListFor(model => model.AccountType,"Student Type", htmlAttributes: new { @class = "form-control", @placeholder = "Student Type"})
+                                @Html.ValidationMessageFor(model => model.AccountType, "", new { @class = "text-danger" })
+                                <i></i>
+                            </label>
+                        </section>
+
+                        @*<section class="col col-6">
+                            <label class="input">
+                                <i class="icon-append fa fa-calendar"></i>
+                                <input type="text" name="request" placeholder="Request activation on" class="datepicker" data-dateformat='dd/mm/yy'>
+                            </label>
+                        </section>*@
+                    </div>
+
+                    @*<section>
+                            <label class="checkbox">
+                                <input type="checkbox" name="subscription" id="subscription">
+                                <i></i>I want to receive news and special offers
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" name="terms" id="terms">
+                                <i></i>I agree with the <a href="#" data-toggle="modal" data-target="#myModal"> Terms and Conditions </a>
+                            </label>
+                        </section>*@
+                </fieldset>
+                <footer>
+                    <button type="submit" class="btn btn-primary" style="background-color:forestgreen">
+                        Register
+                    </button>
+                </footer>
+
+                <div class="message">
+                    <i class="fa fa-check"></i>
+                    <p>
+                        Thank you for your registration!
+                    </p>
+                </div>
+
+
+            }
+
+            <h5 class="text-center">- Or sign in using -</h5>
+            <ul class="list-inline text-center">
+                <li>
+                    <a href="javascript:void(0);" class="btn btn-primary btn-circle"><i class="fa fa-facebook"></i></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" class="btn btn-info btn-circle"><i class="fa fa-twitter"></i></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" class="btn btn-warning btn-circle"><i class="fa fa-linkedin"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
-</div>
+
+<script>
+
+    // Model i agree button
+    $("#i-agree").click(function () {
+        $this = $("#terms");
+        if ($this.checked) {
+            $('#myModal').modal('toggle');
+        } else {
+            $this.prop('checked', true);
+            $('#myModal').modal('toggle');
+        }
+    });
+
+</script>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

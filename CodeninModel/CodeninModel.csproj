@@ -146,6 +146,7 @@
     <Compile Include="Quiz\CourseQuiz.cs" />
     <Compile Include="Quiz\QuizLog.cs" />
     <Compile Include="Quiz\QuizLogVm.cs" />
+    <Compile Include="RemitaPaymentLog.cs" />
     <Compile Include="StudentAssignedCourses.cs" />
     <Compile Include="StudentCourses.cs" />
     <Compile Include="StudentPayment.cs" />

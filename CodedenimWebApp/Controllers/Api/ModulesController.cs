@@ -45,24 +45,25 @@ namespace CodedenimWebApp.Controllers.Api
         public async Task<IHttpActionResult> GetModule(int id)
         {
             //Module module = await db.Modules.FindAsync(id);
-            //var module = await _db.Modules.Where(c => c.CourseId.Equals(id))
-            //                            .Select(m => new
-            //                            {
-            //                              m.ModuleId,
-            //                              m.ModuleName,
-            //                              m.ModuleDescription,
-            //                              m.ExpectedTime,
-            //                              m.CourseId
-            var module = await _db.Topics.Where(t => t.ModuleId.Equals(id))
-                                                .Select(t => new
-                                                {
-                                                    t.ModuleId,
-                                                    t.Module.ModuleName,
-                                                    t.TopicId,
-                                                    t.TopicName,
-                                                    t.ExpectedTime,
-                                                    t.StudentQuestions.Count
-                                                }).ToListAsync();
+            var module = await _db.Modules.Where(c => c.CourseId.Equals(id))
+                                        .Select(m => new
+                                        {
+                                            m.ModuleId,
+                                            m.ModuleName,
+                                            m.ModuleDescription,
+                                            m.ExpectedTime,
+                                            m.CourseId
+                                        }).ToListAsync();
+            //var module = await _db.Topics.Where(t => t.ModuleId.Equals(id))
+            //                                    .Select(t => new
+            //                                    {
+            //                                        t.ModuleId,
+            //                                        t.Module.ModuleName,
+            //                                        t.TopicId,
+            //                                        t.TopicName,
+            //                                        t.ExpectedTime,
+            //                                        t.StudentQuestions.Count
+            //                                    }).ToListAsync();
             //                            }).ToListAsync();
             if (module == null)
             {

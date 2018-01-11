@@ -1,6 +1,6 @@
 ﻿@using CodedenimWebApp.Controllers
 @using CodedenimWebApp.Models
-
+@using Microsoft.AspNet.Identity
 <!DOCTYPE html>
 <html class="transition-navbar-scroll top-navbar-xlarge bottom-footer" lang="en">
 <head>
@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Learning</title>
+    <title>Codedenin</title>
     
     
     <link href="~/Content/LMS/css/vendor.min.css" rel="stylesheet">
@@ -53,7 +53,7 @@
                 <li><a href="@Url.Action("Index","Courses")">Courses</a></li>
                 <li><a href="@Url.Action("About","Home")">About</a></li>
                 <li><a href="@Url.Action("Contact","Home")">Contact</a></li>
-                <li><a href="@Url.Action("ConfirmTutor","Tutors")">Tutor</a></li>
+                @*<li><a href="@Url.Action("ConfirmTutor","Tutors")">Tutor</a></li>*@
             </ul>
             <div class="navbar-right">
                 <ul class="nav navbar-nav navbar-nav-bordered navbar-nav-margin-right">
@@ -62,7 +62,8 @@
                 {
                     <li class="dropdown user">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="images/people/110/guy-6.jpg" alt="" class="img-circle"/> Bill<span class="caret"></span>
+                              <img src="@Url.Action("RenderImage", "Students", new { studentId = User.Identity.GetUserId()})" width="100" height="100" />
+                            @*<img src="images/people/110/guy-6.jpg" alt="" class="img-circle"/> Bill<span class="caret"></span>*@
                         </a>
 
                         <ul class="dropdown-menu" role="menu">

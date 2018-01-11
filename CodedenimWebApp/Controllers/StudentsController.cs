@@ -23,7 +23,7 @@ namespace CodedenimWebApp.Controllers
     {
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
-        private int _progress;
+        private double _progress;
         // GET: Students
         public async Task<ActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
@@ -89,8 +89,8 @@ namespace CodedenimWebApp.Controllers
             if (User.IsInRole(RoleName.UnderGraduate) || User.IsInRole(RoleName.Student) || User.IsInRole(RoleName.Corper))
             {
                 if (paymentRecord == null)
-                {   
-                    return RedirectToAction("CourseCategoryPayment", "CourseCategories");
+                {
+                    return RedirectToAction("LearningPathDetails", "CourseCategories");
                 }
 
                 var student = _db.AssignCourseCategories.Include(x => x.CourseCategory)
@@ -158,8 +158,8 @@ namespace CodedenimWebApp.Controllers
         public async Task<ActionResult> CorperDashboard()
         {
             var user = User.Identity.GetUserId();
-         
-            var payedCourses = await _db.StudentPayments.Where(x => x.StudentId.Equals(user)).Select(x => x.CourseCategoryId).ToListAsync();
+
+            var payedCourses = await _db.StudentPayments.Where(x => x.StudentId.Equals(user) && x.IsPayed.Equals(true)).Select(x => x.CourseCategoryId).ToListAsync();
             var categoryId = new List<AssignCourseCategory>();
             foreach (var item in payedCourses)
             {
@@ -168,9 +168,9 @@ namespace CodedenimWebApp.Controllers
               .FirstOrDefaultAsync();
                 categoryId.Add(corperCourses);
             }
-            
+
             var quizTaken = _progress;
-                
+
             var courseCategory = await _db.CourseCategories.Where(x => x.StudentType.Equals(RoleName.Corper))
                 .ToListAsync();
             var student = await _db.Students.Where(x => x.StudentId.Equals(user)).ToListAsync();
@@ -179,30 +179,20 @@ namespace CodedenimWebApp.Controllers
                              .ToList();
             var quiz = _db.QuizLogs.Where(x => x.StudentId.Equals(user)).Take(1).ToList();
             var quizTakenList = _db.QuizLogs.Where(x => x.StudentId.Equals(user)).AsEnumerable().DistinctBy(x => x.ModuleId).Count();
-            if (quizTakenList != 0)
+            var moduleParCourseList = new List<Module>();
+            foreach (var module in categoryId.DistinctBy(x => x.CourseCategoryId))
             {
-                _progress = (quizTakenList * 100) / quizTakenList;
-            }
-            else
-            {
-                _progress = 0;
-            }
-
-            // var profilePics = GetImage();
-            var certificate = new List<Course>();
-            foreach (var item in categoryId)
-            {              
-                var myModule = _db.Modules.Where(x => x.CourseId.Equals(item.CourseId)).Count();
-                foreach (var modules in item.Courses.Modules)
+                foreach (var singleModule in module.Courses.Modules)
                 {
-                    var moduleQuizTaken = _db.StudentTopicQuizs.Include(x => x.Module).Where(x => x.ModuleId.Equals(modules.CourseId) && x.StudentId.Equals(user)).Count();
-                    if (myModule == moduleQuizTaken)
-                    {
-                        certificate.Add(item.Courses);
-                    }
+                    
+                    var  moduleParCourseList1 = _db.Modules.Where(x => x.ModuleId.Equals(singleModule.ModuleId) && x.CourseId.Equals(singleModule.CourseId)).FirstOrDefault();
+
+                    moduleParCourseList.Add(moduleParCourseList1);
                 }
-               
             }
+            ProgressBar(quizTakenList, moduleParCourseList.Count());
+            // var profilePics = GetImage();
+            List<Course> certificate = GenerateCertificate(user, categoryId);
             var model = new DashboardVm()
             {
                 AssignCourseCategories = categoryId,
@@ -221,7 +211,59 @@ namespace CodedenimWebApp.Controllers
             return View(model);
         }
 
-      
+        private void ProgressBar(int quizTakenList,int moduleNo)
+        {
+           
+               // var moduleNumber = _db.StudentTopicQuizs.Where(x => x.ModuleId.Equals(module.ModuleId)).FirstOrDefault();
+
+                if (quizTakenList != 0)
+                {
+                    _progress = (quizTakenList * 100) / moduleNo;
+                }
+                else
+                {
+                    _progress = 0;
+                }
+            
+        }
+
+        /// <summary>
+        /// this is refactored method to generate certificate of co
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="categoryId"></param>
+        /// <returns></returns>
+        private List<Course> GenerateCertificate(string user, List<AssignCourseCategory> categoryId)
+        {
+            var certificate = new List<Course>();
+            foreach (var item in categoryId)
+            {
+                var myCourse = _db.Courses.Where(x => x.CourseId.Equals(item.CourseId)).FirstOrDefault();
+                //  var myModule = _db.Modules.Where(x => x.CourseId.Equals(item.CourseId)).ToList();
+                List<Module> myModule = ModulesNumber(myCourse);
+                var numberOfModules = myModule.Count();
+                foreach (var modules in item.Courses.Modules)
+                {
+                    //need to fix the certificate it generates
+                    var NumberOfmoduleQuizTaken = _db.StudentTopicQuizs.Where(x => x.StudentId.Equals(user)).DistinctBy(x => x.ModuleId).Count();
+                    var moduleQuizTaken = _db.StudentTopicQuizs.Include(x => x.Module).Where(x => x.ModuleId.Equals(modules.ModuleId) && x.StudentId.Equals(user)).Count();
+                    if (numberOfModules == NumberOfmoduleQuizTaken)
+                    {
+                        certificate.Add(item.Courses);
+                    }
+                }
+
+            }
+
+            return certificate.DistinctBy(x => x.CourseId).ToList();
+        }
+
+        private List<Module> ModulesNumber(Course myCourse)
+        {
+            return _db.Modules.Where(x => x.CourseId.Equals(myCourse.CourseId)).ToList();
+        }
+
+
         //
         public ActionResult Certificate()
         {

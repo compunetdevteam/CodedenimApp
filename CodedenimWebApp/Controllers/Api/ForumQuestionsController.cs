@@ -89,7 +89,8 @@ namespace CodedenimWebApp.Controllers.Api.ForumApi
             {
                 return BadRequest(ModelState);
             }
-
+            ConvertEmail convertEmail = new ConvertEmail();
+             forumQuestion.StudentId  =  convertEmail.ConvertEmailToId(forumQuestion.StudentId);
             db.ForumQuestions.Add(forumQuestion);
             await db.SaveChangesAsync();
 

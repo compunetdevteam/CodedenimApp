@@ -14,7 +14,7 @@ namespace CodedenimWebApp.ViewModels
         public List<ForumQuestion> ForumQuestion { get; set; }
         public List<QuizLog> StudentQuiz { get; set; }
         public byte[] Profile { get; set; }
-        public int Progress { get; set; }
+        public double Progress { get; set; }
         public List<Course> CourseCertificate { get; set; }
 
     }

@@ -3,7 +3,9 @@ using CodedenimWebApp.Service;
 using CodedenimWebApp.Services;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OfficeOpenXml;
 using PayStack.Net;
@@ -24,6 +26,7 @@ namespace CodedenimWebApp.Controllers
     public class CourseCategoriesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private RemitaHash myHash = new RemitaHash();
 
         // GET: CourseCategories
         public async Task<ActionResult> Index()
@@ -137,70 +140,70 @@ namespace CodedenimWebApp.Controllers
 
         }
 
-        public async Task<ActionResult> ConfrimPayment(string reference)
-        {
-            var testOrLiveSecret = ConfigurationManager.AppSettings["PayStackSecret"];
-            var api = new PayStackApi(testOrLiveSecret);
-            //Verifying a transaction
-            var verifyResponse = api.Transactions.Verify(reference); // auto or supplied when initializing;
-            if (verifyResponse.Status)
-            {
-                var convertedValues = new List<SelectableEnumItem>();
-                var valuepair = verifyResponse.Data.Metadata.Where(x => x.Key.Contains("custom")).Select(s => s.Value);
+        //public async Task<ActionResult> ConfrimPayment(string reference)
+        //{
+        //    var testOrLiveSecret = ConfigurationManager.AppSettings["PayStackSecret"];
+        //    var api = new PayStackApi(testOrLiveSecret);
+        //    //Verifying a transaction
+        //    var verifyResponse = api.Transactions.Verify(reference); // auto or supplied when initializing;
+        //    if (verifyResponse.Status)
+        //    {
+        //        var convertedValues = new List<SelectableEnumItem>();
+        //        var valuepair = verifyResponse.Data.Metadata.Where(x => x.Key.Contains("custom")).Select(s => s.Value);
 
-                foreach (var item in valuepair)
-                {
-                    convertedValues = ((JArray)item).Select(x => new SelectableEnumItem
-                    {
-                        key = (string)x["display_name"],
-                        value = (string)x["value"]
-                    }).ToList();
-                }
-                var userId = User.Identity.GetUserId();
-                var student = await db.Students.FindAsync(userId);
-                var ispayedAll = convertedValues.Where(x => x.key.Equals("ispayedall")).Select(s => s.value)
-                                .FirstOrDefault();
-                if (ispayedAll.ToUpper().Equals("TRUE"))
-                {
-                    var courseCategory = await db.AssignCourseCategories.Include(i => i.CourseCategory).AsNoTracking()
-                        .Where(x => x.CourseCategory.StudentType.Equals(student.AccountType))
-                        .ToListAsync();
-                    foreach (var coureCat in courseCategory)
-                    {
-                        var studentPayments = new StudentPayment()
-                        {
-                            PaymentDateTime = DateTime.Now,
-                            CourseCategoryId = coureCat.CourseCategoryId,
-                            StudentId = convertedValues.Where(x => x.key.Equals("studentid")).Select(s => s.value).FirstOrDefault(),
-                            Amount = KoboToNaira.ConvertKoboToNaira(verifyResponse.Data.Amount),
-                            IsPayed = true,
-                            AmountPaid = KoboToNaira.ConvertKoboToNaira(verifyResponse.Data.Amount),
+        //        foreach (var item in valuepair)
+        //        {
+        //            convertedValues = ((JArray)item).Select(x => new SelectableEnumItem
+        //            {
+        //                key = (string)x["display_name"],
+        //                value = (string)x["value"]
+        //            }).ToList();
+        //        }
+        //        var userId = User.Identity.GetUserId();
+        //        var student = await db.Students.FindAsync(userId);
+        //        var ispayedAll = convertedValues.Where(x => x.key.Equals("ispayedall")).Select(s => s.value)
+        //                        .FirstOrDefault();
+        //        if (ispayedAll.ToUpper().Equals("TRUE"))
+        //        {
+        //            var courseCategory = await db.AssignCourseCategories.Include(i => i.CourseCategory).AsNoTracking()
+        //                .Where(x => x.CourseCategory.StudentType.Equals(student.AccountType))
+        //                .ToListAsync();
+        //            foreach (var coureCat in courseCategory)
+        //            {
+        //                var studentPayments = new StudentPayment()
+        //                {
+        //                    PaymentDateTime = DateTime.Now,
+        //                    CourseCategoryId = coureCat.CourseCategoryId,
+        //                    StudentId = convertedValues.Where(x => x.key.Equals("studentid")).Select(s => s.value).FirstOrDefault(),
+        //                    Amount = KoboToNaira.ConvertKoboToNaira(verifyResponse.Data.Amount),
+        //                    IsPayed = true,
+        //                    AmountPaid = KoboToNaira.ConvertKoboToNaira(verifyResponse.Data.Amount),
 
-                        };
-                        db.StudentPayments.Add(studentPayments);
+        //                };
+        //                db.StudentPayments.Add(studentPayments);
 
-                    }
-                    await db.SaveChangesAsync();
-                    return RedirectToAction("DashBoard", "Students");
-                }
-                var studentPayment = new StudentPayment()
-                {
-                    PaymentDateTime = DateTime.Now,
-                    CourseCategoryId = Convert.ToInt32(convertedValues.Where(x => x.key.Equals("coursecategoryid")).Select(s => s.value)
-                        .FirstOrDefault()),
-                    StudentId = convertedValues.Where(x => x.key.Equals("studentid")).Select(s => s.value).FirstOrDefault(),
-                    ReferenceNo = reference,
-                    Amount = KoboToNaira.ConvertKoboToNaira(verifyResponse.Data.Amount),
-                    IsPayed = true,
-                    AmountPaid = KoboToNaira.ConvertKoboToNaira(verifyResponse.Data.Amount),
+        //            }
+        //            await db.SaveChangesAsync();
+        //            return RedirectToAction("DashBoard", "Students");
+        //        }
+        //        var studentPayment = new StudentPayment()
+        //        {
+        //            PaymentDateTime = DateTime.Now,
+        //            CourseCategoryId = Convert.ToInt32(convertedValues.Where(x => x.key.Equals("coursecategoryid")).Select(s => s.value)
+        //                .FirstOrDefault()),
+        //            StudentId = convertedValues.Where(x => x.key.Equals("studentid")).Select(s => s.value).FirstOrDefault(),
+        //            ReferenceNo = reference,
+        //            Amount = KoboToNaira.ConvertKoboToNaira(verifyResponse.Data.Amount),
+        //            IsPayed = true,
+        //            AmountPaid = KoboToNaira.ConvertKoboToNaira(verifyResponse.Data.Amount),
 
-                };
-                db.StudentPayments.Add(studentPayment);
-                await db.SaveChangesAsync();
-                return RedirectToAction("MyCoursesAsync", "Courses");
-            }
-            return RedirectToAction("ListCourses", "Courses");
-        }
+        //        };
+        //        db.StudentPayments.Add(studentPayment);
+        //        await db.SaveChangesAsync();
+        //        return RedirectToAction("MyCoursesAsync", "Courses");
+        //    }
+        //    return RedirectToAction("ListCourses", "Courses");
+        //}
 
 
 
@@ -212,6 +215,233 @@ namespace CodedenimWebApp.Controllers
                 var kobo = naira * 100;
                 return (int)kobo;
             }
+        }
+        public async Task<ActionResult> CategoryDetails(int id)
+        {
+            var userId = User.Identity.GetUserId();
+
+            var hasPayed = await db.StudentPayments.AsNoTracking().Where(x => x.StudentId.Equals(userId) &&
+                                       x.CourseCategoryId.Equals((int)id)).FirstOrDefaultAsync();
+            if (hasPayed != null)
+            {
+                if (hasPayed.IsPayed.Equals(false))
+                {
+                    string serviceTypeId = string.Empty;
+
+
+                    var hashed = myHash.HashRemitedValidate(hasPayed.OrderId, RemitaConfigParams.APIKEY, RemitaConfigParams.MERCHANTID);
+                    string checkurl = RemitaConfigParams.CHECKSTATUSURL + "/" + RemitaConfigParams.MERCHANTID + "/" + hasPayed.OrderId + "/" + hashed + "/" + "orderstatus.reg";
+                    string jsondata = new WebClient().DownloadString(checkurl);
+                    var result = JsonConvert.DeserializeObject<RemitaResponse>(jsondata);
+                    if (string.IsNullOrEmpty(result.Rrr))
+                    {
+                        var entry = db.Entry(hasPayed);
+                        if (entry.State == EntityState.Detached)
+                            db.StudentPayments.Attach(hasPayed);
+                        db.StudentPayments.Remove(hasPayed);
+                        await db.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        return RedirectToAction("ConfrimPayment", new { orderID = hasPayed.OrderId });
+                    }
+
+
+
+                }
+                else
+                {
+                    //return to the receipt page
+                }
+            }
+
+            System.Threading.Thread.Sleep(1);
+            long milliseconds = DateTime.Now.Ticks;
+            var url = Url.Action("ConfrimPayment", "CourseCategories", new { }, protocol: Request.Url.Scheme);
+
+        
+            var student = db.Students.Where(x => x.StudentId.Equals(userId)).Select(s => new { s.AccountType,
+                s.Email, s.PhoneNumber, s.FirstName, s.LastName, s.MiddleName }).SingleOrDefault();
+            var fullName = $"{student.LastName} {student.FirstName} {student.MiddleName}";
+
+            var model = new List<CourseCategory>();
+
+            var assignedCourse = db.AssignCourseCategories.Include(i => i.CourseCategory).Include(i => i.Courses)
+                .AsNoTracking().Where(x => x.CourseCategory.StudentType.Equals(student.AccountType) && x.CourseCategoryId.Equals(id)).ToList();
+            var courseDetails = new CourseCategoryDetailVm();
+            var categories = db.CourseCategories.Find(id);
+            var assingeCourses = db.AssignCourseCategories.Where(x => x.CourseCategoryId.Equals(id)).ToList();
+
+            courseDetails.CourseCategory = categories;
+            courseDetails.AssignedCourses = assingeCourses;
+            courseDetails.orderId = milliseconds.ToString();
+            courseDetails.responseurl = url;
+            courseDetails.StudentId = userId;
+            courseDetails.payerEmail = student.Email;
+            courseDetails.payerName = fullName;
+            courseDetails.CourseCategoryId = id;
+            courseDetails.payerPhone = student.PhoneNumber;
+
+            courseDetails.amt = categories.Amount.ToString();
+            return View(courseDetails);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreatePayment(CourseCategoryDetailVm model)
+        {
+            if (ModelState.IsValid)
+            {
+                //var hasTransaction = await db.SchoolFeePayments.AsNoTracking().Where(x => x.StudentId.Equals(model.StudentId)
+                //                                && x.SessionId.Equals(model.SessionId)
+                //                                && x.FeeCategory.Equals(model.FeeCategory))
+                //                                .ToListAsync();
+                model.paymenttype = model.RemitaPaymentType.ToString().Replace("_", " ").ToLower();             
+                
+                if (string.IsNullOrEmpty(model.payerEmail))
+                {
+                    model.payerEmail = $"{model.payerName}@codednim.com";
+                }
+
+
+                var studentPayment = new StudentPayment
+                {
+                    OrderId = model.orderId,
+                    PaymentDateTime = DateTime.Now,
+
+                    StudentId = model.StudentId,
+                    CourseCategoryId = model.CourseCategoryId,
+                    Amount = Convert.ToDecimal(model.amt),
+                
+                };
+                db.StudentPayments.Add(studentPayment);
+                var log = new RemitaPaymentLog
+                {
+                    OrderId = model.orderId,
+                    PaymentName = "Course Category Payment",
+                    PaymentDate = DateTime.Now,
+                    Amount = model.amt.ToString(),
+                    PayerName = model.payerName
+
+
+                };
+                db.RemitaPaymentLogs.Add(log);
+                await db.SaveChangesAsync();
+                model.serviceTypeId = RemitaConfigParams.SERVICETYPEID;
+                model.merchantId = RemitaConfigParams.MERCHANTID;
+                
+                model.hash = myHash.HashRemitaRequest(RemitaConfigParams.MERCHANTID, RemitaConfigParams.SERVICETYPEID
+                    , model.orderId, model.amt, model.responseurl, RemitaConfigParams.APIKEY);
+                return RedirectToAction("SubmitRemita", model);
+            }
+            return View(model);
+
+          
+        }
+
+
+        [AllowAnonymous]
+        public ActionResult SubmitRemita(CourseCategoryDetailVm model)
+        {
+            return View(model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult RetrySchoolFeePayment(string rrr)
+        {
+
+            var hashrrr = myHash.HashRrrQuery(rrr, RemitaConfigParams.APIKEY, RemitaConfigParams.MERCHANTID);
+            string posturl = RemitaConfigParams.CHECKSTATUSURL + "/" + RemitaConfigParams.MERCHANTID + "/" + rrr + "/" + hashrrr + "/" + "status.reg";
+            string jsondata = new WebClient().DownloadString(posturl);
+            var result = JsonConvert.DeserializeObject<RemitaResponse>(jsondata);
+            if (result.Status.Equals("00") || result.Status.Equals("01"))
+            {
+                return RedirectToAction("ConfrimPayment", "CourseCategories", new { RRR = result.Rrr, orderID = result.OrderId });
+            }
+            var url = Url.Action("ConfrimPayment", "CourseCategories", new { }, protocol: Request.Url.Scheme);
+            var hash = myHash.HashRemitedRePost(RemitaConfigParams.MERCHANTID, rrr, RemitaConfigParams.APIKEY);
+
+            var model = new RemitaRePostVm
+            {
+                rrr = rrr,
+                merchantId = RemitaConfigParams.MERCHANTID,
+                hash = hash,
+                responseurl = url
+            };
+            return View(model);
+        }
+
+
+
+        [AllowAnonymous]
+        public async Task<ActionResult> ConfrimPayment(string RRR, string orderID)
+        {
+            StudentPayment studentPayment;
+            RemitaResponse result = new RemitaResponse();
+            if (string.IsNullOrEmpty(orderID))
+            {
+                studentPayment = await db.StudentPayments.AsNoTracking()
+                    .Where(x => x.ReferenceNo.Equals(RRR))
+                    .FirstOrDefaultAsync();
+            }
+            else
+            {
+                studentPayment = await db.StudentPayments.AsNoTracking()
+                    .Where(x => x.OrderId.Equals(orderID.Trim()))
+                    .FirstOrDefaultAsync();
+            }
+            if (studentPayment != null)
+            {
+                if (studentPayment.IsPayed.Equals(true))
+                {
+                    result.Message = studentPayment.PaymentStatus;
+                    result.OrderId = studentPayment.OrderId;
+                    result.Rrr = studentPayment.ReferenceNo;
+                    result.Status = studentPayment.IsPayed.ToString();
+                    return RedirectToAction("ConfrimRrrPayment", "RemitaServices", result);
+                }
+                var log = await db.RemitaPaymentLogs.AsNoTracking().Where(x => x.OrderId.Equals(studentPayment.OrderId))
+                                            .FirstOrDefaultAsync();
+
+                var hashed = myHash.HashRemitedValidate(studentPayment.OrderId, RemitaConfigParams.APIKEY, RemitaConfigParams.MERCHANTID);
+                string url = RemitaConfigParams.CHECKSTATUSURL + "/" + RemitaConfigParams.MERCHANTID + "/" + studentPayment.OrderId + "/" + hashed + "/" + "orderstatus.reg";
+                string jsondata = new WebClient().DownloadString(url);
+                result = JsonConvert.DeserializeObject<RemitaResponse>(jsondata);
+
+                if (result.Status.Equals("00") || result.Status.Equals("01"))
+                {
+                    studentPayment.IsPayed = true;
+                    studentPayment.PaymentStatus = result.Message;
+                    studentPayment.ReferenceNo = result.Rrr;
+                    db.Entry(studentPayment).State = EntityState.Modified;
+
+                    log.Rrr = result.Rrr;
+                    log.StatusCode = result.Status;
+                    log.TransactionMessage = result.Message;
+                    db.Entry(log).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                }
+                else
+                {
+                    studentPayment.IsPayed = false;
+                    studentPayment.PaymentStatus = result.Message;
+                    studentPayment.ReferenceNo = result.Rrr;
+                    db.Entry(studentPayment).State = EntityState.Modified;
+
+                    log.Rrr = result.Rrr;
+                    log.StatusCode = result.Status;
+                    log.TransactionMessage = result.Message;
+                    db.Entry(log).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("RetrySchoolFeePayment", new { rrr = result.Rrr });
+
+                }
+
+                return RedirectToAction("ConfrimRrrPayment", "RemitaServices", result);
+            }
+            var message = $"There is no payment that has either the RRR {RRR} or" +
+                            $" Order Id {orderID} for School fee or Acceptance Fee";
+            return RedirectToAction("GetPaymentStatus", "RemitaServices", new { message = message });
+
         }
 
         // GET: CourseCategories/Details/5
@@ -237,7 +467,21 @@ namespace CodedenimWebApp.Controllers
             }
             return View(categoryVm);
         }
+        [Authorize]
+        public async Task<ActionResult> LearningPathDetails()
+        {
+            var userId = User.Identity.GetUserId();          
 
+
+            var student = await db.Students.Where( x => x.StudentId.Equals(userId)).Select(x => x.AccountType).SingleOrDefaultAsync();
+
+            var model = new List<CourseCategory>();
+
+            var assignedCourse =  db.AssignCourseCategories.Include(i => i.CourseCategory).Include(i => i.Courses)
+                .AsNoTracking().Where(x => x.CourseCategory.StudentType.Equals(student)).DistinctBy(s => s.CourseCategoryId).AsQueryable().ToList();
+
+            return View(assignedCourse);
+        }
         // GET: CourseCategories/Create
         public ActionResult Create()
         {
@@ -310,15 +554,40 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "CourseCategoryId,CategoryName,Amount,StudentType")] CourseCategory courseCategory)
+        public async Task<ActionResult> Edit([Bind(Include = "CourseCategoryId,CategoryName,Amount,StudentType,ImageLocation")] CourseCategory courseCategory,HttpPostedFileBase File)
         {
             if (ModelState.IsValid)
             {
+
+
+                var imageFromDB = db.CourseCategories.Where(x => x.CourseCategoryId.Equals(courseCategory.CourseCategoryId)).Select(x => x.ImageLocation).ToString();
+
+                DeletePhoto(courseCategory);
+                var fp = new UploadedFileProcessor();
+
+                var path = fp.ProcessFilePath(File);
+                courseCategory.ImageLocation = path.Path;
                 db.Entry(courseCategory).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(courseCategory);
+        }
+        /// <summary>
+        /// this method delete the photo from the file location on the server
+        /// </summary>
+        /// <param name="courseCategory"></param>
+        private void DeletePhoto(CourseCategory courseCategory)
+        {
+            var photoName = "";
+            photoName = courseCategory.ImageLocation;
+            string fullPath = Request.MapPath("~/MaterialUpload/" + photoName);
+
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+                //Session["DeleteSuccess"] = "Yes";
+            }
         }
 
         // GET: CourseCategories/Delete/5
@@ -439,13 +708,14 @@ namespace CodedenimWebApp.Controllers
                             db.CourseCategories.Add(mycategory);
 
                             recordCount++;
+                          //  return View("Index",mycategory);
                             //lastrecord = $"The last Updated record has the Student Id {studentId} and Subject Name is {subjectName}. Please Confirm!!!";
                         }
                     }
                 }
                 await db.SaveChangesAsync();
             }
-            return View("Index");
+            return View("ExcelUpload");
         }
     }
 }

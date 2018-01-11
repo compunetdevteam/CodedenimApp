@@ -8,7 +8,7 @@
 <br/>
 <br />
 
-@if (User.IsInRole(RoleName.Corper))
+@*@if (User.IsInRole(RoleName.Corper))
 {
     foreach (var item in Model)
      {
@@ -41,9 +41,7 @@
                          </span>
                      </a>
                  </div> 
-                 @*<div class="panel-body">
-                     <h4 class="text-headline margin-v-0-10"><a href="@Url.Action("StartPayment","CourseCategories")">@item.CategoryName</a></h4>
-                 </div>*@
+            
                  <hr class="margin-none"/>
                  <div class="panel-body">
                      <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("StartPayment","CourseCategories", new {id = item.CourseCategoryId})">Go to courses</a>
@@ -55,13 +53,13 @@
 }
 
 else
-{
-    if(Model.Any())
+{*@
+  @if(Model.Any())
      {
          <a href="@Url.Action("StartPayment", "CourseCategories")" class="btn btn-success">Pay For All</a>
 
      }
-    foreach (var item in Model)
+    @foreach (var item in Model)
      {
          <div class="item col-xs-12 col-sm-6 col-lg-2" style="margin-left:5%">
              <div class="panel panel-default paper-shadow" data-z="0.5">
@@ -88,7 +86,7 @@ else
          </div>
      }
 
-}
+
 
 
 

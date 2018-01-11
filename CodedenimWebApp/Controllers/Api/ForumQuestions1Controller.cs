@@ -30,11 +30,26 @@ namespace CodedenimWebApp.Controllers.Api
         [ResponseType(typeof(ForumQuestion))]
         public async Task<IHttpActionResult> GetForumQuestion(int id)
         {
-            ForumQuestion forumQuestion = await db.ForumQuestions.FindAsync(id);
+            //ForumQuestion forumQuestion = await db.ForumQuestions.FindAsync(id);
+            var forumQuestion = await db.ForumQuestions.Where(x => x.ForumQuestionId.Equals(id))
+                                            .Select(x => new
+                                                    {
+                                                x.CourseId,
+                                                x.ForumQuestionId,
+                                                x.QuestionName,
+                                                x.PostDate,                                                
+                                               // x.Students.UserName,
+                                                x.Title,
+                                               
+                                               
+                                                                                         
+                                                }).ToListAsync();
             if (forumQuestion == null)
             {
                 return NotFound();
             }
+
+           
 
             return Ok(forumQuestion);
         }

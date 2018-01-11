@@ -74,7 +74,8 @@ namespace CodedenimWebApp.Controllers.Api
                                                                     //x.Courses.CourseName,
                                                                     //x.Courses.CourseDescription,
                                                                     //x.Courses.FileLocation,
-                                                                //    x.CourseCategoryId,
+                                                           
+                                                                  //    x.CourseCategoryId,
                                                                 ////  //  x.ExpectedTime,
                                                                 /// 
                                                                 //    x.CourseCategory.CategoryName,
@@ -115,6 +116,8 @@ namespace CodedenimWebApp.Controllers.Api
             var studentEmail = student.ConvertEmailToId(email);
             var studentId = studentEmail;
             var studentType = _db.Students.Where(x => x.Email.Equals(email)).Select(x => x.AccountType).FirstOrDefault();
+
+           
             var myCourses = new List<MyCourseCategoryVm>();
             //if (studentType == RoleName.Corper)
             //{
@@ -129,14 +132,19 @@ namespace CodedenimWebApp.Controllers.Api
             //}
             //else
             //{
-                var category = _db.StudentPayments.Where(x => x.StudentId.Equals(studentId))
+                var category = _db.StudentPayments.Where(x => x.StudentId.Equals(studentId) && x.IsPayed.Equals(true))
                                 .Select(x => x.CourseCategoryId).ToList();
 
-                foreach (var categoryId in category)
+
+            foreach (var categoryId in category)
                 {
                    var couseCategory = await _db.CourseCategories
                         .Where(x => x.CourseCategoryId.Equals(categoryId))
                         .FirstOrDefaultAsync();
+
+
+
+
                     var vm = new MyCourseCategoryVm
                     {
                         CourseCategoryId = couseCategory.CourseCategoryId,

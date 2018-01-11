@@ -1,0 +1,301 @@
+﻿
+<!DOCTYPE html>
+<html lang="en-us" id="extr-page">
+
+<!-- Mirrored from 192.241.236.31/themes/preview/smartadmin/1.9.x/ajax/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Jan 2018 21:16:26 GMT -->
+<head>
+    @Styles.Render("~/Content/Slider")
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/megamenu/skins")
+
+    @Styles.Render("~/Content/MainStyleFile")
+
+    @Styles.Render("~/Content/PreLoader")
+    @Styles.Render("~/Content/MarginPadding")
+    @Styles.Render("~/Content/MediaQueries")
+    @Styles.Render("~/Content/SliderSettings")
+    @Styles.Render("~/Content/ThemeColor")
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    @Scripts.Render("~/bundles/js/Slider")
+    <script>
+        // You can also use "$(window).load(function() {"
+        $(function () {
+
+            // Slideshow 1
+            $("#slider1").responsiveSlides({
+                maxwidth: 800,
+                speed: 800
+            });
+
+            // Slideshow 2
+            $("#slider2").responsiveSlides({
+                auto: true,
+                pager: true,
+                speed: 300,
+                maxwidth: 1000
+            });
+
+            // Slideshow 3
+            $("#slider3").responsiveSlides({
+                manualControls: '#slider3-pager',
+                maxwidth: 540
+            });
+
+            // Slideshow 4
+            $("#slider4").responsiveSlides({
+                auto: true,
+                pager: true,
+                nav: true,
+                speed: 500,
+                namespace: "callbacks"
+            });
+
+        });
+    </script>
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/ExternalJs")
+    @Scripts.Render("~/bundles/JQueryPluginCollection")
+
+    @Scripts.Render("~/bundles/SliderScript")
+    @Styles.Render("~/Content/css/LoginAssets")
+</head>
+<body class="animated fadeInDown">
+
+    <header id="header" >
+       
+
+            <div id="logo-group">
+                <span id="logo">
+                    <a href="@Url.Action("index","Home")"> <img src="~/Content/img/CodeDemin.png" alt="Codedenim" style="height:40px; width:40px;" /> Codedenim</a>
+                </span>
+                @*<span id="logo"> <img src="~/Content/LandingPageAssets/img/logo.png" alt="Codedenim"> </span>*@
+            </div>
+
+            <span id="extr-page-header-space"> <span class="hidden-mobile hidden-xs">Need an account?</span> <a href="@Url.Action("Register","Account")" class="btn btn-blue-grey-900">Create account</a> </span>
+
+    </header>
+
+
+
+    <div id="main" role="main">
+
+        <!-- MAIN CONTENT -->
+        <div id="content" class="container">
+
+            @RenderBody()
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer" class="footer" data-bg-color="#212331">
+        <div class="container pt-70 pb-40">
+            <div class="row">
+                <div class=" col-md-">
+                    <div class="widget dark">
+                        @*<img class="mt-5 mb-20" alt="" src="~/Content/Assets/images/logo-white-footer.png">*@
+                        <p>Plateau State, Jos. Nigeria.</p>
+                        <ul class="list-inline mt-5">
+                            <li class="m-0 pl-10 pr-10"> <i class="fa fa-phone text-theme-colored2 mr-5"></i> <a class="text-gray" href="#">08136712272</a> </li>
+                            <li class="m-0 pl-10 pr-10"> <i class="fa fa-envelope-o text-theme-colored2 mr-5"></i> <a class="text-gray" href="#">info@ararockscreativecraftinstitute.com</a> </li>
+                            @*<li class="m-0 pl-10 pr-10"> <i class="fa fa-globe text-theme-colored2 mr-5"></i> <a class="text-gray" href="#">www.yourdomain.com</a> </li>*@
+                        </ul>
+                        <ul class="styled-icons icon-sm icon-bordered icon-circled clearfix mt-10">
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-vk"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="footer-bottom" data-bg-color="#2b2d3b">
+            <div class="container pt-20 pb-20">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="font-12 text-black-777 m-0 sm-text-center">@DateTime.UtcNow.Year Codedenim</p>
+                    </div>
+                    @*<div class="col-md-6 text-right">
+                            <div class="widget no-border m-0">
+                                <ul class="list-inline sm-text-center mt-5 font-12">
+                                    <li>
+                                        <a href="#">FAQ</a>
+                                    </li>
+                                    <li>|</li>
+                                    <li>
+                                        <a href="#">Help Desk</a>
+                                    </li>
+                                    <li>|</li>
+                                    <li>
+                                        <a href="#">Support</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/js/LoginAssets")
+    @*<script>
+            runAllForms();
+
+            $(function () {
+                // Validation
+                $("#login-form").validate({
+                    // Rules for form validation
+                    rules: {
+                        email: {
+                            required: true,
+                            email: true
+                        },
+                        password: {
+                            required: true,
+                            minlength: 3,
+                            maxlength: 20
+                        }
+                    },
+
+                    // Messages for form validation
+                    messages: {
+                        email: {
+                            required: 'Please enter your email address',
+                            email: 'Please enter a VALID email address'
+                        },
+                        password: {
+                            required: 'Please enter your password'
+                        }
+                    },
+
+                    // Do not change code below
+                    errorPlacement: function (error, element) {
+                        error.insertAfter(element.parent());
+                    }
+                });
+            });
+        </script>*@
+
+
+    <script>
+        runAllForms();
+
+        // Model i agree button
+        $("#i-agree").click(function () {
+            $this = $("#terms");
+            if ($this.checked) {
+                $('#myModal').modal('toggle');
+            } else {
+                $this.prop('checked', true);
+                $('#myModal').modal('toggle');
+            }
+        });
+
+        // Validation
+        $(function () {
+            // Validation
+            $("#smart-form-register").validate({
+
+                // Rules for form validation
+                rules: {
+                    username: {
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 20
+                    },
+                    passwordConfirm: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 20,
+                        equalTo: '#password'
+                    },
+                    firstname: {
+                        required: true
+                    },
+                    lastname: {
+                        required: true
+                    },
+                    gender: {
+                        required: true
+                    },
+                    terms: {
+                        required: true
+                    }
+                },
+
+                // Messages for form validation
+                messages: {
+                    login: {
+                        required: 'Please enter your login'
+                    },
+                    email: {
+                        required: 'Please enter your email address',
+                        email: 'Please enter a VALID email address'
+                    },
+                    password: {
+                        required: 'Please enter your password'
+                    },
+                    passwordConfirm: {
+                        required: 'Please enter your password one more time',
+                        equalTo: 'Please enter the same password as above'
+                    },
+                    firstname: {
+                        required: 'Please select your first name'
+                    },
+                    lastname: {
+                        required: 'Please select your last name'
+                    },
+                    gender: {
+                        required: 'Please select your gender'
+                    },
+                    terms: {
+                        required: 'You must agree with Terms and Conditions'
+                    }
+                },
+
+                // Ajax form submition
+                submitHandler: function (form) {
+                    $(form).ajaxSubmit({
+                        success: function () {
+                            $("#smart-form-register").addClass('submited');
+                        }
+                    });
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+
+        });
+    </script>
+    <!-- Your GOOGLE ANALYTICS CODE Below -->
+    <script>
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-43548732-6']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+
+<!-- Mirrored from 192.241.236.31/themes/preview/smartadmin/1.9.x/ajax/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Jan 2018 21:16:27 GMT -->
+</html>

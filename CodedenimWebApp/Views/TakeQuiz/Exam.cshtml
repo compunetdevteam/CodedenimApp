@@ -1,6 +1,6 @@
 ﻿@model CodeninModel.Quiz.StudentTopicQuiz
 @{
-    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
     //ViewBag.Title = "Exam";
         ViewBag.Title = @Model.StudentId;
     //ViewBag.StudentId = "4ee04a8e-e369-4e1b-ad4d-6c74e5b6f741";
@@ -22,7 +22,7 @@
                     </div>
                     <div class="media-body">
                         <p class="text-body-2 text-light margin-none">Questions</p>
-                        <p class="text-title text-primary margin-none">25</p>
+                        <p class="text-title text-primary margin-none">@Model.TotalQuestion</p>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="media-body">
                         <p class="text-body-2 text-light margin-none">Score</p>
-                        <p class="text-title text-success margin-none">800 pt</p>
+                        <p class="text-title text-success margin-none"> pt</p>
                     </div>
                 </div>
             </div>

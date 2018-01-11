@@ -1,52 +1,128 @@
 ﻿@using CodedenimWebApp.Models
- @{
-     ViewBag.Title = "Login";
-     Layout = "~/Views/Shared/_LoginLayout.cshtml";
- }
+@model LoginViewModel
+    @{
+        ViewBag.Title = "Login";
+        Layout = "~/Views/Shared/_LoginLayoutNew.cshtml";
+    }
 
-<div  class="login">
-    <div id="content">
-    @using (Html.BeginForm("Login", "Account", new {returnUrl = ViewBag.ReturnUrl}, FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
+ 
 
-        <div class="container-fluid">
-            <div class="lock-container">
-                <div class="panel panel-default text-center paper-shadow" data-z="0.5">
-                    <img src="~/Content/img/CodeDemin.png" class="rounded smr-size-3 d-block" style="height: 100px" />
-                    @*<img src="images/people/110/guy-5.jpg" class="img-circle width-80">*@
-                    <h1 class="text-display-1 text-center margin-bottom-none">Sign In</h1>
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label for="Email">Username</label>
 
-                            <div class="form-control-material">
-                                <input class="form-control md-vertical-align-center text-center" id="Email" name="Email" type="text" placeholder="Username" >
 
-                            </div>
+    <div class="row">
+
+        <div class="row">
+            <div class="col-xs-10 col-sm-10 col-md-3 col-lg-4 hidden-xs hidden-sm">
+                @*<h1 class="txt-color-red login-header-big">Codedenim</h1>
+                <div class="hero">
+
+                    <div class="pull-left login-desc-box-l">
+                        <h4 class="paragraph-header">It's Okay to be Smart. Experience the simplicity of Learning , everywhere you go!</h4>
+                        <div class="login-app-icons">
+                            
                         </div>
-                        <div class="form-group">
-                            <label for="Password">Password</label>
-
-                            <div class="form-control-material">
-                                <input class="form-control md-vertical-align-center text-center" id="Password" name="Password" type="password" placeholder="Enter Password">
-
-                            </div>
-                        </div>
-                        <button class="btn btn-primary"><i class="fa fa-fw fa-unlock-alt"></i>Login</button>
-
-                        @*<a href="website-student-dashboard.html" class="btn btn-primary">Login <i class="fa fa-fw fa-unlock-alt"></i></a>*@
-                        <a href="@Url.Action("ForgotPassword","Account")" class="forgot-password">Forgot password?</a>
-                        <a href="@Url.Action("Register","Account")" class="link-text-color">Create account</a>
                     </div>
-                </div>                                                                                                                                              
+
+                    <img src="~/Content/LoginAssets/img/demo/iphoneview.png" class="pull-right display-image" alt="" style="width:210px">
+
+                </div>*@
+
+
+
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+                <div class="well no-padding">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal smart-form client-form", role = "form", @id = "login-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <header>
+                            Sign In
+                        </header>
+
+                        <fieldset>
+
+
+                            <section>
+                                <label class="label">E-mail</label>
+                                <label class="input">
+                                    <i class="icon-append fa fa-user"></i>
+                                    <input type="email" name="Email">
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter email address/username</b>
+                                </label>
+                            </section>
+
+                            <section>
+                                <label class="label">Password</label>
+                                <label class="input">
+                                    <i class="icon-append fa fa-lock"></i>
+                                    <input type="password" asp-for="Password" name="Password">
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your password</b>
+                                </label>
+                                <div class="note">
+                                    <a href="@Url.Action("ForgotPassword","Account")">Forgot password?</a>
+                                </div>
+                            </section>
+
+                            @* //////////////////////////////////////////////////////////////////////////////////////////////////////// *@
+
+                            @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <section>
+                                    @Html.LabelFor(m => m.Email, new { @class = "label" })
+                                    <i class="icon-append fa fa-user"></i>
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "input" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter email address/username</b>
+                                </section>
+                                <section>
+                                    @Html.LabelFor(m => m.Password, new { @class = "label" })
+                                    <i class="icon-append fa fa-lock"></i>
+                                    @Html.PasswordFor(m => m.Password, new { @class = "input" })
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your password</b>
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                    <div class="note">
+                                        <a href="forgotpassword.html">Forgot password?</a>
+                                    </div>
+                                </section>*@
+                            <section>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="remember" checked="">
+                                    <i></i>Stay signed in
+                                </label>
+                            </section>
+                        </fieldset>
+
+                        <footer>
+
+                            <input type="submit" value=" Sign in" class="btn btn-primary"  style="background-color:forestgreen" />
+
+                        </footer>
+                        @*<div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Log in" class="btn btn-default" />
+                                </div>
+                            </div>*@
+
+                        @* Enable this once you have account confirmation enabled for password reset functionality
+                            <p>
+                                @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                            </p>*@
+
+                    }
+
+                </div>
             </div>
         </div>
-    }
     </div>
-</div>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @*<div class="col-md-4">
+        <section id="socialLoginForm">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+    </div>*@
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
 
 

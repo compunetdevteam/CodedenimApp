@@ -1,4 +1,5 @@
 ﻿@using CodedenimWebApp.Models
+@using Microsoft.AspNet.Identity
 <!DOCTYPE html>
 <html class="st-layout ls-top-navbar-large ls-bottom-footer show-sidebar sidebar-l1 sidebar-r3" lang="en">
 <head>
@@ -7,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Learning</title>
+    <title>Codedenim</title>
     <!-- Compressed Vendor BUNDLE
     Includes vendor (3rd party) styling such as the customized Bootstrap and other 3rd party libraries used for the current theme/module -->
     <link href="~/Content/LMS/css/vendor.min.css" rel="stylesheet">
@@ -47,494 +48,497 @@
     <![endif]-->
 </head>
 <body>
-<!-- Wrapper required for sidebar transitions -->
-<div class="st-container">
-<!-- Fixed navbar -->
-@if (User.IsInRole(RoleName.Corper) || User.IsInRole(RoleName.OtherStudent) || User.IsInRole(RoleName.UnderGraduate) || User.IsInRole(RoleName.Student))
-{ 
-<div class="navbar navbar-size-large navbar-default navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a href="#sidebar-menu" data-toggle="sidebar-menu" class="toggle pull-left visible-xs"><i class="fa fa-ellipsis-v"></i></a>
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <div class="navbar-brand navbar-brand-logo">
-                <img src="~/Content/img/CodeDemin.png" height="50" width="100" />
-            </div>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="main-nav">
-            <ul class="nav navbar-nav">
-                @*<li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Forum <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="@Url.Action("ForumThread","ForumQuestions")">Forum Home</a></li>
-                        <li><a href="@Url.Action("Create","ForumQuestions")">Ask A Question</a></li>
-                    </ul>
-                </li>*@
-                @*<li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="app-directory-grid.html">Courses Grid</a></li>
-                        <li><a href="app-directory-list.html">Courses List</a></li>
-                        <li><a href="app-student-course.html">Course Details</a></li>
-                    </ul>
-                </li>*@
-                <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Student <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="@Url.Action("CorperDashboard","Students")">Dashboard</a></li>
-                        <li class="active"><a href="@Url.Action("MyCoursesAsync", "Courses")">My Courses</a></li>
-                      <li><a href="@Url.Action("Edit", "Students")">Edit Profile</a></li>
-                   
-                    </ul>
-                </li>
-                @*<li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instructor <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="app-instructor-dashboard.html">Dashboard</a></li>
-                        <li><a href="app-instructor-courses.html">My Courses</a></li>
-                        <li><a href="app-instructor-course-edit-course.html">Edit Course</a></li>
-                        <li><a href="app-instructor-earnings.html">Earnings</a></li>
-                        <li><a href="app-instructor-statement.html">Statement</a></li>
-                        <li><a href="app-instructor-profile.html">Edit Profile</a></li>
-                        <li><a href="app-instructor-billing.html">Edit Billing</a></li>
-                        <li><a href="app-instructor-messages.html">Messages</a></li>
-                    </ul>
-                </li>*@
-            </ul>
-            <ul class="nav navbar-nav navbar-nav-bordered navbar-right">
-                <!-- notifications -->
-                <li class="dropdown notifications updates">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-bell-o"></i>
-                        <span class="badge badge-primary">0</span>
-                    </a>
-                    <ul class="dropdown-menu" role="notification">
-                        <li class="dropdown-header">Notifications</li>
-                        @*<li class="media">
-                            <div class="pull-right">
-                                <span class="label label-success">New</span>
-                            </div>
-                            <div class="media-left">
-                                <img src="images/people/50/guy-2.jpg" alt="people" class="img-circle" width="30">
-                            </div>
-                            <div class="media-body">
-                                <a href="#">Adrian D.</a> posted <a href="#">a photo</a> on his timeline.
-                                <br/>
-                                <span class="text-caption text-muted">5 mins ago</span>
-                            </div>
-                        </li>
-                        <li class="media">
-                            <div class="pull-right">
-                                <span class="label label-success">New</span>
-                            </div>
-                            <div class="media-left">
-                                <img src="images/people/50/guy-6.jpg" alt="people" class="img-circle" width="30">
-                            </div>
-                            <div class="media-body">
-                                <a href="#">Bill</a> posted <a href="#">a comment</a> on Adrian's recent <a href="#">post</a>.
-                                <br/>
-                                <span class="text-caption text-muted">3 hrs ago</span>
-                            </div>
-                        </li>
-                        <li class="media">
-                            <div class="media-left">
-                                <span class="icon-block s30 bg-grey-200"><i class="fa fa-plus"></i></span>
-                            </div>
-                            <div class="media-body">
-                                <a href="#">Mary D.</a> and <a href="#">Michelle</a> are now friends.
-                                <p>
-                                    <span class="text-caption text-muted">1 day ago</span>
-                                </p>
-                                <a href="">
-                                    <img class="width-30 img-circle" src="images/people/50/woman-6.jpg" alt="people">
+    <!-- Wrapper required for sidebar transitions -->
+    <div class="st-container">
+        <!-- Fixed navbar -->
+        @if (User.IsInRole(RoleName.Corper) || User.IsInRole(RoleName.OtherStudent) || User.IsInRole(RoleName.UnderGraduate) || User.IsInRole(RoleName.Student))
+        {
+            <div class="navbar navbar-size-large navbar-default navbar-fixed-top" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a href="#sidebar-menu" data-toggle="sidebar-menu" class="toggle pull-left visible-xs"><i class="fa fa-ellipsis-v"></i></a>
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <div class="navbar-brand navbar-brand-logo">
+                            <img src="~/Content/img/CodeDemin.png" height="50" width="100" />
+                        </div>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="main-nav">
+                        <ul class="nav navbar-nav">
+                            @*<li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Forum <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="@Url.Action("ForumThread","ForumQuestions")">Forum Home</a></li>
+                                        <li><a href="@Url.Action("Create","ForumQuestions")">Ask A Question</a></li>
+                                    </ul>
+                                </li>*@
+                            @*<li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="app-directory-grid.html">Courses Grid</a></li>
+                                        <li><a href="app-directory-list.html">Courses List</a></li>
+                                        <li><a href="app-student-course.html">Course Details</a></li>
+                                    </ul>
+                                </li>*@
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Student <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="@Url.Action("CorperDashboard","Students")">Dashboard</a></li>
+                                    <li class="active"><a href="@Url.Action("MyCoursesAsync", "Courses")">My Courses</a></li>
+                                    <li><a href="@Url.Action("Edit", "Students")">Edit Profile</a></li>
+
+                                </ul>
+                            </li>
+                            @*<li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instructor <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="app-instructor-dashboard.html">Dashboard</a></li>
+                                        <li><a href="app-instructor-courses.html">My Courses</a></li>
+                                        <li><a href="app-instructor-course-edit-course.html">Edit Course</a></li>
+                                        <li><a href="app-instructor-earnings.html">Earnings</a></li>
+                                        <li><a href="app-instructor-statement.html">Statement</a></li>
+                                        <li><a href="app-instructor-profile.html">Edit Profile</a></li>
+                                        <li><a href="app-instructor-billing.html">Edit Billing</a></li>
+                                        <li><a href="app-instructor-messages.html">Messages</a></li>
+                                    </ul>
+                                </li>*@
+                        </ul>
+                        <ul class="nav navbar-nav navbar-nav-bordered navbar-right">
+                            <!-- notifications -->
+                            <li class="dropdown notifications updates">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-bell-o"></i>
+                                    <span class="badge badge-primary">0</span>
                                 </a>
-                                <a href="">
-                                    <img class="width-30 img-circle" src="images/people/50/woman-3.jpg" alt="people">
+                                <ul class="dropdown-menu" role="notification">
+                                    <li class="dropdown-header">Notifications</li>
+                                    @*<li class="media">
+                                            <div class="pull-right">
+                                                <span class="label label-success">New</span>
+                                            </div>
+                                            <div class="media-left">
+                                                <img src="images/people/50/guy-2.jpg" alt="people" class="img-circle" width="30">
+                                            </div>
+                                            <div class="media-body">
+                                                <a href="#">Adrian D.</a> posted <a href="#">a photo</a> on his timeline.
+                                                <br/>
+                                                <span class="text-caption text-muted">5 mins ago</span>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="pull-right">
+                                                <span class="label label-success">New</span>
+                                            </div>
+                                            <div class="media-left">
+                                                <img src="images/people/50/guy-6.jpg" alt="people" class="img-circle" width="30">
+                                            </div>
+                                            <div class="media-body">
+                                                <a href="#">Bill</a> posted <a href="#">a comment</a> on Adrian's recent <a href="#">post</a>.
+                                                <br/>
+                                                <span class="text-caption text-muted">3 hrs ago</span>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-left">
+                                                <span class="icon-block s30 bg-grey-200"><i class="fa fa-plus"></i></span>
+                                            </div>
+                                            <div class="media-body">
+                                                <a href="#">Mary D.</a> and <a href="#">Michelle</a> are now friends.
+                                                <p>
+                                                    <span class="text-caption text-muted">1 day ago</span>
+                                                </p>
+                                                <a href="">
+                                                    <img class="width-30 img-circle" src="images/people/50/woman-6.jpg" alt="people">
+                                                </a>
+                                                <a href="">
+                                                    <img class="width-30 img-circle" src="images/people/50/woman-3.jpg" alt="people">
+                                                </a>
+                                            </div>
+                                        </li>*@
+                                </ul>
+                            </li>
+                            <!-- // END notifications -->
+                            <!-- User -->
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle user" data-toggle="dropdown">
+                                    <img src="@Url.Action("RenderImage", "Students", new { studentId = User.Identity.GetUserId()})" class="img-circle width-80" />
+                                    @*<img src="~/ProfilePics/" alt="Bill" class="img-circle" width="40" />*@ @User.Identity.Name <span class="caret"></span>
                                 </a>
-                            </div>
-                        </li>*@
-                    </ul>
-                </li>
-                <!-- // END notifications -->
-                <!-- User -->
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle user" data-toggle="dropdown">
-                        <img src="~/ProfilePics/" alt="Bill" class="img-circle" width="40" /> @User.Identity.Name <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="@Url.Action("ChangePassword", "Manage")">Account</a></li>
-                      <li><a href="@Url.Action("LogOut","Account")">Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-</div>
-}
-@if (User.IsInRole(RoleName.Admin))
-{ 
-    <div class="navbar navbar-size-large navbar-default navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a href="#sidebar-menu" data-toggle="sidebar-menu" class="toggle pull-left visible-xs"><i class="fa fa-ellipsis-v"></i></a>
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="navbar-brand navbar-brand-logo">
-                    <img src="~/Content/img/CodeDemin.png" height="50" width="100" />
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="@Url.Action("ChangePassword", "Manage")">Account</a></li>
+                                    <li><a href="@Url.Action("LogOut","Account")">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
                 </div>
             </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="main-nav">
-                <ul class="nav navbar-nav">
-                    @*<li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Forum <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="@Url.Action("ForumThread","ForumQuestions")">Forum Home</a></li>
-                        <li><a href="@Url.Action("Create","ForumQuestions")">Ask A Question</a></li>
-                    </ul>
-                </li>*@
-                    @*<li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="app-directory-grid.html">Courses Grid</a></li>
-                        <li><a href="app-directory-list.html">Courses List</a></li>
-                        <li><a href="app-student-course.html">Course Details</a></li>
-                    </ul>
-                </li>*@
-                    <li class="dropdown active">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="@Url.Action("AdminDashboard","Home")">Dashboard</a></li>
-                            <li class="active"><a href="@Url.Action("Index", "Courses")">Courses</a></li>
-                            <li><a href="@Url.Action("Index", "Manage")">Edit Profile</a></li>
-                   
-                        </ul>
-                    </li>
-                    @*<li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instructor <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="app-instructor-dashboard.html">Dashboard</a></li>
-                        <li><a href="app-instructor-courses.html">My Courses</a></li>
-                        <li><a href="app-instructor-course-edit-course.html">Edit Course</a></li>
-                        <li><a href="app-instructor-earnings.html">Earnings</a></li>
-                        <li><a href="app-instructor-statement.html">Statement</a></li>
-                        <li><a href="app-instructor-profile.html">Edit Profile</a></li>
-                        <li><a href="app-instructor-billing.html">Edit Billing</a></li>
-                        <li><a href="app-instructor-messages.html">Messages</a></li>
-                    </ul>
-                </li>*@
-                </ul>
-                <ul class="nav navbar-nav navbar-nav-bordered navbar-right">
-                    <!-- notifications -->
-                    <li class="dropdown notifications updates">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-bell-o"></i>
-                            <span class="badge badge-primary">0</span>
-                        </a>
-                        <ul class="dropdown-menu" role="notification">
-                            <li class="dropdown-header">Notifications</li>
-                            @*<li class="media">
-                            <div class="pull-right">
-                                <span class="label label-success">New</span>
-                            </div>
-                            <div class="media-left">
-                                <img src="images/people/50/guy-2.jpg" alt="people" class="img-circle" width="30">
-                            </div>
-                            <div class="media-body">
-                                <a href="#">Adrian D.</a> posted <a href="#">a photo</a> on his timeline.
-                                <br/>
-                                <span class="text-caption text-muted">5 mins ago</span>
-                            </div>
-                        </li>
-                        <li class="media">
-                            <div class="pull-right">
-                                <span class="label label-success">New</span>
-                            </div>
-                            <div class="media-left">
-                                <img src="images/people/50/guy-6.jpg" alt="people" class="img-circle" width="30">
-                            </div>
-                            <div class="media-body">
-                                <a href="#">Bill</a> posted <a href="#">a comment</a> on Adrian's recent <a href="#">post</a>.
-                                <br/>
-                                <span class="text-caption text-muted">3 hrs ago</span>
-                            </div>
-                        </li>
-                        <li class="media">
-                            <div class="media-left">
-                                <span class="icon-block s30 bg-grey-200"><i class="fa fa-plus"></i></span>
-                            </div>
-                            <div class="media-body">
-                                <a href="#">Mary D.</a> and <a href="#">Michelle</a> are now friends.
-                                <p>
-                                    <span class="text-caption text-muted">1 day ago</span>
-                                </p>
-                                <a href="">
-                                    <img class="width-30 img-circle" src="images/people/50/woman-6.jpg" alt="people">
-                                </a>
-                                <a href="">
-                                    <img class="width-30 img-circle" src="images/people/50/woman-3.jpg" alt="people">
-                                </a>
-                            </div>
-                        </li>*@
-                        </ul>
-                    </li>
-                    <!-- // END notifications -->
-                    <!-- User -->
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle user" data-toggle="dropdown">
-                            <img src="~/ProfilePics/" alt="Bill" class="img-circle" width="40" /> @User.Identity.Name <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="@Url.Action("ChangePassword", "Manage")">Account</a></li>
-                            <li><a href="@Url.Action("LogOut","Account")">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-    </div>
-}
-<!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
-<div class="sidebar left sidebar-size-1 sidebar-mini-reveal sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
-    <div data-scrollable>
-        
-        <div class="sidebar-block">
-            <div class="profile">
-                <a href="#">
-                    <img src="~/Content/LMS/images/people/110/guy-6.jpg" alt="people" class="img-circle width-80" />
-                </a>
-                <h6>@User.Identity.Name</h6>
-            </div>
-        </div>
-
-        <ul class="sidebar-menu sm-icons-right">
-            @if (User.IsInRole(RoleName.Corper) || User.IsInRole(RoleName.OtherStudent) || User.IsInRole(RoleName.UnderGraduate) || User.IsInRole(RoleName.Student))
-            {
-
-
-                <li><a href="@Url.Action("CorperDashboard", "Students")"><i class="fa fa-bar-chart-o"></i><span>Dashboard</span></a></li>
-                <li class="hasSubmenu active open">
-                    <a href="#course-menu"><i class="fa fa-mortar-board"></i><span>Courses</span></a>
-                    <ul id="course-menu" class="in">
-
-                        <li><a href="@Url.Action("CourseCategoryPayment", "CourseCategories")"><span>Courses Page</span></a></li>
-                        <li class="active"><a href="@Url.Action("MyCoursesAsync", "Courses")"><span>My Courses</span></a></li>
-                        @*<li><a href=""><span>Take Course</span></a></li>*@
-                        <li><a href="@Url.Action("index", "ForumQuestions")"><span>Course Forums</span></a></li>
-                        @*<li><a href="app-course-forum-thread.html"><span>Course Forum Thread</span></a></li>*@
-                        @*<li><a href="app-take-quiz.html"><span>Take Quiz</span></a></li>*@
-                    </ul>
-                </li>
-
-                <li class="hasSubmenu">
-                    <a href="#forum-menu"><i class="fa fa-file-text-o"></i><span>Forum</span></a>
-                    <ul id="forum-menu">
-                        <li><a href="@Url.Action("Create", "ForumQuestions")"><span>Ask A Question</span></a></li>
-                        @*<li><a href="app-forum-category.html"><span>Forum Category</span></a></li>*@
-                        <li><a href="@Url.Action("ForumThread", "ForumQuestions")"><span>Forum Thread</span></a></li>
-                    </ul>
-                </li>
-                @*<li><a href="@Url.Action()"><i class="fa fa-sign-out"></i><span>Logout</span></a></li>*@
-                <li class="hasSubmenu">
-                    <a href="#account-menu"><i class="fa fa-user"></i><span>Account</span></a>
-                    <ul id="account-menu">
-                        <li><a href="@Url.Action("Edit", "Students")"><span>Edit Profile</span></a></li>
-                        <li><a href="@Url.Action("ChangePassword", "Manage")"><span>Change Password</span></a></li>
-                        <li><a href="@Url.Action("Index", "Manage")"><span>Settings</span></a></li>
-                    </ul>
-                </li>
-                @*<li><a href="app-student-messages.html"><i class="fa fa-comments"></i><span>Messages</span></a></li>*@
-                <li><a href="@Url.Action("LogOut", "Account")"><i class="fa fa-sign-out"></i><span>Logout</span></a></li>
-            }
-            @if (User.IsInRole(RoleName.Admin))
-            {
-
-
-                <li><a href="@Url.Action("AdminDashboard", "Home")"><i class="fa fa-bar-chart-o"></i><span>Dashboard</span></a></li>
-                <li><a href="@Url.Action("Create", "Tutors")"><i class="fa fa-bar-chart-o"></i><span>Create Tutor</span></a></li>
-                <li><a href="@Url.Action("Create", "AssignCourseCategories")"><i class="fa fa-bar-chart-o"></i><span>Assign Courses</span></a></li>
-
-            
-
-                <li class="hasSubmenu">
-                    <a href="#course-menu"><i class="fa fa-mortar-board"></i><span>Courses</span></a>
-                    <ul id="course-menu" >
-                        <li><a href="@Url.Action("Create", "CourseCategories")"><span>Create Category</span></a></li>
-                        <li class="active"><a href="@Url.Action("Index", "CourseCategories")"><span>List Category</span></a></li>
-                        <li><a href="@Url.Action("Create", "Courses")"><span>Create Courses</span></a></li>
-                        <li class="active"><a href="@Url.Action("Index", "Courses")"><span>List Courses</span></a></li>
-                        <li class="active"><a href="@Url.Action("Create", "AssignCourseCategories")"><span>Assign Course</span></a></li>
-                        @*<li><a href=""><span>Take Course</span></a></li>*@
-                        @*<li><a href="@Url.Action("index", "ForumQuestions")"><span>Course Forums</span></a></li>*@
-                      
-                    </ul>
-                </li>
-                <li class="hasSubmenu">
-                    <a href="#forum-menu"><i class="fa fa-file-text-o"></i><span>Forum</span></a>
-                    <ul id="forum-menu">
-                        <li><a href="@Url.Action("Create","Forum")"><span>Create Forum</span></a></li>
-                        <li><a href="#"><span>Forum Category</span></a></li>
-                        <li><a href="@Url.Action("ForumThread", "ForumQuestions")"><span>Forum Thread</span></a></li>
-                    </ul>
-                </li>
-                <li class="hasSubmenu">
-                    <a href="#Quiz-menu"><i class="fa fa-quiz"></i><span> Quiz</span></a>
-                    <ul id="Quiz-menu">
-                        <li><a href="@Url.Action("Create","QuizRules")"><span>Set Quiz Rules</span></a></li>
-                        <li><a href="@Url.Action("Create", "TopicQuizs")"><span>Create Quiz</span></a></li>
-                        <li><a href="@Url.Action("Index","TopicQuizs")"><span></span></a></li>
-                    </ul>
-                </li>
-                <li class="hasSubmenu">
-                    <a href="#account-menu"><i class="fa fa-user"></i><span>Account</span></a>
-                    <ul id="account-menu">
-                        @*<li><a href="@Url.Action("Edit", "Students")"><span>Edit Profile</span></a></li>*@
-                        <li><a href="@Url.Action("ChangePassword", "Manage")"><span>Change Password</span></a></li>
-                        <li><a href="@Url.Action("Index", "Manage")"><span>Settings</span></a></li>
-                    </ul>
-                </li>
-
-                <li><a href="@Url.Action("LogOut", "Account")"><i class="fa fa-sign-out"></i><span>Logout</span></a></li>
-            }
-        
-        </ul>
-    </div >
-                </div >
-         
- @*@if (User.IsInRole(RoleName.Admin))
- {
-     <div class="sidebar right sidebar-size-3 sidebar-offset-0 sidebar-visible-desktop sidebar-skin-white" id="sidebar-library">
-         <div data-scrollable>
-             <h4 class="category">Category</h4>             
-             @Html.Action("CategoryPartial", "CourseCategories")
-
-             <h4 class="category">View</h4>
-             <div class="sidebar-block">
-                 <div class="form-group">
-                     <select class="selectpicker">
-                         <option>List</option>
-                         <option>Grid</option>
-                     </select>
-                 </div>
-             </div>
-             <h4 class="category">Price</h4>
-             <div class="sidebar-block">
-                 <div class="form-group input-group">
-                     <div class="row margin-none">
-                         <div class="col-xs-6 padding-none">
-                             <input class="form-control" type="text" placeholder="Min .."/>
-                         </div>
-                         <div class="col-xs-6 padding-none">
-                             <input class="form-control" type="text" placeholder="Max .."/>
-                         </div>
-                     </div>
-                     <div class="input-group-btn">
-                         <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                     </div>
-                 </div>
-             </div>
-         </div>
-     </div>
- }*@
-<!-- sidebar effects OUTSIDE of st-pusher: -->
-<!-- st-effect-1, st-effect-2, st-effect-4, st-effect-5, st-effect-9, st-effect-10, st-effect-11, st-effect-12, st-effect-13 -->
-<!-- content push wrapper -->
-<div class="st-pusher" id="content">
-    <!-- sidebar effects INSIDE of st-pusher: -->
-    <!-- st-effect-3, st-effect-6, st-effect-7, st-effect-8, st-effect-14 -->
-    <!-- this is the wrapper for the content -->
-    <div class="st-content">
-        
-        <div class="st-content-inner padding-none">
-            <div class="container-fluid">
-                @RenderBody()
-            </div>
-            </div>
-    </div>
-</div>
-<!-- /st-pusher -->
-<!-- Footer -->
-<footer class="footer">
-    <strong>Compunet</strong> v1.0.0 &copy; Copyright @DateTime.Now.Year
-</footer>
-<!-- // Footer -->
-</div>
-<!-- /st-container -->
-<!-- Inline Script for colors and config objects; used by various external scripts; -->
-<script>
-    var colors = {
-        "danger-color": "#e74c3c",
-        "success-color": "#81b53e",
-        "warning-color": "#f0ad4e",
-        "inverse-color": "#2c3e50",
-        "info-color": "#2d7cb5",
-        "default-color": "#6e7882",
-        "default-light-color": "#cfd9db",
-        "purple-color": "#9D8AC7",
-        "mustard-color": "#d4d171",
-        "lightred-color": "#e15258",
-        "body-bg": "#f6f6f6"
-    };
-    var config = {
-        theme: "html",
-        skins: {
-            "default": {
-                "primary-color": "#42a5f5"
-            }
         }
-    };
-</script>
-<!-- Separate Vendor Script Bundles -->
-<script src="~/Content/LMS/js/vendor-core.min.js"></script>
-<script src="~/Content/LMS/js/vendor-countdown.min.js"></script>
-<script src="~/Content/LMS/js/vendor-tables.min.js"></script>
-<script src="~/Content/LMS/js/vendor-forms.min.js"></script>
-<script src="~/Content/LMS/js/vendor-carousel-slick.min.js"></script>
-<script src="~/Content/LMS/js/vendor-player.min.js"></script>
-<script src="~/Content/LMS/js/vendor-charts-flot.min.js"></script>
-<script src="~/Content/LMS/js/vendor-nestable.min.js"></script>
-<!-- <script src="js/vendor-angular.min.js"></script> -->
-<!-- Compressed Vendor Scripts Bundle
-Includes all of the 3rd party JavaScript libraries above.
-The bundle was generated using modern frontend development tools that are provided with the package
-To learn more about the development process, please refer to the documentation.
-Do not use it simultaneously with the separate bundles above. -->
-<!-- <script src="js/vendor-bundle-all.min.js"></script> -->
-<!-- Compressed App Scripts Bundle
-Includes Custom Application JavaScript used for the current theme/module;
-Do not use it simultaneously with the standalone modules below. -->
-<!-- <script src="js/module-bundle-main.min.js"></script> -->
-<!-- Standalone Modules
-As a convenience, we provide the entire UI framework broke down in separate modules
-Some of the standalone modules may have not been used with the current theme/module
-but ALL the modules are 100% compatible -->
-<script src="~/Content/LMS/js/module-essentials.min.js"></script>
-<script src="~/Content/LMS/js/module-material.min.js"></script>
-<script src="~/Content/LMS/js/module-layout.min.js"></script>
-<script src="~/Content/LMS/js/module-sidebar.min.js"></script>
-<script src="~/Content/LMS/js/module-carousel-slick.min.js"></script>
-<script src="~/Content/LMS/js/module-player.min.js"></script>
-<script src="~/Content/LMS/js/module-messages.min.js"></script>
-<script src="~/Content/LMS/js/module-maps-google.min.js"></script>
-<script src="~/Content/LMS/js/module-charts-flot.min.js"></script>
-<!-- [html] Core Theme Script:
-Includes the custom JavaScript for this theme/module;
-The file has to be loaded in addition to the UI modules above;
-module-bundle-main.js already includes theme-core.js so this should be loaded
-ONLY when using the standalone modules; -->
-<script src="~/Content/LMS/js/theme-core.min.js"></script>
-@RenderSection("scripts", required: false)
+        @if (User.IsInRole(RoleName.Admin))
+        {
+            <div class="navbar navbar-size-large navbar-default navbar-fixed-top" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a href="#sidebar-menu" data-toggle="sidebar-menu" class="toggle pull-left visible-xs"><i class="fa fa-ellipsis-v"></i></a>
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <div class="navbar-brand navbar-brand-logo">
+                            <img src="~/Content/img/CodeDemin.png" height="50" width="100" />
+                        </div>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="main-nav">
+                        <ul class="nav navbar-nav">
+                            @*<li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Forum <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="@Url.Action("ForumThread","ForumQuestions")">Forum Home</a></li>
+                                        <li><a href="@Url.Action("Create","ForumQuestions")">Ask A Question</a></li>
+                                    </ul>
+                                </li>*@
+                            @*<li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="app-directory-grid.html">Courses Grid</a></li>
+                                        <li><a href="app-directory-list.html">Courses List</a></li>
+                                        <li><a href="app-student-course.html">Course Details</a></li>
+                                    </ul>
+                                </li>*@
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="@Url.Action("AdminDashboard","Home")">Dashboard</a></li>
+                                    <li class="active"><a href="@Url.Action("Index", "Courses")">Courses</a></li>
+                                    <li><a href="@Url.Action("Index", "Manage")">Edit Profile</a></li>
+
+                                </ul>
+                            </li>
+                            @*<li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instructor <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="app-instructor-dashboard.html">Dashboard</a></li>
+                                        <li><a href="app-instructor-courses.html">My Courses</a></li>
+                                        <li><a href="app-instructor-course-edit-course.html">Edit Course</a></li>
+                                        <li><a href="app-instructor-earnings.html">Earnings</a></li>
+                                        <li><a href="app-instructor-statement.html">Statement</a></li>
+                                        <li><a href="app-instructor-profile.html">Edit Profile</a></li>
+                                        <li><a href="app-instructor-billing.html">Edit Billing</a></li>
+                                        <li><a href="app-instructor-messages.html">Messages</a></li>
+                                    </ul>
+                                </li>*@
+                        </ul>
+                        <ul class="nav navbar-nav navbar-nav-bordered navbar-right">
+                            <!-- notifications -->
+                            <li class="dropdown notifications updates">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-bell-o"></i>
+                                    <span class="badge badge-primary">0</span>
+                                </a>
+                                <ul class="dropdown-menu" role="notification">
+                                    <li class="dropdown-header">Notifications</li>
+                                    @*<li class="media">
+                                            <div class="pull-right">
+                                                <span class="label label-success">New</span>
+                                            </div>
+                                            <div class="media-left">
+                                                <img src="images/people/50/guy-2.jpg" alt="people" class="img-circle" width="30">
+                                            </div>
+                                            <div class="media-body">
+                                                <a href="#">Adrian D.</a> posted <a href="#">a photo</a> on his timeline.
+                                                <br/>
+                                                <span class="text-caption text-muted">5 mins ago</span>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="pull-right">
+                                                <span class="label label-success">New</span>
+                                            </div>
+                                            <div class="media-left">
+                                                <img src="images/people/50/guy-6.jpg" alt="people" class="img-circle" width="30">
+                                            </div>
+                                            <div class="media-body">
+                                                <a href="#">Bill</a> posted <a href="#">a comment</a> on Adrian's recent <a href="#">post</a>.
+                                                <br/>
+                                                <span class="text-caption text-muted">3 hrs ago</span>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-left">
+                                                <span class="icon-block s30 bg-grey-200"><i class="fa fa-plus"></i></span>
+                                            </div>
+                                            <div class="media-body">
+                                                <a href="#">Mary D.</a> and <a href="#">Michelle</a> are now friends.
+                                                <p>
+                                                    <span class="text-caption text-muted">1 day ago</span>
+                                                </p>
+                                                <a href="">
+                                                    <img class="width-30 img-circle" src="images/people/50/woman-6.jpg" alt="people">
+                                                </a>
+                                                <a href="">
+                                                    <img class="width-30 img-circle" src="images/people/50/woman-3.jpg" alt="people">
+                                                </a>
+                                            </div>
+                                        </li>*@
+                                </ul>
+                            </li>
+                            <!-- // END notifications -->
+                            <!-- User -->
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle user" data-toggle="dropdown">
+                                    <img src="@Url.Action("RenderImage", "Students", new { studentId = User.Identity.GetUserId()})" class="img-circle width-40" />
+                                    @*<img src="~/ProfilePics/" alt="Bill" class="img-circle" width="40" />*@ @User.Identity.Name <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="@Url.Action("ChangePassword", "Manage")">Account</a></li>
+                                    <li><a href="@Url.Action("LogOut","Account")">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+            </div>
+        }
+        <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
+        <div class="sidebar left sidebar-size-1 sidebar-mini-reveal sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
+            <div data-scrollable>
+
+                <div class="sidebar-block">
+                    <div class="profile">
+                        <a href="#">
+                            <img src="@Url.Action("RenderImage", "Students", new { studentId = User.Identity.GetUserId()})" class="img-circle width-80" />
+                            @*<img src="~/Content/LMS/images/people/110/guy-6.jpg" alt="people" class="img-circle width-80" />*@
+                        </a>
+                        <h6>@User.Identity.Name</h6>
+                    </div>
+                </div>
+
+                <ul class="sidebar-menu sm-icons-right">
+                    @if (User.IsInRole(RoleName.Corper) || User.IsInRole(RoleName.OtherStudent) || User.IsInRole(RoleName.UnderGraduate) || User.IsInRole(RoleName.Student))
+                    {
+
+
+                        <li><a href="@Url.Action("CorperDashboard", "Students")"><i class="fa fa-bar-chart-o"></i><span>Dashboard</span></a></li>
+                        <li class="hasSubmenu active open">
+                            <a href="#course-menu"><i class="fa fa-mortar-board"></i><span>Courses</span></a>
+                            <ul id="course-menu" class="in">
+
+                                <li><a href="@Url.Action("CourseCategoryPayment", "CourseCategories")"><span>Courses Page</span></a></li>
+                                <li class="active"><a href="@Url.Action("MyCoursesAsync", "Courses")"><span>My Courses</span></a></li>
+                                @*<li><a href=""><span>Take Course</span></a></li>*@
+                                <li><a href="@Url.Action("index", "ForumQuestions")"><span>Course Forums</span></a></li>
+                                @*<li><a href="app-course-forum-thread.html"><span>Course Forum Thread</span></a></li>*@
+                                @*<li><a href="app-take-quiz.html"><span>Take Quiz</span></a></li>*@
+                            </ul>
+                        </li>
+
+                        <li class="hasSubmenu">
+                            <a href="#forum-menu"><i class="fa fa-file-text-o"></i><span>Forum</span></a>
+                            <ul id="forum-menu">
+                                <li><a href="@Url.Action("Create", "ForumQuestions")"><span>Ask A Question</span></a></li>
+                                @*<li><a href="app-forum-category.html"><span>Forum Category</span></a></li>*@
+                                <li><a href="@Url.Action("ForumThread", "ForumQuestions")"><span>Forum Thread</span></a></li>
+                            </ul>
+                        </li>
+                        @*<li><a href="@Url.Action()"><i class="fa fa-sign-out"></i><span>Logout</span></a></li>*@
+                        <li class="hasSubmenu">
+                            <a href="#account-menu"><i class="fa fa-user"></i><span>Account</span></a>
+                            <ul id="account-menu">
+                                <li><a href="@Url.Action("Edit", "Students")"><span>Edit Profile</span></a></li>
+                                <li><a href="@Url.Action("ChangePassword", "Manage")"><span>Change Password</span></a></li>
+                                <li><a href="@Url.Action("Index", "Manage")"><span>Settings</span></a></li>
+                            </ul>
+                        </li>
+                        @*<li><a href="app-student-messages.html"><i class="fa fa-comments"></i><span>Messages</span></a></li>*@
+                        <li><a href="@Url.Action("LogOut", "Account")"><i class="fa fa-sign-out"></i><span>Logout</span></a></li>
+                    }
+                    @if (User.IsInRole(RoleName.Admin))
+                    {
+
+
+                        <li><a href="@Url.Action("AdminDashboard", "Home")"><i class="fa fa-bar-chart-o"></i><span>Dashboard</span></a></li>
+                        <li><a href="@Url.Action("Create", "Tutors")"><i class="fa fa-bar-chart-o"></i><span>Create Tutor</span></a></li>
+                        <li><a href="@Url.Action("Create", "AssignCourseCategories")"><i class="fa fa-bar-chart-o"></i><span>Assign Courses</span></a></li>
+
+
+
+                        <li class="hasSubmenu">
+                            <a href="#course-menu"><i class="fa fa-mortar-board"></i><span>Courses</span></a>
+                            <ul id="course-menu">
+                                <li><a href="@Url.Action("Create", "CourseCategories")"><span>Create Category</span></a></li>
+                                <li class="active"><a href="@Url.Action("Index", "CourseCategories")"><span>List Category</span></a></li>
+                                <li><a href="@Url.Action("Create", "Courses")"><span>Create Courses</span></a></li>
+                                <li class="active"><a href="@Url.Action("Index", "Courses")"><span>List Courses</span></a></li>
+                                <li class="active"><a href="@Url.Action("Create", "AssignCourseCategories")"><span>Assign Course</span></a></li>
+                                @*<li><a href=""><span>Take Course</span></a></li>*@
+                                @*<li><a href="@Url.Action("index", "ForumQuestions")"><span>Course Forums</span></a></li>*@
+
+                            </ul>
+                        </li>
+                        <li class="hasSubmenu">
+                            <a href="#forum-menu"><i class="fa fa-file-text-o"></i><span>Forum</span></a>
+                            <ul id="forum-menu">
+                                <li><a href="@Url.Action("Create","Forum")"><span>Create Forum</span></a></li>
+                                <li><a href="#"><span>Forum Category</span></a></li>
+                                <li><a href="@Url.Action("ForumThread", "ForumQuestions")"><span>Forum Thread</span></a></li>
+                            </ul>
+                        </li>
+                        <li class="hasSubmenu">
+                            <a href="#Quiz-menu"><i class="fa fa-quiz"></i><span> Quiz</span></a>
+                            <ul id="Quiz-menu">
+                                <li><a href="@Url.Action("Create","QuizRules")"><span>Set Quiz Rules</span></a></li>
+                                <li><a href="@Url.Action("Create", "TopicQuizs")"><span>Create Quiz</span></a></li>
+                                <li><a href="@Url.Action("Index","TopicQuizs")"><span></span></a></li>
+                            </ul>
+                        </li>
+                        <li class="hasSubmenu">
+                            <a href="#account-menu"><i class="fa fa-user"></i><span>Account</span></a>
+                            <ul id="account-menu">
+                                @*<li><a href="@Url.Action("Edit", "Students")"><span>Edit Profile</span></a></li>*@
+                                <li><a href="@Url.Action("ChangePassword", "Manage")"><span>Change Password</span></a></li>
+                                <li><a href="@Url.Action("Index", "Manage")"><span>Settings</span></a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="@Url.Action("LogOut", "Account")"><i class="fa fa-sign-out"></i><span>Logout</span></a></li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+
+        @*@if (User.IsInRole(RoleName.Admin))
+            {
+                <div class="sidebar right sidebar-size-3 sidebar-offset-0 sidebar-visible-desktop sidebar-skin-white" id="sidebar-library">
+                    <div data-scrollable>
+                        <h4 class="category">Category</h4>
+                        @Html.Action("CategoryPartial", "CourseCategories")
+
+                        <h4 class="category">View</h4>
+                        <div class="sidebar-block">
+                            <div class="form-group">
+                                <select class="selectpicker">
+                                    <option>List</option>
+                                    <option>Grid</option>
+                                </select>
+                            </div>
+                        </div>
+                        <h4 class="category">Price</h4>
+                        <div class="sidebar-block">
+                            <div class="form-group input-group">
+                                <div class="row margin-none">
+                                    <div class="col-xs-6 padding-none">
+                                        <input class="form-control" type="text" placeholder="Min .."/>
+                                    </div>
+                                    <div class="col-xs-6 padding-none">
+                                        <input class="form-control" type="text" placeholder="Max .."/>
+                                    </div>
+                                </div>
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }*@
+        <!-- sidebar effects OUTSIDE of st-pusher: -->
+        <!-- st-effect-1, st-effect-2, st-effect-4, st-effect-5, st-effect-9, st-effect-10, st-effect-11, st-effect-12, st-effect-13 -->
+        <!-- content push wrapper -->
+        <div class="st-pusher" id="content">
+            <!-- sidebar effects INSIDE of st-pusher: -->
+            <!-- st-effect-3, st-effect-6, st-effect-7, st-effect-8, st-effect-14 -->
+            <!-- this is the wrapper for the content -->
+            <div class="st-content">
+
+                <div class="st-content-inner padding-none">
+                    <div class="container-fluid">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /st-pusher -->
+        <!-- Footer -->
+        <footer class="footer">
+            <strong>Compunet</strong> v1.0.0 &copy; Copyright @DateTime.Now.Year
+        </footer>
+        <!-- // Footer -->
+    </div>
+    <!-- /st-container -->
+    <!-- Inline Script for colors and config objects; used by various external scripts; -->
+    <script>
+        var colors = {
+            "danger-color": "#e74c3c",
+            "success-color": "#81b53e",
+            "warning-color": "#f0ad4e",
+            "inverse-color": "#2c3e50",
+            "info-color": "#2d7cb5",
+            "default-color": "#6e7882",
+            "default-light-color": "#cfd9db",
+            "purple-color": "#9D8AC7",
+            "mustard-color": "#d4d171",
+            "lightred-color": "#e15258",
+            "body-bg": "#f6f6f6"
+        };
+        var config = {
+            theme: "html",
+            skins: {
+                "default": {
+                    "primary-color": "#42a5f5"
+                }
+            }
+        };
+    </script>
+    <!-- Separate Vendor Script Bundles -->
+    <script src="~/Content/LMS/js/vendor-core.min.js"></script>
+    <script src="~/Content/LMS/js/vendor-countdown.min.js"></script>
+    <script src="~/Content/LMS/js/vendor-tables.min.js"></script>
+    <script src="~/Content/LMS/js/vendor-forms.min.js"></script>
+    <script src="~/Content/LMS/js/vendor-carousel-slick.min.js"></script>
+    <script src="~/Content/LMS/js/vendor-player.min.js"></script>
+    <script src="~/Content/LMS/js/vendor-charts-flot.min.js"></script>
+    <script src="~/Content/LMS/js/vendor-nestable.min.js"></script>
+    <!-- <script src="js/vendor-angular.min.js"></script> -->
+    <!-- Compressed Vendor Scripts Bundle
+    Includes all of the 3rd party JavaScript libraries above.
+    The bundle was generated using modern frontend development tools that are provided with the package
+    To learn more about the development process, please refer to the documentation.
+    Do not use it simultaneously with the separate bundles above. -->
+    <!-- <script src="js/vendor-bundle-all.min.js"></script> -->
+    <!-- Compressed App Scripts Bundle
+    Includes Custom Application JavaScript used for the current theme/module;
+    Do not use it simultaneously with the standalone modules below. -->
+    <!-- <script src="js/module-bundle-main.min.js"></script> -->
+    <!-- Standalone Modules
+    As a convenience, we provide the entire UI framework broke down in separate modules
+    Some of the standalone modules may have not been used with the current theme/module
+    but ALL the modules are 100% compatible -->
+    <script src="~/Content/LMS/js/module-essentials.min.js"></script>
+    <script src="~/Content/LMS/js/module-material.min.js"></script>
+    <script src="~/Content/LMS/js/module-layout.min.js"></script>
+    <script src="~/Content/LMS/js/module-sidebar.min.js"></script>
+    <script src="~/Content/LMS/js/module-carousel-slick.min.js"></script>
+    <script src="~/Content/LMS/js/module-player.min.js"></script>
+    <script src="~/Content/LMS/js/module-messages.min.js"></script>
+    <script src="~/Content/LMS/js/module-maps-google.min.js"></script>
+    <script src="~/Content/LMS/js/module-charts-flot.min.js"></script>
+    <!-- [html] Core Theme Script:
+    Includes the custom JavaScript for this theme/module;
+    The file has to be loaded in addition to the UI modules above;
+    module-bundle-main.js already includes theme-core.js so this should be loaded
+    ONLY when using the standalone modules; -->
+    <script src="~/Content/LMS/js/theme-core.min.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>

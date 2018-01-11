@@ -1,0 +1,81 @@
+﻿
+@model IEnumerable<CodeninModel.AssignCourseCategory>
+@{
+    ViewBag.Title = "LearningPathDetails";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>LearningPathDetails</h2>
+
+@if (Model.Any())
+{
+    <a href="@Url.Action("StartPayment", "CourseCategories")" class="btn btn-success">Pay For All</a>
+
+}
+@foreach (var item in Model)
+{
+
+    <div class="item col-xs-12 col-sm-6 col-lg-4">
+             <div class="panel panel-default paper-shadow" data-z="0.5">
+                 <div class="panel-heading">
+                     <div class="media media-clearfix-xs-min v-middle">
+                         <div class="media-body text-caption text-light">
+                             Lessons 1 of 6
+                         </div>
+                         <div class="media-right">
+                             <div class="progress progress-mini width-100 margin-none">
+                                 <div class="progress-bar progress-bar-blue-300" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="cover overlay cover-image-full hover">
+                     <span class="img icon-block height-100 bg-primary"></span>
+                     <a href="app-take-course.html" class="padding-none overlay overlay-full icon-block bg-primary">
+                         <span class="v-center">
+                             <i class="fa fa-css3"></i>
+                         </span>
+                     </a>
+                     <a href="app-take-course.html" class="overlay overlay-full overlay-hover overlay-bg-white">
+                         <span class="v-center">
+                             <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
+                         </span>
+                     </a>
+                 </div> 
+            
+                 <hr class="margin-none"/>
+                 <div class="panel-body">
+                     @item.CourseCategory.CategoryName<br />
+                     @item.CourseCategory.Amount
+                     <br />
+                     @*<a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("StartPayment","CourseCategories", new {id = item.CourseCategoryId})">Go to courses</a>*@
+                     <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("CategoryDetails","CourseCategories", new {id = item.CourseCategoryId})">Pay for courses</a>
+                 </div>
+             </div>
+         </div>
+    @*<div class="item col-xs-12 col-sm-6 col-lg-2" style="margin-left:5%">
+        <div class="panel panel-default paper-shadow" data-z="0.5">
+            <div class="cover overlay cover-image-full hover">
+                <span class="img icon-block height-150 bg-lightred"></span>
+                <a href="#" class="padding-none overlay overlay-full icon-block bg-primary">
+                    <span class="v-center">
+                        <i class="fa fa-windows"></i>
+                    </span>
+                </a>
+                <a href="#" class="overlay overlay-full overlay-hover overlay-bg-white">
+                    <span class="v-center">
+                        <span class="btn btn-circle btn-red-500 btn-lg"><i class="fa fa-graduation-cap"></i></span>
+                    </span>
+                </a>
+            </div>
+            @item.CourseCategory.CategoryName
+            @item.CourseCategory.Amount
+            <hr class="margin-none" />
+            <div class="panel-body" style="width: inherit">
+                <a href="@Url.Action("StartPayment","CourseCategories",new{id = item.CourseCategoryId})" class="btn btn-primary "><i class="fa fa-fw fa-pencil"></i> Pay To Enroll</a>
+            </div>
+        </div>
+    </div>*@
+}
+

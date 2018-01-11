@@ -17,6 +17,10 @@ using System.Web.Mvc;
 using PayStack.Net.Apis;
 using System.Collections.Generic;
 
+
+
+
+
 namespace CodedenimWebApp.Controllers
 {
     public class CoursesController : Controller
@@ -580,13 +584,25 @@ namespace CodedenimWebApp.Controllers
         public async Task<ActionResult> MyCoursesAsync()
         {
             var userId = User.Identity.GetUserId();
-            var mycourses = await db.StudentPayments.Where(x => x.StudentId.Equals(userId)).ToArrayAsync();
-            return View(mycourses);
+            var assinedCourseCategory = new List<AssignCourseCategory>();
+            //var mycourses = await db.StudentPayments.Where(x => x.StudentId.Equals(userId)).ToArrayAsync();
+            var mycourses = await db.StudentPayments.Distinct().AsQueryable().Where(x => x.StudentId.Equals(userId)&& x.IsPayed.Equals(true)).Select(x => x.CourseCategoryId).ToListAsync();
+            foreach (var course in mycourses)
+            {
+
+                var assignedCourses = await db.AssignCourseCategories.Include(i => i.CourseCategory).Include(i => i.Courses)
+                .AsNoTracking().Where(x => x.CourseCategoryId.Equals(course)).Distinct().AsQueryable().FirstOrDefaultAsync();
+                //var assignedCourses = await  db.AssignCourseCategories.Where(x => x.CourseCategoryId.Equals(course)).DistinctBy(s => s.CourseCategoryId).AsQueryable().ToListAsync();
+                assinedCourseCategory.Add(assignedCourses);
+            }
+         
+            return View(assinedCourseCategory);
         }
         public async Task<ActionResult> MyCourses()
         {
             var userId = User.Identity.GetUserId();
-            var mycourses = await db.CorperEnrolledCourses.Where(x => x.StudentId.Equals(userId)).ToListAsync();
+            var mycourses = await db.CorperEnrolledCourses.Where(x => x.StudentId.Equals(userId)).Select(x => x.CourseCategoryId).ToListAsync();
+
             return View(mycourses);
         }
 
@@ -600,7 +616,7 @@ namespace CodedenimWebApp.Controllers
                 return View();
             }
             HttpPostedFileBase file = Request.Files["excelfile"];
-            if (excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
+            if(excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
             {
                 string lastrecord = "";
                 int recordCount = 0;
@@ -621,7 +637,7 @@ namespace CodedenimWebApp.Controllers
                         int requiredField = 7;
 
                         string validCheck = myExcel.ValidateExcel(noOfRow, sheet, requiredField);
-                        if (!validCheck.Equals("Success"))
+                        if(!validCheck.Equals("Success"))
                         {
 
                             string[] ssizes = validCheck.Split(' ');

@@ -1,580 +1,510 @@
 ﻿@{
     ViewBag.Title = "Codedenim Home";
-    Layout = "~/Views/Shared/_GeneralLayout.cshtml";
+    Layout = "~/Views/Shared/_GeneralLayoutNewUI.cshtml";
 }
 
-<div class="parallax cover overlay cover-image-full home">
-    <img class="parallax-layer" src="~/Content/Videos/codedeninLogo1.jpg" />
-    @*<img class="parallax-layer" src="~/Content/LMS/images/photodune-4161018-group-of-students-m.jpg" alt="Learning Cover" />*@
-    <div class="parallax-layer overlay overlay-full overlay-bg-white bg-transparent" data-speed="8" data-opacity="true">
-        <div class="v-center">
-            <div class="page-section overlay-bg-white-strong relative paper-shadow" data-z="1">
-                <h1 class="text-display-2 margin-v-0-15 display-inline-block">CODE DENIM</h1>
-                <p class="text-subhead">Concentrated Dedicated Deliberate Network Intent Media</p>
-                <a class="btn btn-green-500 btn-lg paper-shadow" data-hover-z="2" data-animated data-toggle="modal" href="@Url.Action("Register","Account")">Sign Up - </a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container">
-    <div class="page-section-heading">
-        <h2 class="text-display-1">Our Courses</h2>
-        <p class="lead text-muted">This are some of the Courses we offer.</p>
-    </div>
-    <div class="row" data-toggle="gridalicious">
-        <div class="media">
-            <div class="media-left padding-none">
-                <div class="bg-green-300 text-white">
-                    <div class="panel-body">
-                        <i class="fa fa-film fa-2x fa-fw"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="media-body">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="text-headline">THEORETICAL ENTREPRENEURSHIP</div>
-                        <p>The earth is the only planet made with unlimited funds and resources fashioned to reward and empower its tenants.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="media">
-            <div class="media-left padding-none">
-                <div class="bg-purple-300 text-white">
-                    <div class="panel-body">
-                        <i class="fa fa-life-bouy fa-2x fa-fw"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="media-body">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="text-headline">PRACTICAL ENTREPRENEURSHIP</div>
-                        <p>We will be looking at what the strength of an emtrepreneur is and their habits.
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="media">
-            <div class="media-left padding-none">
-                <div class="bg-orange-400 text-white">
-                    <div class="panel-body">
-                        <i class="fa fa-user fa-2x fa-fw"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="media-body">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="text-headline">BOOT STRAPPING </div>
-                        <p>Entreprenuership Analysis and Analytics in Africa.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="media">
-            <div class="media-left padding-none">
-                <div class="bg-cyan-400 text-white">
-                    <div class="panel-body">
-                        <i class="fa fa-code fa-2x fa-fw"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="media-body">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="text-headline"> SECTORIAL ENTREPRENEURSHIP</div>
-                        <p>Africa seeks entrepreneurs with no plan B but entrepreneurs that are all in.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="media">
-            <div class="media-left padding-none">
-                <div class="bg-pink-400 text-white">
-                    <div class="panel-body">
-                        <i class="fa fa-print fa-2x fa-fw"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="media-body">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="text-headline">FAILURE A POSSIBLE PATHWAY TO INNOVATION </div>
-                        <p>But No one wants to Fail</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="media">
-            <div class="media-left padding-none">
-                <div class="bg-red-400 text-white">
-                    <div class="panel-body">
-                        <i class="fa fa-tasks fa-2x fa-fw"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="media-body">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="text-headline">GENERATIONAL WEALTH </div>
-                        <p>Managing of wealth requires clear planning. </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<br/>
-<div class="page-section bg-white">
-<div class="container">
-<div class="text-center">
-    <h3 class="text-display-1">Our Partners</h3>
-    <p class="lead text-muted"></p>
-</div>
-<br/>
-@*<div class="slick-basic slick-slider" data-items="4" data-items-lg="3" data-items-md="2" data-items-sm="1" data-items-xs="1">
-    <div class="item">
-        <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated>
-            <div class="panel-body">
-                <div class="media media-clearfix-xs">
-                    <div class="media-left">
-                        <div class="cover width-90 width-100pc-xs overlay cover-image-full hover">
-                            <span class="img icon-block s90 bg-default"></span>
-                            <span class="overlay overlay-full padding-none icon-block s90 bg-default">
-                                <span class="v-center">
-                                    <i class="fa fa-github"></i>
-                                </span>
-                            </span>
-                            <a href="website-course.html" class="overlay overlay-full overlay-hover overlay-bg-white">
-                                <span class="v-center">
-                                    <span class="btn btn-circle btn-white btn-lg"><i class="fa fa-graduation-cap"></i></span>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading margin-v-5-3"><a href="website-course.html">Github Webhooks for Beginners</a></h4>
-                        <p class="small margin-none">
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="item">
-        <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated>
-            <div class="panel-body">
-                <div class="media media-clearfix-xs">
-                    <div class="media-left">
-                        <div class="cover width-90 width-100pc-xs overlay cover-image-full hover">
-                            <span class="img icon-block s90 bg-primary"></span>
-                            <span class="overlay overlay-full padding-none icon-block s90 bg-primary">
-                                <span class="v-center">
-                                    <i class="fa fa-css3"></i>
-                                </span>
-                            </span>
-                            <a href="website-course.html" class="overlay overlay-full overlay-hover overlay-bg-white">
-                                <span class="v-center">
-                                    <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading margin-v-5-3"><a href="website-course.html">Awesome CSS with LESS Processing</a></h4>
-                        <p class="small margin-none">
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="item">
-        <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated>
-            <div class="panel-body">
-                <div class="media media-clearfix-xs">
-                    <div class="media-left">
-                        <div class="cover width-90 width-100pc-xs overlay cover-image-full hover">
-                            <span class="img icon-block s90 bg-lightred"></span>
-                            <span class="overlay overlay-full padding-none icon-block s90 bg-lightred">
-                                <span class="v-center">
-                                    <i class="fa fa-windows"></i>
-                                </span>
-                            </span>
-                            <a href="website-course.html" class="overlay overlay-full overlay-hover overlay-bg-white">
-                                <span class="v-center">
-                                    <span class="btn btn-circle btn-red-500 btn-lg"><i class="fa fa-graduation-cap"></i></span>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading margin-v-5-3"><a href="website-course.html">Portable Environments with Vagrant</a></h4>
-                        <p class="small margin-none">
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="item">
-        <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated>
-            <div class="panel-body">
-                <div class="media media-clearfix-xs">
-                    <div class="media-left">
-                        <div class="cover width-90 width-100pc-xs overlay cover-image-full hover">
-                            <span class="img icon-block s90 bg-brown"></span>
-                            <span class="overlay overlay-full padding-none icon-block s90 bg-brown">
-                                <span class="v-center">
-                                    <i class="fa fa-wordpress"></i>
-                                </span>
-                            </span>
-                            <a href="website-course.html" class="overlay overlay-full overlay-hover overlay-bg-white">
-                                <span class="v-center">
-                                    <span class="btn btn-circle btn-orange-500 btn-lg"><i class="fa fa-graduation-cap"></i></span>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading margin-v-5-3"><a href="website-course.html">WordPress Theme Development</a></h4>
-                        <p class="small margin-none">
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="item">
-        <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated>
-            <div class="panel-body">
-                <div class="media media-clearfix-xs">
-                    <div class="media-left">
-                        <div class="cover width-90 width-100pc-xs overlay cover-image-full hover">
-                            <span class="img icon-block s90 bg-purple"></span>
-                            <span class="overlay overlay-full padding-none icon-block s90 bg-purple">
-                                <span class="v-center">
-                                    <i class="fa fa-jsfiddle"></i>
-                                </span>
-                            </span>
-                            <a href="website-course.html" class="overlay overlay-full overlay-hover overlay-bg-white">
-                                <span class="v-center">
-                                    <span class="btn btn-circle btn-purple-500 btn-lg"><i class="fa fa-graduation-cap"></i></span>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading margin-v-5-3"><a href="website-course.html">Modular JavaScript with Browserify</a></h4>
-                        <p class="small margin-none">
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="item">
-        <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated>
-            <div class="panel-body">
-                <div class="media media-clearfix-xs">
-                    <div class="media-left">
-                        <div class="cover width-90 width-100pc-xs overlay cover-image-full hover">
-                            <span class="img icon-block s90 bg-default"></span>
-                            <span class="overlay overlay-full padding-none icon-block s90 bg-default">
-                                <span class="v-center">
-                                    <i class="fa fa-cc-visa"></i>
-                                </span>
-                            </span>
-                            <a href="website-course.html" class="overlay overlay-full overlay-hover overlay-bg-white">
-                                <span class="v-center">
-                                    <span class="btn btn-circle btn-white btn-lg"><i class="fa fa-graduation-cap"></i></span>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading margin-v-5-3"><a href="website-course.html">Easy Online Payments with Stripe</a></h4>
-                        <p class="small margin-none">
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>*@
-<div class="text-center">
-    <br/>
-    <a class="btn btn-lg btn-primary" href="#">Browse Courses</a>
-</div>
-</div>
-</div>
-<div class="parallax cover overlay height-300 margin-none">
-    <img class="parallax-layer" data-auto-offset="true" data-auto-size="true" src="~/Content/LMS/images/distance learning.jpg" />
-    @*<img class="parallax-layer" data-auto-offset="true" data-auto-size="false" src="~/Content/LMS/images/photodune-6745579-modern-creative-man-relaxing-on-workspace-m.jpg" alt="Learning Cover" />*@
-    <div class="parallax-layer overlay overlay-full overlay-bg-white bg-transparent" data-opacity="true" data-speed="8">
-        <div class="v-center">
-            <div class="page-section">
-                <h1 class="text-display-2 overlay-bg-white margin-v-0-15 inline-block">Feedback</h1>
-                <br/>
-                <p class="lead text-overlay overlay-bg-white-strong inline-block">How others use Codedenim to improve their skills</p>
-            </div>
-        </div>
-    </div>
-</div>
-@*<div class="container">
-    <div class="page-section">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="testimonial">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam amet doloremque enim error id, inventore magni odio odit quo tenetur.</p>
-                        </div>
-                    </div>
-                    <div class="media v-middle">
-                        <div class="media-left">
-                            <img src="images/people/50/guy-1.jpg" alt="People" class="img-circle width-40" />
-                        </div>
-                        <div class="media-body">
-                            <p class="text-subhead margin-v-5-0">
-                                <strong>Adrian D. <span class="text-muted"> Mosaicpro Inc.</span></strong>
-                            </p>
-                            <p class="small">
-                                <span class="fa fa-fw fa-star text-yellow-800"></span>
-                                <span class="fa fa-fw fa-star text-yellow-800"></span>
-                                <span class="fa fa-fw fa-star text-yellow-800"></span>
-                                <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                                <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="testimonial">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam amet doloremque enim error id, inventore magni odio odit quo tenetur.</p>
-                        </div>
-                    </div>
-                    <div class="media v-middle">
-                        <div class="media-left">
-                            <img src="images/people/50/guy-8.jpg" alt="People" class="img-circle width-40" />
-                        </div>
-                        <div class="media-body">
-                            <p class="text-subhead margin-v-5-0">
-                                <strong>Adrian D. <span class="text-muted">Mosaicpro Inc.</span></strong>
-                            </p>
-                            <p class="small">
-                                <span class="fa fa-fw fa-star text-yellow-800"></span>
-                                <span class="fa fa-fw fa-star text-yellow-800"></span>
-                                <span class="fa fa-fw fa-star text-yellow-800"></span>
-                                <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                                <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="testimonial">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam amet doloremque enim error id, inventore magni odio odit quo tenetur.</p>
-                        </div>
-                    </div>
-                    <div class="media v-middle">
-                        <div class="media-left">
-                            <img src="images/people/50/guy-4.jpg" alt="People" class="img-circle width-40" />
-                        </div>
-                        <div class="media-body">
-                            <p class="text-subhead margin-v-5-0">
-                                <strong>Adrian D. <span class="text-muted">@@ Mosaicpro Inc.</span></strong>
-                            </p>
-                            <p class="small">
-                                <span class="fa fa-fw fa-star text-yellow-800"></span>
-                                <span class="fa fa-fw fa-star text-yellow-800"></span>
-                                <span class="fa fa-fw fa-star text-yellow-800"></span>
-                                <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                                <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br/>
-</div>*@
-<div class="modal grow modal-overlay modal-backdrop-body fade" id="modal-overlay-signup">
-    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-    <div class="modal-dialog">
-        <div class="v-cell">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="wizard-container wizard-1" id="wizard-demo-1">
-                        <div data-scrollable-h>
-                            <ul class="wiz-progress">
-                                <li class="active">Plan &amp; Payment</li>
-                                <li>Account Setup</li>
-                                <li>Personal Details</li>
-                            </ul>
-                        </div>
-                        <form action="#" data-toggle="wizard" class="max-width-400 h-center">
-                            <fieldset class="step relative paper-shadow form-horizontal" data-z="2">
-                                <div class="page-section-heading">
-                                    <h2 class="text-h3 margin-v-0">Payment</h2>
-                                    <h3 class="text-h4 margin-v-10 text-grey-400">Your plan is
-                                        <strong class="text-uppercase">learner</strong> for
-                                        <strong>&dollar;19.99/mo</strong>
-                                    </h3>
-                                    <a href="pricing.html">See pricing</a>
-                                </div>
-                                <hr/>
-                                <div class="form-group">
-                                    <label for="credit-card" class="col-xs-4 control-label">Credit Card</label>
-                                    <div class="col-xs-8">
-                                        <div class="form-control-material">
-                                            <input type="text" class="form-control" id="credit-card" placeholder="**** **** **** 2422">
-                                            <label for="credit-card">Credit Card</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="card-expiration" class="col-xs-4 control-label">Expiration:</label>
-                                    <div class="col-xs-8">
-                                        <select id="card-expiration" data-toggle="select2">
-                                            <option value="1" selected>January</option>
-                                            <option value="2">February</option>
-                                            <option value="3">March</option>
-                                            <option value="4">April</option>
-                                            <option value="5">May</option>
-                                            <option value="6">June</option>
-                                            <option value="7">July</option>
-                                            <option value="8">August</option>
-                                            <option value="9">September</option>
-                                            <option value="10">October</option>
-                                            <option value="11">November</option>
-                                            <option value="12">December</option>
-                                        </select>
-                                        <select data-toggle="select2">
-                                            <option value="2015" selected>2015</option>
-                                            <option value="2016">2016</option>
-                                            <option value="2017">2017</option>
-                                            <option value="2018">2018</option>
-                                            <option value="2019">2019</option>
-                                            <option value="2020">2020</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="cvv" class="col-xs-4 control-label">CVV</label>
-                                    <div class="col-xs-8">
-                                        <div class="form-control-material">
-                                            <input type="email" class="form-control" id="cvv" placeholder="123">
-                                            <label for="cvv">CVV</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <button type="button" class="wiz-next btn btn-primary">Next</button>
-                                </div>
-                            </fieldset>
-                            <fieldset class="step relative paper-shadow" data-z="2">
-                                <div class="page-section-heading">
-                                    <h2 class="text-h3 margin-v-0">Create your account</h2>
-                                    <h3 class="text-h4 margin-v-10 text-grey-400">This is a multi step form</h3>
-                                </div>
-                                <div class="form-group form-control-material">
-                                    <input class="form-control" type="text" id="wiz-email" placeholder="Email" />
-                                    <label for="wiz-email">Email:</label>
-                                </div>
-                                <div class="form-group form-control-material">
-                                    <input class="form-control" type="password" id="wiz-password" placeholder="Password" />
-                                    <label for="wiz-password">Password:</label>
-                                </div>
-                                <div class="form-group form-control-material">
-                                    <input class="form-control" type="password" id="wiz-password2" placeholder="Confirm Password" />
-                                    <label for="wiz-password2">Confirm Password:</label>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <button type="button" class="wiz-prev btn btn-default">Previous</button>
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        <button type="button" class="wiz-next btn btn-primary">Next</button>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset class="step relative paper-shadow" data-z="2">
-                                <div class="page-section-heading">
-                                    <h2 class="text-h3 margin-v-0">Personal Details</h2>
-                                    <h3 class="text-h4 margin-v-10 text-grey-400">Your personal details are safe with us</h3>
-                                </div>
-                                <div class="form-group form-control-material">
-                                    <input class="form-control" type="text" id="wiz-fname" placeholder="First name" />
-                                    <label for="wiz-fname">First name:</label>
-                                </div>
-                                <div class="form-group form-control-material">
-                                    <input class="form-control" type="tel" id="wiz-lname" placeholder="Last name" />
-                                    <label for="wiz-lname">Last name:</label>
-                                </div>
-                                <div class="form-group form-control-material">
-                                    <input class="form-control" type="text" id="wiz-phone" placeholder="Phone" />
-                                    <label for="wiz-phone">Phone:</label>
-                                </div>
-                                <div class="form-group form-control-material">
-                                    <textarea rows="5" class="form-control" id="wiz-address" placeholder="Your address"></textarea>
-                                    <label for="wiz-address">Address:</label>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <button type="button" class="wiz-prev btn btn-default">Previous</button>
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        <button type="button" class="wiz-step btn btn-primary" data-target="0">Submit</button>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-      
 
+    <!-- Start main-content -->
+    <div class="main-content">
+        <!-- Section: home -->
+        <section id="home">
+            <div class="container-fluid p-0">
+                @* slider space *@
+                <!-- START REVOLUTION SLIDER 5.0.7 -->
+                @*<div id="wrapper">
+                 
+                    <ul class="rslides" id="slider1">
+                        <li><img src="~/Content/Assets/images/1.jpg" alt=""></li>
+                        <li><img src=""~/Content/Assets/images/2.jpg" alt=""></li>
+                        <li><img src=""~/Content/Assets/images/3.jpg" alt=""></li>
+                    </ul>
+              
+
+                </div>*@
+</section>
+
+        <!-- Section: Features -->
+        @*<section class="layer-overlay overlay-white-9" data-bg-img="~/Content/Assets/images/bg/bg-pattern.png">
+            <div class="container pb-40">
+                <div class="section-content">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="icon-box hover-effect border-1px border-radius-10px text-center bg-white p-15 pt-40 pb-30">
+                                <a href="#" class="icon icon-circled icon-lg" data-bg-color="#FC9928">
+                                    <i class="pe-7s-study text-white font-48"></i>
+                                </a>
+                                <h4 class="icon-box-title text-uppercase letter-space-1 font-20 mt-15"><a href="#">Popular Courses</a></h4>
+                                <p class="">Lorem ipsum dolor sit ametconsect etur adipisicing elit. Numquam modi consequuntur maxime voluptates earum illo sunt</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="icon-box hover-effect border-1px border-radius-10px text-center bg-white p-15 pt-40 pb-30">
+                                <a href="#" class="icon icon-circled icon-lg" data-bg-color="#43B14B">
+                                    <i class="pe-7s-notebook text-white font-48"></i>
+                                </a>
+                                <h4 class="icon-box-title text-uppercase letter-space-1 font-20 mt-15"><a href="#">Book Library</a></h4>
+                                <p class="">Lorem ipsum dolor sit ametconsect etur adipisicing elit. Numquam modi consequuntur maxime voluptates earum illo sunt</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="icon-box hover-effect border-1px border-radius-10px text-center bg-white p-15 pt-40 pb-30">
+                                <a href="#" class="icon icon-circled icon-lg" data-bg-color="#00C3CB">
+                                    <i class="pe-7s-diamond text-white font-48"></i>
+                                </a>
+                                <h4 class="icon-box-title text-uppercase letter-space-1 font-20 mt-15"><a href="#">Best Teachers</a></h4>
+                                <p class="">Lorem ipsum dolor sit ametconsect etur adipisicing elit. Numquam modi consequuntur maxime voluptates earum illo sunt</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="icon-box hover-effect border-1px border-radius-10px text-center bg-white p-15 pt-40 pb-30">
+                                <a href="#" class="icon icon-circled icon-lg" data-bg-color="#EF5861">
+                                    <i class="pe-7s-medal text-white font-48"></i>
+                                </a>
+                                <h4 class="icon-box-title text-uppercase letter-space-1 font-20 mt-15"><a href="#">Certification</a></h4>
+                                <p class="">Lorem ipsum dolor sit ametconsect etur adipisicing elit. Numquam modi consequuntur maxime voluptates earum illo sunt</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>*@
+
+        <!-- Section: Courses -->
+        <section id="courses">
+            <div class="container pb-40">
+                <div class="section-title text-center">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="text-uppercase title">Our <span class="text-theme-colored2">Courses</span></h2>
+                            <p class="text-uppercase mb-0">Choose Your Desired Course</p>
+                            <div class="double-line-bottom-centered-theme-colored-2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mtli-row-clearfix">
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <div class="course-single-item style2 text-center mb-40">
+                            <div class="course-thumb">
+                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/sm1.jpg">
+                                @*<div class="price-tag">$460</div>*@
+                            </div>
+                            <div class="course-details border-1px clearfix p-15 pt-15">
+                                <div class="course-top-part">
+                                    <h6 class="line-bottom-centered mt-20 mb-30">Theoritical Entrepreneurship</h6>
+                                </div>
+                                <div class="author-thumb">
+                                    @*<img src="~/Content/Assets/images/course/xs3.jpg" width="54" alt="" class="img-circle img-thumbnail">*@
+                                </div>
+                                @*<p class="course-description mt-5">The earth is the only planet made with unlimited funds and resources fashioned to reward and empower its tenants </p>*@
+                            </div>
+                            @*<div class="course-meta bg-silver-deep">
+                                <ul class="list-inline">
+                                    <li><i class="fa fa-calendar text-theme-colored2 mr-5"></i>3 hours</li>
+                                    <li><i class="fa fa-book text-theme-colored2 mr-5"></i>18 Lessons</li>
+                                    <li><i class="fa fa-clock-o text-theme-colored2 mr-5"></i>34 Seats</li>
+                                </ul>
+                            </div>*@
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <div class="course-single-item style2 text-center mb-40">
+                            <div class="course-thumb">
+                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/sm2.jpg">
+                                @*<div class="price-tag">Free</div>*@
+                            </div>
+                            <div class="course-details border-1px clearfix p-15 pt-15">
+                                <div class="course-top-part">
+                                    <h6 class="line-bottom-centered mt-20 mb-30">Practical Entrepreneurship</h6>
+                                </div>
+                                <div class="author-thumb">
+                                    @*<img src="~/Content/Assets/images/course/xs3.jpg" width="54" alt="" class="img-circle img-thumbnail">*@
+                                </div>
+                                @*<p class="course-description mt-5">Lorem ipsum dolor sit amet, consec teturadipsi cing elit. Nobis commodi esse aliquam eligend repreh</p>*@
+                            </div>
+                            @*<div class="course-meta bg-silver-deep">
+                                <ul class="list-inline">
+                                    <li><i class="fa fa-calendar text-theme-colored2 mr-5"></i>3 hours</li>
+                                    <li><i class="fa fa-book text-theme-colored2 mr-5"></i>18 Lessons</li>
+                                    <li><i class="fa fa-clock-o text-theme-colored2 mr-5"></i>34 Seats</li>
+                                </ul>
+                            </div>*@
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <div class="course-single-item style2 text-center mb-40">
+                            <div class="course-thumb">
+                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/sm3.jpg">
+                                @*<div class="price-tag">$180</div>*@
+                            </div>
+                            <div class="course-details border-1px clearfix p-15 pt-15">
+                                <div class="course-top-part">
+                                 <h6 class="line-bottom-centered mt-20 mb-30">Sectorial Entrepreneurship</h6>
+                                </div>
+                                @*<div class="author-thumb">
+                                    <img src="~/Content/Assets/images/course/xs3.jpg" width="54" alt="" class="img-circle img-thumbnail">
+                                </div>*@
+                                @*<p class="course-description mt-5">Lorem ipsum dolor sit amet, consec teturadipsi cing elit. Nobis commodi esse aliquam eligend repreh</p>*@
+                            </div>
+                            @*<div class="course-meta bg-silver-deep">
+                                <ul class="list-inline">
+                                    <li><i class="fa fa-calendar text-theme-colored2 mr-5"></i>3 hours</li>
+                                    <li><i class="fa fa-book text-theme-colored2 mr-5"></i>18 Lessons</li>
+                                    <li><i class="fa fa-clock-o text-theme-colored2 mr-5"></i>34 Seats</li>
+                                </ul>
+                            </div>*@
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <div class="course-single-item style2 text-center mb-40">
+                            <div class="course-thumb">
+                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/sm4.jpg">
+                                @*<div class="price-tag">$180</div>*@
+                            </div>
+                            <div class="course-details border-1px clearfix p-15 pt-15">
+                                <div class="course-top-part">
+                                    <h6 class="line-bottom-centered mt-20 mb-30">Pathway to Innovation</h6>
+                                </div>
+                                @*<div class="author-thumb">
+                                    <img src="~/Content/Assets/images/course/xs3.jpg" width="54" alt="" class="img-circle img-thumbnail">
+                                </div>*@
+                                @*<p class="course-description mt-5">Lorem ipsum dolor sit amet, consec teturadipsi cing elit. Nobis commodi esse aliquam eligend repreh</p>*@
+                            </div>
+                            @*<div class="course-meta bg-silver-deep">
+                                <ul class="list-inline">
+                                    <li><i class="fa fa-calendar text-theme-colored2 mr-5"></i>3 hours</li>
+                                    <li><i class="fa fa-book text-theme-colored2 mr-5"></i>18 Lessons</li>
+                                    <li><i class="fa fa-clock-o text-theme-colored2 mr-5"></i>34 Seats</li>
+                                </ul>
+                            </div>*@
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <div class="course-single-item style2 text-center mb-40">
+                            <div class="course-thumb">
+                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/sm3.jpg">
+                                @*<div class="price-tag">$120</div>*@
+                            </div>
+                            <div class="course-details border-1px clearfix p-15 pt-15">
+                                <div class="course-top-part">
+                                  <h6 class="line-bottom-centered mt-20 mb-30">Wisdom for the Wise</h6>
+                                </div>
+                                @*<div class="author-thumb">
+                                    <img src="~/Content/Assets/images/course/xs3.jpg" width="54" alt="" class="img-circle img-thumbnail">
+                                </div>*@
+                                @*<p class="course-description mt-5">Lorem ipsum dolor sit amet, consec teturadipsi cing elit. Nobis commodi esse aliquam eligend repreh</p>*@
+                            </div>
+                            @*<div class="course-meta bg-silver-deep">
+                                <ul class="list-inline">
+                                    <li><i class="fa fa-calendar text-theme-colored2 mr-5"></i>3 hours</li>
+                                    <li><i class="fa fa-book text-theme-colored2 mr-5"></i>18 Lessons</li>
+                                    <li><i class="fa fa-clock-o text-theme-colored2 mr-5"></i>34 Seats</li>
+                                </ul>
+                            </div>*@
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <div class="course-single-item style2 text-center mb-40">
+                            <div class="course-thumb">
+                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/sm3.jpg">
+                                @*<div class="price-tag">$360</div>*@
+                            </div>
+                            <div class="course-details border-1px clearfix p-15 pt-15">
+                                <div class="course-top-part">
+                                   <h6 class="line-bottom-centered mt-20 mb-30">Generational Wealth</h6>
+                                </div>
+                                @*<div class="author-thumb">
+                                    <img src="~/Content/Assets/images/course/xs3.jpg" width="54" alt="" class="img-circle img-thumbnail">
+                                </div>*@
+                                @*<p class="course-description mt-5">Lorem ipsum dolor sit amet, consec teturadipsi cing elit. Nobis commodi esse aliquam eligend repreh</p>*@
+                            </div>
+                            @*<div class="course-meta bg-silver-deep">
+                                <ul class="list-inline">
+                                    <li><i class="fa fa-calendar text-theme-colored2 mr-5"></i>3 hours</li>
+                                    <li><i class="fa fa-book text-theme-colored2 mr-5"></i>18 Lessons</li>
+                                    <li><i class="fa fa-clock-o text-theme-colored2 mr-5"></i>34 Seats</li>
+                                </ul>
+                            </div>*@
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <div class="course-single-item style2 text-center mb-40">
+                            <div class="course-thumb">
+                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/sm3.jpg">
+                                @*<div class="price-tag">Free</div>*@
+                            </div>
+                            <div class="course-details border-1px clearfix p-15 pt-15">
+                                <div class="course-top-part">
+                                  <h6 class="line-bottom-centered mt-20 mb-30">The Money River</h6>
+                                </div>
+                                @*<div class="author-thumb">
+                                    <img src="~/Content/Assets/images/course/xs3.jpg" width="54" alt="" class="img-circle img-thumbnail">
+                                </div>*@
+                                @*<p class="course-description mt-5">Lorem ipsum dolor sit amet, consec teturadipsi cing elit. Nobis commodi esse aliquam eligend repreh</p>*@
+                            </div>
+                            @*<div class="course-meta bg-silver-deep">
+                                <ul class="list-inline">
+                                    <li><i class="fa fa-calendar text-theme-colored2 mr-5"></i>3 hours</li>
+                                    <li><i class="fa fa-book text-theme-colored2 mr-5"></i>18 Lessons</li>
+                                    <li><i class="fa fa-clock-o text-theme-colored2 mr-5"></i>34 Seats</li>
+                                </ul>
+                            </div>*@
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <div class="course-single-item style2 text-center mb-40">
+                            <div class="course-thumb">
+                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/sm3.jpg">
+                                @*<div class="price-tag">$240</div>*@
+                            </div>
+                            <div class="course-details border-1px clearfix p-15 pt-15">
+                                <div class="course-top-part">
+                                <h6 class="line-bottom-centered mt-20 mb-30">Wealth Operations</h6>
+                                </div>
+                                @*<div class="author-thumb">
+                                    <img src="~/Content/Assets/images/course/xs3.jpg" width="54" alt="" class="img-circle img-thumbnail">
+                                </div>*@
+                                @*<p class="course-description mt-5">Lorem ipsum dolor sit amet, consec teturadipsi cing elit. Nobis commodi esse aliquam eligend repreh</p>*@
+                            </div>
+                            @*<div class="course-meta bg-silver-deep">
+                                <ul class="list-inline">
+                                    <li><i class="fa fa-calendar text-theme-colored2 mr-5"></i>3 hours</li>
+                                    <li><i class="fa fa-book text-theme-colored2 mr-5"></i>18 Lessons</li>
+                                    <li><i class="fa fa-clock-o text-theme-colored2 mr-5"></i>34 Seats</li>
+                                </ul>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Team -->
+        @*<section id="team" class="bg-silver-deep">
+            <div class="container pb-40">
+                <div class="section-title text-center">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="text-uppercase title">Qualified <span class="text-theme-colored2">Teachers</span></h2>
+                            <p class="text-uppercase mb-0">We Have Highly Qualified Teachers</p>
+                            <div class="double-line-bottom-centered-theme-colored-2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mtli-row-clearfix">
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        <div class="team-members border-bottom-theme-colored2px text-center maxwidth400 mb-30">
+                            <div class="team-thumb">
+                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/team/1.jpg">
+                                <div class="team-overlay"></div>
+                                <ul class="styled-icons team-social icon-sm">
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-skype"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="team-details">
+                                <h4 class="text-uppercase text-theme-colored font-weight-600 m-5">Jhon Anderson</h4>
+                                <h6 class="text-gray font-13 font-weight-400 line-bottom-centered mt-0">Civil Engineer</h6>
+                                <p class="hidden-md">Lorem ipsum dolor sit ametcon secte adipis elit. Debitis magnam placeat dignissimos saperator ellium</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        <div class="team-members border-bottom-theme-colored2px text-center maxwidth400 mb-30">
+                            <div class="team-thumb">
+                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/team/2.jpg">
+                                <div class="team-overlay"></div>
+                                <ul class="styled-icons team-social icon-sm">
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-skype"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="team-details">
+                                <h4 class="text-uppercase text-theme-colored font-weight-600 m-5">Jhon Anderson</h4>
+                                <h6 class="text-gray font-13 font-weight-400 line-bottom-centered mt-0">Civil Engineer</h6>
+                                <p class="hidden-md">Lorem ipsum dolor sit ametcon secte adipis elit. Debitis magnam placeat dignissimos saperator ellium</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        <div class="team-members border-bottom-theme-colored2px text-center maxwidth400 mb-30">
+                            <div class="team-thumb">
+                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/team/3.jpg">
+                                <div class="team-overlay"></div>
+                                <ul class="styled-icons team-social icon-sm">
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-skype"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="team-details">
+                                <h4 class="text-uppercase text-theme-colored font-weight-600 m-5">Jhon Anderson</h4>
+                                <h6 class="text-gray font-13 font-weight-400 line-bottom-centered mt-0">Civil Engineer</h6>
+                                <p class="hidden-md">Lorem ipsum dolor sit ametcon secte adipis elit. Debitis magnam placeat dignissimos saperator ellium</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        <div class="team-members border-bottom-theme-colored2px text-center maxwidth400 mb-30">
+                            <div class="team-thumb">
+                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/team/4.jpg">
+                                <div class="team-overlay"></div>
+                                <ul class="styled-icons team-social icon-sm">
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-skype"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="team-details">
+                                <h4 class="text-uppercase text-theme-colored font-weight-600 m-5">Jhon Anderson</h4>
+                                <h6 class="text-gray font-13 font-weight-400 line-bottom-centered mt-0">Civil Engineer</h6>
+                                <p class="hidden-md">Lorem ipsum dolor sit ametcon secte adipis elit. Debitis magnam placeat dignissimos saperator ellium</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>*@
+
+        <!-- Section: Events -->
+        <section class="layer-overlay overlay-white-9" data-bg-img="~/Content/Assets/images/bg/bg-pattern.png">
+            <div class="container">
+                <div class="section-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="text-uppercase line-bottom-theme-colored-2 mt-0 line-height-1"><i class="fa fa-calendar mr-10"></i>Our <span class="text-theme-colored2">Vision</span></h3>
+                            <article>
+                                <div class="event-block">
+                                    @*<div class="event-date text-center">
+                                        <ul class="text-white font-18 font-weight-600">
+                                            <li class="border-bottom">28</li>
+                                            <li class="">Feb</li>
+                                        </ul>
+                                    </div>*@
+                                    <div class="event-meta border-1px pl-40">
+                                        <div class="event-content pull-left flip">
+                                            <h4 class="event-title media-heading font-roboto-slab font-weight-700"><a href="#">Entrepreneurship</a></h4>
+                                            @* <span class="mb-10 text-gray-darkgray mr-10"><i class="fa fa-clock-o mr-5 text-theme-colored2"></i> at 5.00 pm - 7.30 pm</span>
+        <span class="text-gray-darkgray"><i class="fa fa-map-marker mr-5 text-theme-colored2"></i> 25 Newyork City</span>*@
+                                            <p class="mt-5">Build a community/platform of entrepreneurial minded youths</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                            <article>
+                                <div class="event-block">
+                                    @*<div class="event-date text-center">
+                                        <ul class="text-white font-18 font-weight-600">
+                                            <li class="border-bottom">28</li>
+                                            <li class="">Feb</li>
+                                        </ul>
+                                    </div>*@
+                                    <div class="event-meta border-1px pl-40">
+                                        <div class="event-content pull-left flip">
+                                            <h4 class="event-title media-heading font-roboto-slab font-weight-700"><a href="#">Building Leaders</a></h4>
+                                            @*<span class="mb-10 text-gray-darkgray mr-10"><i class="fa fa-clock-o mr-5 text-theme-colored2"></i> at 5.00 pm - 7.30 pm</span>
+                                            <span class="text-gray-darkgray"><i class="fa fa-map-marker mr-5 text-theme-colored2"></i> 25 Newyork City</span>*@
+                                            <p class="mt-5">To initiate a culture of solution birthing across disciplines</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                            <article>
+                                <div class="event-block">
+                                    @*<div class="event-date text-center">
+                                        <ul class="text-white font-18 font-weight-600">
+                                            <li class="border-bottom">28</li>
+                                            <li class="">Feb</li>
+                                        </ul>
+                                    </div>*@
+                                    <div class="event-meta border-1px pl-40">
+                                        <div class="event-content pull-left flip">
+                                            <h4 class="event-title media-heading font-roboto-slab font-weight-700"><a href="#">Innovation & Invention</a></h4>
+                                            @*<span class="mb-10 text-gray-darkgray mr-10"><i class="fa fa-clock-o mr-5 text-theme-colored2"></i> at 5.00 pm - 7.30 pm</span>
+                                            <span class="text-gray-darkgray"><i class="fa fa-map-marker mr-5 text-theme-colored2"></i> 25 Newyork City</span>*@
+                                            <p class="mt-5">
+                                                Transforming the mind
+                                                for innovation, inventions and enterprise discernment
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="text-uppercase line-bottom-theme-colored-2 mt-0 line-height-1"><i class="fa fa-calendar mr-10"></i>Video <span class="text-theme-colored2">Tour</span></h3>
+                            <div class="box-hover-effect about-video">
+                                <div class="effect-wrapper">
+                                    <div class="thumb">
+
+                                       
+                                        <video controls="controls">
+                                            <source src="~/Content/Videos/Code%20Denim%20(1).mp4" type="video/mp4" />
+                                        </video>
+                                        @*<img class="img-responsive img-fullwidth" src="~/Content/Assets/images/photos/1.jpg" alt="">*@
+                                    </div>
+                                    @*<div class="video-button"></div>*@
+                                    @*<a class="hover-link" data-lightbox-gallery="youtube-video" href="https://www.youtube.com/watch?v=F3QpgXBtDeo" title="Youtube Video">Youtube Video</a>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+   
+        <!-- Divider: Subscribe Newsletter -->
+        <section>
+            <div class="container pt-0 pb-0">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="subscribe-newsletter">
+                            <div class="newsletter-form">
+                                <h2 class="text-theme-colored2">Subscribe Us</h2>
+                                <form id="mailchimp-subscription-form-footer" class="newsletter-form mt-10">
+                                    <div class="input-group">
+                                        <input type="email" id="mce-EMAIL-footer" data-height="48px" class="form-control input-sm" placeholder="Your Email" name="EMAIL" value="">
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-colored btn-theme-colored text-white btn-xs m-0" data-height="48px">Subscribe</button>
+                                        </span>
+                                    </div>
+                                </form>
+                                @*<p class="text-gray-darkgray mt-20">Lorem ipsum dolor sit ametco nsecteter adipisicing elit. Molestias nemo, neque sequi ipsam vitae provident asperna quasi neque sequi ipsam.</p>*@
+
+                                <!-- Mailchimp Subscription Form Validation-->
+                                <script type="text/javascript">
+                                        $('#mailchimp-subscription-form-footer').ajaxChimp({
+                                            callback: mailChimpCallBack,
+                                            url: '//thememascot.us9.list-manage.com/subscribe/post?u=a01f440178e35febc8cf4e51f&amp;id=49d6d30e1e'
+                                        });
+
+                                        function mailChimpCallBack(resp) {
+                                            // Hide any previous response text
+                                            var $mailchimpform = $('#mailchimp-subscription-form-footer'),
+                                                $response = '';
+                                            $mailchimpform.children(".alert").remove();
+                                            if (resp.result === 'success') {
+                                                $response = '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + resp.msg + '</div>';
+                                            } else if (resp.result === 'error') {
+                                                $response = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + resp.msg + '</div>';
+                                            }
+                                            $mailchimpform.prepend($response);
+                                        }
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- end main-content -->
+    </div>
+    
+    <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
 
