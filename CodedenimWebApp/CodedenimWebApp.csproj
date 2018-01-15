@@ -1140,6 +1140,11 @@
     <Content Include="Content\Assets\^%28[^_\indexd41d.html" />
     <Content Include="Content\DataTables\css\dataTables.bootstrap.css" />
     <Content Include="Content\DataTables\css\dataTables.bootstrap.min.css" />
+    <Content Include="Content\images\log01.png" />
+    <Content Include="Content\images\logo02.png" />
+    <Content Include="Content\images\logo03.png" />
+    <Content Include="Content\images\logo4.png" />
+    <Content Include="Content\images\logo7.png" />
     <Content Include="Content\img\Corpers.jpg" />
     <Content Include="Content\img\Course1.png" />
     <Content Include="Content\img\courses.png" />

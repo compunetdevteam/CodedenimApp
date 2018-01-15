@@ -82,7 +82,7 @@ namespace CodedenimWebApp
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
                 ClientId = "694286352294-j2kjuf67qrv6tmhsjjtqp61afoinr4vv.apps.googleusercontent.com",
-                ClientSecret = "HKfdjlRaxWZbZLMqVF0zcmd2"
+                ClientSecret = "qUKJ_LGI1yFX_t2TMnjfwThw"
             });
         }
     }
