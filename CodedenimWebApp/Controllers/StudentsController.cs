@@ -16,14 +16,20 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
+using CodedenimWebApp.Abstractions;
 
 namespace CodedenimWebApp.Controllers
 {
     public class StudentsController : Controller
     {
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
-
+        private readonly ICodedenimUserMgr _user;
         private double _progress;
+
+        public StudentsController(ICodedenimUserMgr user)
+        {
+            _user = user;
+        }
         // GET: Students
         public async Task<ActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
@@ -153,23 +159,29 @@ namespace CodedenimWebApp.Controllers
 
         /// <summary>
         /// This dashbaord is used for all students not only corpers
+        /// 
         /// </summary>
         /// <returns></returns>
         public async Task<ActionResult> CorperDashboard()
         {
-            var user = User.Identity.GetUserId();
+            var user = _user.GetUser();
+            var quizTaken = _progress;
+            var assignCourseCategories = new List<AssignCourseCategory>();
 
-            var payedCourses = await _db.StudentPayments.Where(x => x.StudentId.Equals(user) && x.IsPayed.Equals(true)).Select(x => x.CourseCategoryId).ToListAsync();
-            var categoryId = new List<AssignCourseCategory>();
+            var payedCourses = await _db.StudentPayments.AsNoTracking()
+                                        .Where(x => x.StudentId.Equals(user) && 
+                                        x.IsPayed.Equals(true)).Select(x => x.CourseCategoryId).ToListAsync();
+
+
             foreach (var item in payedCourses)
             {
                 var corperCourses = await _db.AssignCourseCategories.Include(x => x.CourseCategory).Include(x => x.Courses)
               .Where(x => x.CourseCategoryId.Equals(item))
               .FirstOrDefaultAsync();
-                categoryId.Add(corperCourses);
+                assignCourseCategories.Add(corperCourses);
             }
 
-            var quizTaken = _progress;
+            
 
             var courseCategory = await _db.CourseCategories.Where(x => x.StudentType.Equals(RoleName.Corper))
                 .ToListAsync();
@@ -180,7 +192,7 @@ namespace CodedenimWebApp.Controllers
             var quiz = _db.QuizLogs.Where(x => x.StudentId.Equals(user)).Take(1).ToList();
             var quizTakenList = _db.QuizLogs.Where(x => x.StudentId.Equals(user)).AsEnumerable().DistinctBy(x => x.ModuleId).Count();
             var moduleParCourseList = new List<Module>();
-            foreach (var module in categoryId.DistinctBy(x => x.CourseCategoryId))
+            foreach (var module in assignCourseCategories.DistinctBy(x => x.CourseCategoryId))
             {
                 foreach (var singleModule in module.Courses.Modules)
                 {
@@ -192,10 +204,10 @@ namespace CodedenimWebApp.Controllers
             }
             ProgressBar(quizTakenList, moduleParCourseList.Count());
             // var profilePics = GetImage();
-            List<Course> certificate = GenerateCertificate(user, categoryId);
+            List<Course> certificate = GenerateCertificate(user, assignCourseCategories);
             var model = new DashboardVm()
             {
-                AssignCourseCategories = categoryId,
+                AssignCourseCategories = assignCourseCategories,
                 CourseCategories = courseCategory,
                 StudentInfo = student,
                 ForumQuestion = forumQuestion,
