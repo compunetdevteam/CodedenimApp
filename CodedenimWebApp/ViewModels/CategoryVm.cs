@@ -11,5 +11,6 @@ namespace CodedenimWebApp.ViewModels
        public List<AssignCourseCategory> Courses { get; set; }
        public string CourseCategory { get; set; } 
         public CorperEnrolledCourses CourseCategoryId { get; set; }
+        public CourseContentVm courseContentVm { get; set; }
     }
 }

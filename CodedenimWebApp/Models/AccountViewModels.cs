@@ -317,7 +317,7 @@ namespace CodedenimWebApp.Models
     {
         Corper = 1,
         UnderGraduate,
-        [Display(Name = "Student")]
+        [Display(Name = "Professional/Others")]
         RegularStudent
     }
 

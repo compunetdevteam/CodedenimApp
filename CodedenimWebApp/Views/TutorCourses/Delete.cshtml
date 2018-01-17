@@ -2,7 +2,8 @@
 
 @{
     ViewBag.Title = "Delete";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Views/Shared/_GeneralLayoutNewUI.cshtml";
+}
 }
 
 <h2>Delete</h2>
@@ -30,7 +31,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

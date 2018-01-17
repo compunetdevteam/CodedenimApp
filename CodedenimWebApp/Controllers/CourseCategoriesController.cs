@@ -77,7 +77,7 @@ namespace CodedenimWebApp.Controllers
                 model.AddRange(assignedCourse.Select(s => s.CourseCategory));
             }
 
-            return View(model);
+            return View(model.DistinctBy(x => x.CourseCategoryId));
         }
 
        

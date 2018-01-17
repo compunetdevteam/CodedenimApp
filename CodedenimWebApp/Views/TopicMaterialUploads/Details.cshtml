@@ -1,7 +1,6 @@
 ﻿
 @using CodeninModel
-@*@using CodedenimWebApp.ViewModels.CourseContentVm*@
-@*@model CodeninModel.TopicMaterialUpload*@
+
 @model CodedenimWebApp.ViewModels.CourseContentVm
 @{
     ViewBag.Title = "Topic Material Details";
@@ -13,130 +12,92 @@
 
     
 
-@*<h2>Details of  @Model.ModulesName</h2>*@
+
+
 
 
     
-<div class="row ">
 
 
-
-    @*<div class="panel panel-default">
-        <div class="media v-middle">
-            <div class="media-left">
-                <div class="bg-green-400 text-white">*@
-    <div class="panel-body" id="loadTopicContent">  
-        @foreach (var material in Model.Materials)
-    {
-        <div id="topicContents">
-
-            <dt class="btn label label-default" onclick="loadContent(@material.TopicMaterialUploadId)">
-                @Html.DisplayNameFor(model => material.Name)
-
-                <b> @Html.DisplayFor(model => material.Name) </b>
-            </dt>   
-                <hr/>
-          
-        </div>
-
-}
-    </div>
-        @*
-                        </div>
-                    </div>
-
-                </div>
-            </div>*@
-
-
-        <div class="col-md-2">
-
-
-
-            <div>
-
-                @*@foreach (var material in Model.Materials)
-                    {
-                        <div id="topicContents">
-
-                            <dt class="btn label label-default" onclick="loadContent(@material.TopicMaterialUploadId)">
-                                @Html.DisplayNameFor(model => material.Name)
-                            </dt>
-                            <dd>
-                                <b> @Html.DisplayFor(model => material.Name) </b>
-                            </dd>
-                            <hr/>
-                        </div>
-
-                    }*@
-            </div>
-        </div>
-
-
-
-
-        <div class="col-md-10" id="MaterialContent">
-
-        </div>
-    </div>
-
-
-    <div class="sidebar right sidebar-size-3 sidebar-offset-0 sidebar-visible-desktop sidebar-skin-white" id="sidebar-library">
-        <div data-scrollable>
-            <h4 class="category">Modules</h4>
-            -
-            @foreach (var item in Model.Modules)
+    <div class="row ">
+        <div class="col-md-10" id="loadTopicContent">
+            @foreach (var material in Model.Materials)
             {
-                <div class="sidebar-block">
-                    <div class="form-group input-group">
-                        <div class="row margin-none">
-                            <div> @item.ModuleName</div>
-                        </div>
-                        @foreach (var topicContent in item.Topics.Where(x => x.ModuleId.Equals(item.ModuleId)))
-                        {
-                            <button type="button" class="btn btn-primary" onclick="material(@topicContent.TopicId)"><i class="fa fa-book"></i></button>
-                        }
-                        @*@foreach (var topicId in Model.Materials)
-                            {
-                                <div class="input-group-btn">
-                                    <button type="button" class="btn btn-primary" onclick="material(@topicId.TopicId)"><i class="fa fa-book"></i></button>
-                                </div>
-                            }*@
+
+                <div class="panel-footer" id="topicContents">
+                    <div class="text-left">
+
+                        <div id="topicContents">
+                            <div onclick="loadContent(@material.TopicMaterialUploadId)">
+                            <button class="btn btn-success"><i class="fa fa-save fa-fw"></i>@Html.DisplayFor(model => material.Name)</button>
+                             </div>
+                          </div>
 
                     </div>
                 </div>
             }
-
-            @*<h4 class="category">View</h4>
-                <div class="sidebar-block">
-                    <div class="form-group">
-                        <select class="selectpicker">
-                            <option>List</option>
-                            <option>Grid</option>
-                        </select>
-                    </div>
-                </div>
-                <h4 class="category">Price</h4>
-                <div class="sidebar-block">
-                    <div class="form-group input-group">
-                        <div class="row margin-none">
-                            <div class="col-xs-6 padding-none">
-                                <input class="form-control" type="text" placeholder="Min .."/>
-                            </div>
-                            <div class="col-xs-6 padding-none">
-                                <input class="form-control" type="text" placeholder="Max .."/>
-                            </div>
-                        </div>
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
-                </div>*@
         </div>
+
+
+
+        @*<div class="panel-body" id="loadTopicContent">
+            @foreach (var material in Model.Materials)
+            {
+                <div id="topicContents">
+
+                    <dt class="btn label label-default" onclick="loadContent(@material.TopicMaterialUploadId)">
+                        @Html.DisplayNameFor(model => material.Name)
+
+                        <b> @Html.DisplayFor(model => material.Name) </b>
+                    </dt>
+                    <hr />
+
+                </div>
+
+            }
+        </div>*@
+
+
+
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript">
+<br/>
+
+
+
+    <div class="col-md-9" id="MaterialContent">
+
+    </div>
+
+
+
+    <div class="sidebar right sidebar-size-3 sidebar-offset-0 sidebar-visible-desktop sidebar-skin-white" id="sidebar-library">
+        <div data-scrollable >
+            <h4 class="category">Modules</h4>
+            
+            @foreach (var item in Model.Modules)
+    {
+        <div class="sidebar-block">
+            <div class="form-group input-group">
+                <div class="row margin-none">
+                    <div class="link-text-color"> @item.ModuleName</div>
+                </div>
+                @foreach (var topicContent in item.Topics.Where(x => x.ModuleId.Equals(item.ModuleId)))
+        {
+            <button type="button" class="btn btn-primary" onclick="material(@topicContent.TopicId)"><i class="fa fa-book"></i></button>
+}
+
+            </div>
+        </div>
+}
+
+        
+
+                    </div>
+                </div>
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                <script type="text/javascript">
     $(document).ready(function () {
         //$('#ContentId').click(function () {
         //    var contentId = $(this).attr('value');
@@ -155,7 +116,7 @@
 
         $('#loadTopicContent').load("/TopicMaterialUploads/SideBarContentForMaterial/" + topicId);
     }
-    
+
     //$("#ContentId").click(function () {
 
     //    //alert("i am nigeria");
@@ -171,26 +132,26 @@
             $("#MaterialContent").load('@(Url.Action("DetailsContent", "TopicMaterialUploads"))?contentId=' + contentId);
         });
     };*@
-    </script>
-    <script>
-        var myVideo = document.getElementById("video1");
+                </script>
+                <script>
+                    var myVideo = document.getElementById("video1");
 
-        function playPause() {
-            if (myVideo.paused)
-                myVideo.play();
-            else
-                myVideo.pause();
-        }
+                    function playPause() {
+                        if (myVideo.paused)
+                            myVideo.play();
+                        else
+                            myVideo.pause();
+                    }
 
-        function makeBig() {
-            myVideo.width = 560;
-        }
+                    function makeBig() {
+                        myVideo.width = 560;
+                    }
 
-        function makeSmall() {
-            myVideo.width = 320;
-        }
+                    function makeSmall() {
+                        myVideo.width = 320;
+                    }
 
-        function makeNormal() {
-            myVideo.width = 420;
-        }
-    </script>
+                    function makeNormal() {
+                        myVideo.width = 420;
+                    }
+                </script>

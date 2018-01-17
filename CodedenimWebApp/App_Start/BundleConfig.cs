@@ -27,7 +27,7 @@ namespace CodedenimWebApp
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                    //  "~/Content/bootstrap.css",
                       "~/Content/site.css"));
             //Create bundel for jQueryUI  
             //js  
@@ -139,7 +139,8 @@ namespace CodedenimWebApp
                       "~/Content/Assets/css/bootstrap.min.css",
                       "~/Content/Assets/css/jquery-ui.min.css",
                       "~/Content/Assets/css/animate.css",
-                      "~/Content/Assets/css/css-plugin-collections.css"
+                      "~/Content/Assets/css/css-plugin-collections.css",
+                         "~/Content/LandingPageAssets/font-awesome/css/font-awesome.min.css"
                       ));
             //CSS | menuzord megamenu skins 
             bundles.Add(new StyleBundle("~/Content/megamenu/skins").Include(
@@ -153,7 +154,7 @@ namespace CodedenimWebApp
                       ));
             //Main style File
             bundles.Add(new StyleBundle("~/Content/MainStyleFile").Include(
-                "~/Content/Assets/css/style-main.css"
+                 "~/Content/Assets/css/style-main.css"
 
                 ));
             //Pre-Loader

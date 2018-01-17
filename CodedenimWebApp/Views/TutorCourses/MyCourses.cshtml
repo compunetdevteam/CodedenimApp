@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<CodeninModel.TutorCourse>
 @{
-    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
+    Layout = "~/Views/Shared/_GeneralLayoutNewUI.cshtml";
 }
+
 <table class="table">
     <tr>
         <th>
@@ -14,24 +15,25 @@
     </tr>
 
     <tr>
-  
-    @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Courses.CourseCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tutor.Designation)
-        </td>
-        <td>
-        @Html.ActionLink("Create Modeles", "Create","Modules", new { id=item.TutorCoursesId })
-            </td>
-        @*<td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TutorCoursesId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TutorCoursesId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TutorCoursesId })
-        </td>*@
-    </tr>
-}
 
-</table>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Courses.CourseCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tutor.Designation)
+            </td>
+            <td>
+                @Html.ActionLink("Create Modeles", "Create", "Modules", new { id = item.TutorCoursesId })
+            </td>
+            @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.TutorCoursesId }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.TutorCoursesId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.TutorCoursesId })
+                </td>*@
+        </tr>
+    }
+
+    </table>

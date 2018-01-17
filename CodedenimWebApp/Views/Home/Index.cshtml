@@ -5,7 +5,6 @@
 }
 
 
-
 <!-- Start main-content -->
 <div class="main-content">
     <!-- Section: home -->
@@ -14,7 +13,53 @@
 
 
             @*<img src="~/Content/Videos/codedeninLo;lgo1.jpg" class="" />*@
-            @*place for slider  *@
+            <!--BlackHJohnnyslide begins-->
+            <div id="sequence" class="seq">
+                <div class="seq-screen">
+                    <ul class="seq-canvas">
+                        <li class="seq-in">
+                            <div class="seq-model">
+                                
+
+                                <img data-seq src="~/Content/images/ezgif.com-gif-maker.gif" alt="get certified" />
+                            </div>
+                            <div class="seq-title">
+                                <h2 data-seq>Time Waits For No One</h2>
+                                <h3 data-seq>Why not get certified learning what you love NOW!...</h3>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="seq-model">
+                                
+                                <img data-seq src="~/Content/images/ezgif.com-gif-maker (1).gif" alt="learn as A corper" />
+                            </div>
+                            <div class="seq-title">
+                                <h2 data-seq>As A corper</h2>
+                                <h3 data-seq>Build your career on this platform, during your service year...</h3>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="seq-readingguy">
+                                
+                                <img data-seq src="~/Content/images/ezgif.com-gif-maker (3) (1).gif" alt="study on the go" />
+                            </div>
+                           
+
+                            <div class="seq-title">
+                                <h2 data-seq>Learn on the go and from your comfort zone</h2>
+                                <h3 data-seq>Build your career from wherever you are</h3>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+                <fieldset class="seq-nav" aria-controls="sequence" aria-label="Slider buttons">
+                    <button type="button" class="seq-prev" aria-label="Previous">Previous</button>
+                    <button type="button" class="seq-next" aria-label="Next">Next</button>
+                </fieldset>
+               
+            </div>
+            <!--blackHJohnnyslide ends-->
         </div>
     </section>
 
@@ -22,14 +67,14 @@
     <section>
         <div class="container pt-0 pb-0">
             <div class="section-content">
-                <div class="row equal-height-inner home-boxes" data-margin-top="-100px">
+                <div class="row equal-height-inner home-boxes" data-margin-top="10px">
                     <div class="col-sm-12 col-md-3 pl-0 pl-sm-15 pr-0 pr-sm-15 sm-height-auto mt-sm-0 wow fadeInLeft animation-delay1">
                         <div class="sm-height-auto" data-bg-color="#5D9CEC">
                             <div class="features-box-colored text-center p-15 pt-30 pb-20">
                                 <i class="fa fa-graduation-cap font-54 mb-20 text-white"></i>
                                 <h4 class="text-uppercase font-weight-600 mt-0"><a href="page-donate.html" class="text-white">Mission</a></h4>
                                 <p class="text-white">
-                                    To initiate a culture of solution birthing across disciplines. In all stages & at all levels,
+                                    To initiate a culture of solution birthing across disciplines, in all stages & at all levels,
                                     work and study engagement
                                 </p>
                                 <div class="shadow-icon"><i class="pe-7s-mail-open"></i></div>
@@ -42,7 +87,7 @@
                                 <i class="fa fa-book font-54 mb-20 text-white"></i>
                                 <h4 class="text-uppercase font-weight-600 mt-0"><a href="page-donate.html" class="text-white">Vision</a></h4>
                                 <p class="text-white">
-                                    To build a community/platform of entrepreneurial minded youths. Who would be
+                                    To build a community/platform of entrepreneurial minded youths, who would be
                                     trained and liberated from the consumerism ideology
                                 </p>
                                 <div class="shadow-icon"><i class="pe-7s-mail-open"></i></div>
@@ -54,7 +99,7 @@
                             <div class="features-box-colored text-center p-15 pt-30 pb-20">
                                 <i class="fa fa-user-o font-54 mb-20 text-white"></i>
                                 <h4 class="text-uppercase font-weight-600 mt-0"><a href="page-donate.html" class="text-white">Users</a></h4>
-                                <p class="text-white">Youths (Undergraduates, NYSC ad from the informal sector)</p>
+                                <p class="text-white">Youths (Undergraduates, NYSC and from the informal sector)</p>
                                 <div class="shadow-icon"><i class="pe-7s-mail-open"></i></div>
                             </div>
                         </div>
@@ -64,7 +109,7 @@
                             <div class="features-box-colored text-center p-15 pt-30 pb-20">
                                 <i class="fa fa-certificate font-54 mb-20 text-white"></i>
                                 <h4 class="text-uppercase font-weight-600 mt-0"><a href="page-donate.html" class="text-white">Purpose</a></h4>
-                                <p class="text-white">transforming the minds for innovation, invention and enterprise discernment</p>
+                                <p class="text-white">Transforming the minds for innovation, invention and enterprise discernment</p>
                                 <div class="shadow-icon"><i class="pe-7s-mail-open"></i></div>
                             </div>
                         </div>
@@ -100,9 +145,13 @@
                         <div class="box-hover-effect about-video">
                             <div class="effect-wrapper">
                                 <div class="thumb">
-                                    <video controls="controls" class="img-fullwidth">
-                                        <source src="~/Content/Videos/Code%20Denim%20(1).mp4" type="video/mp4" />
+                                    <video controls="controls" class="img-fullwidth" style="width:350px; height:255px">
+                                        <source src="~/Content/Videos/CodeDenim1.mp4" type="video/mp4" />
                                     </video>
+                                  
+                                    @*<video controls="controls" class="img-fullwidth" style="width:350px; height:200px">
+            <source src="~/Content/Videos/Code%20Denim%20(1).mp4" type="video/mp4" />
+        </video>*@
                                 </div>
                                 @*<img class="img-fullwidth" src="~/Content/Assets/images/about/video-thumb.jpg" alt="project">
                                     </div>
@@ -118,14 +167,14 @@
                             <div class="event-small media sm-maxwidth400 mt-0 mb-0 pt-0 pb-15">
                                 <div class="event-date text-center">
                                     <ul class="text-white">
-                                        <li class="font-18 font-weight-700 border-bottom">28</li>
-                                        <li class="font-14 text-center text-uppercase mt-5">Feb</li>
+                                        <li class="font-18 font-weight-700 border-bottom">16</li>
+                                        <li class="font-14 text-center text-uppercase mt-5">Jan</li>
                                     </ul>
                                 </div>
                                 <div class="event-content pt-5">
-                                    <h5 class="media-heading font-16 font-weight-600 mb-5"><a href="#">Admission Fair Spring 2017</a></h5>
-                                    <span class="mr-10"><i class="fa fa-clock-o text-theme-colored2"></i> 5.00 pm - 7.30 pm</span>
-                                    <span> <i class="fa fa-map-marker text-theme-colored2"></i> 25 Newyork City.</span>
+                                    <h5 class="media-heading font-16 font-weight-600 mb-5"><a href="#">Launching Our PlatForm</a></h5>
+                                    <span class="mr-10"><i class="fa fa-clock-o text-theme-colored2"></i> 10.00 am - 2.30 pm</span>
+                                    <span> <i class="fa fa-map-marker text-theme-colored2"></i> Plot 7A Ara Rocks Creative House, Off Liberty Dam Road-Behind De Eden Hotel Jos-Plateau State..</span>
                                 </div>
                             </div>
                         </article>
@@ -133,14 +182,14 @@
                             <div class="event-small media sm-maxwidth400 mt-5 mb-0 pt-10 pb-15">
                                 <div class="event-date text-center">
                                     <ul class="text-white">
-                                        <li class="font-18 font-weight-700 border-bottom">28</li>
-                                        <li class="font-14 text-center text-uppercase mt-5">Feb</li>
+                                        <li class="font-18 font-weight-700 border-bottom">20</li>
+                                        <li class="font-14 text-center text-uppercase mt-5">Jan</li>
                                     </ul>
                                 </div>
                                 <div class="event-content pt-5">
-                                    <h5 class="media-heading font-16 font-weight-600 mb-5"><a href="#">Learning Spoken English</a></h5>
-                                    <span class="mr-10"><i class="fa fa-clock-o text-theme-colored2"></i> 5.00 pm - 7.30 pm</span>
-                                    <span> <i class="fa fa-map-marker text-theme-colored2"></i> 25 Newyork City.</span>
+                                    <h5 class="media-heading font-16 font-weight-600 mb-5"><a href="#">Open Registration</a></h5>
+                                    <span class="mr-10"><i class="fa fa-clock-o text-theme-colored2"></i> 8.00 am - 12pm </span>
+                                    <span> <i class="fa fa-map-marker text-theme-colored2"></i> All Over Nigeria.</span>
                                 </div>
                             </div>
                         </article>
@@ -154,8 +203,8 @@
                                 </div>
                                 <div class="event-content pt-5">
                                     <h5 class="media-heading font-16 font-weight-600 mb-5"><a href="#">Workshop Online Marketing</a></h5>
-                                    <span class="mr-10"><i class="fa fa-clock-o text-theme-colored2"></i> 5.00 pm - 7.30 pm</span>
-                                    <span> <i class="fa fa-map-marker text-theme-colored2"></i> 25 Newyork City.</span>
+                                    <span class="mr-10"><i class="fa fa-clock-o text-theme-colored2"></i> 2.00 pm - 5.30 pm</span>
+                                    <span> <i class="fa fa-map-marker text-theme-colored2"></i> Online.</span>
                                 </div>
                             </div>
                         </article>
@@ -182,12 +231,14 @@
                     <div class="item">
                         <div class="course-single-item bg-white border-1px clearfix mb-30">
                             <div class="course-thumb">
-                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/sm1.jpg">
+                                @*<img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/sm1.jpg">*@
+                                @*<img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/Enterp2.jpeg" />*@
+                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/NewEnterp.png" />
                                 <div class="price-tag">Price</div>
                             </div>
                             <div class="course-details clearfix p-20 pt-15">
                                 <div class="course-top-part pull-left mr-40">
-                                    <a href="page-course-details.html"><h4 class="mt-0 mb-5">Theoritical Enterpreneurship</h4></a>
+                                    <a href="#"><h4 class="mt-0 mb-5">Theoritical Enterpreneurship</h4></a>
                                     <ul class="list-inline">
                                         <li class="review-stars">
                                             <i class="fa fa-star"></i>
@@ -225,12 +276,13 @@
                     <div class="item">
                         <div class="course-single-item bg-white border-1px clearfix mb-30">
                             <div class="course-thumb">
-                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/sm2.jpg">
+                                @*<img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/sm2.jpg">*@
+                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/NewMarket Enterp1.jpg" />
                                 <div class="price-tag">Price</div>
                             </div>
                             <div class="course-details clearfix p-20 pt-15">
                                 <div class="course-top-part pull-left mr-40">
-                                    <a href="page-course-details.html"><h4 class="mt-0 mb-5">Practical Enterpreneurship</h4></a>
+                                    <a href="#"><h4 class="mt-0 mb-5">Practical Enterpreneurship</h4></a>
                                     <ul class="list-inline">
                                         <li class="review-stars">
                                             <i class="fa fa-star"></i>
@@ -268,12 +320,13 @@
                     <div class="item">
                         <div class="course-single-item bg-white border-1px clearfix mb-30">
                             <div class="course-thumb">
-                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/sm3.jpg">
+                                @*<img  src="~/Content/Assets/images/course/sm3.jpg">*@
+                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/WealthCreation.jpg" />
                                 <div class="price-tag">Price</div>
                             </div>
                             <div class="course-details clearfix p-20 pt-15">
                                 <div class="course-top-part pull-left mr-40">
-                                    <a href="page-course-details.html"><h4 class="mt-0 mb-5">Wealth Creation</h4></a>
+                                    <a href="#"><h4 class="mt-0 mb-5">Wealth Creation</h4></a>
                                     <ul class="list-inline">
                                         <li class="review-stars">
                                             <i class="fa fa-star"></i>
@@ -300,7 +353,7 @@
                                             <h6>30</h6>
                                             <span> Class Size</span>
                                         </li>
-                                        <li>
+                                        <li>    
                                             <h6><span class="course-time">2 hours 30 min</span></h6>
                                             <span> Class Duration</span>
                                         </li>
@@ -311,12 +364,13 @@
                     <div class="item">
                         <div class="course-single-item bg-white border-1px clearfix mb-30">
                             <div class="course-thumb">
-                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/sm4.jpg">
+                                @*<img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/sm4.jpg">*@
+                                <img class="img-fullwidth" alt="" src="~/Content/Assets/images/course/salesManager.jpg" />
                                 <div class="price-tag">Price</div>
                             </div>
                             <div class="course-details clearfix p-20 pt-15">
                                 <div class="course-top-part pull-left mr-40">
-                                    <a href="page-course-details.html"><h4 class="mt-0 mb-5">Sales To Management</h4></a>
+                                    <a href="#"><h4 class="mt-0 mb-5">Sales To Management</h4></a>
                                     <ul class="list-inline">
                                         <li class="review-stars">
                                             <i class="fa fa-star"></i>
@@ -333,7 +387,7 @@
                                         <img src="~/Content/Assets/images/course/xs1.jpg" alt="" class="img-circle">
                                     </div>*@
                                 <div class="clearfix"></div>
-                                <p class="course-description mt-20">. Research has shown that it cost five times as much to acquire a new customer as it does to retain an existing customer.</p>
+                                <p class="course-description mt-20">Research has shown that it cost five times as much to acquire a new customer as it does to retain an existing customer.</p>
                                 @*<ul class="list-inline course-meta mt-15">
                                         <li>
                                             <h6>1 year</h6>
@@ -676,9 +730,9 @@
                                     <img class="img-thumbnail img-circle" alt="" src="~/Content/Assets/images/testimonials/1.jpg" width="110">
                                 </div>
                                 <div class="testimonial-content">
-                                    <h4 class="text-white font-weight-300 mt-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</h4>
+                                    <h4 class="text-white font-weight-300 mt-0">This is a Great Platform for Learing. I guarantee you will learn many things</h4>
                                     <h5 class="text-theme-colored2 mt-10 font-16 mb-0">Catherine Grace</h5>
-                                    <h6 class="text-gray-darkgray mt-5">CEO apple.inc</h6>
+                                    <h6 class="text-gray-darkgray mt-5">Ara rocks</h6>
                                 </div>
                             </div>
                         </div>
@@ -688,7 +742,7 @@
                                     <img class="img-thumbnail img-circle" alt="" src="~/Content/Assets/images/testimonials/2.jpg" width="110">
                                 </div>
                                 <div class="testimonial-content">
-                                    <h4 class="text-white font-weight-300 mt-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</h4>
+                                    <h4 class="text-white font-weight-300 mt-0">This content is what is not taught in most schools. Getting on this platform is a blessing.</h4>
                                     <h5 class="text-theme-colored2 mt-10 font-16 mb-0">Catherine Grace</h5>
                                     <h6 class="text-gray-darkgray mt-5">CEO apple.inc</h6>
                                 </div>
@@ -700,7 +754,7 @@
                                     <img class="img-thumbnail img-circle" alt="" src="~/Content/Assets/images/testimonials/3.jpg" width="110">
                                 </div>
                                 <div class="testimonial-content">
-                                    <h4 class="text-white font-weight-300 mt-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</h4>
+                                    <h4 class="text-white font-weight-300 mt-0">World Class Learning Materials.</h4>
                                     <h5 class="text-theme-colored2 mt-10 font-16 mb-0">Catherine Grace</h5>
                                     <h6 class="text-gray-darkgray mt-5">CEO apple.inc</h6>
                                 </div>
@@ -712,7 +766,7 @@
                                     <img class="img-thumbnail img-circle" alt="" src="~/Content/Assets/images/testimonials/1.jpg" width="110">
                                 </div>
                                 <div class="testimonial-content">
-                                    <h4 class="text-white font-weight-300 mt-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</h4>
+                                    <h4 class="text-white font-weight-300 mt-0">Codedenim is just on point.</h4>
                                     <h5 class="text-theme-colored2 mt-10 font-16 mb-0">Catherine Grace</h5>
                                     <h6 class="text-gray-darkgray mt-5">CEO apple.inc</h6>
                                 </div>
@@ -767,8 +821,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <p class="mt-5">Lorem ipsum dolor sit amet, consectetur adipisi cing elit. Molestias eius illum libero dolor nobis deleniti</p>
-                                        <a class="btn btn-default btn-flat font-12 mt-10 ml-5" href="blog-single-left-sidebar.html"> View Details</a>
+                                        <p class="mt-5">Learn the Latest About Codedenim</p>
+                                        <a class="btn btn-default btn-flat font-12 mt-10 ml-5" href="#"> View Details</a>
                                     </div>
                                 </article>
                             </div>
@@ -798,8 +852,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <p class="mt-5">Lorem ipsum dolor sit amet, consectetur adipisi cing elit. Molestias eius illum libero dolor nobis deleniti</p>
-                                        <a class="btn btn-default btn-flat font-12 mt-10 ml-5" href="blog-single-left-sidebar.html"> View Details</a>
+                                        <p class="mt-5">Learn the Latest About Codedenim</p>
+                                        <a class="btn btn-default btn-flat font-12 mt-10 ml-5" href="#"> View Details</a>
                                     </div>
                                 </article>
                             </div>
@@ -829,8 +883,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <p class="mt-5">Lorem ipsum dolor sit amet, consectetur adipisi cing elit. Molestias eius illum libero dolor nobis deleniti</p>
-                                        <a class="btn btn-default btn-flat font-12 mt-10 ml-5" href="blog-single-left-sidebar.html"> View Details</a>
+                                        <p class="mt-5">Learn the Latest About Codedenim</p>
+                                        <a class="btn btn-default btn-flat font-12 mt-10 ml-5" href="#"> View Details</a>
                                     </div>
                                 </article>
                             </div>
@@ -860,8 +914,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <p class="mt-5">Lorem ipsum dolor sit amet, consectetur adipisi cing elit. Molestias eius illum libero dolor nobis deleniti</p>
-                                        <a class="btn btn-default btn-flat font-12 mt-10 ml-5" href="blog-single-left-sidebar.html"> View Details</a>
+                                        <p class="mt-5">Learn the Latest About Codedenim</p>
+                                        <a class="btn btn-default btn-flat font-12 mt-10 ml-5" href="#"> View Details</a>
                                     </div>
                                 </article>
                             </div>
@@ -879,7 +933,7 @@
                                     <a class="media-left pull-left" href="#"> <i class="pe-7s-map-2 text-theme-colored2"></i></a>
                                     <div class="media-body">
                                         <h5 class="mt-0">Our Office Location</h5>
-                                        <p>Plateau State, Jos. Nigeria</p>
+                                        <p>Plot 7A Ara Rocks Creative House, Off Liberty Dam Road-Behind De Eden Hotel Jos-Plateau State.</p>
                                     </div>
                                 </div>
                             </div>
@@ -910,26 +964,7 @@
 
     <!-- Divider: Map -->
     <section>
-        <!-- Google Map HTML Codes -->
-        <div data-address="121 King Street, Melbourne Victoria 3000 Australia"
-             data-popupstring-id="#popupstring1"
-             class="map-canvas autoload-map"
-             data-mapstyle="style1"
-             data-height="400"
-             data-latlng="40.7807400,-74.0210890"
-             data-title="sample title"
-             data-zoom="12"
-             data-marker="~/Content/Assets/images/map-marker.png">
-        </div>
-        <div class="map-popupstring hidden" id="popupstring1">
-            <div class="text-center">
-                <h3>Kempt Central Office</h3>
-                <p>121 King Street, Melbourne Victoria 3000 Australia</p>
-            </div>
-        </div>
-        <!-- Google Map Javascript Codes -->
-        <script src="http://maps.google.com/maps/api/js?key=AIzaSyAYWE4mHmR9GyPsHSOVZrSCOOljk8DU9B4"></script>
-        <script src="js/google-map-init.js"></script>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3930.4174191797224!2d8.90529831478605!3d9.899149492920381!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x105373c15ca265eb%3A0x173b46bc41f14429!2sLamingo+Rd%2C+Jos!5e0!3m2!1sen!2sng!4v1516186035369" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>  
     </section>
 
     <!-- Divider: Call To Action -->

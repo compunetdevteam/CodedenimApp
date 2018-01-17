@@ -216,7 +216,7 @@ namespace CodedenimWebApp.Controllers
            
                // var moduleNumber = _db.StudentTopicQuizs.Where(x => x.ModuleId.Equals(module.ModuleId)).FirstOrDefault();
 
-                if (quizTakenList != 0)
+                if((quizTakenList != 0) && (moduleNo != 0))
                 {
                     _progress = (quizTakenList * 100) / moduleNo;
                 }

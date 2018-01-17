@@ -4,57 +4,55 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<h2>Category Content</h2>
+<h2>Course Content</h2>
 
 <h5 class="text-subhead-2 text-light">Courses to Complete in @Model.CourseCategory category</h5>
-@*@if(User.Identity,GetRoles)*@
+
+
+
+
 @foreach (var item in Model.Courses)
 {
 
-<a href="@Url.Action("Content","Courses",new{@id = item.CourseId})">
-<div class="panel panel-default curriculum open paper-shadow" data-z="0.5">
-
-    <div class="panel-heading panel-heading-gray" data-toggle="collapse" data-target="#curriculum-1">
-        <div class="media">
-
-            <div class="media-left">
-                <span class="icon-block img-circle bg-indigo-300 half text-white"><i class="fa fa-graduation-cap"></i></span>
-            </div>
-            <div class="media-body">
-                <h4 class="text-headline">@item.Courses.CourseName</h4>
+    <div class="panel panel-default curriculum open paper-shadow" data-z="0.5">
+        <div class="panel-heading panel-heading-gray" data-toggle="collapse" data-target="#curriculum-@item.CourseId">
+            <div class="media">
+                <div class="media-left">
+                    <span class="icon-block img-circle bg-indigo-300 half text-white"><i class="fa fa-graduation-cap"></i></span>
+                </div>
                 <div class="media-body">
-                    <i class="fa fa-fw fa-circle text-green-300"></i> @item.Courses.CourseDescription
+                    <h4 class="text-headline">@item.Courses.CourseName</h4>
+                    <p>@item.Courses.CourseDescription</p>
                 </div>
-                <p></p>
             </div>
+            <span class="collapse-status collapse-open">Open</span>
+            <span class="collapse-status collapse-close">Close</span>
         </div>
-        <span class="collapse-status collapse-open">Open</span>
-        <span class="collapse-status collapse-close">Close</span>
-    </div>
+        <div class="list-group collapse in" id="curriculum-@item.CourseId">
 
-    @*<div class="list-group collapse in" id="curriculum-1">
-            @foreach (var topics in Model.Topics.Where(x => x.ModuleId.Equals(item.ModuleId)))
+            @foreach (var module in item.Courses.Modules.Where(x => x.CourseId.Equals(item.CourseId)))
             {
-                <div class="list-group-item media"  @*data-target="#edit-modal" data-toggle="modal" id="@item.ModuleId">
-                    <div class="media-left">
-                        <div class="text-crt" value="@topics.TopicId">@topics.TopicId</div>
-                    </div>
-                    <div class="media-body">
-                        <i class="fa fa-fw fa-circle text-green-300"></i> <a href="@Url.Action("Details","TopicMaterialUploads", new {id = topics.TopicId})"> @topics.TopicName</a>
-                    </div>
-                    <div class="media-right">
-                        <div class="width-100 text-right text-caption">2:03 min</div>
-                    </div>
-                                   
+                foreach (var topic in module.Topics)
+                {
+            <div class="list-group-item media active" data-target="website-take-course.html">
+                <div class="media-left">
+                    <div class="text-crt"></div>
                 </div>
-            }*@
-           
+                
+                    <div class="media-body">
+                        <i class="fa fa-fw fa-circle text-blue-300"></i> <a href="@Url.Action("Details", "TopicMaterialUploads", new { id = topic.TopicId, courseId = item.CourseId })"> @module.ModuleName</a>
 </div>
-    </a>
+                    
+                    <div class="media-right">
+                        <div class="width-100 text-right text-caption"></div>
+                    </div>
+            </div>
+                }
+            }
+
+        </div>
+    </div>
 
 
 }
-<br/>
-<br/>
-
 

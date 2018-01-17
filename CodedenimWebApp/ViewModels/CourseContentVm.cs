@@ -28,6 +28,14 @@ namespace CodedenimWebApp.ViewModels
         public int CourseId { get; set; }
         public Course CoursesAD { get; set; }
         public int CourseIdentifier { get; set; }
+
+        /// <summary>
+        /// ///////////////////
+        /// </summary>
+        public List<AssignCourseCategory> Courses2 { get; set; }
+        public string CourseCategory { get; set; }
+        public CorperEnrolledCourses CourseCategoryId { get; set; }
+        public CourseContentVm courseContentVm { get; set; }
     }
 
     public class ModulesVm
