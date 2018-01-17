@@ -111,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstractions\FilePath.cs" />
+    <Compile Include="Abstractions\IEntity.cs" />
     <Compile Include="Abstractions\IExcelUpload.cs" />
     <Compile Include="Abstractions\IFilePathProcessor.cs" />
     <Compile Include="Assesment\QuestionAnswer.cs" />
@@ -121,7 +122,6 @@
     <Compile Include="BlogPost\Comment.cs" />
     <Compile Include="BlogPost\Post.cs" />
     <Compile Include="BlogPost\Tag.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Classroom.cs" />
     <Compile Include="Content.cs" />
     <Compile Include="CorperEnrolledCourses.cs" />
@@ -131,6 +131,7 @@
     <Compile Include="CourseRating.cs" />
     <Compile Include="EnrollForCourse.cs" />
     <Compile Include="Enrollment.cs" />
+    <Compile Include="Entity.cs" />
     <Compile Include="File.cs" />
     <Compile Include="FilePath.cs" />
     <Compile Include="Forums\CommentsReply.cs" />

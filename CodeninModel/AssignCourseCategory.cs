@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CodeninModel
 {
-    public class AssignCourseCategory
+    public class AssignCourseCategory : Entity<int>
     {
 
-        public int AssignCourseCategoryId { get; set; }
+        //public int AssignCourseCategoryId { get; set; }
         public int CourseId { get; set; }
         public int CourseCategoryId { get; set; }
         public virtual Course Courses { get; set; } 

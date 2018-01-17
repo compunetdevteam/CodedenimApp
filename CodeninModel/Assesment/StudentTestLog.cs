@@ -2,9 +2,9 @@
 
 namespace CodeninModel.CBTE
 {
-    public class StudentTestLog
+    public class StudentTestLog : Entity<int>
     {
-        public int StudentTestLogId { get; set; }
+        //public int StudentTestLogId { get; set; }
         public string StudentId { get; set; }
     
         public int ModuleId { get; set; }

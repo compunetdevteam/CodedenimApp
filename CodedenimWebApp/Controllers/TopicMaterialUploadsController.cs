@@ -40,7 +40,7 @@ namespace CodedenimWebApp.Controllers
 	    {
 	        var viewModel = new CourseContentVm
 	        {
-	            Modules = db.Modules.Where(x => x.ModuleId.Equals(id)).ToList(),
+	            Modules = db.Modules.Where(x => x.Id.Equals(id)).ToList(),
 	            Topics = db.Topics.Include(x => x.MaterialUploads).ToList(),
 
 	        };
@@ -89,7 +89,7 @@ namespace CodedenimWebApp.Controllers
                 return View("NoContent");
             }
             var topicContent = db.TopicMaterialUploads.Where(x => x.TopicId.Equals(id)).ToList();
-		    var ModuleName = db.Topics.Where(x => x.TopicId.Equals(id)).Select(x => x.Module.ModuleName).FirstOrDefault();
+		    var ModuleName = db.Topics.Where(x => x.Id.Equals(id)).Select(x => x.Module.ModuleName).FirstOrDefault();
 		   RedirectToAction("SideBarContentForMaterial",new{topidId = id});
             List<Module> moduleDetail = null;
             if (courseId != null)
@@ -124,7 +124,7 @@ namespace CodedenimWebApp.Controllers
 		{
 		
 		  //  var topic = db.Topics.Find(id);
-		    var topicContent = db.TopicMaterialUploads.FirstOrDefault(x => x.TopicMaterialUploadId.Equals(id));
+		    var topicContent = db.TopicMaterialUploads.FirstOrDefault(x => x.Id.Equals(id));
 		    var contents = new CourseContentVm();
             //var fileName = db.TopicMaterialUploads.Where(x => x.TopicMaterialUploadId.Equals(id)).Select(x => x.FileLocation).FirstOrDefault();
             //CloudBlobContainer blobContainer = _blobService.GetCloudBlobContainer();
@@ -160,7 +160,7 @@ namespace CodedenimWebApp.Controllers
 		    var topicMaterial = db.Topics.Find(id);
 
 
-			ViewBag.TopicId = new SelectList(db.Topics.Where(x => x.TopicId.Equals(id)), "TopicId", "TopicName");
+			ViewBag.TopicId = new SelectList(db.Topics.Where(x => x.Id.Equals(id)), "TopicId", "TopicName");
 			ViewBag.UserName =  User.Identity.GetUserName();
 
 			return View();
@@ -177,7 +177,7 @@ namespace CodedenimWebApp.Controllers
 			{
 			   // var tutorId = User.Identity.GetUserId();
 			    var topicId = topicMaterialUpload.TopicId;
-			    var moduleId = db.Topics.Where(x => x.TopicId.Equals(topicId)).Select(x => x.ModuleId).FirstOrDefault();
+			    var moduleId = db.Topics.Where(x => x.Id.Equals(topicId)).Select(x => x.ModuleId).FirstOrDefault();
 				string _FileName = String.Empty;
                 if (File.ContentLength > 0)
                 {

@@ -22,13 +22,14 @@ namespace CodedenimWebApp.Controllers
 {
     public class StudentsController : Controller
     {
-        private readonly ApplicationDbContext _db = new ApplicationDbContext();
+        private readonly ApplicationDbContext _db;
         private readonly ICodedenimUserMgr _user;
         private double _progress;
 
-        public StudentsController(ICodedenimUserMgr user)
+        public StudentsController(ICodedenimUserMgr user, ApplicationDbContext db)
         {
             _user = user;
+            _db = db;
         }
         // GET: Students
         public async Task<ActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
@@ -80,8 +81,8 @@ namespace CodedenimWebApp.Controllers
 
         public ActionResult DashBoard()
         {
-            var userId = User.Identity.GetUserId();
-            var email = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).FirstOrDefault();
+            var userId = _user.GetUser();
+            var email = _db.Students.Where(x => x.Id.Equals(userId)).Select(x => x.Email).FirstOrDefault();
             // var studentType = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.AccountType).FirstOrDefault();
             var paymentRecord = _db.StudentPayments.FirstOrDefault(x => x.StudentId.Equals(userId) && x.IsPayed.Equals(true));
 
@@ -121,9 +122,9 @@ namespace CodedenimWebApp.Controllers
         {
             var userId = User.Identity.GetUserId();
             //   var course = db.db.ProfessionalPayments.Where(x => x.Email.Equals(vUserCourseName)).Select(x => x.CoursePayedFor).FirstOrDefault(),.Where(x => x.Email.Equals(email)).Select(x => x.CoursePayedFor).FirstOrDefault(),
-            var email = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).SingleOrDefault();
-            var studentId = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.StudentId).FirstOrDefault();
-            var callUpNumber = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.CallUpNo).FirstOrDefault();
+            var email = _db.Students.Where(x => x.Id.Equals(userId)).Select(x => x.Email).SingleOrDefault();
+            var studentId = _db.Students.Where(x => x.Id.Equals(userId)).Select(x => x.Id).FirstOrDefault();
+            var callUpNumber = _db.Students.Where(x => x.Id.Equals(userId)).Select(x => x.CallUpNo).FirstOrDefault();
 
             if ((courseId != null) && (callUpNumber != null))
             {
@@ -185,7 +186,7 @@ namespace CodedenimWebApp.Controllers
 
             var courseCategory = await _db.CourseCategories.Where(x => x.StudentType.Equals(RoleName.Corper))
                 .ToListAsync();
-            var student = await _db.Students.Where(x => x.StudentId.Equals(user)).ToListAsync();
+            var student = await _db.Students.Where(x => x.Id.Equals(user)).ToListAsync();
 
             var forumQuestion = _db.ForumQuestions.Where(x => x.StudentId.Equals(user))
                              .ToList();
@@ -197,7 +198,7 @@ namespace CodedenimWebApp.Controllers
                 foreach (var singleModule in module.Courses.Modules)
                 {
                     
-                    var  moduleParCourseList1 = _db.Modules.Where(x => x.ModuleId.Equals(singleModule.ModuleId) && x.CourseId.Equals(singleModule.CourseId)).FirstOrDefault();
+                    var  moduleParCourseList1 = _db.Modules.Where(x => x.Id.Equals(singleModule.Id) && x.CourseId.Equals(singleModule.CourseId)).FirstOrDefault();
 
                     moduleParCourseList.Add(moduleParCourseList1);
                 }
@@ -250,7 +251,7 @@ namespace CodedenimWebApp.Controllers
             var certificate = new List<Course>();
             foreach (var item in categoryId)
             {
-                var myCourse = _db.Courses.Where(x => x.CourseId.Equals(item.CourseId)).FirstOrDefault();
+                var myCourse = _db.Courses.Where(x => x.Id.Equals(item.CourseId)).FirstOrDefault();
                 //  var myModule = _db.Modules.Where(x => x.CourseId.Equals(item.CourseId)).ToList();
                 List<Module> myModule = ModulesNumber(myCourse);
                 var numberOfModules = myModule.Count();
@@ -258,7 +259,7 @@ namespace CodedenimWebApp.Controllers
                 {
                     //need to fix the certificate it generates
                     var NumberOfmoduleQuizTaken = _db.StudentTopicQuizs.Where(x => x.StudentId.Equals(user)).DistinctBy(x => x.ModuleId).Count();
-                    var moduleQuizTaken = _db.StudentTopicQuizs.Include(x => x.Module).Where(x => x.ModuleId.Equals(modules.ModuleId) && x.StudentId.Equals(user)).Count();
+                    var moduleQuizTaken = _db.StudentTopicQuizs.Include(x => x.Module).Where(x => x.ModuleId.Equals(modules.Id) && x.StudentId.Equals(user)).Count();
                     if (numberOfModules == NumberOfmoduleQuizTaken)
                     {
                         certificate.Add(item.Courses);
@@ -267,12 +268,12 @@ namespace CodedenimWebApp.Controllers
 
             }
 
-            return certificate.DistinctBy(x => x.CourseId).ToList();
+            return certificate.DistinctBy(x => x.Id).ToList();
         }
 
         private List<Module> ModulesNumber(Course myCourse)
         {
-            return _db.Modules.Where(x => x.CourseId.Equals(myCourse.CourseId)).ToList();
+            return _db.Modules.Where(x => x.CourseId.Equals(myCourse.Id)).ToList();
         }
 
 
@@ -402,9 +403,9 @@ namespace CodedenimWebApp.Controllers
             {
                 viewModel.Add(new AssignedCourses
                 {
-                    CourseId = course.CourseId,
+                    CourseId = course.Id,
                     CourseName = course.CourseName,
-                    Assigned = studentCourses.Contains(course.CourseId)
+                    Assigned = studentCourses.Contains(course.Id)
                 });
             }
             ViewBag.Courses = viewModel;
@@ -457,7 +458,7 @@ namespace CodedenimWebApp.Controllers
             {
                 var model = new StudentVm
                 {
-                    StudentId = student.StudentId,
+                    StudentId = student.Id,
                     AccountType = student.AccountType,
                     CountryOfBirth = student.CountryOfBirth,
                     DateOfBirth = student.DateOfBirth,
@@ -492,7 +493,7 @@ namespace CodedenimWebApp.Controllers
 
                 if (model != null)
                 {
-                    model.StudentId = student.StudentId;
+                    model.Id = student.StudentId;
                     model.AccountType = student.AccountType;
                     model.CountryOfBirth = student.CountryOfBirth;
                     model.DateOfBirth = student.DateOfBirth;

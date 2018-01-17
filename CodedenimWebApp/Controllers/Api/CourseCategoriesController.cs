@@ -32,11 +32,11 @@ namespace CodedenimWebApp.Controllers.Api
         {
              var studentEmail = new ConvertEmail1();
             var studentId = studentEmail.ConvertEmailToId(email);
-            var studentType =  _db.Students.AsNoTracking().Where(x => x.StudentId.Equals(studentId)).Select(x => x.AccountType).FirstOrDefault();
+            var studentType =  _db.Students.AsNoTracking().Where(x => x.Id.Equals(studentId)).Select(x => x.AccountType).FirstOrDefault();
             var assignedCourses = await   _db.CourseCategories.AsNoTracking().Where(x => x.StudentType.Equals(studentType))
                                             .Select(x => new { x.CategoryName,
                                                 x.Amount,
-                                                x.CourseCategoryId,
+                                                x.Id,
                                                 x.CategoryDescription,
                                                 x.StudentType,
                                                 x.ImageLocation})
@@ -139,7 +139,7 @@ namespace CodedenimWebApp.Controllers.Api
             foreach (var categoryId in category)
                 {
                    var couseCategory = await _db.CourseCategories
-                        .Where(x => x.CourseCategoryId.Equals(categoryId))
+                        .Where(x => x.Id.Equals(categoryId))
                         .FirstOrDefaultAsync();
 
 
@@ -147,7 +147,7 @@ namespace CodedenimWebApp.Controllers.Api
 
                     var vm = new MyCourseCategoryVm
                     {
-                        CourseCategoryId = couseCategory.CourseCategoryId,
+                        CourseCategoryId = couseCategory.Id,
                         CategoryName = couseCategory.CategoryName,
                         StudentType = couseCategory.StudentType,
                         ImageLocation = couseCategory.ImageLocation,
@@ -171,7 +171,7 @@ namespace CodedenimWebApp.Controllers.Api
 
   
 
-            if (id != courseCategory.CourseCategoryId)
+            if (id != courseCategory.Id)
             {
                 return BadRequest();
             }
@@ -209,7 +209,7 @@ namespace CodedenimWebApp.Controllers.Api
             _db.CourseCategories.Add(courseCategory);
             await _db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = courseCategory.CourseCategoryId }, courseCategory);
+            return CreatedAtRoute("DefaultApi", new { id = courseCategory.Id }, courseCategory);
         }
 
         // DELETE: api/CourseCategories/5
@@ -239,7 +239,7 @@ namespace CodedenimWebApp.Controllers.Api
 
         private bool CourseCategoryExists(int id)
         {
-            return _db.CourseCategories.Count(e => e.CourseCategoryId == id) > 0;
+            return _db.CourseCategories.Count(e => e.Id == id) > 0;
         }
     }
 }

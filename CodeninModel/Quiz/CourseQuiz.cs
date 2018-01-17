@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CodeninModel.Quiz
 {
-    public class CourseQuiz
+    public class CourseQuiz : Entity<int>
     {
 
     }

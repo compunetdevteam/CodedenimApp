@@ -46,7 +46,7 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            if (id != tutor.TutorId)
+            if (id != tutor.Id)
             {
                 return BadRequest();
             }
@@ -89,7 +89,7 @@ namespace CodedenimWebApp.Controllers.Api
             }
             catch (DbUpdateException)
             {
-                if (TutorExists(tutor.TutorId))
+                if (TutorExists(tutor.Id))
                 {
                     return Conflict();
                 }
@@ -99,7 +99,7 @@ namespace CodedenimWebApp.Controllers.Api
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = tutor.TutorId }, tutor);
+            return CreatedAtRoute("DefaultApi", new { id = tutor.Id }, tutor);
         }
 
         // DELETE: api/Tutors/5
@@ -129,7 +129,7 @@ namespace CodedenimWebApp.Controllers.Api
 
         private bool TutorExists(string id)
         {
-            return db.Tutors.Count(e => e.TutorId == id) > 0;
+            return db.Tutors.Count(e => e.Id == id) > 0;
         }
     }
 }

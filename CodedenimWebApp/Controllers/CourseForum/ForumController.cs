@@ -67,8 +67,8 @@ namespace CodedenimWebApp.Controllers.CourseForum
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", forum.CourseId);
-            ViewBag.CourseId = new SelectList(db.ForumViews, "ContentViewId", "ContentViewId", forum.CourseId);
+            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", forum.Id);
+            ViewBag.CourseId = new SelectList(db.ForumViews, "ContentViewId", "ContentViewId", forum.Id);
             return View(forum);
         }
 
@@ -84,8 +84,8 @@ namespace CodedenimWebApp.Controllers.CourseForum
             {
                 return HttpNotFound();
             }
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", forum.CourseId);
-            ViewBag.CourseId = new SelectList(db.ForumViews, "ContentViewId", "ContentViewId", forum.CourseId);
+            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", forum.Id);
+            ViewBag.CourseId = new SelectList(db.ForumViews, "ContentViewId", "ContentViewId", forum.Id);
             return View(forum);
         }
 
@@ -102,8 +102,8 @@ namespace CodedenimWebApp.Controllers.CourseForum
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", forum.CourseId);
-            ViewBag.CourseId = new SelectList(db.ForumViews, "ContentViewId", "ContentViewId", forum.CourseId);
+            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", forum.Id);
+            ViewBag.CourseId = new SelectList(db.ForumViews, "ContentViewId", "ContentViewId", forum.Id);
             return View(forum);
         }
 

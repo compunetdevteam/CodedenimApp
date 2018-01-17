@@ -42,7 +42,7 @@ namespace CodedenimWebApp.Controllers
             Module module = await db.Modules.FindAsync(id);
  
             var course = await db.Courses.FindAsync(id);
-            var courseId = await db.Modules.Where(x => x.ModuleId.Equals((int)id)).Select(x => x.CourseId).FirstOrDefaultAsync();
+            var courseId = await db.Modules.Where(x => x.Id.Equals((int)id)).Select(x => x.CourseId).FirstOrDefaultAsync();
             var modeules = await db.Modules.Where(x => x.CourseId.Equals((int)id)).ToListAsync();
             var topics = await db.Topics.Where(x => x.ModuleId.Equals((int)id)).ToListAsync();
             moduleInfo.CoursesAD = course;
@@ -63,7 +63,7 @@ namespace CodedenimWebApp.Controllers
         {
             if (id != null)
             {
-                ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(id.Value)).ToList(), "CourseId", "CourseName");
+                ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.Id.Equals(id.Value)).ToList(), "CourseId", "CourseName");
                 // ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode");
 
             }
@@ -95,7 +95,7 @@ namespace CodedenimWebApp.Controllers
 
         public PartialViewResult CreatePartial(int id)
         {
-            ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals((int)id)).ToList(), "CourseId", "CourseName");
+            ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.Id.Equals((int)id)).ToList(), "CourseId", "CourseName");
             return PartialView();
         }
 
@@ -174,7 +174,7 @@ namespace CodedenimWebApp.Controllers
             }
 
            // ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", module.CourseId);
-            ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(module.CourseId)).ToList(), "CourseId", "CourseName", module.CourseId);
+            ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.Id.Equals(module.CourseId)).ToList(), "CourseId", "CourseName", module.CourseId);
             return PartialView(module);
         }
 
@@ -311,7 +311,7 @@ namespace CodedenimWebApp.Controllers
                         for (int row = 2; row <= noOfRow; row++)
                         {
                             var course = sheet.Cells[row, 1].Value.ToString().Trim();
-                            var courseName = db.Courses.Where(x => x.CourseName.Equals(course)).Select(x => x.CourseId).FirstOrDefault();
+                            var courseName = db.Courses.Where(x => x.CourseName.Equals(course)).Select(x => x.Id).FirstOrDefault();
 
                             int courseId = courseName;
                             string moduleName = sheet.Cells[row, 2].Value.ToString().ToUpper().Trim();

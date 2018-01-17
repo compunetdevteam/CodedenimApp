@@ -193,7 +193,7 @@ namespace CodedenimWebApp.Controllers.Quiz
                         for (int row = 2; row <= noOfRow; row++)
                         {
                             var ModuleName = sheet.Cells[row, 1].Value.ToString().Trim();
-                            var moduleId = db.Modules.Where(x => x.ModuleName.Equals(ModuleName)).Select(x => x.ModuleId)
+                            var moduleId = db.Modules.Where(x => x.ModuleName.Equals(ModuleName)).Select(x => x.Id)
                                 .FirstOrDefault();
                        
                             string questionName = sheet.Cells[row, 2].Value.ToString().ToUpper().Trim();

@@ -2,10 +2,10 @@
 
 namespace CodeninModel.Quiz
 {
-    public class TopicQuiz
+    public class TopicQuiz : Entity<int>
     {
      
-        public int TopicQuizId { get; set; }
+        //public int TopicQuizId { get; set; }
 
 
         //[Display(Name = "Topic Name")]

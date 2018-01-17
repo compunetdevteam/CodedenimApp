@@ -31,11 +31,11 @@ namespace CodedenimWebApp.Controllers.Api
         public async Task<IHttpActionResult> GetForumQuestion(int id)
         {
             //ForumQuestion forumQuestion = await db.ForumQuestions.FindAsync(id);
-            var forumQuestion = await db.ForumQuestions.Where(x => x.ForumQuestionId.Equals(id))
+            var forumQuestion = await db.ForumQuestions.Where(x => x.Id.Equals(id))
                                             .Select(x => new
                                                     {
                                                 x.CourseId,
-                                                x.ForumQuestionId,
+                                                x.Id,
                                                 x.QuestionName,
                                                 x.PostDate,                                                
                                                // x.Students.UserName,
@@ -63,7 +63,7 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            if (id != forumQuestion.ForumQuestionId)
+            if (id != forumQuestion.Id)
             {
                 return BadRequest();
             }
@@ -101,7 +101,7 @@ namespace CodedenimWebApp.Controllers.Api
             db.ForumQuestions.Add(forumQuestion);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = forumQuestion.ForumQuestionId }, forumQuestion);
+            return CreatedAtRoute("DefaultApi", new { id = forumQuestion.Id }, forumQuestion);
         }
 
         // DELETE: api/ForumQuestions1/5
@@ -131,7 +131,7 @@ namespace CodedenimWebApp.Controllers.Api
 
         private bool ForumQuestionExists(int id)
         {
-            return db.ForumQuestions.Count(e => e.ForumQuestionId == id) > 0;
+            return db.ForumQuestions.Count(e => e.Id == id) > 0;
         }
     }
 }

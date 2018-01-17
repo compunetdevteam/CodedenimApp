@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CodeninModel.Assesment
 {
-    public class StudentAssesment
+    public class StudentAssesment : Entity<int>
     {
-        public int StudentAssesmentId { get; set; }
+        //public int StudentAssesmentId { get; set; }
         public int CousreId { get; set; }
         public double TotalScore { get; set; }
         public int TotalQuestion { get; set; }

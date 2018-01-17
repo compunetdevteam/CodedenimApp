@@ -41,11 +41,11 @@ namespace CodedenimWebApp.Controllers
             {
                 string reference = "";
               
-                var email = _db.Students.AsNoTracking().Where(x => x.StudentId.Equals(userId)).Select(x => x.Email).FirstOrDefault();
-                var accountType = _db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.AccountType)
+                var email = _db.Students.AsNoTracking().Where(x => x.Id.Equals(userId)).Select(x => x.Email).FirstOrDefault();
+                var accountType = _db.Students.Where(x => x.Id.Equals(userId)).Select(x => x.AccountType)
                               .FirstOrDefault();
                 var amount = _db.PaymentTypes.Where(x => x.PaymentName.Equals(accountType)).Select(x => x.Amount).FirstOrDefault();
-                var coursePayedFor = _db.Courses.Where(x => x.CourseId.Equals((int)id)).Select(x => x.CourseName).SingleOrDefault();
+                var coursePayedFor = _db.Courses.Where(x => x.Id.Equals((int)id)).Select(x => x.CourseName).SingleOrDefault();
 
                 //var paymentId = new ProfessionalPayment();
                 //var courseId = new Course();

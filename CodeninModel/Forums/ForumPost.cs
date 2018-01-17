@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CodeninModel.Forums
 {
-    public class ForumPost
+    public class ForumPost : Entity<int>
     {
-        public int ForumPostId { get; set; }
+        //public int ForumPostId { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
         public string IP { get; set; }

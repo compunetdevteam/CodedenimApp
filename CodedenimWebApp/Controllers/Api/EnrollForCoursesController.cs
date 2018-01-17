@@ -75,7 +75,7 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            if (id != enrollForCourse.EnrollForCourseId)
+            if (id != enrollForCourse.Id)
             {
                 return BadRequest();
             }
@@ -116,7 +116,7 @@ namespace CodedenimWebApp.Controllers.Api
             db.EnrollForCourses.Add(enrollForCourse);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = enrollForCourse.EnrollForCourseId }, enrollForCourse);
+            return CreatedAtRoute("DefaultApi", new { id = enrollForCourse.Id }, enrollForCourse);
         }
 
         // DELETE: api/EnrollForCourses/5
@@ -146,7 +146,7 @@ namespace CodedenimWebApp.Controllers.Api
 
         private bool EnrollForCourseExists(int id)
         {
-            return db.EnrollForCourses.Count(e => e.EnrollForCourseId == id) > 0;
+            return db.EnrollForCourses.Count(e => e.Id == id) > 0;
         }
     }
 }

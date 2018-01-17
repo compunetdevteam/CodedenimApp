@@ -5,9 +5,9 @@ using CodeninModel.CBTE;
 
 namespace CodeninModel.Quiz
 {
-    public class Topic
+    public class Topic : Entity<int>
     {
-        public int TopicId { get; set; }
+        //public int TopicId { get; set; }
         public int ModuleId { get; set; }
         public string TopicName { get; set; }
         public int ExpectedTime { get; set; }

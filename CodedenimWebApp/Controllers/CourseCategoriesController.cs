@@ -39,7 +39,7 @@ namespace CodedenimWebApp.Controllers
             var courseCategories = db.CourseCategories.ToList();
             if (id != null)
             {
-                courseCategories = db.CourseCategories.Where(x => x.CourseCategoryId.Equals((int) id)).ToList();
+                courseCategories = db.CourseCategories.Where(x => x.Id.Equals((int) id)).ToList();
                 return PartialView(courseCategories);
             }
           
@@ -59,7 +59,7 @@ namespace CodedenimWebApp.Controllers
             var assignedCourse = await db.AssignCourseCategories.Include(i => i.CourseCategory).Include(i => i.Courses)
                 .AsNoTracking().Where(x => x.CourseCategory.StudentType.Equals(student.AccountType)).ToListAsync();
 
-            var paymentList = await db.StudentPayments.AsNoTracking().Where(x => x.StudentId.Equals(student.StudentId)
+            var paymentList = await db.StudentPayments.AsNoTracking().Where(x => x.StudentId.Equals(student.Id)
                                     && x.IsPayed.Equals(true)).ToListAsync();
             if (paymentList.Any())
             {
@@ -92,7 +92,7 @@ namespace CodedenimWebApp.Controllers
             // var userRole = User.Identity;
             if (userId != null)
             {
-                var student = await db.Students.AsNoTracking().Where(x => x.StudentId.Equals(userId)).FirstOrDefaultAsync();
+                var student = await db.Students.AsNoTracking().Where(x => x.Id.Equals(userId)).FirstOrDefaultAsync();
 
                 if (id == null)
                 {
@@ -103,7 +103,7 @@ namespace CodedenimWebApp.Controllers
                 }
                 else
                 {
-                    amount = db.CourseCategories.Where(x => x.CourseCategoryId.Equals((int)id)).Select(x => x.Amount).FirstOrDefault();
+                    amount = db.CourseCategories.Where(x => x.Id.Equals((int)id)).Select(x => x.Amount).FirstOrDefault();
                     id = (int)id;
                 }
 
@@ -121,7 +121,7 @@ namespace CodedenimWebApp.Controllers
                     CustomFields = new List<CustomField>
                     {
                         new  CustomField("coursecategoryid","coursecategoryid", id.ToString()),
-                        new  CustomField("studentid","studentid", student.StudentId),
+                        new  CustomField("studentid","studentid", student.Id),
                         new  CustomField("ispayedall","ispayedall", isPayAll.ToString()),
                     }
 
@@ -260,7 +260,7 @@ namespace CodedenimWebApp.Controllers
             var url = Url.Action("ConfrimPayment", "CourseCategories", new { }, protocol: Request.Url.Scheme);
 
         
-            var student = db.Students.Where(x => x.StudentId.Equals(userId)).Select(s => new { s.AccountType,
+            var student = db.Students.Where(x => x.Id.Equals(userId)).Select(s => new { s.AccountType,
                 s.Email, s.PhoneNumber, s.FirstName, s.LastName, s.MiddleName }).SingleOrDefault();
             var fullName = $"{student.LastName} {student.FirstName} {student.MiddleName}";
 
@@ -448,7 +448,7 @@ namespace CodedenimWebApp.Controllers
         public async Task<ActionResult> Details(int? id)
         {
             var userId = User.Identity.GetUserId();
-            var userType = db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.AccountType).FirstOrDefault();
+            var userType = db.Students.Where(x => x.Id.Equals(userId)).Select(x => x.AccountType).FirstOrDefault();
             // var userRole = User.IsInRole(userType);
             var enrolledCourses = db.AssignCourseCategories.Where(x => x.CourseCategory.StudentType.Equals(userType)).ToList();
             if (id == null)
@@ -473,7 +473,7 @@ namespace CodedenimWebApp.Controllers
             var userId = User.Identity.GetUserId();          
 
 
-            var student = await db.Students.Where( x => x.StudentId.Equals(userId)).Select(x => x.AccountType).SingleOrDefaultAsync();
+            var student = await db.Students.Where( x => x.Id.Equals(userId)).Select(x => x.AccountType).SingleOrDefaultAsync();
 
             var model = new List<CourseCategory>();
 
@@ -560,7 +560,7 @@ namespace CodedenimWebApp.Controllers
             {
 
 
-                var imageFromDB = db.CourseCategories.Where(x => x.CourseCategoryId.Equals(courseCategory.CourseCategoryId)).Select(x => x.ImageLocation).ToString();
+                var imageFromDB = db.CourseCategories.Where(x => x.Id.Equals(courseCategory.Id)).Select(x => x.ImageLocation).ToString();
 
                 DeletePhoto(courseCategory);
                 var fp = new UploadedFileProcessor();

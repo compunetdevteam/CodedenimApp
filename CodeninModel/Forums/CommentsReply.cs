@@ -2,9 +2,9 @@ using System;
 
 namespace CodeninModel.Forums
 {
-    public class CommentsReply
+    public class CommentsReply : Entity<int>
     {
-        public int CommentsReplyId { get; set; }
+        //public int CommentsReplyId { get; set; }
         public string Reply { get; set; }
         public DateTime ReplyDate { get; set; }
         public string UserId { get; set; }

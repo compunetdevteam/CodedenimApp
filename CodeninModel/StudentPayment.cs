@@ -2,7 +2,7 @@
 
 namespace CodeninModel
 {
-    public class StudentPayment
+    public class StudentPayment : Entity<int>
     {
         public int StudentPaymentId { get; set; }
         public string OrderId { get; set; }

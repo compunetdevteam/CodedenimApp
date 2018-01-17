@@ -16,7 +16,7 @@ namespace CodedenimWebApp.Controllers.Api
         public string ConvertEmailToId(string email)
         {
             var studentEmail = _db.Students.AsNoTracking().Where(x => x.Email.Equals(email))
-                                            .Select(x => x.StudentId).FirstOrDefault();
+                                            .Select(x => x.Id).FirstOrDefault();
             return studentEmail;
         }
     }
@@ -32,7 +32,7 @@ namespace CodedenimWebApp.Controllers.Api
         public  string ConvertEmailToId(string email)
         {
             var studentEmail = _db.Students.AsNoTracking().Where(x => x.Email.Equals(email))
-                .Select(x => x.StudentId).FirstOrDefault();
+                .Select(x => x.Id).FirstOrDefault();
             return studentEmail;
         }
     }

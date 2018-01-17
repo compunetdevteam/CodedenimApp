@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CodeninModel
 {
-    public abstract class Person
+    public abstract class Person : Entity<string>
     {
         //[Required]
         [StringLength(50, ErrorMessage = "First name cannot be longer than 50 characters.")]

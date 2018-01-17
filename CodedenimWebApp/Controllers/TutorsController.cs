@@ -44,7 +44,7 @@ namespace CodedenimWebApp.Controllers
             int totalRecords = 0;
 
             //var v = Db.Subjects.Where(x => x.SchoolId != userSchool).Select(s => new { s.SubjectId, s.SubjectCode, s.SubjectName }).ToList();
-            var v = db.Tutors.Select(s => new { s.TutorId, s.FirstName, s.MiddleName,s.LastName,s.Email }).ToList();
+            var v = db.Tutors.Select(s => new { s.Id, s.FirstName, s.MiddleName,s.LastName,s.Email }).ToList();
 
             //var v = Db.Subjects.Where(x => x.SchoolId.Equals(userSchool)).Select(s => new { s.SubjectId, s.SubjectCode, s.SubjectName }).ToList();
             //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
@@ -55,8 +55,8 @@ namespace CodedenimWebApp.Controllers
             if (!string.IsNullOrEmpty(search))
             {
                 //v = v.OrderBy(sortColumn + " " + sortColumnDir);
-                v = db.Tutors.Where(x =>  (x.TutorId.Equals(search) || x.FirstName.Equals(search) || x.MiddleName.Equals(search) || x.LastName.Equals(search) || x.Email.Equals(search)))
-                    .Select(s => new { s.TutorId, s.FirstName, s.MiddleName, s.LastName,s.Email }).ToList();
+                v = db.Tutors.Where(x =>  (x.Id.Equals(search) || x.FirstName.Equals(search) || x.MiddleName.Equals(search) || x.LastName.Equals(search) || x.Email.Equals(search)))
+                    .Select(s => new { s.Id, s.FirstName, s.MiddleName, s.LastName,s.Email }).ToList();
             }
             totalRecords = v.Count();
             var data = v.Skip(skip).Take(pageSize).ToList();
@@ -121,7 +121,7 @@ namespace CodedenimWebApp.Controllers
             };
 
           
-            ViewBag.TutorProfile = db.Tutors.Where(x => x.TutorId.Equals(userId)).Select(x => x.ImageLocation).FirstOrDefault();
+            ViewBag.TutorProfile = db.Tutors.Where(x => x.Id.Equals(userId)).Select(x => x.ImageLocation).FirstOrDefault();
             ViewBag.TutorCourses = courses;
       
             return View(tutorInfo);  
@@ -134,7 +134,7 @@ namespace CodedenimWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tutor tutor = await db.Tutors.Include(i => i.TutorCourses).Where(x => x.TutorId.Equals(id))
+            Tutor tutor = await db.Tutors.Include(i => i.TutorCourses).Where(x => x.Id.Equals(id))
                 .FirstOrDefaultAsync();
             if (tutor == null)
             {
@@ -158,15 +158,15 @@ namespace CodedenimWebApp.Controllers
         
         public async Task<ActionResult> Create(TutorCreateVm model)
         {
-            var sameTutorId = db.Tutors.AsNoTracking().SingleOrDefault(x => x.TutorId.Equals(model.TutorId));
+            var sameTutorId = db.Tutors.AsNoTracking().SingleOrDefault(x => x.Id.Equals(model.TutorId));
             if (sameTutorId == null)
             {
                 if (ModelState.IsValid)
                 {
                     var tutor = new Tutor
                     {
-                            
-                        TutorId = model.TutorId,
+
+                        Id = model.TutorId,
                         FirstName = model.FirstName,
                         LastName = model.LastName
                 };
@@ -180,8 +180,8 @@ namespace CodedenimWebApp.Controllers
             {
                 //wanted to send to the view the information to the existing tutor that wanted to be added again
                 var tutorInfo = new TutorCreateVm();
-                var tutorExist = db.Tutors.AsNoTracking().FirstOrDefault(x => x.TutorId.Equals(model.TutorId));
-                tutorInfo.TutorId = tutorExist.TutorId;
+                var tutorExist = db.Tutors.AsNoTracking().FirstOrDefault(x => x.Id.Equals(model.TutorId));
+                tutorInfo.TutorId = tutorExist.Id;
                 tutorInfo.LastName = tutorExist.LastName;
                 tutorInfo.FirstName = tutorExist.FirstName;
                
@@ -209,7 +209,7 @@ namespace CodedenimWebApp.Controllers
 
 
             var tutor = db.Tutors.AsNoTracking()
-                .FirstOrDefault(t => t.TutorId.Equals(tutorId));
+                .FirstOrDefault(t => t.Id.Equals(tutorId));
 
             if (tutor == null)
             {
@@ -218,7 +218,7 @@ namespace CodedenimWebApp.Controllers
             }
             var tutorVm = new TutorRegisterVm();
             tutorVm.FirstName = tutor.FirstName;
-            tutorVm.TutorId = tutor.TutorId;
+            tutorVm.TutorId = tutor.Id;
             tutorVm.LastName = tutor.LastName;
             return View("info", tutorVm);
         }

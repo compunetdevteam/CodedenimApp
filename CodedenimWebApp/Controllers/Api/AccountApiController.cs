@@ -389,7 +389,7 @@ namespace CodedenimWebApp.Controllers.Api
             //Persisting the  Student Redord 
             var corper = new Student
             {
-                StudentId = model.CallUpNumber,
+                Id = model.CallUpNumber,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
@@ -452,7 +452,7 @@ namespace CodedenimWebApp.Controllers.Api
 
             var student = new Student
             {
-                StudentId = model.MatNumber,
+                Id = model.MatNumber,
                 Title = model.Title.ToString(),
                 FirstName = model.FirstName,
                 LastName = model.LastName,

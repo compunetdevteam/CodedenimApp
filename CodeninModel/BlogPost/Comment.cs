@@ -2,9 +2,9 @@
 
 namespace CodeninModel.BlogPost
 {
-    public class Comment
+    public class Comment : Entity<int>
     {
-        public int CommentId { get; set; }
+        //public int CommentId { get; set; }
         public int PostId { get; set; }
         public DateTime DateTime { get; set; }
         public string Name { get; set; }

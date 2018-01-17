@@ -4,7 +4,7 @@ using CodeninModel.Quiz;
 
 namespace CodeninModel.BlogPost
 {
-    public class Post
+    public class Post : Entity<int>
     {
         public Post()
         {
@@ -12,7 +12,7 @@ namespace CodeninModel.BlogPost
             this.Tags = new HashSet<Tag>();
         }
 
-        public int PostId { get; set; }
+        //public int PostId { get; set; }
         public string Title { get; set; }
         public DateTime DateTime { get; set; }
         public string Body { get; set; }

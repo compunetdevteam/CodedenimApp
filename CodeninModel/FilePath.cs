@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace CodeninModel
 {
-    public class FilePath
+    public class FilePath : Entity<int>
     {
-        public int FilePathId { get; set; }
+        //public int FilePathId { get; set; }
         [StringLength(255)]
         public string FileName { get; set; }
         public FileType FileType { get; set; }

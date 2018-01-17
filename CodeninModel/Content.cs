@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CodeninModel
 {
-    public class Content
+    public class Content : Entity<int>
     {
         public int ContentId { get; set; }
     }

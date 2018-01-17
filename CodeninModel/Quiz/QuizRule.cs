@@ -3,7 +3,7 @@ using CodeninModel.Quiz;
 
 namespace CodeninModel.CBTE
 {
-    public class QuizRule
+    public class QuizRule : Entity<int>
     {
         public int QuizRuleId { get; set; }
 

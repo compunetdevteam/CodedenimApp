@@ -26,7 +26,7 @@ namespace CodedenimWebApp.Controllers.Api
             {
                 x.ExpectedTime,
                 x.ModuleId,
-                x.TopicId,
+                x.Id,
                 x.TopicName,
                
              
@@ -42,7 +42,7 @@ namespace CodedenimWebApp.Controllers.Api
             var topic = await _db.Topics.Where(t => t.ModuleId.Equals(id))
                                                 .Select(t => new
                                                 {
-                                                    t.TopicId,
+                                                    t.Id,
                                                     t.TopicName,
                                                     t.ExpectedTime,
                                                 }).ToListAsync();
@@ -63,7 +63,7 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            if (id != topic.TopicId)
+            if (id != topic.Id)
             {
                 return BadRequest();
             }
@@ -101,7 +101,7 @@ namespace CodedenimWebApp.Controllers.Api
             _db.Topics.Add(topic);
             await _db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = topic.TopicId }, topic);
+            return CreatedAtRoute("DefaultApi", new { id = topic.Id }, topic);
         }
 
         // DELETE: api/Topics/5
@@ -131,7 +131,7 @@ namespace CodedenimWebApp.Controllers.Api
 
         private bool TopicExists(int id)
         {
-            return _db.Topics.Count(e => e.TopicId == id) > 0;
+            return _db.Topics.Count(e => e.Id == id) > 0;
         }
     }
 }

@@ -5,10 +5,10 @@ using CodeninModel.Quiz;
 
 namespace CodeninModel
 {
-    public class TopicMaterialUpload
+    public class TopicMaterialUpload : Entity<int>
     {
        
-        public int TopicMaterialUploadId { get; set; }
+        //public int TopicMaterialUploadId { get; set; }
         public int TopicId { get; set; }
         public string Tutor { get; set; }
         public FileType FileType { get; set; }

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace CodeninModel.Forums
 {
-    public class ForumQuestion
+    public class ForumQuestion : Entity<int>
     {
-        public int ForumQuestionId { get; set; }
+        //public int ForumQuestionId { get; set; }
         public string Title { get; set; }
         public string QuestionName { get; set; }
         public DateTime PostDate { get; set; }
@@ -25,7 +25,7 @@ namespace CodeninModel.Forums
 
     }
 
-    public class ForumQuestionView
+    public class ForumQuestionView : Entity<int>
     {
 
         [Key, ForeignKey("ForumQuestion")]

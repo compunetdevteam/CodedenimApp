@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CodeninModel
 {
-    public class EnrollForCourse
+    public class EnrollForCourse : Entity<int>
     {
-        public int EnrollForCourseId { get; set; }
+        //public int EnrollForCourseId { get; set; }
         public int CourseCategoryId { get; set; }
         public string StudentId { get; set; }
         public virtual CourseCategory CourseCategory { get; set; }

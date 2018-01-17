@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace CodeninModel.Forums
 {
-    public class ForumTopic
+    public class ForumTopic : Entity<int>
     {
-        public int ForumTopicId { get; set; }
+        //public int ForumTopicId { get; set; }
         public string Title { get; set; }
         public int ViewCount { get; set; }
         public int PostCount { get; set; }
@@ -27,7 +27,5 @@ namespace CodeninModel.Forums
         public virtual ICollection<LatestPost> LatestPost { get; set; }
         public virtual ICollection<Forum> Forum { get; set; }
         
-    
-
-}
+    }
 }

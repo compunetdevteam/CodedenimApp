@@ -27,7 +27,7 @@ namespace CodedenimWebApp.Controllers.Api
                                    x.CourseId,
                                    x.ExpectedTime,
                                    x.ModuleDescription,
-                                   x.ModuleId,
+                                   x.Id,
                                    x.ModuleName,
                                 });
 
@@ -48,7 +48,7 @@ namespace CodedenimWebApp.Controllers.Api
             var module = await _db.Modules.Where(c => c.CourseId.Equals(id))
                                         .Select(m => new
                                         {
-                                            m.ModuleId,
+                                            m.Id,
                                             m.ModuleName,
                                             m.ModuleDescription,
                                             m.ExpectedTime,
@@ -84,7 +84,7 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            if (id != module.ModuleId)
+            if (id != module.Id)
             {
                 return BadRequest();
             }
@@ -122,7 +122,7 @@ namespace CodedenimWebApp.Controllers.Api
             _db.Modules.Add(module);
             await _db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = module.ModuleId }, module);
+            return CreatedAtRoute("DefaultApi", new { id = module.Id }, module);
         }
 
         // DELETE: api/Modules/5
@@ -152,7 +152,7 @@ namespace CodedenimWebApp.Controllers.Api
 
         private bool ModuleExists(int id)
         {
-            return _db.Modules.Count(e => e.ModuleId == id) > 0;
+            return _db.Modules.Count(e => e.Id == id) > 0;
         }
     }
 }

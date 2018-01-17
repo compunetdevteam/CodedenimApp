@@ -24,7 +24,7 @@ namespace CodedenimWebApp.Controllers
         {
             var studentEmail = new ConvertEmail();
             var studentId = studentEmail.ConvertEmailToId(email);
-            var studentType = db.Students.AsNoTracking().Where(x => x.StudentId.Equals(studentId)).Select(x => x.AccountType).FirstOrDefault();
+            var studentType = db.Students.AsNoTracking().Where(x => x.Id.Equals(studentId)).Select(x => x.AccountType).FirstOrDefault();
             var assignedCourses = db.CourseCategories.AsNoTracking().Where(x => x.StudentType.Equals(studentType))
                 .Select(x => new[] {x.CategoryName});
             return db.AssignCourseCategories;
@@ -52,7 +52,7 @@ namespace CodedenimWebApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != assignCourseCategory.AssignCourseCategoryId)
+            if (id != assignCourseCategory.Id)
             {
                 return BadRequest();
             }
@@ -90,7 +90,7 @@ namespace CodedenimWebApp.Controllers
             db.AssignCourseCategories.Add(assignCourseCategory);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = assignCourseCategory.AssignCourseCategoryId }, assignCourseCategory);
+            return CreatedAtRoute("DefaultApi", new { id = assignCourseCategory.Id }, assignCourseCategory);
         }
 
         // DELETE: api/AssignCourseCategories1/5
@@ -120,7 +120,7 @@ namespace CodedenimWebApp.Controllers
 
         private bool AssignCourseCategoryExists(int id)
         {
-            return db.AssignCourseCategories.Count(e => e.AssignCourseCategoryId == id) > 0;
+            return db.AssignCourseCategories.Count(e => e.Id == id) > 0;
         }
     }
 }

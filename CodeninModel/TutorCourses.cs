@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace CodeninModel
 {
-    public class TutorCourse
+    public class TutorCourse : Entity<int>
     {
-        [Key]
-        public int TutorCoursesId { get; set; }
+        //[Key]
+        //public int TutorCoursesId { get; set; }
         public string TutorId { get; set; }
         public int CourseId { get; set; }
         public virtual  Tutor Tutor { get; set; }

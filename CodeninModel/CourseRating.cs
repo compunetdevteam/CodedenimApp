@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CodeninModel
 {
-    public class CourseRating
+    public class CourseRating : Entity<int>
     {
-        public int CourseRatingId { get; set; }
+        //public int CourseRatingId { get; set; }
         public int CourseId { get; set; }
 
         public int Rating { get; set; }

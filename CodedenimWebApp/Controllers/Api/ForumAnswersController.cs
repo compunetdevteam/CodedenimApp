@@ -33,7 +33,7 @@ namespace CodedenimWebApp.Controllers.Api.ForumApi
                                             .Select(x => new
                                             {
                                                 x.ReplyDate,
-                                                x.ForumAnswerId,
+                                                x.Id,
                                                 x.ForumQuestions.QuestionName,
                                                 x.Answer,
                                                 x.UserId,
@@ -56,7 +56,7 @@ namespace CodedenimWebApp.Controllers.Api.ForumApi
                 return BadRequest(ModelState);
             }
 
-            if (id != forumAnswer.ForumAnswerId)
+            if (id != forumAnswer.Id)
             {
                 return BadRequest();
             }
@@ -94,7 +94,7 @@ namespace CodedenimWebApp.Controllers.Api.ForumApi
             db.ForumAnswers.Add(forumAnswer);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = forumAnswer.ForumAnswerId }, forumAnswer);
+            return CreatedAtRoute("DefaultApi", new { id = forumAnswer.Id }, forumAnswer);
         }
 
         // DELETE: api/ForumAnswers/5
@@ -124,7 +124,7 @@ namespace CodedenimWebApp.Controllers.Api.ForumApi
 
         private bool ForumAnswerExists(int id)
         {
-            return db.ForumAnswers.Count(e => e.ForumAnswerId == id) > 0;
+            return db.ForumAnswers.Count(e => e.Id == id) > 0;
         }
     }
 }

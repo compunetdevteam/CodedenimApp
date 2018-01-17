@@ -70,7 +70,7 @@ namespace CodedenimWebApp.Controllers.Api
                 Random rnd = new Random();
                 var myquestion = _db.TopicQuizs.AsNoTracking().Where(x => x.ModuleId.Equals(ModuleId))
                     .OrderBy(x => Guid.NewGuid()).Take(2)
-                    .DistinctBy(d => d.TopicQuizId).ToList();
+                    .DistinctBy(d => d.Id).ToList();
                 // var myquestion = bquestion.OrderBy(x => Guid.NewGuid()).Take(totalQuestion).ToList();
                 //var tenRandomUser = listUsr.OrderBy(u => r.Next()).Take(10);
 

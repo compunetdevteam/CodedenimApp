@@ -122,7 +122,7 @@ namespace CodedenimWebApp.Controllers
 
             categoryVm.Courses = db.AssignCourseCategories.Include(x => x.CourseCategory).Include(x => x.Courses)
                 .Where(x => x.CourseCategoryId.Equals(categoriesPaidFor)).ToList();
-            categoryVm.CourseCategory = db.CourseCategories.Where(x => x.CourseCategoryId.Equals(categoriesPaidFor))
+            categoryVm.CourseCategory = db.CourseCategories.Where(x => x.Id.Equals(categoriesPaidFor))
                 .Select(x => x.CategoryName).FirstOrDefault();
 
          
@@ -150,11 +150,11 @@ namespace CodedenimWebApp.Controllers
                 foreach (var item in modules)
                 {
                     var modulesVm = new ModulesVm();
-                    modulesVm.ModuleId = item.ModuleId;
+                    modulesVm.ModuleId = item.Id;
                     modulesVm.ModuleName = item.ModuleName;
                     modulesVm.ExpectedTime = item.ExpectedTime;
                     modulesVm.ModuleDescription = item.ModuleDescription;
-                    modulesVm.IsModuleTaken = db.StudentTopicQuizs.Where(x => x.ModuleId.Equals(item.ModuleId) && x.StudentId.Equals(userId)).Any();
+                    modulesVm.IsModuleTaken = db.StudentTopicQuizs.Where(x => x.ModuleId.Equals(item.Id) && x.StudentId.Equals(userId)).Any();
                     myVar.Add(modulesVm);
                 }
                 viewModel.Module = myVar;
@@ -281,7 +281,7 @@ namespace CodedenimWebApp.Controllers
         {
             if (id != null)
             {
-                ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals((int)id)).ToList(), "CourseId", "CourseName");
+                ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.Id.Equals((int)id)).ToList(), "CourseId", "CourseName");
             }
             ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName");
             //  ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(id.Value)).ToList(), "CourseId", "CourseCode");
@@ -389,7 +389,7 @@ namespace CodedenimWebApp.Controllers
         /// <returns></returns>
         public PartialViewResult CreateCoursePartial1(int id)
         {
-            var courseCategory = db.CourseCategories.FirstOrDefault(x => x.CourseCategoryId.Equals(id));
+            var courseCategory = db.CourseCategories.FirstOrDefault(x => x.Id.Equals(id));
             ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName");
             return PartialView(courseCategory);
         }

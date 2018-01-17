@@ -344,7 +344,7 @@ namespace CodedenimWebApp.Controllers
                     
                     var student = new Student
                     {
-                        StudentId = user.Id,
+                        Id = user.Id,
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         Email = model.Email,
@@ -462,12 +462,6 @@ namespace CodedenimWebApp.Controllers
                     //ViewBag.Link = callbackUrl;
                     TempData["UserMessage"] = $"Registration is Successful for {user.UserName}, Please Confirm Your Email to Login.";
                     return View("ConfirmTutorRegistration");
-
-
-
-                    RedirectToAction("Index", "Tutors");
-
-
                 };
 
 
@@ -528,7 +522,7 @@ namespace CodedenimWebApp.Controllers
                 //File.SaveAs(path);
                 //}
 
-                StudentId = model.CallUpNumber,
+                Id = model.CallUpNumber,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
@@ -585,7 +579,7 @@ namespace CodedenimWebApp.Controllers
 
             var student = new Student
             {
-                StudentId = model.MatNumber,
+                Id = model.MatNumber,
                 Title = model.Title.ToString(),
                 FirstName = model.FirstName,
                 LastName = model.LastName,

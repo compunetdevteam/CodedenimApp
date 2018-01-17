@@ -37,7 +37,7 @@ namespace CodedenimWebApp.Controllers
         {
             var userId = User.Identity.GetUserId();
 
-            ViewBag.MyQuestion = await db.ForumQuestions.Where(x => x.StudentId.Equals(userId)).Select(x => new { x.QuestionName, x.ForumQuestionId }).ToListAsync();
+            ViewBag.MyQuestion = await db.ForumQuestions.Where(x => x.StudentId.Equals(userId)).Select(x => new { x.QuestionName, x.Id }).ToListAsync();
             return View();
         }
 
@@ -61,7 +61,7 @@ namespace CodedenimWebApp.Controllers
         {
             var userId = User.Identity.GetUserId();
 
-            var student = db.Students.Where(x => x.StudentId.Equals(userId)).ToList();
+            var student = db.Students.Where(stud => stud.Id.Equals(userId)).ToList();
 
             //var enrolledCoursesId = db.CorperEnrolledCourses.Where(x => x.StudentId.Equals(userId))
             //                           .Select(x => x.CourseCategoryId).FirstOrDefault();
@@ -92,7 +92,7 @@ namespace CodedenimWebApp.Controllers
             }
 
             ViewBag.CourseId = new SelectList(db.Fora, "CourseId", "ForumName", forumQuestion.CourseId);
-            ViewBag.ForumQuestionId = new SelectList(db.ForumQuestionViews, "ForumQuestionId", "ForumQuestionId", forumQuestion.ForumQuestionId);
+            ViewBag.ForumQuestionId = new SelectList(db.ForumQuestionViews, "ForumQuestionId", "ForumQuestionId", forumQuestion.Id);
             ViewBag.StudentId = new SelectList(db.Students, "StudentId", "FullName", forumQuestion.StudentId);
             return View(forumQuestion);
         }
@@ -110,7 +110,7 @@ namespace CodedenimWebApp.Controllers
                 return HttpNotFound();
             }
             ViewBag.CourseId = new SelectList(db.Fora, "CourseId", "ForumName", forumQuestion.CourseId);
-            ViewBag.ForumQuestionId = new SelectList(db.ForumQuestionViews, "ForumQuestionId", "ForumQuestionId", forumQuestion.ForumQuestionId);
+            ViewBag.ForumQuestionId = new SelectList(db.ForumQuestionViews, "ForumQuestionId", "ForumQuestionId", forumQuestion.Id);
             ViewBag.StudentId = new SelectList(db.Students, "StudentId", "Institution", forumQuestion.StudentId);
             return View(forumQuestion);
         }
@@ -129,7 +129,7 @@ namespace CodedenimWebApp.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CourseId = new SelectList(db.Fora, "CourseId", "ForumName", forumQuestion.CourseId);
-            ViewBag.ForumQuestionId = new SelectList(db.ForumQuestionViews, "ForumQuestionId", "ForumQuestionId", forumQuestion.ForumQuestionId);
+            ViewBag.ForumQuestionId = new SelectList(db.ForumQuestionViews, "ForumQuestionId", "ForumQuestionId", forumQuestion.Id);
             ViewBag.StudentId = new SelectList(db.Students, "StudentId", "Institution", forumQuestion.StudentId);
             return View(forumQuestion);
         }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace CodeninModel.Forums
 {
-    public class ForumAnswer
+    public class ForumAnswer : Entity<int>
     {
-        public int ForumAnswerId { get; set; }
+        //public int ForumAnswerId { get; set; }
         public string Answer { get; set; }
         public DateTime ReplyDate { get; set; }
         public int ForumQuestionId { get; set; }
@@ -14,9 +14,9 @@ namespace CodeninModel.Forums
         public virtual ICollection<VoteForumAnswer> VoteForumAnswers { get; set; }
     }
 
-    public class VoteForumAnswer
+    public class VoteForumAnswer : Entity<int>
     {
-        public int VoteForumAnswerId { get; set; }
+        //public int VoteForumAnswerId { get; set; }
         public int ForumAnswerId { get; set; }
         public Vote Vote { get; set; }
         public string UserId { get; set; }

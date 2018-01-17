@@ -25,7 +25,7 @@ namespace CodedenimWebApp.Controllers.Api
         public IEnumerable<Student> GetStudents()
         {
             var studentid = RequestContext.Principal;
-            return _db.Students.Where(x => x.StudentId.Equals(studentid));
+            return _db.Students.Where(x => x.Id.Equals(studentid));
             //  return db.Students.ToList();
         }
 
@@ -87,7 +87,7 @@ namespace CodedenimWebApp.Controllers.Api
 
 
                 var corperEnrollment = _db.CorperEnrolledCourses.Any(x => x.StudentId.Equals(studentId) &&
-                                                       x.Category.CourseCategoryId.Equals(courseId));
+                                                       x.Category.Id.Equals(courseId));
                 var enrollStudent = new CorperEnrolledCourses();
                 //if corper has not enrolled the enroll the corper using
                 //the if statement block
@@ -144,7 +144,7 @@ namespace CodedenimWebApp.Controllers.Api
         [System.Web.Http.Route("TopicMaterial")]
         public IHttpActionResult GetTopicMaterial()
         {
-            var location = _db.TopicMaterialUploads.FirstOrDefault(x => x.TopicMaterialUploadId.Equals(2));
+            var location = _db.TopicMaterialUploads.FirstOrDefault(x => x.Id.Equals(2));
             //  var topicDetail = HttpContext.Current.Server.MapPath("~/MaterialUpload/Data Management_ What Is Master Data Management (Mdm).mp4");
             return Ok(location);
         }
@@ -158,7 +158,7 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            if (id != student.StudentId)
+            if (id != student.Id)
             {
                 return BadRequest();
             }
@@ -201,7 +201,7 @@ namespace CodedenimWebApp.Controllers.Api
             }
             catch (DbUpdateException)
             {
-                if (StudentExists(student.StudentId))
+                if (StudentExists(student.Id))
                 {
                     return Conflict();
                 }
@@ -211,7 +211,7 @@ namespace CodedenimWebApp.Controllers.Api
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = student.StudentId }, student);
+            return CreatedAtRoute("DefaultApi", new { id = student.Id }, student);
         }
 
         // DELETE: api/Students/5
@@ -241,7 +241,7 @@ namespace CodedenimWebApp.Controllers.Api
 
         private bool StudentExists(string id)
         {
-            return _db.Students.Count(e => e.StudentId == id) > 0;
+            return _db.Students.Count(e => e.Id == id) > 0;
         }
     }
 }

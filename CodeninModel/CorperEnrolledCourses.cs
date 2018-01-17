@@ -8,9 +8,9 @@ namespace CodeninModel
 {
     //this table is for the enrollment of students and
     // not only corpers
-    public class CorperEnrolledCourses
+    public class CorperEnrolledCourses : Entity<int>
     {
-        public int CorperEnrolledCoursesId { get; set; }
+        //public int CorperEnrolledCoursesId { get; set; }
         public int CourseId { get; set; }
         public string CorperCallUpNumber { get; set; }
         public string StudentId { get; set; }
