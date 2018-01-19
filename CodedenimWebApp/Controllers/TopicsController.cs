@@ -104,7 +104,7 @@ namespace CodedenimWebApp.Controllers
             var topics = new CourseContentVm();
             Topic topic = await db.Topics.FindAsync(id);
             
-            var topicContent = await db.Topics.Where(x => x.TopicId.Equals((int)id)).ToListAsync();
+            var topicContent = await db.Topics.Where(x => x.Id.Equals((int)id)).ToListAsync();
             topics.Topics = topicContent;
             topics.TopicsAD = topic;
             if (topic == null)
@@ -148,7 +148,7 @@ namespace CodedenimWebApp.Controllers
         // GET: Topics/Edit/5
         public PartialViewResult CreatePartial(int id)
         {
-            ViewBag.ModuleId = new SelectList(db.Modules.Where(x => x.ModuleId.Equals((int)id)).ToList(), "ModuleId", "ModuleName");
+            ViewBag.ModuleId = new SelectList(db.Modules.Where(x => x.Id.Equals((int)id)).ToList(), "ModuleId", "ModuleName");
             return PartialView();
         }
 
@@ -217,7 +217,7 @@ namespace CodedenimWebApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ModuleId = new SelectList(db.Modules.Where(x => x.ModuleId.Equals(topic.ModuleId)).ToList(), "ModuleId", "ModuleName", topic.ModuleId);
+            ViewBag.ModuleId = new SelectList(db.Modules.Where(x => x.Id.Equals(topic.ModuleId)).ToList(), "ModuleId", "ModuleName", topic.ModuleId);
 
             //ViewBag.ModuleId = new SelectList(db.Modules, "ModuleId", "ModuleName", topic.ModuleId);
             return PartialView(topic);

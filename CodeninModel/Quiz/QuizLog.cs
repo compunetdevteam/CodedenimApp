@@ -1,8 +1,10 @@
-﻿namespace CodeninModel.Quiz
+﻿using GenericDataRepository.Abstractions;
+
+namespace CodeninModel.Quiz
 {
-    public class QuizLog
+    public class QuizLog : Entity<int>
     {
-        public int QuizLogId { get; set; }
+        //public int QuizLogId { get; set; }
         public string StudentId { get; set; }
         //public int TopicId { get; set; }
         public int ModuleId { get; set; }

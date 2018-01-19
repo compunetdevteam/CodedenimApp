@@ -9,8 +9,8 @@ namespace CodeninModel
 {
     public class Student : Person
     {
-        [Key]
-        public string StudentId { get; set; }
+        //[Key]
+        //public string StudentId { get; set; }
 
         //[Index(IsUnique = true)]
         //[MaxLength(35)]

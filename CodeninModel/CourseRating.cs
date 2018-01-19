@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GenericDataRepository.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace CodeninModel
 {
-    public class CourseRating
+    public class CourseRating : Entity<int>
     {
-        public int CourseRatingId { get; set; }
+        //public int CourseRatingId { get; set; }
         public int CourseId { get; set; }
 
         public int Rating { get; set; }

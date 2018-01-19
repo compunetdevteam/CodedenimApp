@@ -48,7 +48,7 @@ namespace CodedenimWebApp.Controllers.CourseForum
         // GET: ForumAnswers/Create
         public ActionResult Create(int id)
         {
-           ViewBag.ForumQuestionId = new SelectList(db.ForumQuestions.Where(x => x.ForumQuestionId.Equals(id)), "ForumQuestionId", "Title");
+           ViewBag.ForumQuestionId = new SelectList(db.ForumQuestions.Where(x => x.Id.Equals(id)), "ForumQuestionId", "Title");
            // ViewBag.QuestionId = db.ForumQuestions.Where(x => x.ForumQuestionId.Equals(id)).ToList();
             return View();
         }

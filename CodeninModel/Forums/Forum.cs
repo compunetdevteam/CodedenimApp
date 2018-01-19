@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GenericDataRepository.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace CodeninModel.Forums
 {
-    public class Forum
+    public class Forum : Entity<int>
     {
-        [Key,ForeignKey("Course")]
-        public int CourseId { get; set; }
+        //[Key,ForeignKey("Course")]
+        //public int CourseId { get; set; }
         public string ForumName { get; set; }
         public string Description { get; set; }
       
@@ -24,7 +25,7 @@ namespace CodeninModel.Forums
         public virtual ForumView ForumView { get; set; }
     }
 
-    public class ForumView
+    public class ForumView : Entity<int>
     {
         [Key, ForeignKey("Forum")]
         public int ContentViewId { get; set; }

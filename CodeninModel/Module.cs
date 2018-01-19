@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using CodeninModel.CBTE;
 using CodeninModel.Quiz;
+using GenericDataRepository.Abstractions;
 
 namespace CodeninModel
 {
-    public class Module
+    public class Module : Entity<int>
     {
-        public int ModuleId { get; set; }
+        //public int ModuleId { get; set; }
         public int CourseId { get; set; }
         public string ModuleName { get; set; }
         public string ModuleDescription { get; set; }

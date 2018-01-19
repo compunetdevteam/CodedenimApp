@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GenericDataRepository.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace CodeninModel
 {
-    public class File
+    public class File : Entity<int>
     {
-        public int FileId { get; set; }
+        //public int FileId { get; set; }
         [StringLength(355)]
         public string FileName { get; set; }
         [StringLength(100)]

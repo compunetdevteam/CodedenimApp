@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GenericDataRepository.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace CodeninModel
 {
-    public class Enrollment
+    public class Enrollment : Entity<int>
     {
-        public int EnrollmentID { get; set; }
+        //public int EnrollmentID { get; set; }
         public int CourseID { get; set; }
         public int StudentID { get; set; }
         [DisplayFormat(NullDisplayText = "No grade Assigned Yet, Complete the Coures")]

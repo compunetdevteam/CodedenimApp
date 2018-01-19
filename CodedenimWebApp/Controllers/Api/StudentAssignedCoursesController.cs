@@ -129,7 +129,7 @@ namespace CodedenimWebApp.Controllers.Api
 
         private bool StudentAssignedCourseExists(int id)
         {
-            return _db.StudentAssignedCourses.Count(e => e.StudentAssignedCourseId == id) > 0;
+            return _db.StudentAssignedCourses.Count(e => e.Id == id) > 0;
         }
     }
 }

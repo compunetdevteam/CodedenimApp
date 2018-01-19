@@ -87,9 +87,9 @@ namespace CodedenimWebApp.Controllers
                 //answer for the quizrule table.
                 //var number = _db.TopicQuizs.Take(numberOfQuestion).Count(x => x.ModuleId.Equals(moduleId));
                 Random rnd = new Random();
-                var myquestion = _db.TopicQuizs.AsNoTracking().Where(x => x.Module.ModuleId.Equals(moduleId))
+                var myquestion = _db.TopicQuizs.AsNoTracking().Where(x => x.Module.Id.Equals(moduleId))
                     .OrderBy(x => Guid.NewGuid()).Take(numberOfQuestion)
-                    .DistinctBy(d => d.TopicQuizId).ToList();
+                    .DistinctBy(d => d.Id).ToList();
                 // var myquestion = bquestion.OrderBy(x => Guid.NewGuid()).Take(totalQuestion).ToList();
                 //var tenRandomUser = listUsr.OrderBy(u => r.Next()).Take(10);
 

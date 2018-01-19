@@ -26,7 +26,7 @@ namespace CodedenimWebApp.Controllers.Api
                                                 x.Description,
                                                 x.FileLocation,
                                                 x.Name,
-                                                x.TopicMaterialUploadId,
+                                                x.Id,
                                                
                                                 
                                             });
@@ -40,7 +40,7 @@ namespace CodedenimWebApp.Controllers.Api
           var topicMaterialUpload = await _db.TopicMaterialUploads.Where(x => x.TopicId.Equals(id))
                                                                   .Select( x => new
                                                                     {
-                                                                        x.TopicMaterialUploadId,
+                                                                        x.Id,
                                                                         x.TopicId,
                                                                         x.Description,
                                                                         x.FileLocation,
@@ -69,7 +69,7 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            if (id != topicMaterialUpload.TopicMaterialUploadId)
+            if (id != topicMaterialUpload.Id)
             {
                 return BadRequest();
             }
@@ -107,7 +107,7 @@ namespace CodedenimWebApp.Controllers.Api
             _db.TopicMaterialUploads.Add(topicMaterialUpload);
             await _db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = topicMaterialUpload.TopicMaterialUploadId }, topicMaterialUpload);
+            return CreatedAtRoute("DefaultApi", new { id = topicMaterialUpload.Id }, topicMaterialUpload);
         }
 
         // DELETE: api/TopicMaterialUploads/5
@@ -137,7 +137,7 @@ namespace CodedenimWebApp.Controllers.Api
 
         private bool TopicMaterialUploadExists(int id)
         {
-            return _db.TopicMaterialUploads.Count(e => e.TopicMaterialUploadId == id) > 0;
+            return _db.TopicMaterialUploads.Count(e => e.Id == id) > 0;
         }
     }
 }

@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using CodeninModel.Quiz;
+using GenericDataRepository.Abstractions;
 
 namespace CodeninModel.Assesment
 {
-    public class AssesmentQuestionAnswer
+    public class AssesmentQuestionAnswer : Entity<int>
     {
-        public int AssesmentQuestionAnswerId { get; set; }
+        //public int AssesmentQuestionAnswerId { get; set; }
 
         [Display(Name = "Course Name")]
         [Required(ErrorMessage = "Course Name is required")]

@@ -6,8 +6,8 @@ namespace CodeninModel
 {
     public class Tutor : Person
     {
-        [Key]
-        public string TutorId { get; set; }
+        //[Key]
+        //public string TutorId { get; set; }
 
         public string Designation { get; set; }
         public string MaritalStatus { get; set; }

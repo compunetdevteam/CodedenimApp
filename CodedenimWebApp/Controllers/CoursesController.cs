@@ -113,17 +113,16 @@ namespace CodedenimWebApp.Controllers
                 db.SaveChanges();
 
             }
-
             var categoriesPaidFor = db.StudentPayments.Where(x => x.StudentId.Equals(userId))
                 .Select(x => x.CourseCategoryId).FirstOrDefault();
             //foreach (var category in categoriesPaidFor)
             //{
             //   course.Add(category); 
             //}
-            //categoryVm.courseContentVm = GetModules()
+
             categoryVm.Courses = db.AssignCourseCategories.Include(x => x.CourseCategory).Include(x => x.Courses)
                 .Where(x => x.CourseCategoryId.Equals(categoriesPaidFor)).ToList();
-            categoryVm.CourseCategory = db.CourseCategories.Where(x => x.CourseCategoryId.Equals(categoriesPaidFor))
+            categoryVm.CourseCategory = db.CourseCategories.Where(x => x.Id.Equals(categoriesPaidFor))
                 .Select(x => x.CategoryName).FirstOrDefault();
 
          
@@ -141,13 +140,33 @@ namespace CodedenimWebApp.Controllers
         {
             if (id != null)
             {
-                //this method is used to get and the modules based on the course
-                CourseContentVm viewModel = GetModules(id);
+                var userId = User.Identity.GetUserId();
+                var viewModel = new CourseContentVm();
+                var myVar = new List<ModulesVm>();
 
-                RedirectToAction("CalculatePercentage", "Students", new
+                var modules = db.Modules.Include(x => x.Topics).Include(x => x.Course)
+                    .Where(x => x.CourseId.Equals((int)id)).ToList();
+               
+                foreach (var item in modules)
+                {
+                    var modulesVm = new ModulesVm();
+                    modulesVm.ModuleId = item.Id;
+                    modulesVm.ModuleName = item.ModuleName;
+                    modulesVm.ExpectedTime = item.ExpectedTime;
+                    modulesVm.ModuleDescription = item.ModuleDescription;
+                    modulesVm.IsModuleTaken = db.StudentTopicQuizs.Where(x => x.ModuleId.Equals(item.Id) && x.StudentId.Equals(userId)).Any();
+                    myVar.Add(modulesVm);
+                }
+                viewModel.Module = myVar;
+                viewModel.Topics = db.Topics.Include(x => x.MaterialUploads).ToList();
+                viewModel.CourseId = (int)id;
+
+                
+
+              RedirectToAction("CalculatePercentage","Students", new
                 {
                     courseId = id,
-
+              
                 });
                 //viewModel.Modules =  db.Modules.Include(x => x.Topics).Include(x => x.Course).Where(x => x.CourseId.Equals((int)id)).ToListAsync();
 
@@ -158,33 +177,6 @@ namespace CodedenimWebApp.Controllers
                 return View(viewModel);
             }
             return View();
-        }
-
-
-        //the method take in the course id and get the total number of module per couses
-        private CourseContentVm GetModules(int? id)
-        {
-            var userId = User.Identity.GetUserId();
-            var viewModel = new CourseContentVm();
-            var myVar = new List<ModulesVm>();
-
-            var modules = db.Modules.Include(x => x.Topics).Include(x => x.Course)
-                .Where(x => x.CourseId.Equals((int)id)).ToList();
-
-            foreach (var item in modules)
-            {
-                var modulesVm = new ModulesVm();
-                modulesVm.ModuleId = item.ModuleId;
-                modulesVm.ModuleName = item.ModuleName;
-                modulesVm.ExpectedTime = item.ExpectedTime;
-                modulesVm.ModuleDescription = item.ModuleDescription;
-                modulesVm.IsModuleTaken = db.StudentTopicQuizs.Where(x => x.ModuleId.Equals(item.ModuleId) && x.StudentId.Equals(userId)).Any();
-                myVar.Add(modulesVm);
-            }
-            viewModel.Module = myVar;
-            viewModel.Topics = db.Topics.Include(x => x.MaterialUploads).ToList();
-            viewModel.CourseId = (int)id;
-            return viewModel;
         }
 
         public async Task<ActionResult> GetIndex()
@@ -289,7 +281,7 @@ namespace CodedenimWebApp.Controllers
         {
             if (id != null)
             {
-                ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals((int)id)).ToList(), "CourseId", "CourseName");
+                ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.Id.Equals((int)id)).ToList(), "CourseId", "CourseName");
             }
             ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName");
             //  ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(id.Value)).ToList(), "CourseId", "CourseCode");
@@ -397,7 +389,7 @@ namespace CodedenimWebApp.Controllers
         /// <returns></returns>
         public PartialViewResult CreateCoursePartial1(int id)
         {
-            var courseCategory = db.CourseCategories.FirstOrDefault(x => x.CourseCategoryId.Equals(id));
+            var courseCategory = db.CourseCategories.FirstOrDefault(x => x.Id.Equals(id));
             ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName");
             return PartialView(courseCategory);
         }
@@ -595,13 +587,6 @@ namespace CodedenimWebApp.Controllers
             var assinedCourseCategory = new List<AssignCourseCategory>();
             //var mycourses = await db.StudentPayments.Where(x => x.StudentId.Equals(userId)).ToArrayAsync();
             var mycourses = await db.StudentPayments.Distinct().AsQueryable().Where(x => x.StudentId.Equals(userId)&& x.IsPayed.Equals(true)).Select(x => x.CourseCategoryId).ToListAsync();
-
-            //list of all courses on the sidebar
-           // ViewBag.ListCourses = db.Courses.ToList();
-            foreach (var ListCourse in db.Courses.ToList())
-            {
-                ViewBag.ListCourses = ListCourse;
-            }
             foreach (var course in mycourses)
             {
 

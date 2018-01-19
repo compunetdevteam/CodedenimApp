@@ -24,7 +24,7 @@ namespace CodedenimWebApp.Controllers.Api.ForumApi
             var forumQuestion = db.ForumQuestions.AsNoTracking().Select(x => new
             {
                 x.CourseId,
-                x.ForumQuestionId,
+                x.Id,
                 x.QuestionName,
                 x.Title
 
@@ -55,7 +55,7 @@ namespace CodedenimWebApp.Controllers.Api.ForumApi
                 return BadRequest(ModelState);
             }
 
-            if (id != forumQuestion.ForumQuestionId)
+            if (id != forumQuestion.Id)
             {
                 return BadRequest();
             }
@@ -94,7 +94,7 @@ namespace CodedenimWebApp.Controllers.Api.ForumApi
             db.ForumQuestions.Add(forumQuestion);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = forumQuestion.ForumQuestionId }, forumQuestion);
+            return CreatedAtRoute("DefaultApi", new { id = forumQuestion.Id }, forumQuestion);
         }
 
         // DELETE: api/ForumQuestions/5
@@ -124,7 +124,7 @@ namespace CodedenimWebApp.Controllers.Api.ForumApi
 
         private bool ForumQuestionExists(int id)
         {
-            return db.ForumQuestions.Count(e => e.ForumQuestionId == id) > 0;
+            return db.ForumQuestions.Count(e => e.Id == id) > 0;
         }
     }
 }

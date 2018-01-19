@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using CodeninModel.Quiz;
+using GenericDataRepository.Abstractions;
 
 namespace CodeninModel.CBTE
 {
-    public class QuizRule
+    public class QuizRule : Entity<int>
     {
         public int QuizRuleId { get; set; }
 

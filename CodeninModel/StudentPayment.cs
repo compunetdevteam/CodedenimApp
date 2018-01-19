@@ -1,8 +1,9 @@
-﻿using System;
+﻿using GenericDataRepository.Abstractions;
+using System;
 
 namespace CodeninModel
 {
-    public class StudentPayment
+    public class StudentPayment : Entity<int>
     {
         public int StudentPaymentId { get; set; }
         public string OrderId { get; set; }

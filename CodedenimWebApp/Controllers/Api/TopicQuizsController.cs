@@ -23,7 +23,7 @@ namespace CodedenimWebApp.Controllers.Api
         {
             var topicQuiz = db.TopicQuizs.Select(x => new
                                                         {
-                                                               x.TopicQuizId,
+                                                               x.Id,
                                                                x.ModuleId,
                                                                 
                                                                x.Question,
@@ -57,7 +57,7 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            if (id != topicQuiz.TopicQuizId)
+            if (id != topicQuiz.Id)
             {
                 return BadRequest();
             }
@@ -95,7 +95,7 @@ namespace CodedenimWebApp.Controllers.Api
             db.TopicQuizs.Add(topicQuiz);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = topicQuiz.TopicQuizId }, topicQuiz);
+            return CreatedAtRoute("DefaultApi", new { id = topicQuiz.Id }, topicQuiz);
         }
 
         // DELETE: api/TopicQuizs/5
@@ -125,7 +125,7 @@ namespace CodedenimWebApp.Controllers.Api
 
         private bool TopicQuizExists(int id)
         {
-            return db.TopicQuizs.Count(e => e.TopicQuizId == id) > 0;
+            return db.TopicQuizs.Count(e => e.Id == id) > 0;
         }
     }
 }

@@ -6,12 +6,13 @@ using System.IO;
 using System.Web;
 using CodeninModel.Assesment;
 using CodeninModel.Forums;
+using GenericDataRepository.Abstractions;
 
 namespace CodeninModel
 {
-    public class Course
+    public class Course : Entity<int>
     {
-        public int CourseId { get; set; }
+        //public int CourseId { get; set; }
         //public int CourseCategoryId { get; set; }
         public string CourseCode { get; set; }
         public string CourseName { get; set; }

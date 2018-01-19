@@ -1,11 +1,12 @@
-﻿    using System.ComponentModel.DataAnnotations;
+﻿using GenericDataRepository.Abstractions;
+using System.ComponentModel.DataAnnotations;
 
 namespace CodeninModel.Quiz
 {
-    public class TopicQuiz
+    public class TopicQuiz : Entity<int>
     {
      
-        public int TopicQuizId { get; set; }
+        //public int TopicQuizId { get; set; }
 
 
         //[Display(Name = "Topic Name")]

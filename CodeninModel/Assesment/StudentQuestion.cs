@@ -1,10 +1,11 @@
 ﻿using CodeninModel.Quiz;
+using GenericDataRepository.Abstractions;
 
 namespace CodeninModel.Assesment
 {
-    public class StudentQuestion
+    public class StudentQuestion : Entity<int>
     {
-        public int StudentQuestionId { get; set; }
+        //public int StudentQuestionId { get; set; }
         public string StudentId { get; set; }
         public int TopicId { get; set; }
         public string Question { get; set; }

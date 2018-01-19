@@ -2,20 +2,21 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;
 using CodeninModel.Quiz;
+using GenericDataRepository.Abstractions;
 
 namespace CodeninModel
 {
-    public class TopicMaterialUpload
+    public class TopicMaterialUpload : Entity<int>
     {
        
-        public int TopicMaterialUploadId { get; set; }
+        //public int TopicMaterialUploadId { get; set; }
         public int TopicId { get; set; }
         public string Tutor { get; set; }
         public FileType FileType { get; set; }
 
         [Display(Name = "Material Name")]
         [Required(ErrorMessage = "Material Name is required")]
-        public string Name { get; set; }
+        new public string Name { get; set; } //hide inherited property
 
         //[Display(Name = "Material Author")]
         //[Required(ErrorMessage = "Material Author is required")]

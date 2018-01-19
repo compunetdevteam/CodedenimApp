@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GenericDataRepository.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace CodeninModel.Forums
 {
-    public class ForumPost
+    public class ForumPost : Entity<int>
     {
-        public int ForumPostId { get; set; }
+        //public int ForumPostId { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
         public string IP { get; set; }

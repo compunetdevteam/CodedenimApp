@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GenericDataRepository.Abstractions;
 using Microsoft.Win32;
 
 namespace CodeninModel
 {
-    public class PaymentType
+    public class PaymentType : Entity<int>
     {
-        public int PaymentTypeId { get; set; }
+        //public int PaymentTypeId { get; set; }
         
 
         public string PaymentName { get; set; }

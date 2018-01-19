@@ -107,7 +107,7 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            if (id != course.CourseId)
+            if (id != course.Id)
             {
                 return BadRequest();
             }
@@ -145,7 +145,7 @@ namespace CodedenimWebApp.Controllers.Api
             _db.Courses.Add(course);
             await _db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = course.CourseId }, course);
+            return CreatedAtRoute("DefaultApi", new { id = course.Id }, course);
         }
 
         // DELETE: api/Courses/5
@@ -175,7 +175,7 @@ namespace CodedenimWebApp.Controllers.Api
 
         private bool CourseExists(int id)
         {
-            return _db.Courses.Count(e => e.CourseId == id) > 0;
+            return _db.Courses.Count(e => e.Id == id) > 0;
         }
     }
 }

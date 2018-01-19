@@ -42,7 +42,7 @@ namespace CodedenimWebApp.Controllers
             var isCourseIdExist = db.CourseRatings.Any(x => x.CourseId.Equals(courseId));
             if (!isCourseIdExist)
             {
-                var newCourse = db.Courses.Where(x => x.CourseId.Equals(courseId)).Select(x => x.CourseId)
+                var newCourse = db.Courses.Where(x => x.Id.Equals(courseId)).Select(x => x.Id)
                     .FirstOrDefault();
                 courseRating.CourseId = newCourse;
                 if (like == 1)
@@ -104,7 +104,7 @@ namespace CodedenimWebApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != courseRating.CourseRatingId)
+            if (id != courseRating.Id)
             {
                 return BadRequest();
             }
@@ -142,7 +142,7 @@ namespace CodedenimWebApp.Controllers
             db.CourseRatings.Add(courseRating);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = courseRating.CourseRatingId }, courseRating);
+            return CreatedAtRoute("DefaultApi", new { id = courseRating.Id }, courseRating);
         }
 
         // DELETE: api/CourseRatings/5
@@ -172,7 +172,7 @@ namespace CodedenimWebApp.Controllers
 
         private bool CourseRatingExists(int id)
         {
-            return db.CourseRatings.Count(e => e.CourseRatingId == id) > 0;
+            return db.CourseRatings.Count(e => e.Id == id) > 0;
         }
     }
 
