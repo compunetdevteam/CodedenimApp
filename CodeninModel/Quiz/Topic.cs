@@ -2,6 +2,7 @@
 using CodeninModel.Assesment;
 using CodeninModel.BlogPost;
 using CodeninModel.CBTE;
+using GenericDataRepository.Abstractions;
 
 namespace CodeninModel.Quiz
 {

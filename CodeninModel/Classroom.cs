@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;
 using CodeninModel.Quiz;
+using GenericDataRepository.Abstractions;
 
 namespace CodeninModel
 {

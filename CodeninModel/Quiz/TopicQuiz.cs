@@ -1,4 +1,5 @@
-﻿    using System.ComponentModel.DataAnnotations;
+﻿using GenericDataRepository.Abstractions;
+using System.ComponentModel.DataAnnotations;
 
 namespace CodeninModel.Quiz
 {

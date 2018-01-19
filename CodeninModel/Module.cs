@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CodeninModel.CBTE;
 using CodeninModel.Quiz;
+using GenericDataRepository.Abstractions;
 
 namespace CodeninModel
 {

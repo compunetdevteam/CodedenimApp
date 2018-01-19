@@ -39,6 +39,9 @@
     <Reference Include="EPPlus, Version=4.1.1.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.4.1.1\lib\net40\EPPlus.dll</HintPath>
     </Reference>
+    <Reference Include="GenericDataRepository">
+      <HintPath>..\..\..\..\Desktop\GenericDataRepository.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
     </Reference>
@@ -111,7 +114,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstractions\FilePath.cs" />
-    <Compile Include="Abstractions\IEntity.cs" />
     <Compile Include="Abstractions\IExcelUpload.cs" />
     <Compile Include="Abstractions\IFilePathProcessor.cs" />
     <Compile Include="Assesment\QuestionAnswer.cs" />
@@ -131,7 +133,6 @@
     <Compile Include="CourseRating.cs" />
     <Compile Include="EnrollForCourse.cs" />
     <Compile Include="Enrollment.cs" />
-    <Compile Include="Entity.cs" />
     <Compile Include="File.cs" />
     <Compile Include="FilePath.cs" />
     <Compile Include="Forums\CommentsReply.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CodeninModel.Quiz;
+using GenericDataRepository.Abstractions;
 
 namespace CodeninModel.BlogPost
 {

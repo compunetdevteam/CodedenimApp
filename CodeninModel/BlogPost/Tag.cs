@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GenericDataRepository.Abstractions;
+using System.Collections.Generic;
 
 namespace CodeninModel.BlogPost
 {

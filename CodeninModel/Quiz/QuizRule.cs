@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using CodeninModel.Quiz;
+using GenericDataRepository.Abstractions;
 
 namespace CodeninModel.CBTE
 {

@@ -6,6 +6,7 @@ using System.IO;
 using System.Web;
 using CodeninModel.Assesment;
 using CodeninModel.Forums;
+using GenericDataRepository.Abstractions;
 
 namespace CodeninModel
 {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CodeninModel.Quiz;
+using GenericDataRepository.Abstractions;
 
 namespace CodeninModel
 {

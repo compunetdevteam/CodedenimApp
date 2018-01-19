@@ -1,4 +1,5 @@
 ﻿using CodeninModel.Quiz;
+using GenericDataRepository.Abstractions;
 
 namespace CodeninModel.Assesment
 {

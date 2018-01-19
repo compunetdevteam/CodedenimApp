@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GenericDataRepository.Abstractions;
+using System;
 
 namespace CodeninModel
 {

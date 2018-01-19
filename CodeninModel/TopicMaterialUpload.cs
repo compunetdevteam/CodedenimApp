@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;
 using CodeninModel.Quiz;
+using GenericDataRepository.Abstractions;
 
 namespace CodeninModel
 {
@@ -15,7 +16,7 @@ namespace CodeninModel
 
         [Display(Name = "Material Name")]
         [Required(ErrorMessage = "Material Name is required")]
-        public string Name { get; set; }
+        new public string Name { get; set; } //hide inherited property
 
         //[Display(Name = "Material Author")]
         //[Required(ErrorMessage = "Material Author is required")]

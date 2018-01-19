@@ -17,19 +17,22 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using CodedenimWebApp.Abstractions;
+using GenericDataRepository.Abstractions;
 
 namespace CodedenimWebApp.Controllers
 {
     public class StudentsController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly IRepository _repo;
         private readonly ICodedenimUserMgr _user;
         private double _progress;
 
-        public StudentsController(ICodedenimUserMgr user, ApplicationDbContext db)
+        public StudentsController(ICodedenimUserMgr user, ApplicationDbContext db, IRepository repo)
         {
             _user = user;
             _db = db;
+            _repo = repo;
         }
         // GET: Students
         public async Task<ActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
@@ -49,8 +52,13 @@ namespace CodedenimWebApp.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var students = from s in _db.Students
-                           select s;
+            //var students = from s in _db.Students
+            //               select s;
+
+            var students = await _repo.GetAllAsync<Student>(null, null, null, null);
+
+
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 students = students.Where(s => s.LastName.Contains(searchString)
@@ -75,8 +83,6 @@ namespace CodedenimWebApp.Controllers
             int pageSize = 3;
             int pageNumber = (page ?? 1);
             return View(students.ToPagedList(pageNumber, pageSize));
-
-            // return View(await db.Students.ToListAsync());
         }
 
         public ActionResult DashBoard()

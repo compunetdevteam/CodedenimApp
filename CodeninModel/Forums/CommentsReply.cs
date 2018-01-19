@@ -1,3 +1,4 @@
+using GenericDataRepository.Abstractions;
 using System;
 
 namespace CodeninModel.Forums

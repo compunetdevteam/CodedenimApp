@@ -78,6 +78,9 @@
     <Reference Include="Fonlow.WebApiClientGen, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cf59ce9d94b04b8a, processorArchitecture=MSIL">
       <HintPath>..\packages\Fonlow.WebApiClientGen.2.2.5\lib\net452\Fonlow.WebApiClientGen.dll</HintPath>
     </Reference>
+    <Reference Include="GenericDataRepository">
+      <HintPath>..\..\..\..\Desktop\GenericDataRepository.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
     </Reference>
@@ -288,8 +291,6 @@
     <Compile Include="Abstractions\ICodedenimUserMgr.cs" />
     <Compile Include="Abstractions\IDashboardManager.cs" />
     <Compile Include="Abstractions\IGenericRepository.cs" />
-    <Compile Include="Abstractions\IReadOnlyRepository.cs" />
-    <Compile Include="Abstractions\IRepository.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -323,8 +324,6 @@
     <Compile Include="Controllers\AssignCourseCategoriesController.cs" />
     <Compile Include="Controllers\RemitaServicesController.cs" />
     <Compile Include="Infrastructure\CodedenimUserMgr.cs" />
-    <Compile Include="Infrastructure\EFReadOnlyRepository.cs" />
-    <Compile Include="Infrastructure\EFRepository.cs" />
     <Compile Include="Infrastructure\GenericRepository.cs" />
     <Compile Include="Migrations\201712130442269_newMigration.cs" />
     <Compile Include="Migrations\201712130442269_newMigration.Designer.cs">

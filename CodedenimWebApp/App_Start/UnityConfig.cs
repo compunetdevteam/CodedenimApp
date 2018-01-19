@@ -1,6 +1,8 @@
 using CodedenimWebApp.Abstractions;
 using CodedenimWebApp.Infrastructure;
 using CodedenimWebApp.Models;
+using GenericDataRepository.Abstractions;
+using GenericDataRepository.Concrete;
 using System;
 using System.Data.Entity;
 using Unity;

@@ -80,65 +80,66 @@ namespace CodedenimWebApp.Controllers
             return View(model);
         }
 
-       
-        public async Task<ActionResult> StartPayment(int? id)
-        {
+        #region Pay Stack Process
+        //public async Task<ActionResult> StartPayment(int? id)
+        //{
 
-            var testOrLiveSecret = ConfigurationManager.AppSettings["PayStackSecret"];
-            var api = new PayStackApi(testOrLiveSecret);
-            var userId = User.Identity.GetUserId();
-            bool isPayAll = false;
-            decimal amount = 0;
-            // var userRole = User.Identity;
-            if (userId != null)
-            {
-                var student = await db.Students.AsNoTracking().Where(x => x.Id.Equals(userId)).FirstOrDefaultAsync();
+        //    var testOrLiveSecret = ConfigurationManager.AppSettings["PayStackSecret"];
+        //    var api = new PayStackApi(testOrLiveSecret);
+        //    var userId = User.Identity.GetUserId();
+        //    bool isPayAll = false;
+        //    decimal amount = 0;
+        //    // var userRole = User.Identity;
+        //    if (userId != null)
+        //    {
+        //        var student = await db.Students.AsNoTracking().Where(x => x.Id.Equals(userId)).FirstOrDefaultAsync();
 
-                if (id == null)
-                {
-                    amount = await db.AssignCourseCategories.Include(i => i.CourseCategory).AsNoTracking()
-                         .Where(x => x.CourseCategory.StudentType.Equals(student.AccountType))
-                         .SumAsync(s => s.CourseCategory.Amount);
-                    isPayAll = true;
-                }
-                else
-                {
-                    amount = db.CourseCategories.Where(x => x.Id.Equals((int)id)).Select(x => x.Amount).FirstOrDefault();
-                    id = (int)id;
-                }
+        //        if (id == null)
+        //        {
+        //            amount = await db.AssignCourseCategories.Include(i => i.CourseCategory).AsNoTracking()
+        //                 .Where(x => x.CourseCategory.StudentType.Equals(student.AccountType))
+        //                 .SumAsync(s => s.CourseCategory.Amount);
+        //            isPayAll = true;
+        //        }
+        //        else
+        //        {
+        //            amount = db.CourseCategories.Where(x => x.Id.Equals((int)id)).Select(x => x.Amount).FirstOrDefault();
+        //            id = (int)id;
+        //        }
 
 
-                var convertedamount = KoboToNaira.ConvertKoboToNaira(amount);
-                var transactionInitializaRequest = new TransactionInitializeRequest
-                {
-                    //Reference = "SwifKampus",
-                    AmountInKobo = convertedamount,
-                    //CallbackUrl = "http://localhost:64301/CourseCategories/ConfrimPayment",
-                    CallbackUrl = "http://codedenim.azurewebsites.net/CourseCategories/ConfrimPayment",
-                    Email = student.Email,
-                    Bearer = "Application fee",
+        //        var convertedamount = KoboToNaira.ConvertKoboToNaira(amount);
+        //        var transactionInitializaRequest = new TransactionInitializeRequest
+        //        {
+        //            //Reference = "SwifKampus",
+        //            AmountInKobo = convertedamount,
+        //            //CallbackUrl = "http://localhost:64301/CourseCategories/ConfrimPayment",
+        //            CallbackUrl = "http://codedenim.azurewebsites.net/CourseCategories/ConfrimPayment",
+        //            Email = student.Email,
+        //            Bearer = "Application fee",
 
-                    CustomFields = new List<CustomField>
-                    {
-                        new  CustomField("coursecategoryid","coursecategoryid", id.ToString()),
-                        new  CustomField("studentid","studentid", student.Id),
-                        new  CustomField("ispayedall","ispayedall", isPayAll.ToString()),
-                    }
+        //            CustomFields = new List<CustomField>
+        //            {
+        //                new  CustomField("coursecategoryid","coursecategoryid", id.ToString()),
+        //                new  CustomField("studentid","studentid", student.Id),
+        //                new  CustomField("ispayedall","ispayedall", isPayAll.ToString()),
+        //            }
 
-                };
-                var response = api.Transactions.Initialize(transactionInitializaRequest);
+        //        };
+        //        var response = api.Transactions.Initialize(transactionInitializaRequest);
 
-                if (response.Status)
-                {
-                    //redirect to authorization url
-                    return RedirectPermanent(response.Data.AuthorizationUrl);
-                    // return Content("Successful");
-                }
-                return Content("An error occurred");
-            }
-            return RedirectToAction("Login", "Account");
+        //        if (response.Status)
+        //        {
+        //            //redirect to authorization url
+        //            return RedirectPermanent(response.Data.AuthorizationUrl);
+        //            // return Content("Successful");
+        //        }
+        //        return Content("An error occurred");
+        //    }
+        //    return RedirectToAction("Login", "Account");
 
-        }
+        //}
+
 
         //public async Task<ActionResult> ConfrimPayment(string reference)
         //{
@@ -205,7 +206,7 @@ namespace CodedenimWebApp.Controllers
         //    return RedirectToAction("ListCourses", "Courses");
         //}
 
-
+        #endregion
 
         public static class KoboToNaira
         {

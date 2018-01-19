@@ -12,23 +12,31 @@ using CodedenimWebApp.Services;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
 using OfficeOpenXml;
+using GenericDataRepository.Abstractions;
 
 namespace CodedenimWebApp.Controllers
 {
     public class ModulesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly IRepository _repo;
+        private readonly ApplicationDbContext _db;
+
+        public ModulesController(IRepository repo, ApplicationDbContext db)
+        {
+            _repo = repo;
+            _db = db;
+        }
 
         // GET: Modules
         public async Task<ActionResult> Index()
         {
-            var modules = db.Modules.Include(m => m.Course);
+            var modules = _db.Modules.Include(m => m.Course);
             return View(await modules.ToListAsync());
         }
 
         public async Task<ActionResult> MyCourses(string id)
         {
-            var tutorCourses = await db.TutorCourses.Where(x => x.TutorId.Equals(id)).ToListAsync();
+            var tutorCourses = await _db.TutorCourses.Where(x => x.TutorId.Equals(id)).ToListAsync();
             return View(tutorCourses);
         }
         // GET: Modules/Details/5
@@ -39,12 +47,12 @@ namespace CodedenimWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var moduleInfo = new CourseContentVm();
-            Module module = await db.Modules.FindAsync(id);
+            Module module = await _db.Modules.FindAsync(id);
  
-            var course = await db.Courses.FindAsync(id);
-            var courseId = await db.Modules.Where(x => x.Id.Equals((int)id)).Select(x => x.CourseId).FirstOrDefaultAsync();
-            var modeules = await db.Modules.Where(x => x.CourseId.Equals((int)id)).ToListAsync();
-            var topics = await db.Topics.Where(x => x.ModuleId.Equals((int)id)).ToListAsync();
+            var course = await _db.Courses.FindAsync(id);
+            var courseId = await _db.Modules.Where(x => x.Id.Equals((int)id)).Select(x => x.CourseId).FirstOrDefaultAsync();
+            var modeules = await _db.Modules.Where(x => x.CourseId.Equals((int)id)).ToListAsync();
+            var topics = await _db.Topics.Where(x => x.ModuleId.Equals((int)id)).ToListAsync();
             moduleInfo.CoursesAD = course;
             moduleInfo.Modules = modeules;
             moduleInfo.Topics = topics;
@@ -63,11 +71,11 @@ namespace CodedenimWebApp.Controllers
         {
             if (id != null)
             {
-                ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.Id.Equals(id.Value)).ToList(), "CourseId", "CourseName");
+                ViewBag.CourseId = new SelectList(_db.Courses.Where(x => x.Id.Equals(id.Value)).ToList(), "CourseId", "CourseName");
                 // ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode");
 
             }
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName");
+            ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "CourseName");
             //  ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.CourseId.Equals(id.Value)).ToList(), "CourseId", "CourseCode");
 
 
@@ -83,19 +91,19 @@ namespace CodedenimWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Modules.Add(module);
-                await db.SaveChangesAsync();
+                _db.Modules.Add(module);
+                await _db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CourseId = new SelectList(db.Modules, "CourseId", "CourseCode", module.CourseId);
+            ViewBag.CourseId = new SelectList(_db.Modules, "CourseId", "CourseCode", module.CourseId);
             return View(module);
         }
 
 
         public PartialViewResult CreatePartial(int id)
         {
-            ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.Id.Equals((int)id)).ToList(), "CourseId", "CourseName");
+            ViewBag.CourseId = new SelectList(_db.Courses.Where(x => x.Id.Equals((int)id)).ToList(), "CourseId", "CourseName");
             return PartialView();
         }
 
@@ -106,13 +114,13 @@ namespace CodedenimWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Modules.Add(module);
-                await db.SaveChangesAsync();
+                _db.Modules.Add(module);
+                await _db.SaveChangesAsync();
                 return new JsonResult { Data = new { status = true, message = "Saved Succesfully" } };
                 // RedirectToAction("Index","Courses");
             }
 
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", module.CourseId);
+            ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "CourseCode", module.CourseId);
             return PartialView(module);
         }
             
@@ -127,12 +135,12 @@ namespace CodedenimWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = await db.Modules.FindAsync(id);
+            Module module = await _db.Modules.FindAsync(id);
             if (module == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", module.CourseId);
+            ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "CourseCode", module.CourseId);
             return View(module);
         }
 
@@ -145,11 +153,11 @@ namespace CodedenimWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(module).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                _db.Entry(module).State = EntityState.Modified;
+                await _db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", module.CourseId);
+            ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "CourseCode", module.CourseId);
             return View(module);
         }
 
@@ -167,14 +175,14 @@ namespace CodedenimWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var module = await db.Modules.FindAsync((int) id);
+            var module = await _db.Modules.FindAsync((int) id);
             if (module == null)
             {
                 return HttpNotFound();
             }
 
            // ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", module.CourseId);
-            ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.Id.Equals(module.CourseId)).ToList(), "CourseId", "CourseName", module.CourseId);
+            ViewBag.CourseId = new SelectList(_db.Courses.Where(x => x.Id.Equals(module.CourseId)).ToList(), "CourseId", "CourseName", module.CourseId);
             return PartialView(module);
         }
 
@@ -185,12 +193,12 @@ namespace CodedenimWebApp.Controllers
         {
             //ViewBag.CourseId = new SelectList(db.Modules.Where(x => x.ModuleId.Equals((int)id)).Select(x => x.CourseId).ToList(), "CourseId", "CourseName", module.CourseId);
 
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", module.CourseId);
+            ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "CourseCode", module.CourseId);
             if (ModelState.IsValid)
             {
                 //module.ModuleId = (int)ViewBag.CourseId;
-                db.Entry(module).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                _db.Entry(module).State = EntityState.Modified;
+                await _db.SaveChangesAsync();
                return RedirectToAction("Details","Courses",new {id = module.CourseId});
             }
            
@@ -206,7 +214,7 @@ namespace CodedenimWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = await db.Modules.FindAsync(id);
+            Module module = await _db.Modules.FindAsync(id);
             if (module == null)
             {
                 return HttpNotFound();
@@ -219,9 +227,9 @@ namespace CodedenimWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Module module = await db.Modules.FindAsync(id);
-            db.Modules.Remove(module);
-            await db.SaveChangesAsync();
+            Module module = await _db.Modules.FindAsync(id);
+            _db.Modules.Remove(module);
+            await _db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -233,7 +241,7 @@ namespace CodedenimWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = await  db.Modules.FindAsync(id);
+            Module module = await  _db.Modules.FindAsync(id);
             if (module == null)
             {
                 return HttpNotFound();
@@ -246,9 +254,9 @@ namespace CodedenimWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeletePartial(int id)
         {
-            Module module = await db.Modules.FindAsync(id);
-            db.Modules.Remove(module);
-            await db.SaveChangesAsync();
+            Module module = await _db.Modules.FindAsync(id);
+            _db.Modules.Remove(module);
+            await _db.SaveChangesAsync();
             return RedirectToAction("Details","Courses", new{id = module.CourseId});
         }
 
@@ -256,7 +264,7 @@ namespace CodedenimWebApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -311,7 +319,7 @@ namespace CodedenimWebApp.Controllers
                         for (int row = 2; row <= noOfRow; row++)
                         {
                             var course = sheet.Cells[row, 1].Value.ToString().Trim();
-                            var courseName = db.Courses.Where(x => x.CourseName.Equals(course)).Select(x => x.Id).FirstOrDefault();
+                            var courseName = _db.Courses.Where(x => x.CourseName.Equals(course)).Select(x => x.Id).FirstOrDefault();
 
                             int courseId = courseName;
                             string moduleName = sheet.Cells[row, 2].Value.ToString().ToUpper().Trim();
@@ -350,14 +358,14 @@ namespace CodedenimWebApp.Controllers
                                     }
 
                                     ;
-                                db.Modules.Add(myModule);
+                                _db.Modules.Add(myModule);
                             }
                             recordCount++;
                             //lastrecord = $"The last Updated record has the Student Id {studentId} and Subject Name is {subjectName}. Please Confirm!!!";
                         }
                     }
                 }
-                await db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
            // }
             return View("Index");
         }
