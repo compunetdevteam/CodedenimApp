@@ -79,11 +79,11 @@ namespace CodedenimWebApp
                 appId: "662881010576859",
                 appSecret: "b2e27f7678ba99544981b1ec42952e0e");
 
-            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            {
-                ClientId = "694286352294-j2kjuf67qrv6tmhsjjtqp61afoinr4vv.apps.googleusercontent.com",
-                ClientSecret = "qUKJ_LGI1yFX_t2TMnjfwThw"
-            });
+        //    app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+        //    {
+        //        ClientId = "694286352294-j2kjuf67qrv6tmhsjjtqp61afoinr4vv.apps.googleusercontent.com",
+        //        ClientSecret = "qUKJ_LGI1yFX_t2TMnjfwThw"
+        //    });
         }
     }
     //public partial class Startup

@@ -16,10 +16,7 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using PayStack.Net.Apis;
 using System.Collections.Generic;
-
-
-
-
+using CodedenimWebApp.Service;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -459,10 +456,18 @@ namespace CodedenimWebApp.Controllers
         public async Task<ActionResult> Edit(
             [Bind(Include =
                 "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")]
-            Course course)
+            Course course, HttpPostedFileBase File)
         {
             if (ModelState.IsValid)
             {
+                var imageFromDB = db.Courses.Where(x => x.CourseId.Equals(course.CourseId)).Select(x => x.FileLocation).ToString();
+
+                DeletePhoto(course);
+                var fp = new UploadedFileProcessor();
+
+                var path = fp.ProcessFilePath(File);
+                course.FileLocation = path.Path;
+
                 db.Entry(course).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -470,6 +475,25 @@ namespace CodedenimWebApp.Controllers
             // ViewBag.CourseCategoryId = new SelectList(db.CourseCategories, "CourseCategoryId", "CategoryName", course.CourseCategoryId);
             return View(course);
         }
+
+
+        /// <summary>
+        /// this method delete the photo from the file location on the server
+        /// </summary>
+        /// <param name="course"></param>
+        private void DeletePhoto(Course course)
+        {
+            var photoName = "";
+            photoName = course.FileLocation;
+            string fullPath = Request.MapPath("~/MaterialUpload/" + photoName);
+
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+                //Session["DeleteSuccess"] = "Yes";
+            }
+        }
+
 
         /// <summary>
         /// Partial View for editing courses on the course index page

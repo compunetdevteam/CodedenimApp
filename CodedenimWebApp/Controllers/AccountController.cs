@@ -500,7 +500,7 @@ namespace CodedenimWebApp.Controllers
             var user = new ApplicationUser()
             {
                 Id = model.CallUpNumber,
-                UserName = model.Email,
+                UserName = model.FirstName + " " + model.LastName,
                 Email = model.Email
             };
 
@@ -572,7 +572,7 @@ namespace CodedenimWebApp.Controllers
             var user = new ApplicationUser()
             {
                 Id = model.MatNumber,
-                UserName = model.Email,
+                UserName = model.FirstName + " " + model.LastName,
                 Email = model.Email
             };
 
@@ -635,7 +635,7 @@ namespace CodedenimWebApp.Controllers
             var user = new ApplicationUser()
             {
 
-                UserName = model.Email,
+                UserName = model.FirstName + " " + model.LastName,
                 Email = model.Email
             };
 

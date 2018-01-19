@@ -21,6 +21,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Data.Entity.Infrastructure;
 
 namespace CodedenimWebApp.Controllers.Api
 {
@@ -370,14 +373,22 @@ namespace CodedenimWebApp.Controllers.Api
             {
                 return BadRequest(ModelState);
             }
+           
 
             var user = new ApplicationUser()
             {
                 Id = model.CallUpNumber,
-                UserName = model.Email,
+                UserName = model.FirstName + " " + model.LastName,
                 Email = model.Email
             };
 
+            //need refactoring duplicate code
+            //var userWithSameEmail = _db.Users.Where(m => m.Email.Equals(model.Email)).SingleOrDefault(); //checking if the emailid already exits for any user
+            
+            //if(userWithSameEmail != null)
+            //{
+            //    return BadRequest("Email Already Exist");
+            //}
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -407,16 +418,16 @@ namespace CodedenimWebApp.Controllers.Api
             await _db.SaveChangesAsync();
             await this.UserManager.AddToRoleAsync(user.Id, "Corper");
 
-            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+           // var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
             // var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
-            var callbackUrl = EmailLink(user.Id, code);
+           // var callbackUrl = EmailLink(user.Id, code);
 
-            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+           // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
            //         ViewBag.Link = callbackUrl;
                     //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your Tutor account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
                     //ViewBag.Link = callbackUrl;
                   //  TempData["UserMessage"] = $"Registration is Successful for {user.UserName}, Please Confirm Your Email to Login.";
-                    return Ok("ConfirmRegistration");
+                    return Ok("Registration was successful");
 
         }
 
@@ -439,9 +450,16 @@ namespace CodedenimWebApp.Controllers.Api
             var user = new ApplicationUser()
             {
                 Id = model.MatNumber,
-                UserName = model.Email,
+                UserName = model.FirstName + " " + model.LastName,
                 Email = model.Email
             };
+            //need refactoring duplicate code
+            //var userWithSameEmail = _db.Users.Where(m => m.Email.Equals(model.Email)).SingleOrDefault(); //checking if the emailid already exits for any user
+
+            //if (userWithSameEmail != null)
+            //{
+            //    return BadRequest("Email Already Exist");
+            //}
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -465,14 +483,16 @@ namespace CodedenimWebApp.Controllers.Api
 
             };
             _db.Students.Add(student);
-            await _db.SaveChangesAsync();
-            await this.UserManager.AddToRoleAsync(user.Id, RoleName.UnderGraduate);
 
-            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-            // var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
-            var callbackUrl = EmailLink(user.Id, code);
 
-            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+           await _db.SaveChangesAsync();
+           await this.UserManager.AddToRoleAsync(user.Id, RoleName.UnderGraduate);
+
+            //var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            //// var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
+            //var callbackUrl = EmailLink(user.Id, code);
+
+            //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
             
 
             return Ok("Student Created Successfully ");
@@ -499,7 +519,7 @@ namespace CodedenimWebApp.Controllers.Api
         [System.Web.Http.AllowAnonymous]
         [System.Web.Http.Route("OtherStudent")]
         [System.Web.Http.HttpPost]
-        public async Task<IHttpActionResult> OtherStudent([FromBody] RegisterOtherStudentModel model)
+        public async Task<IHttpActionResult> OtherStudent(RegisterOtherStudentModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -508,9 +528,18 @@ namespace CodedenimWebApp.Controllers.Api
 
             var user = new ApplicationUser()
             {
-                UserName = model.Email,
+                
+                UserName = model.FirstName + " " + model.LastName,
                 Email = model.Email
             };
+
+            //need refactoring duplicate code
+            //var userWithSameEmail = _db.Users.Where(m => m.Email.Equals(model.Email)).FirstOrDefault(); //checking if the emailid already exits for any user
+
+            //if (userWithSameEmail != null)
+            //{
+            //    return BadRequest("Email Already Exist");
+            //}
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -521,7 +550,7 @@ namespace CodedenimWebApp.Controllers.Api
 
             var student = new Student
             {
-              
+                StudentId = user.Id,
                 Title = model.Title.ToString(),
                 FirstName = model.FirstName,
                 LastName = model.LastName,
@@ -534,15 +563,39 @@ namespace CodedenimWebApp.Controllers.Api
 
             };
             _db.Students.Add(student);
-            await _db.SaveChangesAsync();
+            _db.SaveChanges();
+            try
+            {
+                _db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                {
+                    // Get entry
+
+                    DbEntityEntry entry = item.Entry;
+                    string entityTypeName = entry.Entity.GetType().Name;
+
+                    // Display or log error messages
+
+                    foreach (DbValidationError subItem in item.ValidationErrors)
+                    {
+                        string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                 subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                        return BadRequest(message);
+                    }
+                }
+            }
+            //await _db.SaveChangesAsync();
 
 
-            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-            var callbackUrl = EmailLink(user.Id, code);
+            ////var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            ////var callbackUrl = EmailLink(user.Id, code);
 
-            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
-            //  
-            await UserManager.AddToRoleAsync(user.Id, "OtherStudent");
+            ////await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+            //////  
+            //await UserManager.AddToRoleAsync(user.Id, RoleName.OtherStudent);
 
             return Ok("Student Created Successfully ");
          

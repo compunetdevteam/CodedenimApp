@@ -55,12 +55,15 @@ namespace CodedenimWebApp.Controllers
             var student = await db.Students.FindAsync(userId);
 
             var model = new List<CourseCategory>();
-
+            var listOfCourses = new LearningPathVm();
             var assignedCourse = await db.AssignCourseCategories.Include(i => i.CourseCategory).Include(i => i.Courses)
                 .AsNoTracking().Where(x => x.CourseCategory.StudentType.Equals(student.AccountType)).ToListAsync();
 
             var paymentList = await db.StudentPayments.AsNoTracking().Where(x => x.StudentId.Equals(student.StudentId)
                                     && x.IsPayed.Equals(true)).ToListAsync();
+
+            //list of all the course
+            var allCourses = db.Courses.ToList();
             if (paymentList.Any())
             {
                 foreach (var courseCategory in assignedCourse)
@@ -70,75 +73,81 @@ namespace CodedenimWebApp.Controllers
                     {
                         model.Add(courseCategory.CourseCategory);
                     }
+
+                    //listOfCourses.AssignCourseCategory = ;
+                    
+                   
                 }
             }
             else
             {
                 model.AddRange(assignedCourse.Select(s => s.CourseCategory));
             }
-
-            return View(model.DistinctBy(x => x.CourseCategoryId));
+            listOfCourses.Courses = allCourses;
+            listOfCourses.CourseCategory = model;
+            //  return View(model.DistinctBy(x => x.CourseCategoryId));
+            return View(listOfCourses);
         }
 
        
-        public async Task<ActionResult> StartPayment(int? id)
-        {
+        //public async Task<ActionResult> StartPayment(int? id)
+        //{
 
-            var testOrLiveSecret = ConfigurationManager.AppSettings["PayStackSecret"];
-            var api = new PayStackApi(testOrLiveSecret);
-            var userId = User.Identity.GetUserId();
-            bool isPayAll = false;
-            decimal amount = 0;
-            // var userRole = User.Identity;
-            if (userId != null)
-            {
-                var student = await db.Students.AsNoTracking().Where(x => x.StudentId.Equals(userId)).FirstOrDefaultAsync();
+        //    var testOrLiveSecret = ConfigurationManager.AppSettings["PayStackSecret"];
+        //    var api = new PayStackApi(testOrLiveSecret);
+        //    var userId = User.Identity.GetUserId();
+        //    bool isPayAll = false;
+        //    decimal amount = 0;
+        //    // var userRole = User.Identity;
+        //    if (userId != null)
+        //    {
+        //        var student = await db.Students.AsNoTracking().Where(x => x.StudentId.Equals(userId)).FirstOrDefaultAsync();
 
-                if (id == null)
-                {
-                    amount = await db.AssignCourseCategories.Include(i => i.CourseCategory).AsNoTracking()
-                         .Where(x => x.CourseCategory.StudentType.Equals(student.AccountType))
-                         .SumAsync(s => s.CourseCategory.Amount);
-                    isPayAll = true;
-                }
-                else
-                {
-                    amount = db.CourseCategories.Where(x => x.CourseCategoryId.Equals((int)id)).Select(x => x.Amount).FirstOrDefault();
-                    id = (int)id;
-                }
+        //        if (id == null)
+        //        {
+        //            amount = await db.AssignCourseCategories.Include(i => i.CourseCategory).AsNoTracking()
+        //                 .Where(x => x.CourseCategory.StudentType.Equals(student.AccountType))
+        //                 .SumAsync(s => s.CourseCategory.Amount);
+        //            isPayAll = true;
+        //        }
+        //        else
+        //        {
+        //            amount = db.CourseCategories.Where(x => x.CourseCategoryId.Equals((int)id)).Select(x => x.Amount).FirstOrDefault();
+        //            id = (int)id;
+        //        }
 
 
-                var convertedamount = KoboToNaira.ConvertKoboToNaira(amount);
-                var transactionInitializaRequest = new TransactionInitializeRequest
-                {
-                    //Reference = "SwifKampus",
-                    AmountInKobo = convertedamount,
-                    //CallbackUrl = "http://localhost:64301/CourseCategories/ConfrimPayment",
-                    CallbackUrl = "http://codedenim.azurewebsites.net/CourseCategories/ConfrimPayment",
-                    Email = student.Email,
-                    Bearer = "Application fee",
+        //        var convertedamount = KoboToNaira.ConvertKoboToNaira(amount);
+        //        var transactionInitializaRequest = new TransactionInitializeRequest
+        //        {
+        //            //Reference = "SwifKampus",
+        //            AmountInKobo = convertedamount,
+        //            //CallbackUrl = "http://localhost:64301/CourseCategories/ConfrimPayment",
+        //            CallbackUrl = "http://codedenim.azurewebsites.net/CourseCategories/ConfrimPayment",
+        //            Email = student.Email,
+        //            Bearer = "Application fee",
 
-                    CustomFields = new List<CustomField>
-                    {
-                        new  CustomField("coursecategoryid","coursecategoryid", id.ToString()),
-                        new  CustomField("studentid","studentid", student.StudentId),
-                        new  CustomField("ispayedall","ispayedall", isPayAll.ToString()),
-                    }
+        //            CustomFields = new List<CustomField>
+        //            {
+        //                new  CustomField("coursecategoryid","coursecategoryid", id.ToString()),
+        //                new  CustomField("studentid","studentid", student.StudentId),
+        //                new  CustomField("ispayedall","ispayedall", isPayAll.ToString()),
+        //            }
 
-                };
-                var response = api.Transactions.Initialize(transactionInitializaRequest);
+        //        };
+        //        var response = api.Transactions.Initialize(transactionInitializaRequest);
 
-                if (response.Status)
-                {
-                    //redirect to authorization url
-                    return RedirectPermanent(response.Data.AuthorizationUrl);
-                    // return Content("Successful");
-                }
-                return Content("An error occurred");
-            }
-            return RedirectToAction("Login", "Account");
+        //        if (response.Status)
+        //        {
+        //            //redirect to authorization url
+        //            return RedirectPermanent(response.Data.AuthorizationUrl);
+        //            // return Content("Successful");
+        //        }
+        //        return Content("An error occurred");
+        //    }
+        //    return RedirectToAction("Login", "Account");
 
-        }
+        //}
 
         //public async Task<ActionResult> ConfrimPayment(string reference)
         //{
@@ -470,18 +479,32 @@ namespace CodedenimWebApp.Controllers
         [Authorize]
         public async Task<ActionResult> LearningPathDetails()
         {
-            var userId = User.Identity.GetUserId();          
+            var userId = User.Identity.GetUserId();
 
 
-            var student = await db.Students.Where( x => x.StudentId.Equals(userId)).Select(x => x.AccountType).SingleOrDefaultAsync();
+            var student = await db.Students.Where(x => x.StudentId.Equals(userId)).Select(x => x.AccountType).SingleOrDefaultAsync();
 
             var model = new List<CourseCategory>();
 
-            var assignedCourse =  db.AssignCourseCategories.Include(i => i.CourseCategory).Include(i => i.Courses)
-                .AsNoTracking().Where(x => x.CourseCategory.StudentType.Equals(student)).DistinctBy(s => s.CourseCategoryId).AsQueryable().ToList();
-
-            return View(assignedCourse);
+            LearningPathVm learningPathVm = CategoriesAndCoursesList(student);
+            //return View(assignedCourse);
+            return View(learningPathVm);
         }
+
+        private LearningPathVm CategoriesAndCoursesList(string student)
+        {
+            var learningPathVm = new LearningPathVm();
+            //list of assigned courses
+            var assignedCourse = db.AssignCourseCategories.Include(i => i.CourseCategory).Include(i => i.Courses)
+                .AsNoTracking().Where(x => x.CourseCategory.StudentType.Equals(student)).DistinctBy(s => s.CourseCategoryId).AsQueryable().ToList();
+            //list of all courses
+            var allCourses = db.Courses.ToList();
+            //assigning course and course category to Learning path
+            learningPathVm.AssignCourseCategory = assignedCourse;
+            learningPathVm.Courses = allCourses;
+            return learningPathVm;
+        }
+
         // GET: CourseCategories/Create
         public ActionResult Create()
         {

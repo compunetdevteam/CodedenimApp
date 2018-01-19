@@ -19,7 +19,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -389,6 +390,7 @@
     <Compile Include="App_Start\Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Services\ExcelValidation.cs" />
+    <Compile Include="Service\DeletePhoto.cs" />
     <Compile Include="Service\EmailSetupServices.cs" />
     <Compile Include="Service\ExcelUploadProcessor.cs" />
     <Compile Include="Controllers\MultipleButtonAttributeController.cs" />
@@ -407,6 +409,7 @@
     <Compile Include="ViewModels\DashboardVm.cs" />
     <Compile Include="ViewModels\DisplayQuestionViewModel.cs" />
     <Compile Include="ViewModels\ForumQA_Vm.cs" />
+    <Compile Include="ViewModels\LearningPathVm.cs" />
     <Compile Include="ViewModels\MyCoursesVm.cs" />
     <Compile Include="ViewModels\RegularStudentVm.cs" />
     <Compile Include="ViewModels\RemitaNotificationVm.cs" />
@@ -2248,6 +2251,10 @@
     <Content Include="fonts\roboto\Roboto-Thin.woff" />
     <Content Include="fonts\roboto\Roboto-Thin.woff2" />
     <Content Include="fonts\roboto\Roboto-Thind41d.eot" />
+    <Content Include="MaterialUpload\distance learning.jpg" />
+    <Content Include="MaterialUpload\distance learning2.jpg" />
+    <Content Include="MaterialUpload\html.png" />
+    <Content Include="MaterialUpload\html1.png" />
     <Content Include="Profile_Pics\Computer.jpg" />
     <Content Include="Profile_Pics\WhatsApp Image 2017-08-14 at 5.15.22 PM.jpeg" />
     <Content Include="Scripts\bootstrap.js" />
@@ -2827,7 +2834,6 @@
     <Folder Include="Content\StudentFiles\" />
     <Folder Include="Content\TutorFiles\" />
     <Folder Include="Controllers\Api\ForumApi\" />
-    <Folder Include="MaterialUpload\" />
     <Folder Include="ProfilePics\" />
     <Folder Include="uploads\" />
     <Folder Include="Views\CourseCategories\BlobConnection\" />

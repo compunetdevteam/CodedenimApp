@@ -1,95 +1,135 @@
-﻿
-@model IEnumerable<CodeninModel.AssignCourseCategory>
+﻿@*@model IEnumerable<CodeninModel.AssignCourseCategory>*@
+
+@model CodedenimWebApp.ViewModels.LearningPathVm
 @{
     ViewBag.Title = "LearningPathDetails";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<h2>LearningPathDetails</h2>
+<h2>Learning Path Details</h2>
 
-@if (Model.Any())
-{
-    <a href="@Url.Action("StartPayment", "CourseCategories")" class="btn btn-success">Pay For All</a>
+@*@if (Model.Any())
+    {
+        <a href="@Url.Action("StartPayment", "CourseCategories")" class="btn btn-success">Pay For All</a>
 
-}
+    }*@
 @*@foreach (var item in Model)
-{
+    {
 
-    <div class="item col-xs-12 col-sm-6 col-lg-4">
-        <div class="panel panel-default paper-shadow" data-z="0.5">
-            <div class="panel-heading">
-                <div class="media media-clearfix-xs-min v-middle">
-                    <div class="media-body text-caption text-light">
-                        Lessons 1 of 6
-                    </div>
-                    <div class="media-right">
-                        <div class="progress progress-mini width-100 margin-none">
-                            <div class="progress-bar progress-bar-blue-300" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">
+        <div class="item col-xs-12 col-sm-6 col-lg-4">
+            <div class="panel panel-default paper-shadow" data-z="0.5">
+                <div class="panel-heading">
+                    <div class="media media-clearfix-xs-min v-middle">
+                        <div class="media-body text-caption text-light">
+                            Lessons 1 of 6
+                        </div>
+                        <div class="media-right">
+                            <div class="progress progress-mini width-100 margin-none">
+                                <div class="progress-bar progress-bar-blue-300" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="cover overlay cover-image-full hover">
+                    <span class="img icon-block height-100 bg-primary"></span>
+                    <a href="app-take-course.html" class="padding-none overlay overlay-full icon-block bg-primary">
+                        <span class="v-center">
+                            <i class="fa fa-css3"></i>
+                        </span>
+                    </a>
+                    <a href="app-take-course.html" class="overlay overlay-full overlay-hover overlay-bg-white">
+                        <span class="v-center">
+                            <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
+                        </span>
+                    </a>
+                </div>
+
+                <hr class="margin-none" />
+                <div class="panel-body">
+                    @item.CourseCategory.CategoryName<br />
+                    @item.CourseCategory.Amount
+                    <br />
+
+                    <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("CategoryDetails","CourseCategories", new {id = item.CourseCategoryId})">Pay for courses</a>
+                </div>
             </div>
+        </div>
+
+    }*@
+
+@foreach (var item in Model.AssignCourseCategory)
+{
+
+    @*<div class="item col-xs-12 col-sm-6 col-lg-4">
+        <div class="panel panel-default paper-shadow" data-z="0.5">
             <div class="cover overlay cover-image-full hover">
-                <span class="img icon-block height-100 bg-primary"></span>
-                <a href="app-take-course.html" class="padding-none overlay overlay-full icon-block bg-primary">
+                <span class="img icon-block height-150 bg-primary"></span>
+                <a href="website-course.html" class="padding-none overlay overlay-full icon-block bg-primary">
                     <span class="v-center">
                         <i class="fa fa-css3"></i>
                     </span>
                 </a>
-                <a href="app-take-course.html" class="overlay overlay-full overlay-hover overlay-bg-white">
+                <a href="website-course.html" class="overlay overlay-full overlay-hover overlay-bg-white">
                     <span class="v-center">
                         <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
                     </span>
                 </a>
             </div>
-
+            <div class="panel-body">
+                <h4 class="text-headline margin-v-0-10"><a href="@Url.Action("CategoryDetails","CourseCategories", new {id = item.CourseCategoryId})"> @item.CourseCategory.CategoryName</a></h4>
+                <p class="small margin-none">
+                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                    <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                    <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                </p>
+            </div>
             <hr class="margin-none" />
             <div class="panel-body">
-                @item.CourseCategory.CategoryName<br />
-                @item.CourseCategory.Amount
-                <br />
+                <p>@item.CourseCategory.Amount.</p>
+                <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("CategoryDetails","CourseCategories", new {id = item.CourseCategoryId})">Pay for courses</a>
+            </div>
+        </div>
+    </div>*@
+foreach (var courseItem in Model.Courses)
+{
 
+    <div class="item col-xs-12 col-sm-6 col-lg-4">
+        <div class="panel panel-default paper-shadow" data-z="0.5">
+            <div class="cover overlay cover-image-full hover">
+                @*<span class="img icon-block height-150 bg-primary"></span>
+        <a href="website-course.html" class="padding-none overlay overlay-full icon-block bg-primary">
+            <span class="v-center">
+                <i class="fa fa-css3"></i>
+            </span>
+        </a>
+        <a href="website-course.html" class="overlay overlay-full overlay-hover overlay-bg-white">
+            <span class="v-center">
+                <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
+            </span>
+        </a>*@
+                <img src="~/MaterialUpload/@courseItem.FileLocation" />
+            </div>
+            <div class="panel-body">
+                <h4 class="text-headline margin-v-0-10"><a href="@Url.Action("CategoryDetails","CourseCategories", new {id = item.CourseId})"> @courseItem.CourseName</a></h4>
+                <p class="small margin-none">
+                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                    <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                    <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                </p>
+            </div>
+            <hr class="margin-none" />
+            <div class="panel-body">
+                <p>@item.CourseCategory.Amount.</p>
                 <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("CategoryDetails","CourseCategories", new {id = item.CourseCategoryId})">Pay for courses</a>
             </div>
         </div>
     </div>
+}
 
-}*@
 
-@foreach (var item in Model)
-{ 
-
-<div class="item col-xs-12 col-sm-6 col-lg-4">
-    <div class="panel panel-default paper-shadow" data-z="0.5">
-        <div class="cover overlay cover-image-full hover">
-            <span class="img icon-block height-150 bg-primary"></span>
-            <a href="website-course.html" class="padding-none overlay overlay-full icon-block bg-primary">
-                <span class="v-center">
-                    <i class="fa fa-css3"></i>
-                </span>
-            </a>
-            <a href="website-course.html" class="overlay overlay-full overlay-hover overlay-bg-white">
-                <span class="v-center">
-                    <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
-                </span>
-            </a>
-        </div>
-        <div class="panel-body">
-            <h4 class="text-headline margin-v-0-10"><a href="@Url.Action("CategoryDetails","CourseCategories", new {id = item.CourseCategoryId})"> @item.CourseCategory.CategoryName</a></h4>
-            <p class="small margin-none">
-                <span class="fa fa-fw fa-star text-yellow-800"></span>
-                <span class="fa fa-fw fa-star text-yellow-800"></span>
-                <span class="fa fa-fw fa-star text-yellow-800"></span>
-                <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-            </p>
-        </div>
-        <hr class="margin-none" />
-        <div class="panel-body">
-            <p>@item.CourseCategory.Amount.</p>
-            <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("CategoryDetails","CourseCategories", new {id = item.CourseCategoryId})">Pay for courses</a>
-        </div>
-    </div>
-</div>
 }
