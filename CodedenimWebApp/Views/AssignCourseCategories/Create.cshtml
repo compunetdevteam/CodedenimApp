@@ -1,0 +1,58 @@
+﻿@model CodeninModel.AssignCourseCategory
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+<br/>
+
+<label class="col-sm-3 control-label">AssignCourseCategory</label>
+<div class="panel panel-default">
+    <div class="panel-body">
+        @using (Html.BeginForm(new{@class= "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+              
+                
+                <hr/>
+                @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CourseCategoryId, "CourseCategoryId", htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-10">
+                        @Html.DropDownList("CourseCategoryId", null, htmlAttributes: new {@class = "form-control selectpicker",@name = "select", @data_style="btn-white", @data_live_search="true", @data_size="5" })
+                        @Html.ValidationMessageFor(model => model.CourseCategoryId, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CourseId, "CourseId", htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-10">
+                        @Html.DropDownList("CourseId", (MultiSelectList)ViewBag.CourseId, htmlAttributes: new {@class = "form-control selectpicker", @multiple="multiple", @data_style="btn-white", @title="Choose one of the following...", @data_live_search = "true", @data_size = "5" })
+                        @Html.ValidationMessageFor(model => model.CourseId, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default"/>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,66 +1,157 @@
-﻿@model CodeninModel.TopicMaterialUpload
+﻿
+@using CodeninModel
 
+@model CodedenimWebApp.ViewModels.CourseContentVm
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Topic Material Details";
+
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+      
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>TopicMaterialUpload</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Course.TopicName)
-        </dt>
+    
 
-        <dd>
-            @Html.DisplayFor(model => model.Course.TopicName)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Tutor)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Tutor)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FileType)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FileType)
-        </dd>
+    
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+    <div class="row ">
+        <div class="col-md-10" id="loadTopicContent">
+            @foreach (var material in Model.Materials)
+            {
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+                <div class="panel-footer" id="topicContents">
+                    <div class="text-left">
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+                        <div id="topicContents">
+                            <div onclick="loadContent(@material.TopicMaterialUploadId)">
+                            <button class="btn btn-success"><i class="fa fa-save fa-fw"></i>@Html.DisplayFor(model => material.Name)</button>
+                             </div>
+                          </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FileLocation)
-        </dt>
+                    </div>
+                </div>
+            }
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.FileLocation)
-        </dd>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.TopicMaterialUploadId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+        @*<div class="panel-body" id="loadTopicContent">
+            @foreach (var material in Model.Materials)
+            {
+                <div id="topicContents">
+
+                    <dt class="btn label label-default" onclick="loadContent(@material.TopicMaterialUploadId)">
+                        @Html.DisplayNameFor(model => material.Name)
+
+                        <b> @Html.DisplayFor(model => material.Name) </b>
+                    </dt>
+                    <hr />
+
+                </div>
+
+            }
+        </div>*@
+
+
+
+    </div>
+
+<br/>
+
+
+
+    <div class="col-md-9" id="MaterialContent">
+
+    </div>
+
+
+
+    <div class="sidebar right sidebar-size-3 sidebar-offset-0 sidebar-visible-desktop sidebar-skin-white" id="sidebar-library">
+        <div data-scrollable >
+            <h4 class="category">Modules</h4>
+            
+            @foreach (var item in Model.Modules)
+    {
+        <div class="sidebar-block">
+            <div class="form-group input-group">
+                <div class="row margin-none">
+                    <div class="link-text-color"> @item.ModuleName</div>
+                </div>
+                @foreach (var topicContent in item.Topics.Where(x => x.ModuleId.Equals(item.ModuleId)))
+        {
+            <button type="button" class="btn btn-primary" onclick="material(@topicContent.TopicId)"><i class="fa fa-book"></i></button>
+}
+
+            </div>
+        </div>
+}
+
+        
+
+                    </div>
+                </div>
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                <script type="text/javascript">
+    $(document).ready(function () {
+        //$('#ContentId').click(function () {
+        //    var contentId = $(this).attr('value');
+        //    $('#MaterialContent').load("/TopicMaterialUploads/DetailsContent/" + contentId);
+        //});
+
+
+    });
+    //function material(Moduleid,CourseId) {
+    //    $('loadTopicContent').load("/TopicMaterialUploads/Details/id?" + id + "/courseId?" +CourseId);
+    //}
+        function loadContent(contentId) {
+            $('#MaterialContent').load("/TopicMaterialUploads/DetailsContent/" + contentId);
+        }
+    function material(topicId) {
+
+        $('#loadTopicContent').load("/TopicMaterialUploads/SideBarContentForMaterial/" + topicId);
+    }
+
+    //$("#ContentId").click(function () {
+
+    //    //alert("i am nigeria");
+    //    $("#MaterialContent").load("i am Nigeria ");
+    //});
+    @*function changeMaterial(contentId) {
+<a href="~/Controllers/TutorsController.cs">~/Controllers/TutorsController.cs</a>
+        alert(contentId);
+<a href="~/Codedenim Requirement/mobile app synopsis.pdf">~/Codedenim Requirement/mobile app synopsis.pdf</a>
+        $("#Content").change(function() {
+          //  var categoryId = $("#Content").val();
+
+            $("#MaterialContent").load('@(Url.Action("DetailsContent", "TopicMaterialUploads"))?contentId=' + contentId);
+        });
+    };*@
+                </script>
+                <script>
+                    var myVideo = document.getElementById("video1");
+
+                    function playPause() {
+                        if (myVideo.paused)
+                            myVideo.play();
+                        else
+                            myVideo.pause();
+                    }
+
+                    function makeBig() {
+                        myVideo.width = 560;
+                    }
+
+                    function makeSmall() {
+                        myVideo.width = 320;
+                    }
+
+                    function makeNormal() {
+                        myVideo.width = 420;
+                    }
+                </script>

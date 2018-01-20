@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Tutor DashBoard";
+    ViewBag.Role = "TUTOR";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 col-sm-6">
+                <div class="card mycard">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big icon-warning text-center">
+                                    <i class="fa fa-graduation-cap"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>COURSES</p>
+                                    5+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr />
+                            <div class="stats">
+                                <i class="fa fa-hand-o-right"></i> <a href="@Url.Action("Index","Courses")">VIEW MORE...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-sm-6">
+                <div class="card mycard">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big icon-danger text-center">
+                                    <i class="fa fa-pencil"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>TOPICS</p>
+                                    23
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr />
+                            <div class="stats">
+                                <i class="fa fa-hand-o-right"></i> <a href="@Url.Action("Index","Topics")">VIEW TOPICS...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="card mycard">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big icon-success text-center">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>STUDENTS</p>
+                                    20+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr />
+                            <div class="stats">
+                                <i class="fa fa-hand-o-right"></i> <a href="@Url.Action("Index","Students")">VIEW LIST...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+           
+        </div>
+
+
+
+
+
+    </div>
+</div>

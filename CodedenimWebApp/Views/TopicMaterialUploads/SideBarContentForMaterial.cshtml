@@ -1,0 +1,21 @@
+﻿
+
+@using CodeninModel
+@*@model CodeninModel.TopicMaterialUpload*@
+@model CodedenimWebApp.ViewModels.CourseContentVm  
+
+@foreach (var material in Model.Materials)
+  {
+      <div id="topicContents">
+          @*<dl class="dl-horizontal">*@
+          @*<dt class="btn label label-default" id="ContentId" value="@material.TopicMaterialUploadId">*@
+          <dt class="btn label label-default" onclick="loadContent(@material.TopicMaterialUploadId)">
+              @Html.DisplayNameFor(model => material.Name)
+          </dt>
+          <dd class="btn btn-success" onclick="loadContent(@material.TopicMaterialUploadId)">
+              <b> @Html.DisplayFor(model => material.Name) </b>
+          </dd>
+          <hr/>
+      </div>
+                @*</dl>*@
+  }

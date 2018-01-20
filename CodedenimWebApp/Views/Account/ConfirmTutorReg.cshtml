@@ -1,0 +1,128 @@
+﻿@model CodedenimWebApp.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayoutWeb.cshtml";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@*@using (Html.BeginForm("Register", "Account", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create a new account.</h4>
+    <hr/>
+    @Html.ValidationSummary("", new {@class = "text-danger"})
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TutorId, htmlAttributes: new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TutorId, new {htmlAttributes = new {@class = "form-control", @id = "TutorId"}})
+            @Html.ValidationMessageFor(model => model.TutorId, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="" class="btn btn-default" id="confirm" value="Register" />
+        </div>
+    </div>
+}*@
+
+@*@Html.Partial("_tutorCourses")*@
+
+@*<div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        </div>
+    </div>*@
+
+
+@*@if (Model.TutorsCourses != null)
+{
+    <h3>Courses Taught by Selected Instructor</h3>
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Course Code</th>
+            <th>Title</th>
+            <th>Category</th>
+        </tr>
+
+        @foreach (var item in Model.TutorsCourses)
+        {
+            string selectedRow = "";
+            if (item.CourseId == ViewBag.CourseID)
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                @*<td>
+                         @Html.ActionLink("Select", "Index", new {courseID = item.CourseId})
+                     </td>*@
+                @*<td>
+                    @item.CourseId
+                </td>
+                <td>
+                    @item.CourseName
+                </td>
+                <td>
+                    @item.CourseCategory.CategoryName
+                </td>
+            </tr>
+        }
+
+    </table>
+}*@
+
+
+
+
+    @*<div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.MobileNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>*@
+   
+
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    $('#Register').click(function() {
+        $.ajax({
+            url: '/Account/Register' + $('#TutorId'),
+            type : 'Post'
+
+        });
+
+    });
+
+    </script>

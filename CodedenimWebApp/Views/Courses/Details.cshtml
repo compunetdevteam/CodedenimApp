@@ -1,74 +1,396 @@
-﻿@model CodeninModel.Course
+﻿@*@model CodeninModel.Course*@
+@using CodedenimWebApp.Controllers
+@using CodedenimWebApp.Models
+@model CodedenimWebApp.ViewModels.CourseContentVm
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Courses Detail";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+ 
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Course</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseCategory.CategoryName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseCategory.CategoryName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseCode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseCode)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CourseDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CourseDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ExpectedTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ExpectedTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateAdded)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateAdded)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Points)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Points)
-        </dd>
-
-    </dl>
+   
+<br />
+@* Start of Course Name header *@
+<div class="parallax bg-white page-section">
+    <div class="parallax-layer container" data-opacity="true">
+        <div class="media v-middle">
+            <div class="media-left">
+                <span class="icon-block s60 bg-green"><i class="fa fa-book"></i></span>
+            </div>
+            <div class="media-body">
+                <h1 class="text-display-1 margin-none">@Model.CoursesAD.CourseName</h1>
+                
+            </div>
+           
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@* End of Course Name header *@
+<div class="container">
+<div class="row">
+<div class="col-lg-9 col-md-8">
+<div class="page-section">
+    <div class="width-350 width-300-md width-100pc-xs paragraph-inline">
+        <div class="embed-responsive embed-responsive-16by9">
+            
+            <img  class="embed-responsive-item" src="~/MaterialUpload/@Model.CoursesAD.FileLocation">
+        </div>
+    </div>
+    <p>
+        @Model.CoursesAD.CourseDescription
+    </p>
+   
+    <br/>
+    <br/>
+
+</div>
+    
+    
+
+<div class="page-section">
+    <div class="row">
+        <div class="col-md-9">
+            <h2 class="text-headline margin-none">What you'll learn</h2>
+            <p class="text-subhead text-light">Modules under this course</p>
+               
+            @using (Html.BeginForm("ExcelUpload", "TopicQuizs", FormMethod.Post, new {enctype = "multipart/form-data"}))
+            {
+                    
+                <legend><h4><b>Upload Course</b></h4></legend>
+                <div class="col-md-5">
+                    <input class=" form-control" type="file" name="excelfile"/>
+                    <input class=" btn btn-success" type="submit" value="Submit"/>
+                </div>  
+                
+            }   
+            <div class="">
+                <p class="clearfix">
+                    <a class="btn btn-success btn-lg paper-shadow relative" data-z="1" data-hover-z="2" data-animated href="#CreateModule" onclick="CreateModules(@Model.CoursesAD.CourseId)" data-toggle="modal" data-placement="top" title="Create Modules">
+                        Add Module
+                    </a>
+                </p> 
+                <p>
+             
+
+
+                </p> 
+            </div>
+            <ul class="list-group relative paper-shadow" data-hover-z="0.5" data-animated>
+                @foreach(var course in Model.Modules)
+                {
+                    <li class="list-group-item">
+                        <a href="@Url.Action("Details","Modules", new{id = course.ModuleId})" class="clearfix">
+                            <div class="media v-middle">
+                                <div class="media-left">
+                               
+                                    <div class="icon-block s30 bg-red-300 text-white img-circle">
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                </div>
+                        
+                                <div class="media-body text-body-2">
+                                    @course.ModuleName
+                                </div>
+                  
+                            </div>
+                        </a>
+                        <a href="#CreateModule" onclick="EditModules(@course.ModuleId)" data-toggle="modal" class="clearfix">
+                       
+                            <div class="icon-block s30 bg-red-300 text-white img-circle">
+                                <i class="fa fa-pencil"></i>
+                            </div>
+                        </a>
+                        
+                        <a href="#CreateModule" onclick="DeleteModules(@course.ModuleId)" data-toggle="modal" class="clearfix">
+                            <div class="icon-block s30 bg-red-300 text-white img-circle">
+                                <i class="fa fa-trash"></i>
+                            </div>
+                        </a>
+                    </li>
+             
+                }
+               
+                @*<li class="list-group-item paper-shadow">
+                    <div class="media v-middle">
+                        <div class="media-left">
+                            <div class="icon-block s30 bg-green-300 text-white img-circle">
+                                <i class="fa fa-database"></i>
+                            </div>
+                        </div>
+                        <div class="media-body text-body-2">
+                            Database connections & some other nice features.
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item paper-shadow">
+                    <div class="media v-middle">
+                        <div class="media-left">
+                            <div class="icon-block s30 bg-indigo-300 text-white img-circle">
+                                <i class="fa fa-trophy"></i>
+                            </div>
+                        </div>
+                        <div class="media-body text-body-2">
+                            Eaque ex exercitationem quia reprehenderit?
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item paper-shadow">
+                    <div class="media v-middle">
+                        <div class="media-left">
+                            <div class="icon-block s30 bg-orange-300 text-white img-circle">
+                                <i class="fa fa-code-fork"></i>
+                            </div>
+                        </div>
+                        <div class="media-body text-body-2">
+                            Ab distinctio nemo, provident quia quibusdam ullam.
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item paper-shadow">
+                    <div class="media v-middle">
+                        <div class="media-left">
+                            <div class="icon-block s30 bg-grey-500 text-white img-circle">
+                                <i class="fa fa-check"></i>
+                            </div>
+                        </div>
+                        <div class="media-body text-body-2">
+                            Conclusion & Notes.
+                        </div>
+                    </div>
+                </li>*@
+            </ul>
+        </div>
+        @*<div class="col-md-5">
+            <div class="pull-right">
+                <a class="btn btn-white btn-circle paper-shadow relative" data-z="1" href="#"><i class="md md-add"></i></a>
+            </div>
+            <h2 class="text-headline margin-none">Testimonials</h2>
+            <p class="text-subhead text-light">A few words from our past students</p>
+            <div class="slick-basic slick-slider" data-items="1" data-items-lg="1" data-items-md="1" data-items-sm="1" data-items-xs="1">
+                <div class="item">
+                    <div class="testimonial">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam amet doloremque enim error id, inventore magni odio odit quo tenetur.</p>
+                            </div>
+                        </div>
+                        <div class="media v-middle">
+                            <div class="media-left">
+                                <img src="images/people/50/guy-8.jpg" alt="People" class="img-circle width-40" />
+                            </div>
+                            <div class="media-body">
+                                <p class="text-subhead margin-v-5-0">
+                                    <strong>Adrian D. <span class="text-muted"> Mosaicpro Inc.</span></strong>
+                                </p>
+                                <p class="small">
+                                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                                    <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                                    <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="testimonial">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam amet doloremque enim error id, inventore magni odio odit quo tenetur.</p>
+                            </div>
+                        </div>
+                        <div class="media v-middle">
+                            <div class="media-left">
+                                <img src="images/people/50/guy-7.jpg" alt="People" class="img-circle width-40" />
+                            </div>
+                            <div class="media-body">
+                                <p class="text-subhead margin-v-5-0">
+                                    <strong>Adrian D. <span class="text-muted"> Mosaicpro Inc.</span></strong>
+                                </p>
+                                <p class="small">
+                                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                                    <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                                    <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="testimonial">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam amet doloremque enim error id, inventore magni odio odit quo tenetur.</p>
+                            </div>
+                        </div>
+                        <div class="media v-middle">
+                            <div class="media-left">
+                                <img src="images/people/50/guy-3.jpg" alt="People" class="img-circle width-40" />
+                            </div>
+                            <div class="media-body">
+                                <p class="text-subhead margin-v-5-0">
+                                    <strong>Adrian D. <span class="text-muted"> Mosaicpro Inc.</span></strong>
+                                </p>
+                                <p class="small">
+                                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                                    <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                                    <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="testimonial">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam amet doloremque enim error id, inventore magni odio odit quo tenetur.</p>
+                            </div>
+                        </div>
+                        <div class="media v-middle">
+                            <div class="media-left">
+                                <img src="images/people/50/guy-6.jpg" alt="People" class="img-circle width-40" />
+                            </div>
+                            <div class="media-body">
+                                <p class="text-subhead margin-v-5-0">
+                                    <strong>Adrian D. <span class="text-muted"> Mosaicpro Inc.</span></strong>
+                                </p>
+                                <p class="small">
+                                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                                    <span class="fa fa-fw fa-star text-yellow-800"></span>
+                                    <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                                    <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    </div>
+</div>
+</div>
+<div class="col-lg-3 col-md-4">
+    <div class="page-section">
+        <!-- .panel -->
+        <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated>
+            <div class="panel-heading">
+                <h4 class="text-headline">Course</h4>
+            </div>
+            <div class="panel-body">
+                <p class="text-caption">
+                    <i class="fa fa-clock-o fa-fw"></i> @Model.CoursesAD.ExpectedTime min &nbsp;
+                    <i class="fa fa-calendar fa-fw"></i> @Model.CoursesAD.DateAdded
+                    <br/>
+                    @*<i class="fa fa-user fa-fw"></i> Instructor: Adrian Demian
+                    <br/>
+                    <i class="fa fa-mortar-board fa-fw"></i> Max. students: 50
+                    <br/>
+                    <i class="fa fa-check fa-fw"></i> Attending: 30*@
+                </p>
+            </div>
+            <hr class="margin-none" />
+            <div class="panel-body text-center">
+                @if (User.IsInRole(RoleName.Admin))
+                {
+                    <p><a class="btn btn-success btn-lg paper-shadow relative" data-z="1" data-hover-z="2" data-animated href="@Url.Action("Index", "Courses")">Goto Course Index</a>
+                    </p> 
+                }
+               @if (User.IsInRole(RoleName.Corper) || User.IsInRole(RoleName.OtherStudent) || User.IsInRole(RoleName.UnderGraduate) || User.IsInRole(RoleName.RegularStudent) || User.IsInRole(RoleName.Student))
+               {
+                   @*<p><a class="btn btn-success btn-lg paper-shadow relative" data-z="1" data-hover-z="2" data-animated href="@Url.Action("Index", "Courses")">Enroll for Course</a>
+                   </p>*@ 
+               }
+
+
+            </div>
+     
+        </div>
+        <!-- // END .panel -->
+        <!-- .panel -->
+        @*<div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated>
+            <div class="panel-body">
+                <div class="media v-middle">
+                    <div class="media-left">
+                        <img src="images/people/110/guy-6.jpg" alt="About Adrian" width="60" class="img-circle" />
+                    </div>
+                    <div class="media-body">
+                        <h4 class="text-title margin-none"><a href="#">Adrian Demian</a></h4>
+                        <span class="caption text-light">Biography</span>
+                    </div>
+                </div>
+                <br/>
+                <div class="expandable expandable-indicator-white expandable-trigger">
+                    <div class="expandable-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus aut consectetur consequatur cum cupiditate debitis doloribus, error ex explicabo harum illum minima mollitia nisi nostrum officiis omnis optio qui quisquam saepe sit sunt totam vel velit voluptatibus? Adipisci ducimus expedita id nostrum quas quia!</p>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+        <!-- // END .panel -->
+    </div>
+    <!-- // END .page-section -->
+</div>
+</div>
+</div>
+
+
+
+
+<div class="modal grow modal-backdrop-white fade" id="CreateModule">
+    <div class="modal-dialog modal-lg">
+        <div class="v-cell">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Module</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="LoadCreateModule">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/jquery-3.1.1.js"></script>
+<script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/DataTables/dataTables.bootstrap4.js"></script>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+
+
+<script type="text/javascript">
+    function CreateModules(courseId) {
+        var url = "/Modules/CreatePartial?id=" + courseId;
+        $("#LoadCreateModule").load(url);
+
+   
+    }
+
+    function EditModules(courseId) {
+        var url = "/Modules/EditPartial?id=" + courseId;
+        $("#LoadCreateModule").load(url);
+
+   
+    }
+
+    function DeleteModules(courseId) {
+        var url = "/Modules/DeletePartial?id=" + courseId;
+        $("#LoadCreateModule").load(url);
+
+   
+    }
+</script>

@@ -1,0 +1,160 @@
+﻿@model IEnumerable<CodeninModel.Quiz.StudentTopicQuiz>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Student.StudentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Topic.TopicName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentQuestionId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Question)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Option1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Option2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Option3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Option4)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Check1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Check2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Check3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Check4)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FilledAnswer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Answer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuestionHint)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuestionNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsCorrect)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsFillInTheGag)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsMultiChoiceAnswer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedAnswer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalQuestion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExamTime)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Student.Institution)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Topic.TopicName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentQuestionId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Question)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Option1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Option2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Option3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Option4)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Check1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Check2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Check3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Check4)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FilledAnswer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Answer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuestionHint)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuestionNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsCorrect)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsFillInTheGag)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsMultiChoiceAnswer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SelectedAnswer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalQuestion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExamTime)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.StudentTopicQuizId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.StudentTopicQuizId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.StudentTopicQuizId })
+        </td>
+    </tr>
+}
+
+</table>

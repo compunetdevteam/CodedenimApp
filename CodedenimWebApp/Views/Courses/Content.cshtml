@@ -1,0 +1,149 @@
+﻿@using CodedenimWebApp.Controllers
+@model CodedenimWebApp.ViewModels.CourseContentVm
+
+
+@{
+    ViewBag.Title = "ListCourses";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+}   
+
+<div class="container-fluid" style="margin-left: 10%;">
+    <div class="page-section">
+        <div class="media media-grid v-middle">
+            <div class="media-left">
+                <span class="icon-block half bg-blue-300 text-white">2</span>
+            </div>
+            <div class="media-body">
+               
+                <h1 class="text-display-1 margin-none">Course Content</h1> 
+                 
+             
+            </div>
+        </div>
+        <br/>
+    </div> 
+    @* side Category Bar *@
+
+    @*<div class="col-md-3">
+                <div class="panel panel-default" data-toggle="panel-collapse" data-open="true">
+                    <div class="panel-heading panel-collapse-trigger">
+                        <h4 class="panel-title">My Account</h4>
+                    </div>
+                    <div class="panel-body list-group">
+                        <ul class="list-group list-group-menu">
+                            <li class="list-group-item"><a class="link-text-color" href="website-student-dashboard.html">Dashboard</a></li>
+                            <li class="list-group-item active"><a class="link-text-color" href="website-student-courses.html">My Courses</a></li>
+                            <li class="list-group-item"><a class="link-text-color" href="website-student-profile.html">Profile</a></li>
+                            <li class="list-group-item"><a class="link-text-color" href="website-student-messages.html">Messages</a></li>
+                            <li class="list-group-item"><a class="link-text-color" href="login.html"><span>Logout</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>*@
+
+    @* End of side category bar *@
+
+    <h5 class="text-subhead-2 text-light">Learning Path</h5>
+    @*@if(User.Identity,GetRoles)*@
+    @foreach (var item in Model.Module)
+    {
+
+
+        <div class="panel panel-default curriculum open paper-shadow" data-z="0.5">
+
+            <div class="panel-heading panel-heading-gray" data-toggle="collapse" data-target="#curriculum-@item.ModuleId">
+                <div class="media">
+
+                    <div class="media-left">
+                        <span class="icon-block img-circle bg-indigo-300 half text-white"><i class="fa fa-graduation-cap"></i></span>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="text-headline">@item.ModuleName</h4>
+                        <p>@item.ModuleDescription</p>  
+                    </div>
+                </div>
+                <span class="collapse-status collapse-open">Open</span>
+                <span class="collapse-status collapse-close">Close</span>
+            </div>
+
+            <div class="list-group collapse in" id="curriculum-@item.ModuleId">
+                @foreach (var topics in Model.Topics.Where(x => x.ModuleId.Equals(item.ModuleId)))
+                {
+                    <div class="list-group-item media" @*data-target="#edit-modal" data-toggle="modal" id="@item.ModuleId"*@>
+                        <div class="media-left">
+                            <div class="text-crt" value="@topics.TopicId">@topics.TopicId</div>
+                        </div>
+                        <div class="media-body">
+                            <i class="fa fa-fw fa-circle text-green-300"></i> <a href="@Url.Action("Details","TopicMaterialUploads", new {id = topics.TopicId ,courseId = @Model.CourseId})" onclick="_StudentContent(@Model.CourseId)"> @topics.TopicName</a>
+                        </div>
+                        <div class="media-right">
+                            <div class="width-100 text-right text-caption">2:03 min</div>
+                        </div>
+                                   
+                    </div>
+                }
+                    <div class="media-body">
+   @if(item.IsModuleTaken == true)
+        {
+                    <i class="fa fa-fw fa-circle text-blue-300"></i> <span>Quiz Taken</span>
+}
+else
+{
+                    <i class="fa fa-fw fa-circle text-green-300"></i> <a href="@Url.Action("SelectSubject","takeQuiz", new {@moduleId =@item.ModuleId})"> Take Quiz</a>
+}
+
+                        @*<i class="fa fa-fw fa-circle text-green-300"></i> <a href="@Url.Action("selectsubject","takeQuiz", new {id = item.CourseId})"> Take Quiz</a>*@
+
+                    </div>
+            </div>
+        </div>
+
+    }
+    <br/>
+    <br/>
+
+    <div id="edit-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body edit-content">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+
+    function _StudentContent(courseId)
+    {
+        var url = "/TopicMaterialUploads/_StudentContent?id=" + courseId;
+        $('.studentContent').load(url);
+    }
+    $('#edit-modal').on('show.bs.modal', function(e) {
+
+        var $modal = $(this),
+            esseyId = e.relatedTarget.id;
+
+        $.ajax({
+            cache: false,
+            type: 'GET',
+            url: 'TopicMaterialUpload/Details',
+            data: 'EID=' + essayId,
+            success: function(data) {
+                $modal.find('.edit-content').html(data);
+            }
+        });
+    })
+</script>

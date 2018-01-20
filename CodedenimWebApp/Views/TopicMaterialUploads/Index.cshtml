@@ -1,63 +1,70 @@
 ﻿@model IEnumerable<CodeninModel.TopicMaterialUpload>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Topic Materials";
+    ViewBag.Materials = "class = active";
+
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
 }
 
-<h2>Index</h2>
+<div class="container-fluid" style="margin-left: 13%">
+    <h2>Topic Materials</h2>
+    <br />
+    <p>
+        @Html.ActionLink("CREATE TOPIC MATERIAL", "Create", null, new { @class = "my-class; btn" })
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Course.TopicName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tutor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileLocation)
+            </th>
+            <th></th>
+        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Course.TopicName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tutor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FileType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FileLocation)
-        </th>
-        <th></th>
-    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.TopicName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tutor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileLocation)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.TopicMaterialUploadId }, new { @class = "my-class; btn" })
+                    @Html.ActionLink("Details", "Details", new { id = item.TopicMaterialUploadId }, new { @class = "my-class; btn" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.TopicMaterialUploadId }, new { @class = "my-class; btn" })
+                </td>
+            </tr>}
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Course.TopicName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tutor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FileType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FileLocation)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TopicMaterialUploadId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TopicMaterialUploadId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TopicMaterialUploadId })
-        </td>
-    </tr>
-}
+    </table>
+</div>
 
-</table>

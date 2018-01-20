@@ -1,20 +1,29 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
+using System.Web.Http.Description;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.Providers;
 using CodedenimWebApp.Results;
+using CodedenimWebApp.Service;
+using CodeninModel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Data.Entity.Infrastructure;
 
 namespace CodedenimWebApp.Controllers.Api
 {
@@ -24,9 +33,11 @@ namespace CodedenimWebApp.Controllers.Api
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        private readonly ApplicationDbContext _db;
 
         public AccountApiController()
         {
+            _db = new ApplicationDbContext();
         }
 
         public AccountApiController(ApplicationUserManager userManager,
@@ -340,6 +351,255 @@ namespace CodedenimWebApp.Controllers.Api
             return Ok();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public async Task<IHttpActionResult> RegisterCorper()
+        {
+            return Ok();
+        }
+
+
+   // POST api/Account/RegisterStudent
+        [System.Web.Http.AllowAnonymous]
+        [System.Web.Http.Route("RegisterCorper")]
+        [System.Web.Http.HttpPost]
+        public async Task<IHttpActionResult> RegisterCorper(RegisterCorperModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+           
+
+            var user = new ApplicationUser()
+            {
+                Id = model.CallUpNumber,
+                UserName = model.FirstName + " " + model.LastName,
+                Email = model.Email
+            };
+
+            //need refactoring duplicate code
+            //var userWithSameEmail = _db.Users.Where(m => m.Email.Equals(model.Email)).SingleOrDefault(); //checking if the emailid already exits for any user
+            
+            //if(userWithSameEmail != null)
+            //{
+            //    return BadRequest("Email Already Exist");
+            //}
+
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            //Persisting the  Student Redord 
+            var corper = new Student
+            {
+                StudentId = model.CallUpNumber,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
+                Gender = model.Gender,
+                Email = model.Email,
+                PhoneNumber = model.MobileNumber,
+                StateOfService = model.NyscState.ToString(),
+               Institution = model.Institution,
+               AccountType = "Corper",
+               Batch = model.NyscBatch.ToString(),
+               Discpline = model.Discpline
+            };
+
+            _db.Students.Add(corper);
+            await _db.SaveChangesAsync();
+            await this.UserManager.AddToRoleAsync(user.Id, "Corper");
+
+           // var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            // var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
+           // var callbackUrl = EmailLink(user.Id, code);
+
+           // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+           //         ViewBag.Link = callbackUrl;
+                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your Tutor account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                    //ViewBag.Link = callbackUrl;
+                  //  TempData["UserMessage"] = $"Registration is Successful for {user.UserName}, Please Confirm Your Email to Login.";
+                    return Ok("Registration was successful");
+
+        }
+
+        public string EmailLink(string userId, string code)
+        {
+           var url = this.Url.Link("Default", new { Controller = "Account" , Action = "ConfirmEmail", userId, code} );
+            return url;
+        }
+
+        // POST api/Account/RegisterUnderGraduate
+        [System.Web.Http.AllowAnonymous]
+        [System.Web.Http.Route("RegisterUnderGraduate")]
+        public async Task<IHttpActionResult> RegisterUnderGraduate(RegisterUnderGrad model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = new ApplicationUser()
+            {
+                Id = model.MatNumber,
+                UserName = model.FirstName + " " + model.LastName,
+                Email = model.Email
+            };
+            //need refactoring duplicate code
+            //var userWithSameEmail = _db.Users.Where(m => m.Email.Equals(model.Email)).SingleOrDefault(); //checking if the emailid already exits for any user
+
+            //if (userWithSameEmail != null)
+            //{
+            //    return BadRequest("Email Already Exist");
+            //}
+
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            var student = new Student
+            {
+                StudentId = model.MatNumber,
+                Title = model.Title.ToString(),
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
+                Gender = model.Gender,
+                AccountType = "UnderGraduate",
+                PhoneNumber = model.MobileNumber,
+                Institution = model.Institution,
+                Discpline = model.Discpline
+
+            };
+            _db.Students.Add(student);
+
+
+           await _db.SaveChangesAsync();
+           await this.UserManager.AddToRoleAsync(user.Id, RoleName.UnderGraduate);
+
+            //var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            //// var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
+            //var callbackUrl = EmailLink(user.Id, code);
+
+            //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+            
+
+            return Ok("Student Created Successfully ");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public async Task<IHttpActionResult> OtherStudent()
+        {
+            return Ok();
+        }
+
+
+
+        /// <summary>
+        /// method to register student from the mobile app
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [System.Web.Http.AllowAnonymous]
+        [System.Web.Http.Route("OtherStudent")]
+        [System.Web.Http.HttpPost]
+        public async Task<IHttpActionResult> OtherStudent(RegisterOtherStudentModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = new ApplicationUser()
+            {
+                
+                UserName = model.FirstName + " " + model.LastName,
+                Email = model.Email
+            };
+
+            //need refactoring duplicate code
+            //var userWithSameEmail = _db.Users.Where(m => m.Email.Equals(model.Email)).FirstOrDefault(); //checking if the emailid already exits for any user
+
+            //if (userWithSameEmail != null)
+            //{
+            //    return BadRequest("Email Already Exist");
+            //}
+
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            var student = new Student
+            {
+                StudentId = user.Id,
+                Title = model.Title.ToString(),
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
+                Gender = model.Gender,
+                AccountType = "RegularStudent",
+                PhoneNumber = model.MobileNumber,
+                Email = model.Email
+                
+
+            };
+            _db.Students.Add(student);
+            _db.SaveChanges();
+            try
+            {
+                _db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                {
+                    // Get entry
+
+                    DbEntityEntry entry = item.Entry;
+                    string entityTypeName = entry.Entity.GetType().Name;
+
+                    // Display or log error messages
+
+                    foreach (DbValidationError subItem in item.ValidationErrors)
+                    {
+                        string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                 subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                        return BadRequest(message);
+                    }
+                }
+            }
+            //await _db.SaveChangesAsync();
+
+
+            ////var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            ////var callbackUrl = EmailLink(user.Id, code);
+
+            ////await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+            //////  
+            //await UserManager.AddToRoleAsync(user.Id, RoleName.OtherStudent);
+
+            return Ok("Student Created Successfully ");
+         
+        }
         //my custom Registration controller
         // POST api/Account/InstructorRegister
         [System.Web.Http.AllowAnonymous]
@@ -362,6 +622,72 @@ namespace CodedenimWebApp.Controllers.Api
 
             return Ok();
         }
+
+        /// <summary>
+        /// Email Confirmation
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+
+        [System.Web.Http.AllowAnonymous]
+        public async Task<IHttpActionResult> SendEmail()
+        {
+            var message = new IdentityMessage
+            {
+                Subject = "Confirm Email",
+                Destination = "davidzagi93@gmail.com",
+                Body = "this is to Confirm Password",
+
+            };
+
+            var send = new EmailService();
+            await send.SendAsync(message);
+           // ViewBag.Success = "Success";
+            return Ok();
+
+            // return await message;
+        }
+
+
+
+        [System.Web.Http.AllowAnonymous]
+        public async Task SendAsync(EmailSender message)
+        {
+            // Plug in your email service here to send an email.
+            string schoolName = ConfigurationManager.AppSettings["CODEDENIM"];
+            string emailsetting = ConfigurationManager.AppSettings["GmailUserName"];
+            MailMessage email = new MailMessage(new MailAddress($"noreply{emailsetting}", "(Codedenin Registration, do not reply)"),
+                new MailAddress(message.Destination));
+
+            email.Subject = message.Subject;
+            email.Body = message.Body;
+
+            email.IsBodyHtml = true;
+
+            using (var mailClient = new EmailSetUpServices())
+            {
+                //In order to use the original from email address, uncomment this line:
+                email.From = new MailAddress(mailClient.UserName, $"(do not reply)@{schoolName}");
+
+                await mailClient.SendMailAsync(email);
+            }
+        }
+
+        //
+        //// GET: /Account/ConfirmEmail
+        //[System.Web.Http.AllowAnonymous]
+        //public async Task<IHttpActionResult> ConfirmEmail(string userId, string code)
+        //{
+        //    if (userId == null || code == null)
+        //    {
+        //        return Ok("Error");
+        //    }
+        //    var result = await UserManager.ConfirmEmailAsync(userId, code);
+        //    return Ok(result.Succeeded ? "ConfirmEmail" : "Error");
+        //}
+
+
+
 
         // POST api/Account/RegisterExternal    
         [System.Web.Http.OverrideAuthentication]

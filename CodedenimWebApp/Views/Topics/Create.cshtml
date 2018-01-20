@@ -1,56 +1,81 @@
 ﻿@model CodeninModel.Quiz.Topic
-
+<style>
+    body {
+        background: white !important;
+    }
+</style>
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Topics";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<h2>Create</h2>
+<div class="container-fluid" style="margin-left: 13%">
+    @using (Html.BeginForm("Create", "Topics", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
 
+        <fieldset>
+            <legend><h3><b>Create Topics</b></h3></legend>
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ModuleId, "Module Id", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.DropDownList("ModuleId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ModuleId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Topic</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.ModuleId, "ModuleId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ModuleId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ModuleId, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TopicName, "Topic Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.TopicName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TopicName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ExpectedTime, "Expected Time", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.ExpectedTime, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ExpectedTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button class="btn btn-success"><span>Create</span> <i class="fa fa-check-square-o"></i></button>
+                        <button class="btn-inverse btn" type="reset"><span>Reset</span> <i class="fa fa-undo"></i></button>
+                    </div>
+                </div>
             </div>
-        </div>
+        </fieldset>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TopicName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TopicName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TopicName, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            @Scripts.Render("~/bundles/jqueryval")
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ExpectedTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ExpectedTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ExpectedTime, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            @*<script src="~/Scripts/jquery-3.1.1.js"></script>
+                <script>
+                    $(document).ready(function () {
+                        //window.alert("ready");
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
+                        $("#btnsubmit").click(function() {
+                            // window.alert("ready");
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+                            $("#loaderDiv").show();
+
+                            var data = $("#myform").serialize();
+                            debugger;
+                            $.ajax({
+                                type: "POST",
+                                url: "/Topics/Create",
+                                data: data,
+                                success: function(response) {
+                                    $("#loaderDiv").hide();
+                                    alertify.success('session Created Successfully');
+                                }
+                            });
+                        });
+                    })
+                </script>*@
+    }
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

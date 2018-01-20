@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Results;
 using CodedenimWebApp.Models;
 using CodeninModel;
 
@@ -16,25 +17,85 @@ namespace CodedenimWebApp.Controllers.Api
 {
     public class CoursesController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         // GET: api/Courses
-        public IEnumerable<Course> GetCourses()
+        //Get all the Courses to the client
+        public IHttpActionResult GetCourses()
         {
-            return db.Courses.ToList();
+
+
+
+            var getCourses = _db.AssignCourseCategories.Include(x => x.CourseCategory)
+                .Include(x => x.Courses)
+                .Select(x => new
+                {
+                    x.CourseId,
+                    x.CourseCategoryId
+
+                    //x.CourseCode,
+                    //x.CourseDescription,
+                    //  x.CourseCategory.CategoryName,
+                    //x.CourseName,
+                    //x.ExpectedTime,
+                    // x.,
+                    // x.FileLocation
+
+
+                }).ToList();
+
+
+            return Ok();
         }
 
         // GET: api/Courses/5
+        /// <summary>
+        /// this method receives the Course id and 
+        /// fetches all the Modules associated with that course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [ResponseType(typeof(Course))]
         public async Task<IHttpActionResult> GetCourse(int id)
         {
-            Course course = await db.Courses.FindAsync(id);
-            if (course == null)
-            {
-                return NotFound();
-            }
+            // Course course = await _db.Courses.FindAsync(id);
+            //var course = await _db.Courses.Where(x => x.CourseCategoryId.Equals(id))
+            //                            .Select(x => new
+            //                            {
+            //                                    x.CourseId,
+            //                                    x.CourseCode,
+            //                                    x.CourseDescription,
+            //                                    x.FileLocation,
+            //                                    x.CourseName,
+            //                                    x.CourseCategoryId,
 
-            return Ok(course);
+            //                            }).ToListAsync();
+
+           //var course = await  _db.Modules.Where(c => c.CourseId.Equals(id))
+           //                                     .Select(x => new
+           //                                     {
+           //                                         x.CourseId,
+           //                                         x.Course.CourseCode,
+           //                                         x.Course.CourseName,
+           //                                         x.Course.CourseDescription,
+           //                                         x.Course.ExpectedTime,
+           //                                         x.Course.CourseCategory.CategoryName,
+           //                                         x.Course.CourseCategoryId,
+           //                                         x.Course.FileLocation
+
+           //                                         //m.ModuleId,
+           //                                         //m.ModuleName,
+           //                                         //m.ModuleDescription,
+           //                                         //m.ExpectedTime,
+           //                                         //m.CourseId,
+           //                                         //m.Course.CourseName
+           //                                     }).ToListAsync();
+           // if (course == null)
+           // {
+           //     return NotFound();
+           // }
+
+            return Ok(/*course*/);
         }
 
         // PUT: api/Courses/5
@@ -51,11 +112,11 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest();
             }
 
-            db.Entry(course).State = EntityState.Modified;
+            _db.Entry(course).State = EntityState.Modified;
 
             try
             {
-                await db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -81,8 +142,8 @@ namespace CodedenimWebApp.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            db.Courses.Add(course);
-            await db.SaveChangesAsync();
+            _db.Courses.Add(course);
+            await _db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = course.CourseId }, course);
         }
@@ -91,14 +152,14 @@ namespace CodedenimWebApp.Controllers.Api
         [ResponseType(typeof(Course))]
         public async Task<IHttpActionResult> DeleteCourse(int id)
         {
-            Course course = await db.Courses.FindAsync(id);
+            Course course = await _db.Courses.FindAsync(id);
             if (course == null)
             {
                 return NotFound();
             }
 
-            db.Courses.Remove(course);
-            await db.SaveChangesAsync();
+            _db.Courses.Remove(course);
+            await _db.SaveChangesAsync();
 
             return Ok(course);
         }
@@ -107,14 +168,14 @@ namespace CodedenimWebApp.Controllers.Api
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool CourseExists(int id)
         {
-            return db.Courses.Count(e => e.CourseId == id) > 0;
+            return _db.Courses.Count(e => e.CourseId == id) > 0;
         }
     }
 }

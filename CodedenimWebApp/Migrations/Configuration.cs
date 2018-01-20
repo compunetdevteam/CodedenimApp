@@ -1,7 +1,9 @@
+using CodedenimWebApp.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+
 namespace CodedenimWebApp.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
@@ -15,6 +17,70 @@ namespace CodedenimWebApp.Migrations
 
         protected override void Seed(CodedenimWebApp.Models.ApplicationDbContext context)
         {
+
+
+            context.Configuration.AutoDetectChangesEnabled = false;
+
+            context.Configuration.ValidateOnSaveEnabled = false;
+
+            if (!context.Roles.Any(r => r.Name == "Corper"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "Corper" };
+
+                manager.Create(role);
+            }
+            if (!context.Roles.Any(r => r.Name == "UnderGraduate"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "UnderGraduate" };
+
+                manager.Create(role);
+            }
+            if (!context.Roles.Any(r => r.Name == "RegularStudent"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "RegularStudent" };
+
+                manager.Create(role);
+            }
+            if (!context.Roles.Any(r => r.Name == "Tutor"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "Tutor" };
+
+                manager.Create(role);
+            }
+            if (!context.Roles.Any(r => r.Name == "Admin"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "Admin" };
+
+                manager.Create(role);
+            }
+
+            if (!context.Roles.Any(r => r.Name == "OtherStudent"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "OtherStudent" };
+
+                manager.Create(role);
+            }
+            if (!context.Users.Any(u => u.UserName == "Admin@Codedenim.com"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                var user = new ApplicationUser { UserName = "Admin@Codedenim.com", Email = "Admin@Codedenim.com" };
+
+                manager.Create(user, "admin12345");
+                manager.AddToRole(user.Id, "Admin");
+            }
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 

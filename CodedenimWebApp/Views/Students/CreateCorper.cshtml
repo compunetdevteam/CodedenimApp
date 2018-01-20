@@ -1,0 +1,153 @@
+﻿@model CodedenimWebApp.Models.RegisterCorperModel
+
+@{
+    ViewBag.Title = "Corper Registration";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
+}
+<br />
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-6 col-lg-8 login-form mx-auto float-none">
+
+    <!--Form with header-->
+    <div class="card" style="width:90%; margin-left:5%">
+        <div class="card-block">
+            <div class="form-header" style="height: 200px !important; padding: 5px;">            
+                <h3>
+                    <a href="@Url.Action("Index", "Home")"><img src="~/Content/img/CodeDemin.png" width="60" height="50" style="margin-left: 45%"/>Code-Denim</a>
+                </h3>
+                <h4>Corps Member Registration</h4>
+            </div>
+
+            @using (Html.BeginForm("RegisterCorper", "Account"))
+                { 
+            
+
+
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CallUpNumber, htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.CallUpNumber, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.CallUpNumber, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LastName, htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.LastName, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.LastName, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FirstName, htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.FirstName, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.DateOfBirth, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.DateOfBirth, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NyscState, htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-6">
+                            @Html.EnumDropDownListFor(
+                                x => x.NyscState, "Select My Type", new {@class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.NyscState, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NyscBatch, htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-6">
+                            @Html.EnumDropDownListFor(model => model.NyscBatch, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.NyscBatch, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MobileNumber, htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.MobileNumber, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.MobileNumber, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Gender, htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.Gender, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.Gender, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Institution, htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.Institution, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.Institution, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password, htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.Password, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.ConfirmPassword, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Photo", new {@class = "control-label col-md-2"})
+                        <div class="col-md-6">
+                            <input type="file" id="File" name="File"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-6">
+                            <button class="btn btn-default " data-url="@Url.Action("RegisterCorper", "Account")">Create</button>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+</div>
+</div>

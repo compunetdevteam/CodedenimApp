@@ -1,0 +1,72 @@
+﻿@model IEnumerable<CodeninModel.Forums.ForumAnswer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_GeneralLayoutNewUI.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    @*<tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ForumQuestions.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Answer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReplyDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th></th>
+        </tr>*@
+
+
+    @foreach (var item in Model)
+    {
+    @*<tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ForumQuestions.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Answer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReplyDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ForumAnswerId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ForumAnswerId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ForumAnswerId })
+        </td>
+    </tr>*@
+        /**/
+
+    <div class="page-section">
+        <div class="media media-overflow-visible s-container">
+            <div class="media-body">
+                <h1 class="text-display-1 margin-top-none"> @Html.DisplayNameFor(model => model.ForumQuestions.Title)</h1>
+                <p class="text-light text-caption">
+                    posted by
+                    <a href="#">
+                        <img src="images/people/50/woman-1.jpg" alt="person" class="img-circle width-20" />@item.UserId
+                    </a> &nbsp; | <i class="fa fa-clock-o fa-fw">@item.ReplyDate
+                </p>
+            </div>
+            <div class="media-right">
+                <a href="#" class="btn btn-white paper-shadow relative" data-z="0.5" data-hover-z="1" data-animated><i class="fa fa-fw fa-reply"></i> Reply</a>
+            </div>
+        </div>
+    </div>
+    }            
+
+</table>

@@ -1,0 +1,74 @@
+﻿@model CodeninModel.Tutor
+@{
+    ViewBag.Title = "ConfirmTutor";
+    Layout = "~/Views/Shared/_GeneralLayout.cshtml";
+ 
+}
+
+
+
+
+    <div class="container-fluid">
+        <div class="row bs-wizard" style="border-bottom:0;">
+
+            <div class="col-xs-3 bs-wizard-step complete">
+                <div class="text-center bs-wizard-stepnum">Step 1</div>
+                <div class="progress"><div class="progress-bar"></div></div>
+                <a href="#" class="bs-wizard-dot"></a>
+                <div class="bs-wizard-info text-center">Enter Your Tutor ID</div>
+            </div>
+
+            <div class="col-xs-3 bs-wizard-step disabled">
+                <!-- complete -->
+                <div class="text-center bs-wizard-stepnum">Step 2</div>
+                <div class="progress"><div class="progress-bar"></div></div>
+                <a href="#" class="bs-wizard-dot"></a>
+                <div class="bs-wizard-info text-center">Add Personal Details</div>
+            </div>
+
+            <div class="col-xs-3 bs-wizard-step disabled">
+                <!-- complete -->
+                <div class="text-center bs-wizard-stepnum">Step 3</div>
+                <div class="progress"><div class="progress-bar"></div></div>
+                <a href="#" class="bs-wizard-dot"></a>
+                <div class="bs-wizard-info text-center">Receive E-mail Confirmation</div>
+            </div>
+            </div>
+          
+        </div>
+        <div class="form-horizontal">
+        <fieldset><h2>Confirm Tutor</h2></fieldset>
+        @Html.AntiForgeryToken()
+        @using (Html.BeginForm("ConfirmTutor", "Tutors", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            
+
+
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.Label("Enter You Tutor Id ", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            @Html.EditorFor(model => model.TutorId, new { htmlAttributes = new { @class = "form-control ", @autofocus = " " } })
+                            @Html.ValidationMessageFor(model => model.TutorId, "", new { @class = "text-danger" })
+                        </div>
+                </div>
+                    </div>
+
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Verify" class="btn btn-success" />
+                    </div>
+                </div>
+           
+
+
+
+        }
+    </div>

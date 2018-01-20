@@ -1,0 +1,133 @@
+﻿@model PagedList.IPagedList<CodeninModel.Forums.ForumQuestion>
+@using Microsoft.AspNet.Identity
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "ForumThread";
+    Layout = "~/Views/Shared/_GeneralLayoutNewUI.cshtml";
+}
+
+<h2>Forum Thread</h2>
+@foreach (var questions in Model){
+<div class="page-section">
+    <div class="media media-overflow-visible s-container">
+        <div class="media-body">
+            <h1 class="text-display-1 margin-top-none">@questions.Title</h1>
+            <p class="text-light text-caption">
+                posted by
+                <a href="#">
+                    <img src="~/Content/LMS/images/people/50/woman-1.jpg" alt="person" class="img-circle width-20" /> @questions.Students.FullName</a> &nbsp; | <i class="fa fa-clock-o fa-fw"></i> @questions.PostDate.Date
+            </p>
+        </div>
+        <div class="media-right">
+            <a href="@Url.Action("ForumQuestion","ForumQuestions",new{id = @questions.ForumQuestionId})" class="btn btn-white paper-shadow relative" data-z="0.5" data-hover-z="1" data-animated><i class="fa fa-fw fa-reply"></i> Reply</a>
+        </div>
+    </div>
+</div>
+<div class="media s-container">
+    <div class="media-left">
+        <div class="width-70 text-center">
+            <p>
+                <a href="">
+                    <img src="~/Content/LMS/images/people/50/woman-1.jpg" alt="people" />
+                </a>
+            </p>
+            <p class="text-caption text-light">@Model.Count posts</p>
+            <span class="icon-block s25 img-circle bg-green-300"><i class="fa fa-mortar-board text-white"></i></span>
+            <span class="icon-block s25 img-circle bg-orange-300"><i class="fa fa-code-fork text-white"></i></span>
+        </div>
+    </div>
+    <div class="media-body">
+        <div class="panel panel-default">
+            <div class="panel-body">
+       
+                <div class="text-subhead-2">@questions.Students.FullName <span class="text-caption text-light">- 2 minutes ago</span>
+                </div>
+                <p>@questions.QuestionName</p>
+               
+           
+               </div>
+        </div>
+    </div>
+</div>
+
+    if (questions.ForumAnswers != null)
+    {
+
+        foreach (var subquestion in questions.ForumAnswers)
+        {
+
+            <div class="forum-thread-reply">
+                <div class="media s-container">
+                    <div class="media-left">
+                        <div class="width-70 text-center">
+                            <a href="">
+                                <img src="~/Content/LMS/images/people/50/woman-5.jpg" alt="people"/>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="text-subhead-2"><span class="text-caption text-light">- 2 hours ago</span>
+                                </div>
+                                <p>@subquestion.Answer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="forum-thread-reply">
+            <div class="media s-container">
+            
+                <div class="media-body">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-subhead-2"><span class="text-caption text-light">- 2 hours ago</span>
+                            </div>
+                            <p>No Answer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+}
+
+
+
+@*<div class="text-right">
+    <ul class="pagination margin-top-none">
+        <li class="disabled"><a href="#">&laquo;</a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">&raquo;</a></li>
+    </ul>
+</div>*@
+
+
+    @*<div class="page-section padding-top-none">
+    <div class="panel panel-default paper-shadow" data-z="0.5">
+        <div class="panel-heading">
+            <h4 class="text-headline">Post a reply</h4>
+        </div>
+        <div class="panel-body">*@
+           @*@using (Html.BeginForm("Create","ForumAnswers",new{id = }))*@ 
+                @*<label for="reply">Your comment</label>
+                <div class="form-group form-control-material">
+                    <textarea id="reply" class="form-control" placeholder="Your comment .."></textarea>
+                 
+                </div>
+                <div class="text-right">
+                    <button class="btn btn-primary" type="submit">Post reply <i class="fa fa-plus"></i></button>
+                </div>*@
+     @*}*@
+        @*</div>
+    </div>
+</div>*@

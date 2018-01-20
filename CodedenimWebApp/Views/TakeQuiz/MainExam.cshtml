@@ -1,0 +1,17 @@
+﻿@model CodedenimWebApp.ViewModels.ExamIndexVm
+@{
+    ViewBag.Title = "MainExam";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>MainExam</h2>
+
+
+
+@{
+    Html.RenderAction("Exam", new
+    {
+        questionNo = ViewBag.QuestionNumber, courseId = ViewBag.CourseId,
+        studentid = ViewBag.StudentId
+    });
+}

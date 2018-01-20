@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CodeninModel.CBTE;
 using CodeninModel.Quiz;
 
 namespace CodeninModel
@@ -12,5 +13,6 @@ namespace CodeninModel
         public int ExpectedTime { get; set; }
         public virtual Course Course { get; set; }
         public virtual ICollection<Topic> Topics { get; set; }
+        public virtual ICollection<StudentTestLog> StudentTestLogs { get; set; }
     }
 }

@@ -57,12 +57,12 @@
 
     public enum FileType
     {
-        MP4 = 1, MP3, PDF, DOC, PPT, XLS,Photo
+        MP4 = 1, MP3, PDF, DOC, PPT, XLS,Photo,Video,Audio
     }
 
     public enum State
     {
-        Abia, Adamawa, AkwaIbom, Anambra, Bauchi, Bayelsa, Benue, Borno, CrossRiver, Delta, Ebonyi, Edo, Ekiti,
+        Abia = 1, Adamawa, AkwaIbom, Anambra, Bauchi, Bayelsa, Benue, Borno, CrossRiver, Delta, Ebonyi, Edo, Ekiti,
         Abuja, Gombe, Imo, Jigawa, Kaduna, Kano, Katsina, Kebbi, Kogi, Kwara, Lagos, Nasarawa, Niger, Ogun, Ondo, Osun,
         Oyo, Plateau, Rivers, Sokoto, Taraba, Yobe, Zamfara
     }
@@ -100,5 +100,20 @@
     public enum StaffRole
     {
         Lecturer = 1, None_Teaching
+    }
+
+    public enum Batch
+    {
+        A,B
+    }
+
+    public enum Title
+    {
+        Mr = 1, Mrs , Arch, Bar, Dr, Engr, Miss, Pharm
+    }
+
+    public enum StudentTypes
+    {
+        Corper = 1, Undergraduate, RegularStudent
     }
 }

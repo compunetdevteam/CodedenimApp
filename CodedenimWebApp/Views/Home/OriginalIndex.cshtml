@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "Codedenim Home";
+    Layout = "~/Views/Shared/_LayoutCodeDenim.cshtml";
+}
+<body class="grey-skin intro-page creative-lp">
+
+<!--Navigation & Intro-->
+<header>
+        
+    <!--Navbar-->
+    <nav class="navbar fixed-top navbar-toggleable-md navbar-dark scrolling-navbar">
+           
+        <div class="container">
+               
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+                
+            <a class="navbar-brand" href="@Url.Action("Index","Home")">
+                <img src="~/Content/img/CodeDemin.png"  height="50" width="50"/>
+                <strong>Codedenim</strong>
+            </a>
+                
+            <div class="collapse navbar-collapse" id="navbarNav">
+                   
+                <!--Links-->
+                <ul class="navbar-nav align-self-lg-auto" >
+                   
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Login","Account")" data-offset="100">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Register","Account")" data-offset="100">Register</a>
+                    </li> 
+                     <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("confirmTutor","Tutors")" data-offset="100">Confirm Tutor Account</a>
+                    </li>
+                   
+                </ul>
+                    
+                
+                
+                @*@using Microsoft.AspNet.Identity
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                            </li>
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                        </ul>
+                    }
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("Register ", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                    </ul>
+                }*@
+
+                <!--Social Icons-->
+                @*<ul class="navbar-nav nav-flex-icons" style="margin-left: 80%;">
+                    <li class="nav-item">
+                        <a class="nav-link" href="Url.Action('_ExternalLoginsListPartial','Account',new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl }><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="fa fa-instagram"></i></a>
+                    </li>
+                </ul>*@
+                    
+            </div>
+        </div>
+    </nav>
+    <!--/Navbar-->
+            <!--Video-->
+        <div class="intro-video view" id="home">
+            <video  class="myVideo" poster="" playsinline autoplay muted loop>
+                <source src="~/Content/Videos/Intro.mp4"  type="video/mp4">
+            </video>
+            @*<div class="hm-gradient">
+                <div class="full-bg-img flex-center">
+                    <div class="container smooth-scroll">
+                        <div class="row">
+                            <h4 class="subtext-header mt-2 mb-2"></h4>
+                        </div>
+                        <div class="col-md-12 white-text text-center smooth-scroll">
+                            <div class="wow fadeInDown" data-wow-delay="0.5s">
+                                <img src="~/Content/img/CodeDemin.png" height="70" width="70" style="margin-left: 48%;" />
+                                <button class="btn">
+                                    <h2>Welcome To CODE-DENIM</h2></button>
+                                <br /><h4 style="text-shadow:2px 2px 2px #093">Concentrated Dedicated Deliberate Network Intent Media</h4>
+                                <hr class="hr-light">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        </div>
+        <!--/Video-->
+</header>
+<!--/Navigation & Intro-->
+</body>       
+
+

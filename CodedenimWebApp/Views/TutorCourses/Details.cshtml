@@ -1,0 +1,36 @@
+﻿@model CodeninModel.TutorCourse
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_GeneralLayoutNewUI.cshtml";
+}
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TutorCourses</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Courses.CourseCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Courses.CourseCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tutor.Designation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tutor.Designation)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TutorCoursesId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

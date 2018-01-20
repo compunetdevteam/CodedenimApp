@@ -1,0 +1,52 @@
+﻿@model IEnumerable<CodedenimWebApp.ViewModels.UserCourseDetail>
+
+@{
+    ViewBag.Title = "CoursesIPaiedFor";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
+}
+
+<h2>CoursesIPaiedFor</h2>
+
+
+@ViewBag.UserCourseName
+
+@*<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserCourseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseCategory)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PaymentDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserCourseName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseCategory)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.UserCourseDetailId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.UserCourseDetailId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.UserCourseDetailId })
+        </td>
+    </tr>
+}
+
+</table>*@

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Web;
 
 namespace CodeninModel
 {
@@ -27,6 +25,8 @@ namespace CodeninModel
 
         // [Required]
         [EmailAddress]
+        //[Index(IsUnique = true)]
+        [MaxLength(100)]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -50,15 +50,21 @@ namespace CodeninModel
         public bool IsAcctive { get; set; }
 
         [Display(Name = "Date Of Birth")]
-        [DataType(DataType.Date)]
+        //[DataType(DataType.Date)]
+        // [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
         public DateTime? DateOfBirth { get; set; }
 
-        public int Age
+        public int? Age
         {
             get
             {
-                var t = DateTime.Now - DateTime.Parse(DateOfBirth.ToString());
-                return Age = (int)t.Days / 365;
+                if (DateOfBirth != null)
+                {
+                    var t = DateTime.Now - DateTime.Parse(DateOfBirth.ToString());
+                    return Age = (int)t.Days / 365;
+                }
+                return null;
+
             }
             set { }
         }
@@ -70,34 +76,8 @@ namespace CodeninModel
         public string FullName => LastName + " " + FirstName + " " + MiddleName;
 
         public byte[] Passport { get; set; }
+        public string FileLocation { get; set; }
 
-        [Display(Name = "Upload A Passport/Picture")]
-        [ValidateFile(ErrorMessage = "Please select a PNG/JPEG image smaller than 20kb")]
-        [NotMapped]
-        public HttpPostedFileBase File
-        {
-            get
-            {
-                return null;
-            }
 
-            set
-            {
-                try
-                {
-                    var target = new MemoryStream();
-
-                    if (value.InputStream == null)
-                        return;
-
-                    value.InputStream.CopyTo(target);
-                    Passport = target.ToArray();
-                }
-                catch (Exception ex)
-                {
-                    var message = ex.Message;
-                }
-            }
-        }
     }
 }

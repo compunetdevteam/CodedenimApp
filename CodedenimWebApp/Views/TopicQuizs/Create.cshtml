@@ -1,0 +1,130 @@
+﻿@model CodeninModel.Quiz.TopicQuiz
+<style>
+    body {
+        background: white !important;
+    }
+</style>
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+}
+
+<div class="container-fluid" style="margin-left: 13%">
+    
+    @using (Html.BeginForm("ExcelUpload", "TopicQuizs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <input class="form-control" type="file" id="File" name="excelfile" class="btn btn-default btn-md" />
+
+        <input type="submit" value="submit">
+
+    }
+
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <fieldset>
+            <legend>
+                <h3><b>Create Quiz</b>
+                </h3></legend>
+
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.Topic.Module.CourseId, "TopicId", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("CourseId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Topic.Module.CourseId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ModuleId, "Select Module", htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-8">
+                        @Html.DropDownList("ModuleId", null, htmlAttributes: new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.ModuleId, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Question, htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Question, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Question, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Option1, htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Option1, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Option1, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Option2, htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Option2, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Option2, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Option3, htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Option3, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Option3, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Option4, htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Option4, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Option4, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Answer, htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Answer, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Answer, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.QuestionHint, htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.QuestionHint, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.QuestionHint, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.QuestionType, htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-8">
+                        @Html.DropDownList("QuestionType", null, htmlAttributes: new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.QuestionType, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+                <div class="form-group"></div>
+                <div class="clearfix"></div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button class="btn btn-success"><span>Create</span> <i class="fa fa-check-square-o"></i></button>
+                        <button class="btn-inverse btn" type="reset"><span>Reset</span> <i class="fa fa-undo"></i></button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    }
+
+</div>

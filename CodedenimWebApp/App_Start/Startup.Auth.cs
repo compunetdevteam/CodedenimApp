@@ -5,6 +5,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
+using Microsoft.Owin.Security;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.Providers;
 using Microsoft.Owin.Security.OAuth;
@@ -28,6 +29,11 @@ namespace CodedenimWebApp
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
             // Configure the sign in cookie
+
+            app.SetDefaultSignInAsAuthenticationType(DefaultAuthenticationTypes.ExternalCookie);
+           app.Properties["Microsoft.Owin.Security.Constants.DefaultSignInAsAuthenticationType"] = "ExternalCookie";
+
+
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
@@ -39,7 +45,10 @@ namespace CodedenimWebApp
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager, ""))
-                }
+                },
+                CookieHttpOnly = true,
+                CookieName = CookieAuthenticationDefaults.CookiePrefix + "External",
+            //    CookieDomain = "www.facebook.com"
             }); 
 
             // Configure the application for OAuth based flow
@@ -66,15 +75,15 @@ namespace CodedenimWebApp
             //    consumerKey: "",
             //    consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //    appId: "",
-            //    appSecret: "");
+            app.UseFacebookAuthentication(  
+                appId: "662881010576859",
+                appSecret: "b2e27f7678ba99544981b1ec42952e0e");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+        //    app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+        //    {
+        //        ClientId = "694286352294-j2kjuf67qrv6tmhsjjtqp61afoinr4vv.apps.googleusercontent.com",
+        //        ClientSecret = "qUKJ_LGI1yFX_t2TMnjfwThw"
+        //    });
         }
     }
     //public partial class Startup

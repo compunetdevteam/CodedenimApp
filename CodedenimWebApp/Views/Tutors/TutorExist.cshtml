@@ -1,0 +1,30 @@
+﻿@model CodedenimWebApp.ViewModels.TutorCreateVm
+@{
+    ViewBag.Title = "TutorExist";
+}
+
+<h2>
+     
+    <p> The Tutor you are trying to add already exist</p>
+
+</h2>
+<th>
+    @Html.DisplayFor(model => model.TutorId)
+</th>
+<br/>
+<th>
+    @Html.DisplayFor(model => model.FirstName)
+</th>
+<br />
+
+<th>
+    @Html.DisplayFor(model => model.LastName)
+</th>
+<br />
+
+@*<th>
+    @Html.DisplayFor(model => model.Gender)
+</th>*@
+<br />
+
+@Html.ActionLink("Back to Create", "Create")    

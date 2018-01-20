@@ -1,78 +1,162 @@
-﻿@model IEnumerable<CodeninModel.Course>
+﻿@using CodedenimWebApp.Models
+@model IEnumerable<CodeninModel.Course>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Courses";
+    ViewBag.Courses = "class = active";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+  
+
+}
+@*<link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+<link href="~/Content/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <h2>Courses</h2>  
+
+
+@using(Html.BeginForm("ExcelUpload", "Courses", FormMethod.Post, new {enctype = "multipart/form-data"}))
+{       
+    @Html.AntiForgeryToken()
+    <input class="form-control" type="file" id="File" name="excelfile" class="btn btn-default btn-md" />
+    
+    <input type="submit" value="submit">
+  
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div class="panel panel-default">
+    <!-- Progress table -->
+    <div class="table-responsive">
+        <table class="table v-middle">
+            <thead>
+            <tr>
+                <th width="20">
+                    <div class="checkbox checkbox-single margin-none">
+                        <input id="checkAll" data-toggle="check-all" data-target="#responsive-table-body" type="checkbox" checked>
+                        <label for="checkAll">Check All</label>
+                    </div>
+                </th>
+                <th>Course Name</th>
+                @*<th>Course Description</th>*@
+                <th>Expected Time</th>
+                <th>Number Of Modules</th>
+                <th>Points</th>
+                <th>Action</th>
+           
+            </tr>
+            </thead>
+            <tbody id="responsive-table-body">
+            @foreach (var item in Model)
+            {
+                 
+                <tr>
 
-@using (Html.BeginForm())
-{
-    <p>
-        Select Department: @Html.DropDownList("SelectedCategory", "All")
-        <input type="submit" value="Filter" />
-    </p>
-}
+                    <td>
+                        <div class="checkbox checkbox-single">
+                            <input id="checkbox1" type="checkbox" checked>
+                            <label for="checkbox1">Label</label>
+                        </div>
+                    </td>
+               
+                <td>
+                    <a href="@Url.Action("Details","Courses",new{id = item.CourseId})"><span class="label label-default" data-toggle="tooltip" data-placement="top" title="View Course Detail">@item.CourseName</span></a>
+                </td>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseCategory.CategoryName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ExpectedTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateAdded)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Points)
-        </th>
-        <th></th>
-    </tr>
+                                       <td><i class="fa fa-clock-o"> @item.ExpectedTime</i> </td>
+                    <td>@item.Modules.Count</td>
+                    <td>
+                        <i class="fa fa-user"></i> @item.Points
+                    </td>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseCategory.CategoryName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ExpectedTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateAdded)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Points)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CourseId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.CourseId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CourseId })
-        </td>
-    </tr>
-}
+                    <td class="text-right">
+                        @*<a href="#CreateModule" onclick="CreateModules(@item.CourseId)" class="btn btn-default btn-xs" data-toggle="modal" data-placement="top" title="Create Modules"><i class="fa fa-file"></i></a>*@
+                        @*<a href="@Url.Action("Edit", "Courses", new {id = @item.CourseId})" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>*@
+                        <a href="#EditModule"onclick="EditModules(@item.CourseId)" class="btn btn-default btn-xs" data-toggle="modal" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
 
-</table>
+                        @*<a href="@Url.Action("Delete", "Courses", new {id = @item.CourseId})" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Delete"><i*@
+                        <a href="#EditModule"onclick="DeleteModules(@item.CourseId)" class="btn btn-danger btn-xs" data-toggle="modal" data-placement="top" title="Delete"><i class="fa fa-times"></i></a>
+                    </td>
+             
+                </tr>
+            }
+            </tbody>    
+        </table>
+    </div>
+    <!-- // Progress table -->
+    <div class="panel-footer padding-none text-center">
+        <ul class="pagination">
+            <li class="disabled"><a href="#">&laquo;</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </div>
+</div>
+
+
+
+
+<div class="modal grow modal-backdrop-white fade" id="EditModule">
+    <div class="modal-dialog modal-lg">
+        <div class="v-cell">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Course</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="LoadEditModule">
+                       
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br /><br />
+    @*<div class="table-responsive" style="width: 99%; margin: 0 auto">
+    <table id="Jdatatable" class="table table-striped table-hover" >
+        <thead>
+        <tr>
+            <th>Category Name</th>
+            <th>Course Code</th>
+            <th>Course Name</th>
+            <th>Course Description</th>
+            <th>Expected Time</th>
+            <th>Date Added</th>
+            <th>Points</th>
+            <th>Action</th>
+
+        </tr>
+        </thead>
+    </table>
+    </div> 
+    <div class="modal fade" id="createAssetModal" tabindex="-1" role="dialog" aria-labelledby="CreateAssetModal" aria-hidden="true" data-backdrop="static" >
+
+        <div id="createAssetContainer">
+
+        </div>
+
+    </div>*@
+    <script src="~/Scripts/jquery-3.1.1.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/DataTables/dataTables.bootstrap4.js"></script>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+
+
+    <script type="text/javascript">
+   function EditModules(courseId) {
+       var url = "/Courses/EditPartial?id=" + courseId;
+       $("#LoadEditModule").load(url);
+        }
+
+   function DeleteModules(courseId) {
+       var url = "/Courses/DeletePartial?id=" + courseId;
+       $("#LoadEditModule").load(url);
+   }
+        </script>

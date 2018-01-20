@@ -1,0 +1,175 @@
+﻿@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Certificate";
+}
+
+
+@*<div class="row">*@
+@*<center> <h2>Certificate of Completion</h2>   </center>
+        <div class="">
+            @*This is to Certify that @Url.
+        </div>
+
+    </div>
+    <button class="btn btn-default" onclick="print()">Print</button>*@
+
+
+<div id="content" >
+    <div class="container-fluid">
+        <div class="lock-container" style="background-image:url('~/Content/img/CodeDemin.png')">
+            <div class="panel panel-default text-center paper-shadow" data-z="0.5">
+                <h1 class="text-display-1">Certificate of Completion</h1>
+                <div class="panel-body">
+                    <!-- Signup -->
+                    <table>
+                        <tr>
+                            <td>This is to Certify that @User.Identity.GetUserName() </td>
+                            <td> Has Completed the Codedenim Course</td>
+                        </tr>
+                    </table>
+                    <img src="~/Content/img/CodeDemin.png" />
+                    <!-- //Signup -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center">
+    <a onclick="print()" class="btn btn-primary">Print</a>
+</div>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.5.1/jQuery.print.min.js"></script>
+
+<script type='text/javascript'>
+
+    //$(function() {
+
+    //    //$("#printable").find('.print').on('click', function() {
+    //    $("#printable").find('#print').on('click', function () {
+    //        alert("Print ");
+    //        $.print("#printable");
+
+    //    });
+
+    //});
+
+    $(function print() {
+
+        //$("#printable").find('.print').on('click', function() {
+
+        $.print("#printable");
+        $("#printable").print({
+
+
+
+            // Use Global styles
+
+            globalStyles: false,
+
+            // Add link with attrbute media=print
+
+            mediaPrint: false,
+
+            //Custom stylesheet
+            stylesheet: "http://fonts.googleapis.com/css?family=Inconsolata",
+
+            //Print in a hidden iframe
+
+            iframe: false,
+
+
+            // Don't print this
+
+            noPrintSelector: ".avoid-this",
+
+            append: "Free jQuery Plugins<br/>",
+
+
+            prepend: "<br/>jQueryScript.net",
+
+            // Manually add form values
+
+            manuallyCopyFormValues: true,
+
+            // resolves after print and restructure the code for better maintainability
+
+            deferred: $.Deferred(),
+
+            // timeout
+
+            timeout: 250,
+
+            title: null,
+
+            doctype: '<!doctype html>'
+
+        });
+        $.print("#printable");
+
+
+
+    });
+
+    //$(function() {
+
+            //$("#printable").find('.print').on('click', function() {
+//            $("#printable").find('#print').on('click', function() {
+
+//                alert("Print ");
+
+//                $("#printable").print({
+
+
+
+//// Use Global styles
+
+//                    globalStyles : false,
+
+//// Add link with attrbute media=print
+
+//                    mediaPrint : false,
+
+////Custom stylesheet
+//                    stylesheet : "http://fonts.googleapis.com/css?family=Inconsolata",
+
+////Print in a hidden iframe
+
+//                    iframe : false,
+
+
+//// Don't print this
+
+//                    noPrintSelector : ".avoid-this",
+
+//                    append : "Free jQuery Plugins<br/>",
+
+
+//                    prepend : "<br/>jQueryScript.net",
+
+//// Manually add form values
+
+//                    manuallyCopyFormValues: true,
+
+//// resolves after print and restructure the code for better maintainability
+
+//                    deferred: $.Deferred(),
+
+//// timeout
+
+//                   timeout: 250,
+
+//                    title: null,
+
+//                    doctype: '<!doctype html>'
+
+//                });
+
+//            });
+
+
+</script>

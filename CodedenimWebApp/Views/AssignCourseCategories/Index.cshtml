@@ -1,0 +1,79 @@
+﻿@model IEnumerable<CodeninModel.AssignCourseCategory>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+
+
+<h4 class="page-section-heading">Assigned Course Categories</h4>
+<div class="panel panel-default">
+    <!-- Progress table -->
+    <div class="table-responsive">
+        <table class="table v-middle">
+            <thead>
+            <tr>
+                <th width="20">
+                    @*<div class="checkbox checkbox-single margin-none">
+                        <input id="checkAll" data-toggle="check-all" data-target="#responsive-table-body" type="checkbox" checked>
+                        <label for="checkAll">Check All</label>
+                    </div>*@
+                </th>
+                <th>Category Name</th>
+                <th>Assigned Course</th>
+
+                <th class="text-right">Action</th>
+            </tr>
+            </thead>
+            <tbody id="responsive-table-body">
+           
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @*<div class="checkbox checkbox-single">
+                         freadh
+                            <label for="checkbox1">Label</label>
+                        </div>*@
+                    </td>
+                    <td><span class="label label-default">@item.CourseCategory.CategoryName</span></td>
+
+                    <td>
+                      
+                        <img src="~/MaterialUpload/@item.Courses.FileLocation" width="40" class="img-circle" /> @item.Courses.CourseName
+                    </td>
+
+                    <td class="text-right">
+                        <a href="@Url.Action("Edit","AssignCourseCategories",new{id = @item.AssignCourseCategoryId})" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                        <a href="@Url.Action("Delete","AssignCourseCategories",new{id = @item.AssignCourseCategoryId})" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Delete">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+               
+
+            </tbody>
+        </table>
+    </div>
+    <!-- // Progress table -->
+    <div class="panel-footer padding-none text-center">
+        <ul class="pagination">
+            <li class="disabled"><a href="#">&laquo;</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </div>
+</div>

@@ -1,50 +1,176 @@
-﻿@model CodeninModel.Module
-
+﻿@*@model CodeninModel.Module*@
+@using System.Security.AccessControl
+@using System.Web.UI.WebControls
+@model CodedenimWebApp.ViewModels.CourseContentVm
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Module Details";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<h2>Details</h2>
+@*<div class="container-fluid">
 
-<div>
-    <h4>Module</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Course.CourseCode)
-        </dt>
+    <h2>Details</h2>
 
-        <dd>
-            @Html.DisplayFor(model => model.Course.CourseCode)
-        </dd>
+    <div>
+        <h4>Module</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Course.CourseCode)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ModuleName)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Course.CourseCode)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ModuleName)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ModuleName)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ModuleDescription)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ModuleName)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ModuleDescription)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ModuleDescription)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ExpectedTime)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ModuleDescription)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ExpectedTime)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ExpectedTime)
+            </dt>
 
-    </dl>
+            <dd>
+                @Html.DisplayFor(model => model.ExpectedTime)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ModuleId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>*@
+
+
+
+<div class="parallax bg-white page-section">
+    <div class="parallax-layer container" data-opacity="true">
+        <div class="media v-middle">
+            Topic Name
+            <div class="media-right">
+                @*<a class="btn btn-primary paper-shadow relative" href="@Url.Action("Details","Courses",new{id = @Model.ModulesAD.ModuleId})">Back to Module</a>*@
+            </div>
+            <div class="media-left">
+                <span class="icon-block s60 bg-green"><i class="fa fa-book"></i></span>
+            </div>
+            <div class="media-body">
+                <h1 class="text-display-1 margin-none">@Model.ModulesAD.ModuleName</h1>
+
+            </div>
+
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ModuleId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<br />
+<div class="tab-content">
+    <div id="lessons" class="tab-pane active">
+        <div class="media v-middle s-container">
+            <div class="media-body">
+                <h5 class="text-subhead text-light"></h5>
+            </div>
+            <div class="media-right">
+                <a class="btn btn-primary paper-shadow relative" href="#CreateTopics" onclick="CreateTopics(@Model.ModulesAD.ModuleId)" data-toggle="modal" data-placement="top" title="Create Topic">Add Topic</a>
+            </div>
+        </div>
+        <div class="nestable" id="nestable-handles-primary">
+            <ul class="nestable-list">
+                @foreach (var topics in Model.Topics)
+                {
+                 @Html.HiddenFor(x => x.ModulesAD.ModuleId)
+                    <li class="nestable-item nestable-item-handle" data-id="2">
+                        <a href="@Url.Action("Create","TopicMaterialUploads",new{id = topics.TopicId})" class="btn btn-white btn-flat">Add Content</a>
+                        <div class="nestable-content">  
+                            <div class="media v-middle">
+                                <div class="media-left">
+                                    <div class="icon-block half bg-blue-400 text-white">
+                                        <i class="fa fa-css3"></i>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="text-title media-heading margin-none">
+                                        <a href="@Url.Action("Details","TopicMaterialUploads",new{id = topics.TopicId, courseId = Model.CourseIdentifier})" class="link-text-color">@topics.TopicName</a>
+                                    </h4>
+                                    @*<div class="text-caption">@topics.</div>*@
+                                </div>
+                                <div class="media-right">
+                                    <a href="#CreateTopics" onclick="EditTopics(@topics.TopicId)" data-toggle="modal" class="btn btn-white btn-flat"><i class="fa fa-pencil fa-fw"></i> Edit</a>
+                                    <a href="#CreateTopics" onclick="DeleteTopics(@topics.TopicId)" data-toggle="modal" class="btn btn-white btn-flat"><i class="fa fa-times btn-danger"></i> Delete</a>
+                               
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal grow modal-backdrop-white fade" id="CreateTopics">
+    <div class="modal-dialog modal-lg">
+        <div class="v-cell">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Create Topic</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="LoadCreateTopics">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/jquery-3.1.1.js"></script>
+<script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/DataTables/dataTables.bootstrap4.js"></script>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+
+
+<script type="text/javascript">
+    function CreateTopics(moduleId) {
+        var url = "/Topics/CreatePartial?id=" + moduleId;
+        $("#LoadCreateTopics").load(url);
+
+
+    }
+
+    function EditTopics(moduleId) {
+        var url = "/Topics/EditPartial?id=" + moduleId;
+        $("#LoadCreateTopics").load(url);
+
+
+    }
+
+    function DeleteTopics(moduleId) {
+        var url = "/Topics/DeletePartial?id=" + moduleId;
+        $("#LoadCreateTopics").load(url);
+
+
+    }
+</script>

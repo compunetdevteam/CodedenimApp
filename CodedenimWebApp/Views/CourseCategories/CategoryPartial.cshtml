@@ -1,0 +1,12 @@
+﻿@model  IEnumerable<CodeninModel.CourseCategory>
+@{
+    ViewBag.Title = "CategoryPartial";
+}
+
+<ul class="sidebar-block list-group list-group-menu list-group-minimal">
+    @foreach(var item in Model){
+        <li class="list-group-item"><a href="@Url.Action("_ListCoursesPartial","Courses",new{id = item.CourseCategoryId})"><span class="badge pull-right"></span> @item.CategoryName</a></li>
+    }
+   
+   
+</ul>

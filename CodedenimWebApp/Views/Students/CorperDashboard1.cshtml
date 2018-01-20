@@ -1,0 +1,56 @@
+﻿@model CodedenimWebApp.ViewModels.CorperDashboard1Vm
+@{
+    ViewBag.Title = "CorperDashbaord1";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
+}
+
+<h2>CorperDashbaord1</h2>
+
+<!-- content push wrapper -->
+<div id="showList">
+    
+</div>  
+
+@*@Html.Partial("_ListCoursesPartial")*@
+
+
+
+
+<div class="">
+<div class="sidebar right sidebar-size-3 sidebar-offset-0 sidebar-visible-desktop sidebar-skin-white" id="sidebar-library">
+    <div data-scrollable>
+        <h4 class="category"> CourseCategory</h4>
+        <ul class="sidebar-block list-group list-group-menu list-group-minimal">
+            @foreach (var category in Model.CourseCategories)
+            {
+                @*<li class="list-group-item"><a href="@Url.Action("_ListCoursesPartial","Courses",new{id = category.CourseCategoryId})"><span class="badge pull-right">120+</span> @category.CategoryName</a></li>*@
+               
+                    @Ajax.ActionLink(@category.CategoryName, "_ListCoursesPartial", "Courses",
+                               new { categoryId = category.CourseCategoryId},
+                               new AjaxOptions { UpdateTargetId = "showList"  })
+                
+                    }
+
+</ul>
+        
+
+
+       
+    </div>
+</div>
+<!-- sidebar effects OUTSIDE of st-pusher: -->
+<!-- st-effect-1, st-effect-2, st-effect-4, st-effect-5, st-effect-9, st-effect-10, st-effect-11, st-effect-12, st-effect-13 -->
+</div> 
+
+
+
+<div id="loading" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+                
+            <img src="~/Content/img/loading (1).gif" />
+     
+</div>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>

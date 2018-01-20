@@ -1,0 +1,181 @@
+﻿ @model CodedenimWebApp.ViewModels.TutorRegisterVm
+@{
+    ViewBag.Title = "Tutor info";
+    Layout = "~/Views/Shared/_GeneralLayout.cshtml";
+}
+<div class="container">
+
+    <div class="row bs-wizard" style="border-bottom:0;">
+
+        <div class="col-xs-3 bs-wizard-step complete">
+            <div class="text-center bs-wizard-stepnum">Step 1</div>
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="#" class="bs-wizard-dot"></a>
+            <div class="bs-wizard-info text-center">Enter Your Tutor ID</div>
+        </div>
+
+        <div class="col-xs-3 bs-wizard-step active">
+            <!-- complete -->
+            <div class="text-center bs-wizard-stepnum">Step 2</div>
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="#" class="bs-wizard-dot"></a>
+            <div class="bs-wizard-info text-center">Update Personal Details</div>
+        </div>
+
+        <div class="col-xs-3 bs-wizard-step disabled">
+            <!-- complete -->
+            <div class="text-center bs-wizard-stepnum">Step 3</div>
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="#" class="bs-wizard-dot"></a>
+            <div class="bs-wizard-info text-center">Confirm E-Mail Address</div>
+        </div>
+
+
+    </div>
+
+
+    <div class="container-fluid">
+        
+        
+    
+        
+        <h2 class="fa fa-align-center fa-2x">Update Tutor Info</h2>
+
+
+        
+        
+
+
+        @using (Html.BeginForm("TutorRegistration", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @*<a href="~/Views/Tutors/Create.cshtml">~/Views/Tutors/Create.cshtml</a>*@
+               
+                <hr />
+
+
+
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TutorId,"Tutor ID", htmlAttributes: new { @class = " control-label col-md-2" })
+                    <div class="col-md-6">
+                        <div class="input-group mb-4">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            @Html.EditorFor(model => model.TutorId, new { htmlAttributes = new { @class = "form-control", @value = @Model.TutorId, @readonly = "readonly", } })
+                            </div>
+                        </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FirstName,"First Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon mb-4"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @value = @Model.FirstName, @readonly = "readonly" } })
+                            </div>
+                        </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastName,"Last Name" ,htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon mb-4"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @value = @Model.LastName, @readonly = "readonly" } })
+                            </div>
+                        </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email,"E-Mail" ,htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon mb-4"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                        </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PhoneNumber,"Phone Number", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon mb-4"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                        </div>
+                        </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DateOfBirth, "Date Of Birth" , htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon mb-4"><i class="fa fa-calendar fa" aria-hidden="true"></i></span>
+                            @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control datepicker ", @readonly = true } })
+                            @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                        </div>
+                        </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password,"Password", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon mb-4"><i class="fa fa-key fa" aria-hidden="true"></i></span>
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                        </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ConfirmPassword,"Confirm Password", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-6 mb-2">
+                        <div class="input-group">
+                            <span class="input-group-addon mb-4"><i class="fa fa-key fa" aria-hidden="true"></i></span>
+                            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                        </div>
+                        </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.Label("Photo", new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        <input type="file" id="File" name="File" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-6 ">
+                        <input type="submit" value="Create" class="btn btn-success  green" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+        </div>
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.datepicker').datepicker(
+                {
+                    dateFormat: "dd/M/yy",
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "-60:+0"
+                }
+            );
+
+        });
+    </script>

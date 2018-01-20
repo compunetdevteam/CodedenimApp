@@ -1,0 +1,31 @@
+﻿
+
+
+
+@{
+    ViewBag.Title = "UploadFile";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>Upload Course Category</h2>
+
+@using (Html.BeginForm("UploadCategory", "CourseCategories", FormMethod.Post, new { enctype = "multipart/form-data", id= "theform" }))
+{
+    @Html.Raw(ViewBag.Error)
+    <span>Excel File </span> <input type="file" name="excelfile" />
+    <br />
+    <input id="btnsubmit" type="submit" value="Import" class="btn btn-success" />
+}
+
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#theform').submit(function () {
+            $("input[type='submit']", this)
+                .val("Uploading Please Wait...")
+                .attr('disabled', 'disabled');
+            return true;
+        });
+    });
+</script>

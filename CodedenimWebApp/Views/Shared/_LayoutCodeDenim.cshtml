@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="full-height">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>@ViewBag.Title</title>
+
+  
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Content/font-awesome-4.7.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/bootstrap1.min.css" rel="stylesheet">
+ 
+    <!-- Material Design Bootstrap -->
+    <link href="~/Content/mdb.css" rel="stylesheet">
+
+    <!-- Your custom styles (optional) -->
+    <link href="~/Content/style.css" rel="stylesheet">
+    
+</head>
+<body>
+
+    
+
+<main class="">
+    <div class="container-fluid">
+        @RenderBody();
+    </div>
+</main>
+<!-- JQuery -->
+<script src="~/Scripts/jquery-3.1.1.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="~/Scripts/tether.min.js"></script>
+
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="~/Scripts/mdb.min.js"></script>
+
+
+<script>
+    //Animation init
+    new WOW().init();
+
+    //Modal
+    $('#myModal').on('shown.bs.modal',
+        function() {
+            $('#myInput').focus()
+        })
+
+    // Material Select Initialization
+    $(document).ready(function() {
+        $('.mdb-select').material_select();
+    });
+
+</script>
+
+</body>
+
+<!-- Mirrored from mdbootstrap.com/live/_MDB/templates/Landing-Page/creative-landing-page.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 14 Jul 2017 19:04:01 GMT -->
+</html>

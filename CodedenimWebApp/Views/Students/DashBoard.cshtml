@@ -1,0 +1,101 @@
+﻿@using CodedenimWebApp.Models
+@model CodedenimWebApp.ViewModels.DashboardVm
+@{
+    ViewBag.Title = "Corper Dashboard";
+    Layout = "~/Views/Shared/_LayoutBoard.cshtml";
+}
+
+
+@*<div class="container">
+<div class="page-section">
+<div class="row">
+<div class="col-md-9">
+    <div class="panel panel-default">
+        <div class="media v-middle">
+            <div class="media-left">
+                <div class="bg-green-400 text-white">
+                    <div class="panel-body">
+                        <i class="fa fa-credit-card fa-fw fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="item col-xs-6 col-lg-6">
+                <div class="panel panel-default paper-shadow" data-z="0.5">
+                    <div class="panel-body">
+                        <h4 class="text-headline margin-none">Rewards</h4>
+                        <p class="text-subhead text-light">What you can Win</p>
+                        <div class="icon-block half img-circle bg-purple-300">
+                            <i class="fa fa-star text-white" data-hover-z="0.5" data-animated data-toggle="tooltip" data-title="State Competition $2000"></i>
+                        </div>
+                        <div class="icon-block half img-circle bg-indigo-300">
+                            <i class="fa fa-trophy text-white"  data-hover-z="0.5" data-animated data-toggle="tooltip" data-title="National Competition $10000"></i>
+                        </div>
+                        <div class="icon-block half img-circle bg-green-300">
+                            <i class="fa fa-mortar-board text-white" data-hover-z="0.5" data-animated data-toggle="tooltip" data-title="International Certificate Recognition"></i>
+                        </div>
+                        <div class="icon-block half img-circle bg-orange-300">
+                            <i class="fa fa-code-fork text-white" data-hover-z="0.5" data-animated data-toggle="tooltip" data-title="National Competition $10000"></i>
+                        </div>
+                        <div class="icon-block half img-circle bg-red-300 ">
+                            <i class="fa fa-diamond text-white" data-hover-z="0.5" data-animated data-toggle="tooltip" data-title="Get Connected"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default paper-shadow" data-z="0.5">
+                    <div class="panel-heading">
+                        <h4 class="text-headline">Certificates
+                            <small>(4)</small>
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <a class="btn btn-default text-grey-400 btn-lg btn-circle paper-shadow relative" data-hover-z="0.5" data-animated data-toggle="tooltip" data-title="Name of Certificate">
+                            <i class="fa fa-file-text"></i>
+                        </a>
+                        <a class="btn btn-default text-grey-400 btn-lg btn-circle paper-shadow relative" data-hover-z="0.5" data-animated data-toggle="tooltip" data-title="Name of Certificate">
+                            <i class="fa fa-file-text"></i>
+                        </a>
+                        <a class="btn btn-default text-grey-400 btn-lg btn-circle paper-shadow relative" data-hover-z="0.5" data-animated data-toggle="tooltip" data-title="Name of Certificate">
+                            <i class="fa fa-file-text"></i>
+                        </a>
+                        <a class="btn btn-default text-grey-400 btn-lg btn-circle paper-shadow relative" data-hover-z="0.5" data-animated data-toggle="tooltip" data-title="Name of Certificate">
+                            <i class="fa fa-file-text"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+</div>
+
+@foreach (var item in Model)
+{
+    <div class="item col-xs-12 col-sm-6 col-lg-2" style="margin-left:5%">
+        <div class="panel panel-default paper-shadow" data-z="0.5">
+            <div class="cover overlay cover-image-full hover">
+                <span class="img icon-block height-150 bg-lightred"></span>
+                <a href="#" class="padding-none overlay overlay-full icon-block bg-primary">
+                    <span class="v-center">
+                        <i class="fa fa-windows"></i>
+                    </span>
+                </a>
+                <a href="#" class="overlay overlay-full overlay-hover overlay-bg-white">
+                    <span class="v-center">
+                        <span class="btn btn-circle btn-red-500 btn-lg"><i class="fa fa-graduation-cap"></i></span>
+                    </span>
+                </a>
+            </div>
+           @item.CourseName
+            <hr class="margin-none"/>
+            <div class="panel-body" style="width: inherit">
+                <a href="@Url.Action("Pay","PaymentTypes",new{id = item.CourseId})" class="btn btn-primary "><i class="fa fa-fw fa-pencil"></i> Pay To Enroll</a>
+            </div>
+        </div>
+    </div>
+}*@
+
+
+c
+

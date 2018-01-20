@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using CodeninModel;
 
 namespace CodedenimWebApp.ViewModels
 {
@@ -11,4 +12,16 @@ namespace CodedenimWebApp.ViewModels
         public string CourseName { get; set; }
         public bool Assigned { get; set; }
     }
-}
+
+    public class AssigedCoursesToTutorVm
+    {
+        public  string TutorId { get; set; }
+        public int[] CourseId { get; set; }
+    }
+    public class AssignCourseToCategory
+    {
+        public int CourseCategoryId { get; set; }
+        public int[] CourseId { get; set; }
+    }
+        
+ }

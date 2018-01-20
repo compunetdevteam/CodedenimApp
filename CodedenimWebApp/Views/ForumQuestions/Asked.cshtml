@@ -1,0 +1,30 @@
+﻿@using CodeninModel.Forums
+@model IEnumerable<CodeninModel.Forums.ForumQuestion>
+
+
+@{
+    ViewBag.Title = "Asked";
+    Layout = "~/Views/Shared/_GeneralLayoutNewUI.cshtml";
+}
+
+
+
+
+@foreach (var item in ViewBag.MyQuestion as List<ForumQuestion>)
+{
+    <ul>
+        <li>
+            @if (item.QuestionName == null)
+            {
+                <p class="icon-alert">you havent asked any question yet</p>
+            }
+        </li>
+        else
+        {
+            <li>
+                @item.QuestionName
+            </li>
+        }
+
+    </ul>
+}

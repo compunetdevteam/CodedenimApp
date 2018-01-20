@@ -1,0 +1,440 @@
+﻿@model CodeninModel.Quiz.StudentTopicQuiz
+@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    //ViewBag.Title = "Exam";
+        ViewBag.Title = @Model.StudentId;
+    //ViewBag.StudentId = "4ee04a8e-e369-4e1b-ad4d-6c74e5b6f741";
+    //ViewBag.CourseId = 7;
+    ViewBag.CourseId = Model.ModuleId;
+    //ViewBag.LevelId = Model.LevelId;
+
+}
+
+
+<div class="split-vertical">
+<div class="page-section half bg-white">
+    <div class="container">
+        <div class="section-toolbar">
+            <div class="cell">
+                <div class="media width-120 v-middle margin-none">
+                    <div class="media-left">
+                        <div class="icon-block bg-grey-200 s30"><i class="fa fa-question"></i></div>
+                    </div>
+                    <div class="media-body">
+                        <p class="text-body-2 text-light margin-none">Questions</p>
+                        <p class="text-title text-primary margin-none">@Model.TotalQuestion</p>
+                    </div>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="media width-120 v-middle margin-none">
+                    <div class="media-left">
+                        <div class="icon-block bg-grey-200 s30"><i class="fa fa-diamond"></i></div>
+                    </div>
+                    <div class="media-body">
+                        <p class="text-body-2 text-light margin-none">Score</p>
+                        <p class="text-title text-success margin-none"> pt</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="split-vertical-body">
+<div class="split-vertical-cell">
+<div class="container height-100pc">
+<div class="page-section height-100pc">
+<div class="row height-100pc">
+            
+<div class="col-md-9">
+    @* start of form for question  *@
+    <form action="" method="post" id="myform">
+
+        @Html.HiddenFor(model => model.QuestionNumber)
+        @Html.HiddenFor(model => model.ModuleId)
+        @Html.HiddenFor(model => model.StudentId)
+        @Html.HiddenFor(model => model.Option1)
+        @Html.HiddenFor(model => model.Option2)
+        @Html.HiddenFor(model => model.Option3)
+        @Html.HiddenFor(model => model.Option4)
+        @Html.HiddenFor(model => model.FilledAnswer)
+        @Html.HiddenFor(model => model.IsFillInTheGag)
+        @Html.HiddenFor(model => model.IsMultiChoiceAnswer)
+
+        @* the dive below shows the Question number *@
+
+        <div class="text-subhead-2 text-light">Question @Html.DisplayFor(modelItem => Model.QuestionNumber) of 25</div>
+
+        <h4>Take Quiz </h4>
+
+        <div class="panel panel-default paper-shadow" data-z="0.5">
+            <div class="panel-heading">
+                <h4 class="text-headline">Question </h4>
+            </div>
+            <div class="panel-body">
+                <h3 class="text-body-2"> @Html.Raw(Model.Question)</h3>
+            </div>
+        </div>
+        @* section to display  the answer option *@
+
+        @if (Model.IsFillInTheGag.Equals(false) && Model.IsMultiChoiceAnswer.Equals(false))
+        {
+            <div class="text-subhead-2 text-light">Your Answer</div>
+            <div class="panel panel-default paper-shadow" data-z="0.5">
+                <div class="panel-body">
+                    <div class="checkbox checkbox-primary">
+                        @*<input id="checkbox1" type="checkbox">*@
+                        <label for="checkbox1">
+                            A. &nbsp; @Html.RadioButtonFor(model => model.SelectedAnswer, Model.Option1, new {@class = "radio-styled", id = "ra"}) @Model.Option1
+                        </label>
+                    </div>
+                    <div class="checkbox checkbox-primary">
+                        @*<input id="checkbox2" type="checkbox" checked>*@
+                        <label for="checkbox2">
+                            B. &nbsp; @Html.RadioButtonFor(model => model.SelectedAnswer, Model.Option2, new {@class = "radio-styled", id = "rb"}) @Model.Option2
+
+                        </label>
+                    </div>
+                    <div class="checkbox checkbox-primary">
+                        @*<input id="checkbox5" type="checkbox">*@
+                        <label for="checkbox5">
+                            C. &nbsp; @Html.RadioButtonFor(model => model.SelectedAnswer, Model.Option3, new {@class = "radio-styled", id = "rc"}) @Model.Option3
+
+                        </label>
+                    </div>
+                    <div class="checkbox checkbox-primary">
+                        @*<input id="checkbox5" type="checkbox">*@
+                        <label for="checkbox5">
+                            D. &nbsp; @Html.RadioButtonFor(model => model.SelectedAnswer, Model.Option4, new {@class = "radio-styled", id = "rd"}) @Model.Option4
+
+                        </label>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="text-right">
+
+                        @if (Model.QuestionNumber != 1)
+                        {
+                                            @*<button class="btn btn-success"><i class="fa fa-save fa-fw"></i> Save Answer</button>*@
+                            <i class="fa fa-save fa-fw"></i><input type="submit" id="previous" value="Previous" class="btn btn-block btn-raised btn-primary" name="action:Previous"/>
+                        }
+                        @if (Model.QuestionNumber != Model.TotalQuestion)
+                        {
+                                            @*<button class="btn btn-primary"><i class="fa fa-chevron-right fa-fw"></i> Next Question</button>*@
+                            <i class="fa fa-chevron-right fa-fw"></i>
+                            <span><input id="nextButton" type="submit" value="Next" class="btn btn-primary" name="action:Next"/></span>
+                        }
+
+                        <div class="col-sm-3">
+                            <p><span><input onclick="submitFunction()" value="Submit Exam" class="btn btn-block btn-danger btn-raised btn-danger"/></span>
+                            </p>
+
+                            <p><span><input id="submitExam2" type="submit" style="display: none" name="action:SubmitExam"/></span>
+                            </p>
+                            @*<p><button type="button" class="btn btn-block ink-reaction btn-flat btn-accent">Accent</button>
+                                </p>*@
+                        </div><!--end .col -->
+
+                    </div>
+                </div>
+            </div>
+        }
+        <br/>
+        <br/>
+
+    </form>
+    @* end of form for question *@
+</div>
+
+<div class="col-md-3 height-100pc">
+    <div class="split-vertical">
+        <div class="s-container">
+            <div class="text-subhead-2 text-light">Time to complete</div>
+          
+               
+                <h3 id="timecountdown"></h3>
+         
+            @*<div id="tk-countdown></div>*@
+                            </div>
+                            <div class="split-vertical-body">
+                <div class="split-vertical-cell">
+                    <div class="panel panel-default margin-none">
+                        <div class="split-vertical">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">Questions</h4>
+                            </div>
+                            <div class="split-vertical-body">
+                                <div class="split-vertical-cell">
+                                    <div data-scrollable class="panel-body list-group">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <div class="media v-middle">
+                                                    <div class="media-left">
+                                                        <div class="icon-block s30 bg-green-400 text-white">1</div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <a href="#" class="link-text-color">Dolores explicabo mollitia nisi perspiciatis quas. Itaque.</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="media v-middle">
+                                                    <div class="media-left">
+                                                        <div class="icon-block s30 bg-blue-400 text-white">2</div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <a href="#" class="link-text-color">Lorem ipsum dolor sit amet, consectetur adipisicing.</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="media v-middle">
+                                                    <div class="media-left">
+                                                        <div class="icon-block s30 bg-grey-400 text-white">3</div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <a href="#" class="link-text-color">A aliquam dolore et explicabo possimus vitae?</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="media v-middle">
+                                                    <div class="media-left">
+                                                        <div class="icon-block s30 bg-grey-400 text-white">4</div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <a href="#" class="link-text-color">Optio perspiciatis quasi reprehenderit voluptas?</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="media v-middle">
+                                                    <div class="media-left">
+                                                        <div class="icon-block s30 bg-grey-400 text-white">5</div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <a href="#" class="link-text-color">Cum dignissimos dolores et illum magni minus?</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="media v-middle">
+                                                    <div class="media-left">
+                                                        <div class="icon-block s30 bg-grey-400 text-white">6</div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <a href="#" class="link-text-color">Cum dignissimos dolores et illum magni minus?</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="media v-middle">
+                                                    <div class="media-left">
+                                                        <div class="icon-block s30 bg-grey-400 text-white">7</div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <a href="#" class="link-text-color">Cum dignissimos dolores et illum magni minus?</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="media v-middle">
+                                                    <div class="media-left">
+                                                        <div class="icon-block s30 bg-grey-400 text-white">8</div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <a href="#" class="link-text-color">Cum dignissimos dolores et illum magni minus?</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="media v-middle">
+                                                    <div class="media-left">
+                                                        <div class="icon-block s30 bg-grey-400 text-white">9</div>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <a href="#" class="link-text-color">Cum dignissimos dolores et illum magni minus?</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <h4 class="text-subhead margin-v-0-5">Legend</h4>
+                                <span class="fa fa-fw fa-circle text-green-400"></span> Answered question
+                                <br/>
+                                <span class="fa fa-fw fa-circle text-blue-400"></span> Selected question
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- Modal -->
+<!-- BEGIN SIMPLE MODAL MARKUP -->
+<div class="modal fade" id="simpleModal" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="simpleModalLabel">Exam Status</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure You want to Submit and Save the Exam
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- END SIMPLE MODAL MARKUP -->
+
+
+
+
+@*@RenderSection("scripts", required: false)*@
+@Scripts.Render("~/bundles/jqueryval")
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script>
+    // window.alert("Exam Fininshed because Your Time is Up, Click OK to Save your scores");
+    //window.alert(5 + 6);
+    //$('#simpleModal').modal('show');
+    //document.getElementById('submitExam2').style.visibility = 'hidden';
+    function submitFunction() {
+        var txt;
+        if (confirm("Do You want to Submit and Save Exam!!!") == true) {
+            txt = "You pressed OK!";
+            $('#submitExam2').trigger('click');
+        } else {
+            txt = "You pressed Cancel!";
+        }
+        document.getElementById("demo").innerHTML = txt;
+    }
+    function oSubmit() {
+        $('#nextButton').trigger('click');
+    }
+
+    //window.oSubmit = $('#nextButton').trigger('click'); 
+    // window.alert("ready");
+    $(document).ready(function () {
+        //window.oSubmit = $('#nextButton').trigger('click');
+        //document.getElementById('submitExam2').style.visibility = 'hidden';
+        var dt = '@ViewBag.Rem_Time';
+        var dateAr = dt.split('-');
+        var newDate = dateAr[0] + '/' + dateAr[1] + '/' + dateAr[2];
+
+        var end = new Date(dateAr[0] + '/' + dateAr[1] + '/' + dateAr[2]);
+
+        var _second = 1000;
+        var _minute = _second * 60;
+        var _hour = _minute * 60;
+        var _day = _hour * 24;
+        var timer;
+
+        function showRemaining() {
+            var now = new Date();
+            // var newend = new Date('end');
+
+            //console.log(now + 'now');
+            //window.alert(end + 'end');
+            var distance = end - now;
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById('timecountdown').innerHTML = 'Exam Ends!';
+                // $('#modaldisplay').trigger('click');
+                window.alert("Exam Fininshed because Your Time is Up, Click OK to Save your scores");
+                $('#submitExam2').trigger('click');
+                //window.location.href =
+                //    '/TakeExam/SubmitExam?studentId=+@ViewBag.StudentId&courseId=@ViewBag.TopicId&levelId=@ViewBag.LevelId;
+
+                return;
+            }
+            var days = Math.floor(distance / _day);
+            var _hours = Math.floor((distance % _day) / _hour);
+            var _minutes = Math.floor((distance % _hour) / _minute);
+            var _seconds = Math.floor((distance % _minute) / _second);
+
+            document.getElementById('timecountdown').innerHTML = ' Hrs: ' + _hours;
+            document.getElementById('timecountdown').innerHTML += ' Mins: ' + _minutes;
+            document.getElementById('timecountdown').innerHTML += ' Secs: ' + _seconds;
+        }   
+
+        timer = setInterval(showRemaining, 1000);
+
+
+        $(document).keydown(function(e) {
+            var multiSelect = "@Model.IsMultiChoiceAnswer";
+
+            //window.alert(multiSelect);
+            if (multiSelect === "False") {
+                if (e.keyCode == 65) {
+                    $("#ra").prop("checked", "checked");
+                } else if (e.keyCode === 66) {
+                    $("#rb").prop("checked", "checked");
+                } else if (e.keyCode === 67) {
+                    $("#rc").prop("checked", "checked");
+                } else if (e.keyCode === 68) {
+                    $("#rd").prop("checked", "checked");
+                }
+            } else {
+                if (e.keyCode === 65 && e.shiftKey) {
+                    document.getElementById("ca").checked = false;
+                } else if (e.keyCode === 66 && e.shiftKey) {
+                    document.getElementById("cb").checked = false;
+                } else if (e.keyCode === 67 && e.shiftKey) {
+                    document.getElementById("cc").checked = false;
+                } else if (e.keyCode === 68 && e.shiftKey) {
+                    document.getElementById("cd").checked = false;
+
+                } else if (e.keyCode === 65) {
+                    document.getElementById("ca").checked = true;
+                } else if (e.keyCode === 66) {
+                    document.getElementById("cb").checked = true;
+                } else if (e.keyCode === 67) {
+                    document.getElementById("cc").checked = true;
+                } else if (e.keyCode === 68) {
+                    document.getElementById("cd").checked = true;
+                }
+            }
+
+            if (e.keyCode === 37) {
+                $('#previous').trigger('click');
+            } else if (e.keyCode === 39) {
+                  
+                $('#nextButton').trigger('click');
+            }
+
+        });
+       
+
+
+    });
+    //$(".sub").click(function () {
+    //    $('#simpleModal').modal('show');
+    //    window.alert('Are you sure You want to submit and save the exam?');
+
+    //});
+    //window.onbeforeunload = function () { return "You work will be lost."; };
+</script>
+
