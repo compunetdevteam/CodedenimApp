@@ -333,7 +333,7 @@ namespace CodedenimWebApp.Controllers
             {
                 var user = new ApplicationUser
                 {
-                    UserName = model.Email,
+                    UserName = model.FirstName + " " + model.LastName,
                     Email = model.Email,
                 };
 
@@ -499,9 +499,11 @@ namespace CodedenimWebApp.Controllers
 
             var user = new ApplicationUser()
             {
-                Id = model.CallUpNumber,
-                UserName = model.FirstName + " " + model.LastName,
-                Email = model.Email
+               // Id = model.CallUpNumber,
+                UserName = model.Email,
+                Email = model.Email,
+                PhoneNumber = model.MobileNumber
+                
             };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
@@ -528,11 +530,13 @@ namespace CodedenimWebApp.Controllers
                 //File.SaveAs(path);
                 //}
 
-                StudentId = model.CallUpNumber,
+                StudentId = user.Id,
+                CallUpNo = model.CallUpNumber,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
                 Gender = model.Gender,
+                AccountType = "Corper",
                 PhoneNumber = model.MobileNumber,
                 Institution = model.Institution,
                 Discpline = model.Discpline
@@ -571,9 +575,10 @@ namespace CodedenimWebApp.Controllers
 
             var user = new ApplicationUser()
             {
-                Id = model.MatNumber,
-                UserName = model.FirstName + " " + model.LastName,
-                Email = model.Email
+                //Id = model.MatNumber,
+                UserName = model.Email,
+                Email = model.Email,
+                PhoneNumber = model.MobileNumber
             };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
@@ -585,12 +590,14 @@ namespace CodedenimWebApp.Controllers
 
             var student = new Student
             {
-                StudentId = model.MatNumber,
+                StudentId = user.Id,
+                MatricNo = model.MatNumber,
                 Title = model.Title.ToString(),
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
                 Gender = model.Gender,
+                AccountType = "UnderGraduate",
                 PhoneNumber = model.MobileNumber,
                 Institution = model.Institution,
                 Discpline = model.Discpline
@@ -635,8 +642,9 @@ namespace CodedenimWebApp.Controllers
             var user = new ApplicationUser()
             {
 
-                UserName = model.FirstName + " " + model.LastName,
-                Email = model.Email
+                UserName = model.Email,
+                Email = model.Email,
+                PhoneNumber = model.MobileNumber
             };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
@@ -654,12 +662,13 @@ namespace CodedenimWebApp.Controllers
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
                 Gender = model.Gender,
+                AccountType = "RegularStudent",
                 PhoneNumber = model.MobileNumber,
 
             };
             _db.Students.Add(student);
             await _db.SaveChangesAsync();
-            await this.UserManager.AddToRoleAsync(user.Id, "Student");
+            await this.UserManager.AddToRoleAsync(user.Id, RoleName.RegularStudent);
 
             //var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
             //// var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);

@@ -1,17 +1,15 @@
-﻿using System;
+﻿using CodedenimWebApp.Models;
+using CodedenimWebApp.ViewModels;
+using CodeninModel;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using CodedenimWebApp.Models;
-using CodedenimWebApp.ViewModels;
-using CodeninModel;
 
 namespace CodedenimWebApp.Controllers.Api
 {
@@ -19,7 +17,7 @@ namespace CodedenimWebApp.Controllers.Api
     public class CourseCategoriesController : ApiController
     {
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
-
+        private ConvertEmail1 email_Id = new ConvertEmail1();
         [HttpGet]
         [System.Web.Http.Route("CourseCategorys")]
         [ResponseType(typeof(CourseCategory))]
@@ -30,10 +28,12 @@ namespace CodedenimWebApp.Controllers.Api
         // the query is performed based on the email parameter coming into the method
         public async Task<IHttpActionResult> CourseCategorys(string email)
         {
-             var studentEmail = new ConvertEmail1();
-            var studentId = studentEmail.ConvertEmailToId(email);
+            // var studentEmail = new ConvertEmail();
+            var studentId = _db.Users.AsNoTracking().Where(x => x.Email.Equals(email))
+                                            .Select(x => x.Id).FirstOrDefault();
+            //var studentId = studentEmail.ConvertEmailToId(email);
             var studentType =  _db.Students.AsNoTracking().Where(x => x.StudentId.Equals(studentId)).Select(x => x.AccountType).FirstOrDefault();
-            var assignedCourses = await   _db.CourseCategories.AsNoTracking().Where(x => x.StudentType.Equals(studentType))
+            var assignedCourses = await  _db.CourseCategories.AsNoTracking().Where(x => x.StudentType.Equals(studentType))
                                             .Select(x => new { x.CategoryName,
                                                 x.Amount,
                                                 x.CourseCategoryId,
@@ -100,6 +100,55 @@ namespace CodedenimWebApp.Controllers.Api
 
             return Ok(courseCategory);
         }
+
+
+
+        ///this api method checks the payment status of a user
+        ///strings in the method should not be changed because it will break the mobile end point
+        ///and make it not to work Pls NOTE !!!!
+        [HttpPost]
+        [System.Web.Http.Route("CheckPayment")]
+        [ResponseType(typeof(CourseCategory))]
+        public async Task<IHttpActionResult> CheckPayment(CheckPaymentVm payment)
+        {
+            if (ModelState.IsValid)
+            {
+                var responseStatus = new CheckPaymentStatus();
+                var studentId = email_Id.ConvertEmailToId(payment.Email);
+                var status = await _db.StudentPayments.Where(x => x.StudentId.Equals(studentId) 
+                                                        && x.CourseCategoryId.Equals(payment.CategoryId) 
+                                                        && x.IsPayed.Equals(true)).AnyAsync();
+                if(status == true)
+                {
+                    responseStatus.status = "Paid"; 
+                    //if any string in this method changes the mobile endpoint will break and not work
+                    return Ok(responseStatus);
+                }
+                else
+                {
+                    //code to check if the transaction of a student is pending
+                    var status2 = await _db.StudentPayments.Where(x => x.StudentId.Equals(studentId)
+                                                           && x.CourseCategoryId.Equals(payment.CategoryId)
+                                                           && x.IsPayed.Equals(false) 
+                                                           && x.PaymentStatus.Equals("Transaction Pending"))
+                                                           .AnyAsync();
+                    if (status2 == true)
+                    {
+                        responseStatus.status = "Pending";
+                        return Ok(responseStatus);
+                    }
+                    responseStatus.status = "Not Paid";
+                    return Ok(responseStatus);
+                }
+            }
+        
+            return Json("SomeThing went wrong with the request");
+        }
+
+      
+
+
+
 
         /// <summary>
         /// method to check the student account type and display mycourse

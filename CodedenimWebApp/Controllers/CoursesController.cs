@@ -1,11 +1,14 @@
 ﻿using CodedenimWebApp.Models;
+using CodedenimWebApp.Service;
 using CodedenimWebApp.Services;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
 using Microsoft.AspNet.Identity;
 using OfficeOpenXml;
 using System;
+using System.Collections.Generic;
 using System.Data;
+
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -14,9 +17,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
-using PayStack.Net.Apis;
-using System.Collections.Generic;
-using CodedenimWebApp.Service;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -618,10 +618,14 @@ namespace CodedenimWebApp.Controllers
             var userId = User.Identity.GetUserId();
             var assinedCourseCategory = new List<AssignCourseCategory>();
             //var mycourses = await db.StudentPayments.Where(x => x.StudentId.Equals(userId)).ToArrayAsync();
-            var mycourses = await db.StudentPayments.Distinct().AsQueryable().Where(x => x.StudentId.Equals(userId)&& x.IsPayed.Equals(true)).Select(x => x.CourseCategoryId).ToListAsync();
+            var mycourses = await db.StudentPayments.Distinct()
+                                    .AsQueryable()
+                                    .Where(x => x.StudentId.Equals(userId)&& x.IsPayed.Equals(true))
+                                    .Select(x => x.CourseCategoryId)
+                                    .ToListAsync();
 
             //list of all courses on the sidebar
-           // ViewBag.ListCourses = db.Courses.ToList();
+            // ViewBag.ListCourses = db.Courses.ToList();
             foreach (var ListCourse in db.Courses.ToList())
             {
                 ViewBag.ListCourses = ListCourse;
@@ -629,8 +633,14 @@ namespace CodedenimWebApp.Controllers
             foreach (var course in mycourses)
             {
 
-                var assignedCourses = await db.AssignCourseCategories.Include(i => i.CourseCategory).Include(i => i.Courses)
-                .AsNoTracking().Where(x => x.CourseCategoryId.Equals(course)).Distinct().AsQueryable().FirstOrDefaultAsync();
+                var assignedCourses = await db.AssignCourseCategories
+                                              .Include(i => i.CourseCategory)
+                                              .Include(i => i.Courses)
+                                              .AsNoTracking()
+                                              .Where(x => x.CourseCategoryId.Equals(course))
+                                              .Distinct()
+                                              .AsQueryable()
+                                              .FirstOrDefaultAsync();
                 //var assignedCourses = await  db.AssignCourseCategories.Where(x => x.CourseCategoryId.Equals(course)).DistinctBy(s => s.CourseCategoryId).AsQueryable().ToListAsync();
                 assinedCourseCategory.Add(assignedCourses);
             }

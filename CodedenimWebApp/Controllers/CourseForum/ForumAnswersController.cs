@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CodedenimWebApp.Models;
+using CodeninModel.Forums;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using CodedenimWebApp.Models;
-using CodeninModel.Forums;
-using Microsoft.AspNet.Identity;
 
 namespace CodedenimWebApp.Controllers.CourseForum
 {
@@ -41,7 +39,7 @@ namespace CodedenimWebApp.Controllers.CourseForum
             if (forumAnswer == null)
             {
                 return HttpNotFound();
-            }
+            }   
             return View(forumAnswer);
         }
 

@@ -6,12 +6,9 @@ using CodeninModel;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using OfficeOpenXml;
-using PayStack.Net;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -45,7 +42,10 @@ namespace CodedenimWebApp.Controllers
           
             return PartialView(courseCategories);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         public async Task<ActionResult> CourseCategoryPayment()
         {
@@ -63,7 +63,11 @@ namespace CodedenimWebApp.Controllers
                                     && x.IsPayed.Equals(true)).ToListAsync();
 
             //list of all the course
-            var allCourses = db.Courses.ToList();
+          //  var allCourses = db.Courses.ToList();
+            var assigedCourses = db.AssignCourseCategories
+                                   .Include(x => x.Courses)
+                                   .DistinctBy(x => x.CourseId)
+                                   .ToList();
             if (paymentList.Any())
             {
                 foreach (var courseCategory in assignedCourse)
@@ -83,7 +87,7 @@ namespace CodedenimWebApp.Controllers
             {
                 model.AddRange(assignedCourse.Select(s => s.CourseCategory));
             }
-            listOfCourses.Courses = allCourses;
+            listOfCourses.AssignCourseCategory = assigedCourses;
             listOfCourses.CourseCategory = model;
             //  return View(model.DistinctBy(x => x.CourseCategoryId));
             return View(listOfCourses);
@@ -225,12 +229,24 @@ namespace CodedenimWebApp.Controllers
                 return (int)kobo;
             }
         }
+        /// <summary>
+        /// this method  takes in a category Id and and displays all the courses
+        /// associated with that category
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
         public async Task<ActionResult> CategoryDetails(int id)
         {
             var userId = User.Identity.GetUserId();
 
-            var hasPayed = await db.StudentPayments.AsNoTracking().Where(x => x.StudentId.Equals(userId) &&
-                                       x.CourseCategoryId.Equals((int)id)).FirstOrDefaultAsync();
+            var hasPayed = await db.StudentPayments
+                                    .AsNoTracking()
+                                     .Where(x => x.StudentId.Equals(userId) 
+                                     &&
+                                       x.CourseCategoryId.Equals((int)id) && x.IsPayed.Equals(true))
+                                       .FirstOrDefaultAsync();
             if (hasPayed != null)
             {
                 if (hasPayed.IsPayed.Equals(false))

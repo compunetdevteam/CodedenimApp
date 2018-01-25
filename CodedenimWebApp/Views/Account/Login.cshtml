@@ -8,32 +8,27 @@
 
 
 
+<!-- Start main-content -->
+<div class="main-content">
+    <!-- Section: home -->
+    <section id="home">
+        <div class="container-fluid p-0">
 
-<div class="row">
+           
+    </section>
 
-    <div class="row">
-        <div class="col-xs-10 col-sm-10 col-md-3 col-lg-4 hidden-xs hidden-sm">
-            @*<h1 class="txt-color-red login-header-big">Codedenim</h1>
-                <div class="hero">
-
-                    <div class="pull-left login-desc-box-l">
-                        <h4 class="paragraph-header">It's Okay to be Smart. Experience the simplicity of Learning , everywhere you go!</h4>
-                        <div class="login-app-icons">
-
-                        </div>
-                    </div>
-
-                    <img src="~/Content/LoginAssets/img/demo/iphoneview.png" class="pull-right display-image" alt="" style="width:210px">
-
-                </div>*@
-
-
-
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
-            <div class="well no-padding">
-                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal smart-form client-form", role = "form", @id = "login-form" }))
-                {
+    <!-- Section: About -->
+    <section id="about">
+        <div class="container">
+            <div class="section-content">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4  smart-form">
+                        <h3 class="font-weight-500 font-30 font- mt-10"></h3>
+                        <div class=""></div>
+                        @*<span class="text-theme-colored">*@
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal  client-form", role = "form", @id = "login-form" }))
+    {
                     @Html.AntiForgeryToken()
                     <header>
                         Sign In
@@ -65,26 +60,7 @@
                             </div>
                         </section>
 
-                        @* //////////////////////////////////////////////////////////////////////////////////////////////////////// *@
 
-                        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            <section>
-                                @Html.LabelFor(m => m.Email, new { @class = "label" })
-                                <i class="icon-append fa fa-user"></i>
-                                @Html.TextBoxFor(m => m.Email, new { @class = "input" })
-                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter email address/username</b>
-                            </section>
-                            <section>
-                                @Html.LabelFor(m => m.Password, new { @class = "label" })
-                                <i class="icon-append fa fa-lock"></i>
-                                @Html.PasswordFor(m => m.Password, new { @class = "input" })
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your password</b>
-                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                                <div class="note">
-                                    <a href="forgotpassword.html">Forgot password?</a>
-                                </div>
-                            </section>*@
                         <section>
                             <label class="checkbox">
                                 <input type="checkbox" name="remember" checked="">
@@ -98,28 +74,58 @@
                         <input type="submit" value=" Sign in" class="btn btn-primary" style="background-color:forestgreen" />
 
                     </footer>
-                    @*<div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Log in" class="btn btn-default" />
+}
+                        <br />
+                        <br />
+                        <br />
+                       
+
+
+                        @*</span>*@
+
+
+                    </div>
+                    <div class="col-md-4"></div>
+                        @*<div class="col-md-7">
+                <div class="owl-carousel-1col" data-nav="true">
+                    <div class="item">
+                        <div class="box-hover-effect about-video">
+                            <div class="effect-wrapper">
+                                <div class="thumb">
+                                    <video controls="controls" class="img-fullwidth" style="width:100%; height:100%">
+                                        <source src="~/Content/Assets1/video/CodeDenim1.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+
+
                             </div>
-                        </div>*@
+                        </div>
+                    </div>
 
-                    @* Enable this once you have account confirmation enabled for password reset functionality
-                        <p>
-                            @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                        </p>*@
-
-                }
-
-            </div>
+                </div>
+            </div>*@
+                    </div>
+                </div>
         </div>
-    </div>
-</div>
-@*<div class="col-md-4">
-    <section id="socialLoginForm">
-        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
     </section>
-</div>*@
+
+
+
+
+
+
+    
+</div>
+
+
+
+
+
+@*<div class="col-md-4">
+        <section id="socialLoginForm">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+    </div>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

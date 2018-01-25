@@ -1,27 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CodedenimWebApp.Models;
+using CodeninModel.Forums;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using CodedenimWebApp.Models;
-using CodeninModel.Forums;
 
-namespace CodedenimWebApp.Controllers.Api.ForumApi
+namespace CodedenimWebApp.Controllers.Api
 {
+    [System.Web.Http.RoutePrefix("api/ForumAnswers")]
     public class ForumAnswersController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/ForumAnswers
-        public IQueryable<ForumAnswer> GetForumAnswers()
+        public IQueryable GetForumAnswers()
         {
-            return db.ForumAnswers;
+            var forumAnswers = db.ForumAnswers
+                                 .AsNoTracking()
+                                 .Select(x => new
+                                    {
+                                     x.ForumQuestionId,
+                                     x.ForumQuestions.QuestionName,
+                                        x.ForumAnswerId,
+                                        x.ReplyDate,
+                                        x.Answer
+                
+                                    });
+            return forumAnswers;
         }
 
         // GET: api/ForumAnswers/5
@@ -32,6 +42,8 @@ namespace CodedenimWebApp.Controllers.Api.ForumApi
             var forumAnswer = await db.ForumAnswers.Where(x => x.ForumQuestionId.Equals(id))
                                             .Select(x => new
                                             {
+                                                
+                                                x.ForumQuestionId,
                                                 x.ReplyDate,
                                                 x.ForumAnswerId,
                                                 x.ForumQuestions.QuestionName,
@@ -84,13 +96,15 @@ namespace CodedenimWebApp.Controllers.Api.ForumApi
 
         // POST: api/ForumAnswers
         [ResponseType(typeof(ForumAnswer))]
-        public async Task<IHttpActionResult> PostForumAnswer(ForumAnswer forumAnswer)
+        public async Task<IHttpActionResult> PostForumAnswer(string email,ForumAnswer forumAnswer)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+            ConvertEmail convertEmail = new ConvertEmail();
+            forumAnswer.UserId = convertEmail.ConvertEmailToId(email);
+            forumAnswer.ReplyDate = DateTime.Now;
             db.ForumAnswers.Add(forumAnswer);
             await db.SaveChangesAsync();
 

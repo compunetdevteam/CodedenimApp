@@ -9,12 +9,11 @@
 <br />
 <br />
 
-@foreach (var item in Model.CourseCategory)
-{
 
 
-    //foreach (var assignedCourseItem in Model.AssignCourseCategory)
-    //{
+
+    @*//foreach (var assignedCourseItem in Model.AssignCourseCategory)
+    //{*@
 
 
     @*<div class="item col-xs-12 col-sm-6 col-lg-4">
@@ -95,7 +94,7 @@
 
 
 
-foreach (var courseItem in Model.Courses)
+@foreach (var courseItem in Model.AssignCourseCategory)
     {
 
             <div class="item col-xs-12 col-sm-6 col-lg-4">
@@ -108,7 +107,7 @@ foreach (var courseItem in Model.Courses)
                 @*<i class="fa fa-css3"></i>*@
                         @*</span>
         </a>*@
-                        <img src="~/MaterialUpload/@courseItem.FileLocation" />
+                        <img src="~/MaterialUpload/@courseItem.Courses.FileLocation" />
                         <a href="@Url.Action("CategoryDetails", "CourseCategories", new { id = courseItem.CourseId })" class="overlay overlay-full overlay-hover overlay-bg-white">
                             <span class="v-center">
                                 <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
@@ -116,7 +115,7 @@ foreach (var courseItem in Model.Courses)
                         </a>
                     </div>
                     <div class="panel-body">
-                        <h4 class="text-headline margin-v-0-10"><a href="@Url.Action("CategoryDetails", "CourseCategories", new { id = courseItem.CourseId })"> @courseItem.CourseName</a></h4>
+                        <h4 class="text-headline margin-v-0-10"><a href="@Url.Action("CategoryDetails", "CourseCategories", new { id = courseItem.CourseId })"> @courseItem.Courses.CourseName</a></h4>
                         <p class="small margin-none">
                             <span class="fa fa-fw fa-star text-yellow-800"></span>
                             <span class="fa fa-fw fa-star text-yellow-800"></span>
@@ -130,12 +129,15 @@ foreach (var courseItem in Model.Courses)
                     <hr class="margin-none" />
                     <div class="panel-body">
                         No of Modules
-                        <p>@courseItem.Modules.Count</p>
-                        <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("CategoryDetails", "CourseCategories", new { id = item.CourseCategoryId })">Pay for courses</a>
+                        <p>@courseItem.Courses.Modules.Count</p>
+                        @*@foreach (var item in Model.CourseCategory)
+    {*@
+                    <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("CategoryDetails", "CourseCategories", new { id = courseItem.CourseCategoryId })">Pay for courses</a>
+@*}*@
                     </div>
                 </div>
             </div>
-        }
+      
 }
 
 
