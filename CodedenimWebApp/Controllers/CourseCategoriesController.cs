@@ -25,21 +25,27 @@ namespace CodedenimWebApp.Controllers
 
     public class CourseCategoriesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext _db;
         private RemitaHash myHash = new RemitaHash();
+
+
+        public CourseCategoriesController(ApplicationDbContext db)
+        {
+            _db = db;
+        }
 
         // GET: CourseCategories
         public async Task<ActionResult> Index()
         {
-            return View(await db.CourseCategories.ToListAsync());
+            return View(await _db.CourseCategories.ToListAsync());
         }
 
         public PartialViewResult CategoryPartial(int? id)
         {
-            var courseCategories = db.CourseCategories.ToList();
+            var courseCategories = _db.CourseCategories.ToList();
             if (id != null)
             {
-                courseCategories = db.CourseCategories.Where(x => x.Id.Equals((int) id)).ToList();
+                courseCategories = _db.CourseCategories.Where(x => x.Id.Equals((int) id)).ToList();
                 return PartialView(courseCategories);
             }
           
@@ -52,14 +58,14 @@ namespace CodedenimWebApp.Controllers
             var userId = User.Identity.GetUserId();
 
 
-            var student = await db.Students.FindAsync(userId);
+            var student = await _db.Students.FindAsync(userId);
 
             var model = new List<CourseCategory>();
 
-            var assignedCourse = await db.AssignCourseCategories.Include(i => i.CourseCategory).Include(i => i.Courses)
+            var assignedCourse = await _db.AssignCourseCategories.Include(i => i.CourseCategory).Include(i => i.Courses)
                 .AsNoTracking().Where(x => x.CourseCategory.StudentType.Equals(student.AccountType)).ToListAsync();
 
-            var paymentList = await db.StudentPayments.AsNoTracking().Where(x => x.StudentId.Equals(student.Id)
+            var paymentList = await _db.StudentPayments.AsNoTracking().Where(x => x.StudentId.Equals(student.Id)
                                     && x.IsPayed.Equals(true)).ToListAsync();
             if (paymentList.Any())
             {
@@ -77,7 +83,7 @@ namespace CodedenimWebApp.Controllers
                 model.AddRange(assignedCourse.Select(s => s.CourseCategory));
             }
 
-            return View(model.DistinctBy(x => x.CourseCategoryId));
+            return View(model.DistinctBy(x => x.Id));
         }
 
         #region Pay Stack Process
@@ -221,7 +227,7 @@ namespace CodedenimWebApp.Controllers
         {
             var userId = User.Identity.GetUserId();
 
-            var hasPayed = await db.StudentPayments.AsNoTracking().Where(x => x.StudentId.Equals(userId) &&
+            var hasPayed = await _db.StudentPayments.AsNoTracking().Where(x => x.StudentId.Equals(userId) &&
                                        x.CourseCategoryId.Equals((int)id)).FirstOrDefaultAsync();
             if (hasPayed != null)
             {
@@ -230,17 +236,19 @@ namespace CodedenimWebApp.Controllers
                     string serviceTypeId = string.Empty;
 
 
-                    var hashed = myHash.HashRemitedValidate(hasPayed.OrderId, RemitaConfigParams.APIKEY, RemitaConfigParams.MERCHANTID);
-                    string checkurl = RemitaConfigParams.CHECKSTATUSURL + "/" + RemitaConfigParams.MERCHANTID + "/" + hasPayed.OrderId + "/" + hashed + "/" + "orderstatus.reg";
+                    var hashed = myHash.HashRemitedValidate(hasPayed.OrderId, RemitaConfigParams.APIKEY, 
+                        RemitaConfigParams.MERCHANTID);
+                    string checkurl = RemitaConfigParams.CHECKSTATUSURL + "/" + RemitaConfigParams.MERCHANTID + "/" +
+                        hasPayed.OrderId + "/" + hashed + "/" + "orderstatus.reg";
                     string jsondata = new WebClient().DownloadString(checkurl);
                     var result = JsonConvert.DeserializeObject<RemitaResponse>(jsondata);
                     if (string.IsNullOrEmpty(result.Rrr))
                     {
-                        var entry = db.Entry(hasPayed);
+                        var entry = _db.Entry(hasPayed);
                         if (entry.State == EntityState.Detached)
-                            db.StudentPayments.Attach(hasPayed);
-                        db.StudentPayments.Remove(hasPayed);
-                        await db.SaveChangesAsync();
+                            _db.StudentPayments.Attach(hasPayed);
+                        _db.StudentPayments.Remove(hasPayed);
+                        await _db.SaveChangesAsync();
                     }
                     else
                     {
@@ -261,17 +269,17 @@ namespace CodedenimWebApp.Controllers
             var url = Url.Action("ConfrimPayment", "CourseCategories", new { }, protocol: Request.Url.Scheme);
 
         
-            var student = db.Students.Where(x => x.Id.Equals(userId)).Select(s => new { s.AccountType,
+            var student = _db.Students.Where(x => x.Id.Equals(userId)).Select(s => new { s.AccountType,
                 s.Email, s.PhoneNumber, s.FirstName, s.LastName, s.MiddleName }).SingleOrDefault();
             var fullName = $"{student.LastName} {student.FirstName} {student.MiddleName}";
 
             var model = new List<CourseCategory>();
 
-            var assignedCourse = db.AssignCourseCategories.Include(i => i.CourseCategory).Include(i => i.Courses)
+            var assignedCourse = _db.AssignCourseCategories.Include(i => i.CourseCategory).Include(i => i.Courses)
                 .AsNoTracking().Where(x => x.CourseCategory.StudentType.Equals(student.AccountType) && x.CourseCategoryId.Equals(id)).ToList();
             var courseDetails = new CourseCategoryDetailVm();
-            var categories = db.CourseCategories.Find(id);
-            var assingeCourses = db.AssignCourseCategories.Where(x => x.CourseCategoryId.Equals(id)).ToList();
+            var categories = _db.CourseCategories.Find(id);
+            var assingeCourses = _db.AssignCourseCategories.Where(x => x.CourseCategoryId.Equals(id)).ToList();
 
             courseDetails.CourseCategory = categories;
             courseDetails.AssignedCourses = assingeCourses;
@@ -314,7 +322,7 @@ namespace CodedenimWebApp.Controllers
                     Amount = Convert.ToDecimal(model.amt),
                 
                 };
-                db.StudentPayments.Add(studentPayment);
+                _db.StudentPayments.Add(studentPayment);
                 var log = new RemitaPaymentLog
                 {
                     OrderId = model.orderId,
@@ -325,8 +333,8 @@ namespace CodedenimWebApp.Controllers
 
 
                 };
-                db.RemitaPaymentLogs.Add(log);
-                await db.SaveChangesAsync();
+                _db.RemitaPaymentLogs.Add(log);
+                await _db.SaveChangesAsync();
                 model.serviceTypeId = RemitaConfigParams.SERVICETYPEID;
                 model.merchantId = RemitaConfigParams.MERCHANTID;
                 
@@ -351,7 +359,8 @@ namespace CodedenimWebApp.Controllers
         {
 
             var hashrrr = myHash.HashRrrQuery(rrr, RemitaConfigParams.APIKEY, RemitaConfigParams.MERCHANTID);
-            string posturl = RemitaConfigParams.CHECKSTATUSURL + "/" + RemitaConfigParams.MERCHANTID + "/" + rrr + "/" + hashrrr + "/" + "status.reg";
+            string posturl = RemitaConfigParams.CHECKSTATUSURL + "/" + RemitaConfigParams.MERCHANTID + "/" + rrr + "/" +
+                hashrrr + "/" + "status.reg";
             string jsondata = new WebClient().DownloadString(posturl);
             var result = JsonConvert.DeserializeObject<RemitaResponse>(jsondata);
             if (result.Status.Equals("00") || result.Status.Equals("01"))
@@ -380,13 +389,13 @@ namespace CodedenimWebApp.Controllers
             RemitaResponse result = new RemitaResponse();
             if (string.IsNullOrEmpty(orderID))
             {
-                studentPayment = await db.StudentPayments.AsNoTracking()
+                studentPayment = await _db.StudentPayments.AsNoTracking()
                     .Where(x => x.ReferenceNo.Equals(RRR))
                     .FirstOrDefaultAsync();
             }
             else
             {
-                studentPayment = await db.StudentPayments.AsNoTracking()
+                studentPayment = await _db.StudentPayments.AsNoTracking()
                     .Where(x => x.OrderId.Equals(orderID.Trim()))
                     .FirstOrDefaultAsync();
             }
@@ -400,11 +409,12 @@ namespace CodedenimWebApp.Controllers
                     result.Status = studentPayment.IsPayed.ToString();
                     return RedirectToAction("ConfrimRrrPayment", "RemitaServices", result);
                 }
-                var log = await db.RemitaPaymentLogs.AsNoTracking().Where(x => x.OrderId.Equals(studentPayment.OrderId))
+                var log = await _db.RemitaPaymentLogs.AsNoTracking().Where(x => x.OrderId.Equals(studentPayment.OrderId))
                                             .FirstOrDefaultAsync();
 
                 var hashed = myHash.HashRemitedValidate(studentPayment.OrderId, RemitaConfigParams.APIKEY, RemitaConfigParams.MERCHANTID);
-                string url = RemitaConfigParams.CHECKSTATUSURL + "/" + RemitaConfigParams.MERCHANTID + "/" + studentPayment.OrderId + "/" + hashed + "/" + "orderstatus.reg";
+                string url = RemitaConfigParams.CHECKSTATUSURL + "/" + RemitaConfigParams.MERCHANTID + "/" +
+                    studentPayment.OrderId + "/" + hashed + "/" + "orderstatus.reg";
                 string jsondata = new WebClient().DownloadString(url);
                 result = JsonConvert.DeserializeObject<RemitaResponse>(jsondata);
 
@@ -413,26 +423,26 @@ namespace CodedenimWebApp.Controllers
                     studentPayment.IsPayed = true;
                     studentPayment.PaymentStatus = result.Message;
                     studentPayment.ReferenceNo = result.Rrr;
-                    db.Entry(studentPayment).State = EntityState.Modified;
+                    _db.Entry(studentPayment).State = EntityState.Modified;
 
                     log.Rrr = result.Rrr;
                     log.StatusCode = result.Status;
                     log.TransactionMessage = result.Message;
-                    db.Entry(log).State = EntityState.Modified;
-                    await db.SaveChangesAsync();
+                    _db.Entry(log).State = EntityState.Modified;
+                    await _db.SaveChangesAsync();
                 }
                 else
                 {
                     studentPayment.IsPayed = false;
                     studentPayment.PaymentStatus = result.Message;
                     studentPayment.ReferenceNo = result.Rrr;
-                    db.Entry(studentPayment).State = EntityState.Modified;
+                    _db.Entry(studentPayment).State = EntityState.Modified;
 
                     log.Rrr = result.Rrr;
                     log.StatusCode = result.Status;
                     log.TransactionMessage = result.Message;
-                    db.Entry(log).State = EntityState.Modified;
-                    await db.SaveChangesAsync();
+                    _db.Entry(log).State = EntityState.Modified;
+                    await _db.SaveChangesAsync();
                     return RedirectToAction("RetrySchoolFeePayment", new { rrr = result.Rrr });
 
                 }
@@ -449,9 +459,9 @@ namespace CodedenimWebApp.Controllers
         public async Task<ActionResult> Details(int? id)
         {
             var userId = User.Identity.GetUserId();
-            var userType = db.Students.Where(x => x.Id.Equals(userId)).Select(x => x.AccountType).FirstOrDefault();
+            var userType = _db.Students.Where(x => x.Id.Equals(userId)).Select(x => x.AccountType).FirstOrDefault();
             // var userRole = User.IsInRole(userType);
-            var enrolledCourses = db.AssignCourseCategories.Where(x => x.CourseCategory.StudentType.Equals(userType)).ToList();
+            var enrolledCourses = _db.AssignCourseCategories.Where(x => x.CourseCategory.StudentType.Equals(userType)).ToList();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -461,7 +471,7 @@ namespace CodedenimWebApp.Controllers
             {
                 Courses = enrolledCourses
             };
-            CourseCategory courseCategory = await db.CourseCategories.FindAsync(id);
+            CourseCategory courseCategory = await _db.CourseCategories.FindAsync(id);
             if (courseCategory == null)
             {
                 return HttpNotFound();
@@ -474,11 +484,11 @@ namespace CodedenimWebApp.Controllers
             var userId = User.Identity.GetUserId();          
 
 
-            var student = await db.Students.Where( x => x.Id.Equals(userId)).Select(x => x.AccountType).SingleOrDefaultAsync();
+            var student = await _db.Students.Where( x => x.Id.Equals(userId)).Select(x => x.AccountType).SingleOrDefaultAsync();
 
             var model = new List<CourseCategory>();
 
-            var assignedCourse =  db.AssignCourseCategories.Include(i => i.CourseCategory).Include(i => i.Courses)
+            var assignedCourse =  _db.AssignCourseCategories.Include(i => i.CourseCategory).Include(i => i.Courses)
                 .AsNoTracking().Where(x => x.CourseCategory.StudentType.Equals(student)).DistinctBy(s => s.CourseCategoryId).AsQueryable().ToList();
 
             return View(assignedCourse);
@@ -506,8 +516,8 @@ namespace CodedenimWebApp.Controllers
             if (ModelState.IsValid)
             {
                 courseCategory.ImageLocation = path.Path;
-                db.CourseCategories.Add(courseCategory);
-                await db.SaveChangesAsync();
+                _db.CourseCategories.Add(courseCategory);
+                await _db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             //  ViewBag.StudentType = new SelectList(studentType, "Name", "Name");
@@ -542,7 +552,7 @@ namespace CodedenimWebApp.Controllers
             var studentType = from StudentTypes s in Enum.GetValues(typeof(StudentTypes))
                               select new { Id = s, Name = s.ToString() };
             ViewBag.StudentType = new SelectList(studentType, "Name", "Name");
-            CourseCategory courseCategory = await db.CourseCategories.FindAsync(id);
+            CourseCategory courseCategory = await _db.CourseCategories.FindAsync(id);
             if (courseCategory == null)
             {
                 return HttpNotFound();
@@ -561,15 +571,15 @@ namespace CodedenimWebApp.Controllers
             {
 
 
-                var imageFromDB = db.CourseCategories.Where(x => x.Id.Equals(courseCategory.Id)).Select(x => x.ImageLocation).ToString();
+                var imageFromDB = _db.CourseCategories.Where(x => x.Id.Equals(courseCategory.Id)).Select(x => x.ImageLocation).ToString();
 
                 DeletePhoto(courseCategory);
                 var fp = new UploadedFileProcessor();
 
                 var path = fp.ProcessFilePath(File);
                 courseCategory.ImageLocation = path.Path;
-                db.Entry(courseCategory).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                _db.Entry(courseCategory).State = EntityState.Modified;
+                await _db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(courseCategory);
@@ -598,7 +608,7 @@ namespace CodedenimWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CourseCategory courseCategory = await db.CourseCategories.FindAsync(id);
+            CourseCategory courseCategory = await _db.CourseCategories.FindAsync(id);
             if (courseCategory == null)
             {
                 return HttpNotFound();
@@ -611,9 +621,9 @@ namespace CodedenimWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            CourseCategory courseCategory = await db.CourseCategories.FindAsync(id);
-            db.CourseCategories.Remove(courseCategory);
-            await db.SaveChangesAsync();
+            CourseCategory courseCategory = await _db.CourseCategories.FindAsync(id);
+            _db.CourseCategories.Remove(courseCategory);
+            await _db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -621,7 +631,7 @@ namespace CodedenimWebApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -689,7 +699,7 @@ namespace CodedenimWebApp.Controllers
                             //var subjectName = db.Subjects.Where(x => x.SubjectCode.Equals(subjectValue))
                             //    .Select(c => c.SubjectId).FirstOrDefault();
 
-                            var category = db.CourseCategories.Where(x => x.CategoryName.Equals(categoryName) && x.StudentType.Equals(studentType));
+                            var category = _db.CourseCategories.Where(x => x.CategoryName.Equals(categoryName) && x.StudentType.Equals(studentType));
                             var countFromDb = await category.CountAsync();
                             if (countFromDb >= 1)
                             {
@@ -706,7 +716,7 @@ namespace CodedenimWebApp.Controllers
 
 
                             };
-                            db.CourseCategories.Add(mycategory);
+                            _db.CourseCategories.Add(mycategory);
 
                             recordCount++;
                           //  return View("Index",mycategory);
@@ -714,7 +724,7 @@ namespace CodedenimWebApp.Controllers
                         }
                     }
                 }
-                await db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             return View("ExcelUpload");
         }

@@ -16,7 +16,7 @@ namespace CodedenimWebApp.Services
             return BitConverter.ToString(EncryptedSHA512).Replace("-", "").ToLower();
         }
 
-        public string HashRemitedValidate(string orderID, string apiKey, string merchantId)
+        public string HashRemitedValidate(string orderID, string apiKey, string merchantId) // get status of transaction
         {
             string hash_string = orderID + apiKey + merchantId;
             System.Security.Cryptography.SHA512Managed sha512 = new System.Security.Cryptography.SHA512Managed();
@@ -25,7 +25,7 @@ namespace CodedenimWebApp.Services
             return BitConverter.ToString(EncryptedSHA512).Replace("-", "").ToLower();
         }
 
-        public string HashRemitedRePost(string merchantId, string rrr, string apiKey)
+        public string HashRemitedRePost(string merchantId, string rrr, string apiKey) // retry payment process
         {
             string hash_string = merchantId + rrr + apiKey;
             System.Security.Cryptography.SHA512Managed sha512 = new System.Security.Cryptography.SHA512Managed();
@@ -34,7 +34,7 @@ namespace CodedenimWebApp.Services
             return BitConverter.ToString(EncryptedSHA512).Replace("-", "").ToLower();
         }
 
-        public string HashRrrQuery(string rrr, string apiKey, string merchantId)
+        public string HashRrrQuery(string rrr, string apiKey, string merchantId) //query rrr of transaction.
         {
             string hash_string = rrr + apiKey + merchantId;
             System.Security.Cryptography.SHA512Managed sha512 = new System.Security.Cryptography.SHA512Managed();

@@ -342,12 +342,12 @@ namespace CodedenimWebApp.Controllers
             return View(student);
         }
 
-        public async Task<ActionResult> CreateCorper()
+        public ActionResult CreateCorper()
         {
             return View();
         }
 
-        public async Task<ActionResult> CreateUnderGrad()
+        public ActionResult CreateUnderGrad()
         {
             return View();
         }
@@ -381,19 +381,6 @@ namespace CodedenimWebApp.Controllers
         //    return View(student);
 
         //}
-
-
-        [Authorize]
-        public ActionResult AssignedCourseView()
-        {
-            var student = new Student();
-            student.Enrollments = new List<Enrollment>();
-            PopulateAssignedCourseData(student);
-            return View();
-        }
-
-
-
 
 
         /// <summary>

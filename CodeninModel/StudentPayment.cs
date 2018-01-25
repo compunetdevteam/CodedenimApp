@@ -3,6 +3,9 @@ using System;
 
 namespace CodeninModel
 {
+    /// <summary>
+    /// Holds payment summary of every successful or failed payments from Remita
+    /// </summary>
     public class StudentPayment : Entity<int>
     {
         public int StudentPaymentId { get; set; }
