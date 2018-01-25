@@ -4,17 +4,47 @@
 
 <!-- Mirrored from 192.241.236.31/themes/preview/smartadmin/1.9.x/ajax/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Jan 2018 21:16:26 GMT -->
 <head>
-    @Styles.Render("~/Content/Slider")
-    @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/megamenu/skins")
+    @*<link rel="stylesheet" href="~/Content/Asset"/>*@
+    <!-- CSS | Main style file -->
+    <link href="~/Content/Assets1/css/style-main.css" rel="stylesheet" type="text/css">
+    <!-- Stylesheet -->
+    <link href="~/Content/Assets1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/Assets1/css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/Assets1/css/animate.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/Assets1/css/css-plugin-collections.css" rel="stylesheet" />
+    <!-- CSS | menuzord megamenu skins -->
+    <link href="~/Content/Assets1/css/menuzord-megamenu.css" rel="stylesheet" />
+    <link id="menuzord-menu-skins" href="~/Content/Assets1/css/menuzord-skins/menuzord-boxed.css" rel="stylesheet" />
+    <!-- CSS | Main style file -->
+    <link href="~/Content/Assets1/css/style-main.css" rel="stylesheet" type="text/css">
+    <!-- CSS | Preloader Styles -->
+    <link href="~/Content/Assets1/css/preloader.css" rel="stylesheet" type="text/css">
+    <!-- CSS | Custom Margin Padding Collection -->
+    <link href="~/Content/Assets1/css/custom-bootstrap-margin-padding.css" rel="stylesheet" type="text/css">
+    <!-- CSS | Responsive media queries -->
+    <link href="~/Content/Assets1/css/responsive.css" rel="stylesheet" type="text/css">
+    <!-- CSS | Style css. This is the file where you can place your own custom css code. Just uncomment it and use it. -->
+    <!-- <link href="~/Content/Assets1/css/style.css" rel="stylesheet" type="text/css"> -->
+    <!-- Revolution Slider 5.x CSS settings -->
+    <link href="~/Content/Assets1/js/revolution-slider/css/settings.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Assets1/js/revolution-slider/css/layers.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Assets1/js/revolution-slider/css/navigation.css" rel="stylesheet" type="text/css" />
 
-    @Styles.Render("~/Content/MainStyleFile")
+    <!-- CSS | Theme Color -->
+    <link href="~/Content/Assets1/css/colors/theme-skin-color-set1.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    @Styles.Render("~/Content/PreLoader")
-    @Styles.Render("~/Content/MarginPadding")
-    @Styles.Render("~/Content/MediaQueries")
-    @Styles.Render("~/Content/SliderSettings")
-    @Styles.Render("~/Content/ThemeColor")
+    @*@Styles.Render("~/Content/Slider")
+        @Styles.Render("~/Content/css")
+        @Styles.Render("~/Content/megamenu/skins")*@
+
+    @*@Styles.Render("~/Content/Asset1/MainStyleFile")*@
+
+    @*@Styles.Render("~/Content/PreLoader")
+        @Styles.Render("~/Content/MarginPadding")
+        @Styles.Render("~/Content/MediaQueries")
+        @Styles.Render("~/Content/SliderSettings")
+        @Styles.Render("~/Content/ThemeColor")*@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
     @Scripts.Render("~/bundles/js/Slider")
@@ -61,94 +91,201 @@
     @Styles.Render("~/Content/css/LoginAssets")
 </head>
 <body class="animated fadeInDown">
-
-    <header id="header" >
-       
-
-            <div id="logo-group">
-                <span id="logo">
-                    <a href="@Url.Action("index","Home")">   <img class="logo-scrolled-to-fixed" src="~/Content/Assets/images/newlogosmall2.png" /></a>
-                </span>
-                @*<span id="logo"> <img src="~/Content/LandingPageAssets/img/logo.png" alt="Codedenim"> </span>*@
-            </div>
-
-            <span id="extr-page-header-space"> <span class="hidden-mobile hidden-xs">Need an account?</span> <a href="@Url.Action("Register","Account")" class="btn btn-blue-grey-900">Create account</a> </span>
-
-    </header>
-
-
-
-    <div id="main" role="main">
-
-        <!-- MAIN CONTENT -->
-        <div id="content" class="container">
-
-            @RenderBody()
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer id="footer" class="footer" data-bg-color="#212331">
-        <div class="container pt-70 pb-40">
-            <div class="row">
-                <div class=" col-md-">
-                    <div class="widget dark">
-                        @*<img class="mt-5 mb-20" alt="" src="~/Content/Assets/images/logo-white-footer.png">*@
-                        <p>Plateau State, Jos. Nigeria.</p>
-                        <ul class="list-inline mt-5">
-                            <li class="m-0 pl-10 pr-10"> <i class="fa fa-phone text-theme-colored2 mr-5"></i> <a class="text-gray" href="#">08136712272</a> </li>
-                            <li class="m-0 pl-10 pr-10"> <i class="fa fa-envelope-o text-theme-colored2 mr-5"></i> <a class="text-gray" href="#">info@ararockscreativecraftinstitute.com</a> </li>
-                            @*<li class="m-0 pl-10 pr-10"> <i class="fa fa-globe text-theme-colored2 mr-5"></i> <a class="text-gray" href="#">www.yourdomain.com</a> </li>*@
-                        </ul>
-                        <ul class="styled-icons icon-sm icon-bordered icon-circled clearfix mt-10">
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-vk"></i></a></li>
-                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                        </ul>
+    <div id="wrapper" class="clearfix">
+        <!-- Header -->
+        <header id="header" class="header header-floating header-floating-text-dark">
+            <div class="header-top bg-theme-colored2 sm-text-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="widget text-white">
+                                <ul class="list-inline xs-text-center text-white">
+                                    <li class="m-0 pl-10 pr-10"> <a href="#" class="text-white"><i class="fa fa-phone text-white"></i> +234 813-6712-272</a> </li>
+                                    <li class="m-0 pl-10 pr-10">
+                                        <a href="#" class="text-white"><i class="fa fa-envelope-o text-white mr-5"></i> info@codedenim.org</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4 pr-0">
+                            <div class="widget">
+                                <ul class="styled-icons icon-sm pull-right flip sm-pull-none sm-text-center mt-5">
+                                    <li><a href=""><i class="fa fa-facebook text-white"></i></a></li>
+                                    <li><a href=""><i class="fa fa-twitter text-white"></i></a></li>
+                                    <li><a href=""><i class="fa fa-google-plus text-white"></i></a></li>
+                                    <li><a href=""><i class="fa fa-instagram text-white"></i></a></li>
+                                    <li><a href=""><i class="fa fa-linkedin text-white"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <ul class="list-inline sm-pull-none sm-text-center text-right text-white mb-sm-20 mt-10">
+                                <li class="m-0 pl-10 text-white"> <i class="fa fa-user-o mr-5 text-white"></i> @Html.ActionLink("Login","Login","Account", new { @class = "text-white" }) </li>
+                                <li class="m-0 pl-0 pr-10 text-white">
+                                    <i class="fa fa-edit mr-5"></i>  @Html.ActionLink("Register", "Register", "Account" ,new { @class= "text-white" })
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-
             </div>
-        </div>
-        <div class="footer-bottom" data-bg-color="#2b2d3b">
-            <div class="container pt-20 pb-20">
-                <div class="row">
-                    <div class="col-md-6">
-                        <p class="font-12 text-black-777 m-0 sm-text-center">@DateTime.UtcNow.Year Codedenim</p>
+            @*<div class="header-nav navbar-sticky navbar-sticky-animated">
+                <div class="header-nav-wrapper">
+                    <div class="container">
+                        <nav id="menuzord-right" class="menuzord default no-bg">
+                            <a class="menuzord-brand switchable-logo pull-left flip mb-15" href="@Url.Action( "Index", "Home")">
+                                <img class="logo-default" src="~/Content/Assets1/images/logo-wide-white.png" alt="">
+                                <img class="logo-scrolled-to-fixed" src="~/Content/Assets1/images/logo-wide.png" alt="">
+                            </a>
+                            <ul class="menuzord-menu onepage-nav">
+                                <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+                                <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                                <li>@Html.ActionLink("SignUp", "Register", "Account")</li>
+
+                            </ul>
+                        </nav>
                     </div>
-                    @*<div class="col-md-6 text-right">
+                </div>
+            </div>*@
+        </header>
+        </div>
+        @*<header id="header">
+
+
+                <div id="logo-group">
+                    <span id="logo">
+                        <a href="@Url.Action("index","Home")">   <img class="logo-scrolled-to-fixed" src="~/Content/Assets/images/newlogosmall2.png" /></a>
+                    </span>
+
+                </div>
+
+                <span id="extr-page-header-space"> <span class="hidden-mobile hidden-xs">Need an account?</span> <a href="@Url.Action("Register","Account")" class="btn btn-blue-grey-900">Create account</a> </span>
+
+            </header>*@
+
+
+
+  
+
+                @RenderBody()
+      >
+
+        <!-- Footer -->
+        <footer id="footer" class="footer" style="background: black; " data-bg-color="#000">
+            <div class="container pt-70 pb-40">
+                <div class="row">
+                    <div class="col-sm-8 col-md-6">
+                        <div class="widget dark">
+                            <img class="mt-5 mb-20" alt="" src="~/Content/Assets1/images/logo-white-footer.png">
+                            <p style="color: gray">Plot 7A Ara Rocks Creative House, Off Liberty Dam Road-Behind De Eden Hotel Jos-Plateau State.</p>
+                            <ul class="list-inline mt-5">
+                                <li class="m-0 pl-10 pr-10"> <i class="fa fa-phone text-theme-colored2 mr-5"></i> <a class="text-gray" href="#">+234 813-6712-272</a> </li>
+                                <li class="m-0 pl-10 pr-10"> <i class="fa fa-envelope-o text-theme-colored2 mr-5"></i> <a class="text-gray" href="#">info@ararockscreativecraftinstitute.com</a> </li>
+                                <li class="m-0 pl-10 pr-10"> <i class="fa fa-globe text-theme-colored2 mr-5"></i> <a class="text-gray" href="#">www.codedenim.org</a> </li>
+                            </ul>
+                            <ul class="styled-icons icon-sm icon-bordered icon-circled clearfix mt-10">
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-vk"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3">
+                        <div class="widget dark">
+                            <h4 class="widget-title line-bottom-theme-colored-2">Useful Links</h4>
+                            <ul class="angle-double-right list-border">
+
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Our Mission</a></li>
+                                <li><a href="#">Terms and Conditions</a></li>
+                                <li><a href="#">FAQ</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="widget dark">
+                            <h4 class="widget-title line-bottom-theme-colored-2">Opening Hours</h4>
+                            <div class="opening-hours">
+                                <ul class="list-border">
+                                    <li class="clearfix">
+                                        <span> Mon - Tues :  </span>
+                                        <div class="value pull-right"> 8:00 am - 5:00 pm </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <span> Wednes - Thurs :</span>
+                                        <div class="value pull-right"> 8:00 am - 5:00 pm </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <span> Fri : </span>
+                                        <div class="value pull-right">  8:00 am - 5:00 pm  </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <span> Sun : </span>
+                                        <div class="value pull-right">  8:00 am - 5:00 pm  </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom" data-bg-color="#22965C">
+                <div class="container pt-20 pb-20">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="font-12 text-black-777 m-0 sm-text-center">Copyright &copy; Codedenim. All Rights Reserved</p>
+                        </div>
+                        <div class="col-md-6 text-right">
                             <div class="widget no-border m-0">
                                 <ul class="list-inline sm-text-center mt-5 font-12">
                                     <li>
                                         <a href="#">FAQ</a>
                                     </li>
                                     <li>|</li>
-                                    <li>
-                                        <a href="#">Help Desk</a>
-                                    </li>
-                                    <li>|</li>
+
+
                                     <li>
                                         <a href="#">Support</a>
                                     </li>
                                 </ul>
                             </div>
-                        </div>*@
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 
-    @Scripts.Render("~/bundles/js/LoginAssets")
-    @*<script>
+        @Scripts.Render("~/bundles/js/LoginAssets")
+
+
+
+        <script>
             runAllForms();
 
+            // Model i agree button
+            $("#i-agree").click(function () {
+                $this = $("#terms");
+                if ($this.checked) {
+                    $('#myModal').modal('toggle');
+                } else {
+                    $this.prop('checked', true);
+                    $('#myModal').modal('toggle');
+                }
+            });
+
+            // Validation
             $(function () {
                 // Validation
-                $("#login-form").validate({
+                $("#smart-form-register").validate({
+
                     // Rules for form validation
                     rules: {
+                        username: {
+                            required: true
+                        },
                         email: {
                             required: true,
                             email: true
@@ -157,18 +294,64 @@
                             required: true,
                             minlength: 3,
                             maxlength: 20
+                        },
+                        passwordConfirm: {
+                            required: true,
+                            minlength: 3,
+                            maxlength: 20,
+                            equalTo: '#password'
+                        },
+                        firstname: {
+                            required: true
+                        },
+                        lastname: {
+                            required: true
+                        },
+                        gender: {
+                            required: true
+                        },
+                        terms: {
+                            required: true
                         }
                     },
 
                     // Messages for form validation
                     messages: {
+                        login: {
+                            required: 'Please enter your login'
+                        },
                         email: {
                             required: 'Please enter your email address',
                             email: 'Please enter a VALID email address'
                         },
                         password: {
                             required: 'Please enter your password'
+                        },
+                        passwordConfirm: {
+                            required: 'Please enter your password one more time',
+                            equalTo: 'Please enter the same password as above'
+                        },
+                        firstname: {
+                            required: 'Please select your first name'
+                        },
+                        lastname: {
+                            required: 'Please select your last name'
+                        },
+                        gender: {
+                            required: 'Please select your gender'
+                        },
+                        terms: {
+                            required: 'You must agree with Terms and Conditions'
                         }
+                    },
+
+                    // Ajax form submition
+                    submitHandler: function (form) {
+                        $(form).ajaxSubmit({
+                            success: function () {
+                                $("#smart-form-register").addClass('submited');
+                            }
+                        });
                     },
 
                     // Do not change code below
@@ -176,126 +359,26 @@
                         error.insertAfter(element.parent());
                     }
                 });
+
             });
-        </script>*@
+        </script>
+        <!-- Your GOOGLE ANALYTICS CODE Below -->
+        <script>
 
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-43548732-6']);
+            _gaq.push(['_trackPageview']);
 
-    <script>
-        runAllForms();
+            (function () {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
 
-        // Model i agree button
-        $("#i-agree").click(function () {
-            $this = $("#terms");
-            if ($this.checked) {
-                $('#myModal').modal('toggle');
-            } else {
-                $this.prop('checked', true);
-                $('#myModal').modal('toggle');
-            }
-        });
+        </script>
+        @RenderSection("scripts", required: false)
 
-        // Validation
-        $(function () {
-            // Validation
-            $("#smart-form-register").validate({
-
-                // Rules for form validation
-                rules: {
-                    username: {
-                        required: true
-                    },
-                    email: {
-                        required: true,
-                        email: true
-                    },
-                    password: {
-                        required: true,
-                        minlength: 3,
-                        maxlength: 20
-                    },
-                    passwordConfirm: {
-                        required: true,
-                        minlength: 3,
-                        maxlength: 20,
-                        equalTo: '#password'
-                    },
-                    firstname: {
-                        required: true
-                    },
-                    lastname: {
-                        required: true
-                    },
-                    gender: {
-                        required: true
-                    },
-                    terms: {
-                        required: true
-                    }
-                },
-
-                // Messages for form validation
-                messages: {
-                    login: {
-                        required: 'Please enter your login'
-                    },
-                    email: {
-                        required: 'Please enter your email address',
-                        email: 'Please enter a VALID email address'
-                    },
-                    password: {
-                        required: 'Please enter your password'
-                    },
-                    passwordConfirm: {
-                        required: 'Please enter your password one more time',
-                        equalTo: 'Please enter the same password as above'
-                    },
-                    firstname: {
-                        required: 'Please select your first name'
-                    },
-                    lastname: {
-                        required: 'Please select your last name'
-                    },
-                    gender: {
-                        required: 'Please select your gender'
-                    },
-                    terms: {
-                        required: 'You must agree with Terms and Conditions'
-                    }
-                },
-
-                // Ajax form submition
-                submitHandler: function (form) {
-                    $(form).ajaxSubmit({
-                        success: function () {
-                            $("#smart-form-register").addClass('submited');
-                        }
-                    });
-                },
-
-                // Do not change code below
-                errorPlacement: function (error, element) {
-                    error.insertAfter(element.parent());
-                }
-            });
-
-        });
-    </script>
-    <!-- Your GOOGLE ANALYTICS CODE Below -->
-    <script>
-
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-43548732-6']);
-        _gaq.push(['_trackPageview']);
-
-        (function () {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-
-    </script>
-    @RenderSection("scripts", required: false)
-</body>
+        </body>
 
 <!-- Mirrored from 192.241.236.31/themes/preview/smartadmin/1.9.x/ajax/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Jan 2018 21:16:27 GMT -->
 </html>

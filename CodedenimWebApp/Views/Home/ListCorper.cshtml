@@ -3,7 +3,7 @@
     ViewBag.Title = "ListCorper";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
-
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
 <h2>ListCorper</h2>
 
 
@@ -27,7 +27,7 @@
                     <th class="text-right">Action</th>
                 </tr>
                 </thead>
-                <tbody id="responsive-table-body">
+                <tbody id="responsive-table-body myTable">
                 @foreach (var corper in Model.Corpers)
                 {
                     <tr>
@@ -37,7 +37,7 @@
                                 <label for="checkbox1">Label</label>
                             </div>
                         </td>
-                        <td><span class="label label-default">19/09/2014</span></td>
+                        <td><span class="label label-default"></span></td>
                         <td>
                             <img src="images/people/110/guy-5.jpg" width="40" class="img-circle"/> @corper.FullName
                         </td>
@@ -74,3 +74,9 @@
         </div>
     </div>
 
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>

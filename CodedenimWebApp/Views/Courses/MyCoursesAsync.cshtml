@@ -8,9 +8,9 @@
 
 
 
-<h2>Paid Courses</h2>
+<h2 class="alert alert-info">Paid Courses</h2>
 
-
+      
 
 
 
@@ -19,8 +19,15 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="row" data-toggle="isotope">
+
                     @foreach (var mycourses in Model)
     {
+
+                if (mycourses == null)
+{
+                <div class="alert alert-info" role="alert">Your have not paid for any course. Please Click on the Couses Page in the side bar.</div>
+}
+
 
                 <div class="item col-xs-12 col-sm-6 col-lg-4">
                     <div class="panel panel-default paper-shadow" data-z="0.5">
@@ -32,7 +39,7 @@
                                 </span>
                             </a>
                             <a href="@Url.Action("CategoryContent", "Courses",new{@id = mycourses.CourseCategoryId})" class="overlay overlay-full overlay-hover overlay-bg-white">
-                                <span class="v-center"> 
+                                <span class="v-center">
                                     <span class="btn btn-circle btn-white btn-lg"><i class="fa fa-graduation-cap"></i></span>
                                 </span>
                             </a>
@@ -96,12 +103,12 @@
     </div>*@
 }
                 </div>
-              
+
                 <br />
                 <br />
             </div>
-         
-        
+
+
         </div>
     </div>
 </div>

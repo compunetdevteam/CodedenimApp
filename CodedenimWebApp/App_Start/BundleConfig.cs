@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace CodedenimWebApp
 {
@@ -9,7 +8,7 @@ namespace CodedenimWebApp
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Content/Assets/js/jquery-{version}.js"
+                        "~/Content/Assets1/js/jquery-{version}.js"
                         ));
             //bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
             //            "~/Scripts/jquery-{version}.js"));
@@ -77,13 +76,13 @@ namespace CodedenimWebApp
             bundles.Add(new StyleBundle("~/Content/css/LoginAssets").Include(
                    //"~/Content/bootstrap.css",
                    //"~/Content/site.css"));
-                   "~/Content/LoginAssets/css/bootstrap.min.css",
-                   "~/Content/LoginAssets/css/font-awesome.min.css",
-                   "~/Content/LoginAssets/css/smartadmin-production-plugins.min.css",
-                  "~/Content/LoginAssets/css/smartadmin-production.min.css",
-                   "~/Content/LoginAssets/css/smartadmin-skins.min.css",
-                   "~/Content/LoginAssets/css/smartadmin-rtl.min.css",
-                   "~/Content/LoginAssets/css/demo.min.css"
+                  // "~/Content/LoginAssets/css/bootstrap.min.css",
+                  // "~/Content/LoginAssets/css/font-awesome.min.css",
+                  // //"~/Content/LoginAssets/css/smartadmin-production-plugins.min.css",
+                  ////"~/Content/LoginAssets/css/smartadmin-production.min.css",
+                  // "~/Content/LoginAssets/css/smartadmin-skins.min.css",
+                  // "~/Content/LoginAssets/css/smartadmin-rtl.min.css",
+                  // "~/Content/LoginAssets/css/demo.min.css"
 
                    ));
 
@@ -98,7 +97,7 @@ namespace CodedenimWebApp
                  ));
 
             bundles.Add(new ScriptBundle("~/bundles/js/Slider").Include(
-                    "~/Content/Assets/js/responsiveslides.min.js"
+                    "~/Content/Assets1/js/responsiveslides.min.js"
             ));
 
 
@@ -108,20 +107,20 @@ namespace CodedenimWebApp
 
             //external javascripts
             bundles.Add(new ScriptBundle("~/bundles/ExternalJs").Include(
-                     "~/Content/Assets/js/jquery-2.2.4.min.js",
-                     "~/Content/Assets/js/jquery-ui.min.js",
-                     "~/Content/Assets/js/bootstrap.min.js"
+                     "~/Content/Assets1/js/jquery-2.2.4.min.js",
+                     "~/Content/Assets1/js/jquery-ui.min.js",
+                     "~/Content/Assets1/js/bootstrap.min.js"
                      ));
 
             //JS | jquery plugin collection for this theme 
 
             bundles.Add(new ScriptBundle("~/bundles/JQueryPluginCollection").Include(
-                     "~/Content/Assets/js/jquery-plugin-collection.js"
+                     "~/Content/Assets1/js/jquery-plugin-collection.js"
                      ));
             //Revolution Slider 5.x SCRIPTS
             bundles.Add(new ScriptBundle("~/bundles/SliderScript").Include(
-               "~/Content/Assets/js/jquery.themepunch.tools.min.js",
-               "~/Content/Assets/js/jquery.themepunch.revolution.min.js"
+               "~/Content/Assets1/js/jquery.themepunch.tools.min.js",
+               "~/Content/Assets1/js/jquery.themepunch.revolution.min.js"
                ));
 
 
@@ -136,35 +135,35 @@ namespace CodedenimWebApp
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       //"~/Content/bootstrap.css",
                       //"~/Content/site.css"
-                      "~/Content/Assets/css/bootstrap.min.css",
-                      "~/Content/Assets/css/jquery-ui.min.css",
-                      "~/Content/Assets/css/animate.css",
-                      "~/Content/Assets/css/css-plugin-collections.css",
+                      "~/Content/Assets1/css/bootstrap.min.css",
+                      "~/Content/Assets1/css/jquery-ui.min.css",
+                      "~/Content/Assets1/css/animate.css",
+                      "~/Content/Assets1/css/css-plugin-collections.css",
                          "~/Content/LandingPageAssets/font-awesome/css/font-awesome.min.css"
                       ));
             //CSS | menuzord megamenu skins 
             bundles.Add(new StyleBundle("~/Content/megamenu/skins").Include(
-                     "~/Content/Assets/css/menuzord-megamenu.css",
-                     "~/Content/Assets/css/menuzord-skins/menuzord-boxed.css"
+                     "~/Content/Assets1/css/menuzord-megamenu.css",
+                     "~/Content/Assets1/css/menuzord-skins/menuzord-boxed.css"
                       ));
-            ///Slider from 30billion
+            //Slider from 30billion
             bundles.Add(new StyleBundle("~/Content/Slider").Include(
-            "~/Content/Assets/css/responsiveslides.css",
-                     "~/Content/Assets/css/demo.css"
+            "~/Content/Assets1/css/responsiveslides.css",
+                     "~/Content/Assets1/css/demo.css"
                       ));
             //Main style File
             bundles.Add(new StyleBundle("~/Content/MainStyleFile").Include(
-                 "~/Content/Assets/css/style-main.css"
-
+                 "~/Content/Assets1/css/style-main.css",
+                 "~/Content/Assets1/css/utility-classes.css"
                 ));
             //Pre-Loader
             bundles.Add(new StyleBundle("~/Content/PreLoader").Include(
-               "~/Content/Assets/css/preloader.css"
+               "~/Content/Assets1/css/preloader.css"
                ));
 
             //Custom Margin Padding Collection
             bundles.Add(new StyleBundle("~/Content/MarginPadding").Include(
-            "~/Content/Assets/css/custom-bootstrap-margin-padding.css"
+            "~/Content/Assets1/css/custom-bootstrap-margin-padding.css"
             ));
             // Responsive media queries
             bundles.Add(new StyleBundle("~/Content/MediaQueries").Include(
@@ -172,14 +171,14 @@ namespace CodedenimWebApp
          ));
             //Revolution Slider 5.x CSS settings
             bundles.Add(new StyleBundle("~/Content/SliderSettings").Include(
-      "~/Content/Assets/css/settings.css",
-      "~/Content/Assets/css/layers.css",
-      "~/Content/Assets/css/navigation.css"
+                  "~/Content/Assets1/css/settings.css",
+                  "~/Content/Assets1/css/layers.css",
+                  "~/Content/Assets1/css/navigation.css"
       ));
 
             //CSS | Theme Color
             bundles.Add(new StyleBundle("~/Content/ThemeColor").Include(
-     "~/Content/Assets/css/colors/theme-skin-color-set4.css"
+                 "~/Content/Assets1/css/colors/theme-skin-color-set4.css"
      ));
             ////////////End of CSS style sheet bundle code///////////////////////////////
 

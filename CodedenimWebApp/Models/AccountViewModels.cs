@@ -332,6 +332,9 @@ namespace CodedenimWebApp.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        [Required]
+        public string MobileNumber { get; set; }
+
         public AccountType AccountType { get; set; }
 
         [Required]
