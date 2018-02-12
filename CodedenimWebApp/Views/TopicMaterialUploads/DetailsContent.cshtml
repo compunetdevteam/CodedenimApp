@@ -12,115 +12,84 @@
 
 
 <div class="row panel panel-default">
+    <div class="col-md-12">
+        <div class="page-section">
+            <div class="media">
 
-
-
-    <div class="col-xs-12 col-md-8 ">
-        @if (@Model.Material != null)
-    {
-        if (@Model.Material.FileType == FileType.MP4)
-        {
-            <div style="text-align: center">
-                <button onclick="playPause()" class="btn btn-primary">Play/Pause</button>
-                <button onclick="makeBig()" class="btn btn-primary">Big</button>
-                <button onclick="makeSmall()" class="btn btn-primary">Small</button>
-                <button onclick="makeNormal()" class="btn btn-primary">Normal</button>
-                <br><br>
-
-                <video controls="controls" id="video1" width="420">
-                    <source src="~/MaterialUpload/@Model.Material.FileLocation" type="video/mp4">
-                    Your browser does not support HTML5 video.
-                </video>
+                    <span class="icon-block s60 bg-lightred"><i class="fa fa-book"></i></span>
+                
+                <div class="media-body">
+                    <h1 class="text-display-1 margin-none">@Html.DisplayFor(model => Model.Material.Name)</h1>
+                <br>
+                </div>
             </div>
-    }
-    else if (@Model.Material.FileType == FileType.PDF)
-    {
-        @*<iframe src="@BlobService.BlobUri/@Model.Material.FileLocation" style="width: 500px; height:500px; border: none;" type="application/pdf"> </iframe>*@
-        <iframe src="~/MaterialUpload/@Model.Material.FileLocation" style="width: 900px; height:900px; border: none;" type="application/pdf"> </iframe>
+        </div>
+        </div>
+
+        <div class="col-xs-12 col-md-8 ">
+            @if (@Model.Material != null)
+            {
+                if (@Model.Material.FileType == FileType.MP4)
+                {
+                    <div style="text-align: center">
+                        <button onclick="playPause()" class="btn btn-primary">Play/Pause</button>
+                        <button onclick="makeBig()" class="btn btn-primary">Big</button>
+                        <button onclick="makeSmall()" class="btn btn-primary">Small</button>
+                        <button onclick="makeNormal()" class="btn btn-primary">Normal</button>
+                        <br><br>
+
+                        <video controls="controls" id="video1" width="600">
+                            <source src="~/MaterialUpload/@Model.Material.FileLocation" type="video/mp4">
+                            Your browser does not support HTML5 video.
+                        </video>
+                    </div>
+                }
+                else if (@Model.Material.FileType == FileType.PDF)
+                {
+
+                    <iframe src="~/MaterialUpload/@Model.Material.FileLocation" style="width: 900px; height:900px; border: none;" type="application/pdf"> </iframe>
 
 
 
 
 
-}
-else if (@Model.Material.FileType == FileType.Audio)    
-{
+                }
+                else if (@Model.Material.FileType == FileType.Audio)
+                {
 
-    <audio controls="controls" id="video1" width="420">
-        <source src="~/MaterialUpload/@Model.Material.FileLocation" type="audio/mpeg">
+                    <audio controls="controls" id="video1" width="420">
+                        <source src="~/MaterialUpload/@Model.Material.FileLocation" type="audio/mpeg">
 
-    </audio>
+                    </audio>
 
-}
-}
+                }
+            }
+        </div>
+
+
+
     </div>
 
-    @*<div class="col-xs-6 col-md-4 ">
-        <h4>Topic Material Upload</h4>
-        <hr/>
-        <dl class="dl-horizontal">
-            <dt class="label label-default">
-                @Html.DisplayNameFor(model => content.Course.TopicName)
-            </dt>
+    <script>
 
-            <dd>
-                @Html.DisplayFor(model => content.Course.TopicName)
-            </dd>
-            <hr/>
-            <dt class="label label-default">
-                @Html.DisplayNameFor(model => content.Tutor)
-            </dt>
+        var myVideo = document.getElementById("video1");
 
-            <dd>
-                @Html.DisplayFor(model => content.Tutor)
-            </dd>
-            <hr/>
-            <dt class="label label-default">
-                @Html.DisplayNameFor(model => content.FileType)
-            </dt>
+        function playPause() {
+            if (myVideo.paused)
+                myVideo.play();
+            else
+                myVideo.pause();
+        }
 
-            <dd>
-                @Html.DisplayFor(model => content.FileType)
-            </dd>
-            <hr/>
-            <dt class="label label-default">
-                @Html.DisplayNameFor(model => content.Name)
-            </dt>
+        function makeBig() {
+            myVideo.width = 780;
+        }
 
-            <dd>
-                @Html.DisplayFor(model => content.Name)
-            </dd>
+        function makeSmall() {
+            myVideo.width = 420;
+        }
 
-
-
-
-
-        </dl>
-    </div>*@
-
-    
-</div>
-
-<script>
-
-    var myVideo = document.getElementById("video1");
-
-    function playPause() {
-        if (myVideo.paused)
-            myVideo.play();
-        else
-            myVideo.pause();
-    }
-
-    function makeBig() {
-        myVideo.width = 560;
-    }
-
-    function makeSmall() {
-        myVideo.width = 320;
-    }
-
-    function makeNormal() {
-        myVideo.width = 420;
-    }
-</script>
+        function makeNormal() {
+            myVideo.width = 560;
+        }
+    </script>

@@ -80,6 +80,7 @@ namespace CodedenimWebApp.Migrations
 
                 manager.Create(user, "admin12345");
                 manager.AddToRole(user.Id, "Admin");
+
             }
             //  This method will be called after migrating to the latest version.
 

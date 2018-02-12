@@ -23,7 +23,7 @@ namespace CodedenimWebApp.Controllers.Api
         [ResponseType(typeof(CourseCategory))]
         // GET: api/CourseCategories
         //
-        // these method will get all the courses based on the student type 
+        // these method will get all the courses based on the student type x`
         // either Corper , undergraduate or regular student|
         // the query is performed based on the email parameter coming into the method
         public async Task<IHttpActionResult> CourseCategorys(string email)

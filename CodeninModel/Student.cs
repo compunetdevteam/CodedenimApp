@@ -36,6 +36,7 @@ namespace CodeninModel
         public string StateOfService { get; set; }
         public string Batch { get; set; }
         public string Discpline { get; set; }
+
         
 
 

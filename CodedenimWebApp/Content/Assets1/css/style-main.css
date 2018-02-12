@@ -8677,8 +8677,10 @@ input.input-circled {
   box-shadow: none;
 }
 .header.header-floating.header-floating-text-dark .sticky-wrapper:not(.is-sticky) .header-nav.navbar-sticky .menuzord-menu > li:not(.active):not(:hover) > a {
-  color: #fff;
+    color: #fff;
 }
+
+S
 .header.header-floating .sticky-wrapper.is-sticky .header-nav.navbar-sticky .header-nav-wrapper {
   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
 }

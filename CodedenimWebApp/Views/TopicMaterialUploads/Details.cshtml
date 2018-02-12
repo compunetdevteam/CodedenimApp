@@ -6,152 +6,231 @@
     ViewBag.Title = "Topic Material Details";
 
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
-      
+
 }
 
 
-    
 
 
 
 
 
-    
 
 
-    <div class="row ">
-        <div class="col-md-10" id="loadTopicContent">
-            @foreach (var material in Model.Materials)
+
+
+@*<div class="row ">
+            <div class="col-md-10" id="loadTopicContent">
+                @foreach (var material in Model.Materials)
+                {
+
+                    <div class="panel-footer" id="topicContents">
+                        <div class="text-left">
+
+                            <div id="topicContents">
+                                <div onclick="loadContent(@material.TopicMaterialUploadId)">
+                                <button class="btn btn-success"><i class="fa fa-save fa-fw"></i>@Html.DisplayFor(model => material.Name)</button>
+                                 </div>
+                              </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+
+
+
+
+
+
+        </div>
+
+    <br/>
+
+
+
+        <div class="col-md-9" id="MaterialContent">
+
+        </div>
+
+
+
+        <div class="sidebar right sidebar-size-3 sidebar-offset-0 sidebar-visible-desktop sidebar-skin-white" id="sidebar-library">
+            <div data-scrollable >
+                <h4 class="category">Modules</h4>
+
+                @foreach (var item in Model.Modules)
+        {
+            <div class="sidebar-block">
+                <div class="form-group input-group">
+                    <div class="row margin-none">
+                        <div class="link-text-color"> @item.ModuleName</div>
+                    </div>
+                    @foreach (var topicContent in item.Topics.Where(x => x.ModuleId.Equals(item.ModuleId)))
             {
+                <button type="button" class="btn btn-primary" onclick="material(@topicContent.TopicId)"><i class="fa fa-book"></i></button>
+    }
 
-                <div class="panel-footer" id="topicContents">
+                </div>
+            </div>
+    }
+
+
+
+                        </div>
+                    </div>*@
+
+
+
+
+
+<div class="panel-body text-center" id="loadTopicContent">
+    <div class="row">
+    @foreach (var material in Model.Materials)
+    {
+                <div class="panel-footer col-md-3" id="topicContents">
                     <div class="text-left">
 
                         <div id="topicContents">
                             <div onclick="loadContent(@material.TopicMaterialUploadId)">
-                            <button class="btn btn-success"><i class="fa fa-save fa-fw"></i>@Html.DisplayFor(model => material.Name)</button>
-                             </div>
-                          </div>
+                                <button class="btn btn-success btn-lg paper-shadow relative" data-z="1" data-hover-z="2" data-animated>@Html.DisplayFor(model => material.FileType)</button>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
-            }
+     }
         </div>
+   </div>
+
+<div class="media media-grid media-clearfix-xs">
+    <div class="media-body">
+        <div class="row">
+            @*width-350 width-300-md width-100pc-xs*@
+            <div class=" paragraph-inline">
+                <div class="embed-responsive embed-responsive-16by9">
+                    @*<iframe class="embed-responsive-itemSS" src="//www.youtube-nocookie.com/embed/Ycv5fNd4AeM?rel=0"></iframe>*@
 
 
 
-        @*<div class="panel-body" id="loadTopicContent">
-            @foreach (var material in Model.Materials)
-            {
-                <div id="topicContents">
 
-                    <dt class="btn label label-default" onclick="loadContent(@material.TopicMaterialUploadId)">
-                        @Html.DisplayNameFor(model => material.Name)
+                </div>
+            </div>
+            @*<br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />*@
 
-                        <b> @Html.DisplayFor(model => material.Name) </b>
-                    </dt>
-                    <hr />
+            <div class="col-md-12">
+                <div class="page-section" id="MaterialContent">
+                    <div class="page-section">
+                        <h2 class="text-headline margin-none">Instruction</h2>
+                        <p class="text-subhead text-light"> </p>
+                        <ul class="list-group relative paper-shadow margin-none" data-hover-z="0.5" data-animated>
 
+                            <li class="list-group-item paper-shadow">
+                                <div class="media v-middle">
+                                    <div class="media-left">
+                                        <div class="icon-block s30 bg-grey-500 text-white img-circle">
+                                            <i class="fa fa-check"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body text-body-2">
+                                        To Start Course Click on the Module Section and then choose the content type at the top of the page.
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-
-            }
-        </div>*@
-
-
-
-    </div>
-
-<br/>
-
-
-
-    <div class="col-md-9" id="MaterialContent">
-
-    </div>
-
-
-
-    <div class="sidebar right sidebar-size-3 sidebar-offset-0 sidebar-visible-desktop sidebar-skin-white" id="sidebar-library">
-        <div data-scrollable >
-            <h4 class="category">Modules</h4>
-            
-            @foreach (var item in Model.Modules)
-    {
-        <div class="sidebar-block">
-            <div class="form-group input-group">
-                <div class="row margin-none">
-                    <div class="link-text-color"> @item.ModuleName</div>
-                </div>
-                @foreach (var topicContent in item.Topics.Where(x => x.ModuleId.Equals(item.ModuleId)))
-        {
-            <button type="button" class="btn btn-primary" onclick="material(@topicContent.TopicId)"><i class="fa fa-book"></i></button>
-}
-
             </div>
         </div>
-}
+        <div class="page-section">
 
-        
+        </div>
+        <div class="pull-right">
 
-                    </div>
+        </div>
+
+        <br />
+
+    </div>
+    <div class="media-right">
+        <div class="page-section width-270 width-auto-xs">
+   
+            <!-- .panel -->
+            <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated>
+                <div class="panel-body">
+                    <h4 class="text-headline">Modules</h4>
                 </div>
+                <ul class="list-group">
+                    @foreach (var item in Model.Modules)
+                    {
+                    <li class="list-group-item">
+                        @foreach (var topicContent in item.Topics.Where(x => x.ModuleId.Equals(item.ModuleId)))
+                        {
+                    <div class="media v-middle">
+                        <div class="media-left">
+                            <div class="icon-block s30 bg-grey-400 text-white">
+                                <i class="fa fa-mortar-board"></i>
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <a onclick="material(@topicContent.TopicId)" class="link-text-color">@item.ModuleName</a>
+                        </div>
+                    </div>
+                        }
+                    </li>
+                    }
+                </ul>
+            </div>
+            <!-- // END .panel -->
+        </div>
+        <!-- // END .page-section -->
+    </div>
+</div>
 
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-                <script type="text/javascript">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
     $(document).ready(function () {
-        //$('#ContentId').click(function () {
-        //    var contentId = $(this).attr('value');
-        //    $('#MaterialContent').load("/TopicMaterialUploads/DetailsContent/" + contentId);
-        //});
+
 
 
     });
-    //function material(Moduleid,CourseId) {
-    //    $('loadTopicContent').load("/TopicMaterialUploads/Details/id?" + id + "/courseId?" +CourseId);
-    //}
-        function loadContent(contentId) {
-            $('#MaterialContent').load("/TopicMaterialUploads/DetailsContent/" + contentId);
-        }
+
+    function loadContent(contentId) {
+        $('#MaterialContent').load("/TopicMaterialUploads/DetailsContent/" + contentId);
+    }
     function material(topicId) {
 
         $('#loadTopicContent').load("/TopicMaterialUploads/SideBarContentForMaterial/" + topicId);
     }
 
-    //$("#ContentId").click(function () {
 
-    //    //alert("i am nigeria");
-    //    $("#MaterialContent").load("i am Nigeria ");
-    //});
-    @*function changeMaterial(contentId) {
-<a href="~/Controllers/TutorsController.cs">~/Controllers/TutorsController.cs</a>
-        alert(contentId);
-<a href="~/Codedenim Requirement/mobile app synopsis.pdf">~/Codedenim Requirement/mobile app synopsis.pdf</a>
-        $("#Content").change(function() {
-          //  var categoryId = $("#Content").val();
+</script>
+<script>
+    var myVideo = document.getElementById("video1");
 
-            $("#MaterialContent").load('@(Url.Action("DetailsContent", "TopicMaterialUploads"))?contentId=' + contentId);
-        });
-    };*@
-                </script>
-                <script>
-                    var myVideo = document.getElementById("video1");
+    function playPause() {
+        if (myVideo.paused)
+            myVideo.play();
+        else
+            myVideo.pause();
+    }
 
-                    function playPause() {
-                        if (myVideo.paused)
-                            myVideo.play();
-                        else
-                            myVideo.pause();
-                    }
+    function makeBig() {
+        myVideo.width = 560;
+    }
 
-                    function makeBig() {
-                        myVideo.width = 560;
-                    }
+    function makeSmall() {
+        myVideo.width = 320;
+    }
 
-                    function makeSmall() {
-                        myVideo.width = 320;
-                    }
-
-                    function makeNormal() {
-                        myVideo.width = 420;
-                    }
-                </script>
+    function makeNormal() {
+        myVideo.width = 420;
+    }
+</script>

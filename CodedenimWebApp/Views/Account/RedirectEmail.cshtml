@@ -1,27 +1,36 @@
 ﻿
 @{
     ViewBag.Title = "RedirectEmail";
-    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    Layout = "~/Views/Shared/_LoginLayoutNew.cshtml";
 
 }
 
 
 
+<!-- Start main-content -->
+<div class="main-content">
+    <!-- Section: home -->
+    <section id="home">
+        <div class="container-fluid p-0"></div>
 
-<div class="lock-container">
-    <div class="v-cell">
-        <div class="panel">
-            <div class="panel-heading">
-                <h1 class="h2 margin-none">Registration Successful</h1>
-            </div>
-            <div class="panel-body">
-                Confirmation Email has been sent successfully <br/>
-                Please confirm the link and Login
-              
-            </div>
-            <div class="panel-footer text-right">
-             
-                <a href="@Url.Action("Index","Home")" class="btn btn-primary">Back to Home</a>
+
+    </section>
+    <br />    <br />    <br />    <br />
+    <div class="lock-container">
+        <div class="v-cell">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h1 class="h2 margin-none">Registration Successful</h1>
+                </div>
+                <div class="panel-body">
+                    Confirmation Email has been sent successfully <br />
+                    Please confirm the link and Login
+
+                </div>
+                <div class="panel-footer text-right">
+
+                    <a href="@Url.Action("Index","Home")" class="btn btn-success">Back to Home</a>
+                </div>
             </div>
         </div>
     </div>

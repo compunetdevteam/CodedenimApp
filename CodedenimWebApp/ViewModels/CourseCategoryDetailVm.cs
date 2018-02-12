@@ -1,8 +1,6 @@
 ﻿using CodeninModel;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace CodedenimWebApp.ViewModels
 {
@@ -15,13 +13,22 @@ namespace CodedenimWebApp.ViewModels
         public string orderId { get; set; }
         public string responseurl { get; set; }
         public string StudentId { get; set; }
+
+        [Display(Name = "Email")]
         public string payerEmail { get; set; }
+
+        [Display(Name = "Name")]
         public string payerName { get; set; }
         public int CourseCategoryId { get; set; }
+        [Display(Name ="Amount")]
         public string amt { get; set; }
+
+        [Display(Name = "Mobile No")]
         public string payerPhone { get; set; }
         public string merchantId { get; set; }
         public string serviceTypeId { get; set; }
+
+        [Display(Name = "Payment Type")]
         public string paymenttype { get; set; }
         public string hash { get; set; }
     }

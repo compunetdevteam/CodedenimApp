@@ -34,19 +34,19 @@
             {
                 foreach (var topic in module.Topics)
                 {
-            <div class="list-group-item media active" data-target="website-take-course.html">
-                <div class="media-left">
-                    <div class="text-crt"></div>
-                </div>
-                
-                    <div class="media-body">
-                        <i class="fa fa-fw fa-circle text-blue-300"></i> <a href="@Url.Action("Details", "TopicMaterialUploads", new { id = topic.TopicId, courseId = item.CourseId })"> @module.ModuleName</a>
-</div>
-                    
-                    <div class="media-right">
-                        <div class="width-100 text-right text-caption"></div>
+                    <div class="list-group-item media active" data-target="#">
+                        <div class="media-left">
+                            <div class="text-crt"></div>
+                        </div>
+
+                        <div class="media-body">
+                            <i class="fa fa-fw fa-circle text-blue-300 js-toggle-course" ></i> <a href="@Url.Action("Details", "TopicMaterialUploads", new { id = topic.TopicId, courseId = item.CourseId })"> @module.ModuleName</a>
+                        </div>
+
+                        <div class="media-right">
+                            <div class="width-100 text-right text-caption"></div>
+                        </div>
                     </div>
-            </div>
                 }
             }
 
@@ -56,3 +56,29 @@
 
 }
 
+
+
+
+@section scripts{
+    <script>
+        
+        //$(document).ready(function() {
+            $(".js-toggle-course").click(function (e) {
+                alert("Something Failed");
+                    var button = $(e.target)
+         
+                    .done(function() {
+                        button
+                             .removeClass("fa-circle")
+                            .addClass("fa-check")
+                          
+                    })
+                    .fail(function() {
+                        alert("Something Failed");
+
+
+                    });
+            //});
+
+    </script>
+}

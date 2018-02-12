@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CodedenimWebApp.ViewModels.AdminDashboard
+@{
     ViewBag.Title = "Administrator";
     ViewBag.Role = "ADMIN";
     ViewBag.Administrator = "class = active";
@@ -27,9 +28,9 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="text-headline">COURSES</div>
-                            @if (ViewBag.TotalCourses != null)
+                            @if (@Model.TotalCourses > 0)
                             {
-                                <h3> @ViewBag.TotalCourses +</h3>
+                                <h3> @Model.TotalCourses +</h3>
                             }
                             else
                             {
@@ -43,23 +44,7 @@
                 </div>
             </div>
 
-            @*<div class="col-lg-3 col-sm-6">
-                    <div class="card mycard">
-                        <div class="content">
-                            <div class="row">
-
-                                <div class="col-xs-12">
-                                    <div class="numbers">
-
-                                        <p> <i class="fa fa-book fa-1x"></i><span> &nbsp;<b>COURSES</b></span></p>&nbsp;&nbsp;
-                                        @ViewBag.TotalCourses+
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>*@
+         
 
 
             <div class="media">
@@ -74,9 +59,9 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="text-headline">STUDENTS</div>
-                            @if (ViewBag.TotalStudents != null)
+                            @if (@Model.TotalStudents > 0)
                             {
-                                @ViewBag.TotalStudents
+                                @Model.TotalStudents
                             }
                             else
                             {
@@ -118,9 +103,9 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="text-headline">TUTORS</div>
-                            @if (ViewBag.TotalTutors != null)
+                            @if (@Model.TotalTutors > 0)
                             {
-                                @ViewBag.TotalTutors
+                                @Model.TotalTutors
                             }
                             else
                             {
@@ -215,7 +200,7 @@
                         <ul class="list-group">
                             <li class="list-group-item media v-middle">
                                 <div class="media-body">
-                                    <a href="#" class="text-subhead list-group-link">Basics of HTML</a>
+                                    <a href="#" class="text-subhead list-group-link">Practical Entreprenuership</a>
                                 </div>
                                 <div class="media-right">
                                     <div class="progress progress-mini width-100 margin-none">
@@ -226,7 +211,7 @@
                             </li>
                             <li class="list-group-item media v-middle">
                                 <div class="media-body">
-                                    <a href="#" class="text-subhead list-group-link">Angular in Steps</a>
+                                    <a href="#" class="text-subhead list-group-link">Wealth Generation</a>
                                 </div>
                                 <div class="media-right">
                                     <div class="progress progress-mini width-100 margin-none">
@@ -237,7 +222,7 @@
                             </li>
                             <li class="list-group-item media v-middle">
                                 <div class="media-body">
-                                    <a href="#" class="text-subhead list-group-link">Bootstrap Foundations</a>
+                                    <a href="#" class="text-subhead list-group-link">Generational Wealth</a>
                                 </div>
                                 <div class="media-right">
                                     <div class="progress progress-mini width-100 margin-none">
@@ -248,8 +233,8 @@
                             </li>
                         </ul>
                         <div class="panel-footer text-right">
-                            <a href="#" class="btn btn-white paper-shadow relative" data-z="0" data-hover-z="1" data-animated>View all</a>
-                            <a href="#" class="btn btn-primary paper-shadow relative" data-z="0" data-hover-z="1" data-animated>CREATE COURSE <i class="fa fa-plus"></i></a>
+                            <a href="@Url.Action("Index","Courses")" class="btn btn-white paper-shadow relative" data-z="0" data-hover-z="1" data-animated>View all</a>
+                            <a href="@Url.Action("Create","Courses")" class="btn btn-primary paper-shadow relative" data-z="0" data-hover-z="1" data-animated>CREATE COURSE <i class="fa fa-plus"></i></a>
                         </div>
                     </div>
                 </div>
@@ -263,45 +248,36 @@
                                     <p class="text-subhead text-light">Latest from statement</p>
                                 </div>
                                 <div class="media-right">
-                                    <a class="btn btn-white btn-flat" href="#">Statement</a>
+                                    <a class="btn btn-white btn-flat" href="@Url.Action("PaymentDetails", "Home")">Statement</a>
+                                    @*@Html.ActionLink("Statement", "PaymentDetails", "Home")*@
                                 </div>
                             </div>
                         </div>
                         <div class="table-responsive">
                             <table class="table text-subhead v-middle">
                                 <tbody>
-                                    <tr>
+                                    <tr class="alert alert-success bold">
                                         <td class="width-100 text-caption">
-                                            <div class="label label-grey-200 label-xs">12 Jan 2015</div>
+                                            <div class="width-80 text-center bold">Payment Date</div>
                                         </td>
-                                        <td>Adrian Demian</td>
-                                        <td class="width-80 text-center"><a href="#">#1261</a></td>
-                                        <td class="width-50 text-center">&dollar;70</td>
+                                        <td>Name</td>
+                                        <td class="width-80 text-center">ReferenceNo</td>
+                                        <td class="width-50 text-center">Payment Staus</td>
                                     </tr>
-                                    <tr>
-                                        <td class="width-100 text-caption">
-                                            <div class="label label-grey-200 label-xs">12 Jan 2015</div>
-                                        </td>
-                                        <td>Adrian Demian</td>
-                                        <td class="width-80 text-center"><a href="#">#4631</a></td>
-                                        <td class="width-50 text-center">&dollar;28</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="width-100 text-caption">
-                                            <div class="label label-grey-200 label-xs">12 Jan 2015</div>
-                                        </td>
-                                        <td>Adrian Demian</td>
-                                        <td class="width-80 text-center"><a href="#">#7396</a></td>
-                                        <td class="width-50 text-center">&dollar;100</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="width-100 text-caption">
-                                            <div class="label label-grey-200 label-xs">12 Jan 2015</div>
-                                        </td>
-                                        <td>Adrian Demian</td>
-                                        <td class="width-80 text-center"><a href="#">#14247</a></td>
-                                        <td class="width-50 text-center">&dollar;88</td>
-                                    </tr>
+                                    @foreach (var transaction in @Model.PaymentDetails)
+    {
+
+                                <tr>
+                                    <td class="width-100 text-caption">
+                                        <div class="label label-grey-200 label-xs">@transaction.PaymentDate</div>
+                                    </td>
+                                    <td>@transaction.FullName</td>
+                                    <td class="width-80 text-center">@transaction.ReferenceNo</td>
+                                    <td class="width-50 text-center">@transaction.PaymentStatus</td>
+                                </tr>
+
+
+}
                                 </tbody>
                             </table>
                         </div>
@@ -365,7 +341,7 @@
         </li>
         <li class="col-md-4">
             <div class="innerAll">
-                <h3>Other Students</h3>
+                <h3>Professional Students</h3>
                 <div class="pricing-body">
                     <div class="price">
                         <img src="~/Content/img/UnderG.jpg" width="180" class="img-circle" />

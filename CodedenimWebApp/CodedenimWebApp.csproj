@@ -308,6 +308,10 @@
     <Compile Include="Migrations\201712181526203_Remita_implementation.Designer.cs">
       <DependentUpon>201712181526203_Remita_implementation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802060434458_migration2018.cs" />
+    <Compile Include="Migrations\201802060434458_migration2018.Designer.cs">
+      <DependentUpon>201802060434458_migration2018.cs</DependentUpon>
+    </Compile>
     <Compile Include="Services\RemitaHash.cs" />
     <Compile Include="Service\BlobConnection.cs" />
     <Compile Include="Service\BlobService.cs" />
@@ -399,6 +403,7 @@
     <Compile Include="Service\RemitaResponse.cs" />
     <Compile Include="Service\UploadedFileProcessor.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AdminDashboard.cs" />
     <Compile Include="ViewModels\ApiVm.cs" />
     <Compile Include="ViewModels\AssignedCourses.cs" />
     <Compile Include="ViewModels\CategoryVm.cs" />
@@ -415,6 +420,7 @@
     <Compile Include="ViewModels\RegularStudentVm.cs" />
     <Compile Include="ViewModels\RemitaNotificationVm.cs" />
     <Compile Include="ViewModels\RemitaPostVm.cs" />
+    <Compile Include="ViewModels\StudentListVm.cs" />
     <Compile Include="ViewModels\StudentTypeVm.cs" />
     <Compile Include="ViewModels\StudentVm.cs" />
     <Compile Include="ViewModels\TopicMaterialVm.cs" />
@@ -566,6 +572,7 @@
     <Content Include="Content\Assets1\images\apple-touch-icon-144x144.png" />
     <Content Include="Content\Assets1\images\apple-touch-icon-72x72.png" />
     <Content Include="Content\Assets1\images\apple-touch-icon.png" />
+    <Content Include="Content\Assets1\images\appm.png" />
     <Content Include="Content\Assets1\images\bg\bg1.jpg" />
     <Content Include="Content\Assets1\images\bg\bg10.jpg" />
     <Content Include="Content\Assets1\images\bg\bg12.jpg" />
@@ -605,6 +612,7 @@
     <Content Include="Content\Assets1\images\clients\w5.png" />
     <Content Include="Content\Assets1\images\clients\w6.png" />
     <Content Include="Content\Assets1\images\close.png" />
+    <Content Include="Content\Assets1\images\codedenimApp.jpg" />
     <Content Include="Content\Assets1\images\course\online-course1.jpg" />
     <Content Include="Content\Assets1\images\course\online-course2.jpg" />
     <Content Include="Content\Assets1\images\course\online-course3.jpg" />
@@ -2186,10 +2194,6 @@
     <Content Include="fonts\roboto\Roboto-Thin.woff" />
     <Content Include="fonts\roboto\Roboto-Thin.woff2" />
     <Content Include="fonts\roboto\Roboto-Thind41d.eot" />
-    <Content Include="MaterialUpload\distance learning.jpg" />
-    <Content Include="MaterialUpload\distance learning2.jpg" />
-    <Content Include="MaterialUpload\html.png" />
-    <Content Include="MaterialUpload\html1.png" />
     <Content Include="Profile_Pics\Computer.jpg" />
     <Content Include="Profile_Pics\WhatsApp Image 2017-08-14 at 5.15.22 PM.jpeg" />
     <Content Include="Scripts\bootstrap.js" />
@@ -2551,12 +2555,6 @@
     <Content Include="Views\Topics\Details.cshtml" />
     <Content Include="Views\Topics\Edit.cshtml" />
     <Content Include="Views\Topics\Index.cshtml" />
-    <Content Include="Views\TopicMaterialUploads\Create.cshtml" />
-    <Content Include="Views\TopicMaterialUploads\Delete.cshtml" />
-    <Content Include="Views\TopicMaterialUploads\Details.cshtml" />
-    <Content Include="Views\TopicMaterialUploads\Edit.cshtml" />
-    <Content Include="Views\TopicMaterialUploads\Index.cshtml" />
-    <Content Include="Views\TopicMaterialUploads\Upload.cshtml" />
     <Content Include="Views\Account\SendEmail.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />
     <Content Include="Views\Courses\Delete.cshtml" />
@@ -2574,7 +2572,7 @@
     <Content Include="Views\Shared\_LayoutWeb.cshtml" />
     <Content Include="Views\Account\Login1.cshtml" />
     <Content Include="Views\Account\Register2.cshtml" />
-    <Content Include="Views\Home\Index1.cshtml" />
+    <Content Include="Views\Home\AllStudent.cshtml" />
     <Content Include="Views\Account\_tutorCourses.cshtml" />
     <Content Include="Views\Account\ConfirmTutorReg.cshtml" />
     <Content Include="Views\Account\TutorRegistration.cshtml" />
@@ -2663,7 +2661,6 @@
     <Content Include="Views\Shared\_LayoutLMS.cshtml" />
     <Content Include="Views\Courses\Content.cshtml" />
     <Content Include="Views\Shared\_LayoutStudent.cshtml" />
-    <Content Include="Views\TopicMaterialUploads\NoContent.cshtml" />
     <Content Include="Views\Forum\Index.cshtml" />
     <Content Include="Views\Forum\ForumIndex.cshtml" />
     <Content Include="Views\ForumQuestions\ForumQuestion.cshtml" />
@@ -2717,7 +2714,6 @@
     <Content Include="Views\Home\OtherStudent.cshtml" />
     <Content Include="Views\Courses\CreateCoursePartial.cshtml" />
     <Content Include="Views\Courses\CreatePartial.cshtml" />
-    <Content Include="Views\TopicMaterialUploads\DetailsContent.cshtml" />
     <Content Include="Views\Shared\Invalid.cshtml" />
     <Content Include="Views\CourseCategories\CreateCategoryPartial.cshtml" />
     <Content Include="Views\Courses\CreateCoursePartial1.cshtml" />
@@ -2731,7 +2727,6 @@
     <Content Include="Views\Shared\ExcelUpload.cshtml" />
     <Content Include="Views\Shared\StudentContentLayout.cshtml" />
     <Content Include="Views\Shared\_StudentContent.cshtml" />
-    <Content Include="Views\TopicMaterialUploads\SideBarContentForMaterial.cshtml" />
     <Content Include="Views\Students\GenerateCertificate.cshtml" />
     <Content Include="Views\Students\Certificate.cshtml" />
     <Content Include="Views\CourseCategories\LearningPathDetails.cshtml" />
@@ -2744,6 +2739,16 @@
     <Content Include="Views\Shared\_GeneralLayoutNewUI.cshtml" />
     <Content Include="Views\ForumAnswers\_CreatePartial.cshtml" />
     <Content Include="Views\Shared\_DoxaLayout.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\Create.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\Delete.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\Details.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\DetailsContent.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\Edit.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\Index.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\NoContent.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\SideBarContentForMaterial.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\Upload.cshtml" />
+    <Content Include="Views\Home\PaymentDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2752,6 +2757,7 @@
     <Folder Include="Content\StudentFiles\" />
     <Folder Include="Content\TutorFiles\" />
     <Folder Include="Controllers\Api\ForumApi\" />
+    <Folder Include="MaterialUpload\" />
     <Folder Include="ProfilePics\" />
     <Folder Include="uploads\" />
     <Folder Include="Views\CourseCategories\BlobConnection\" />
@@ -2822,6 +2828,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712181526203_Remita_implementation.resx">
       <DependentUpon>201712181526203_Remita_implementation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802060434458_migration2018.resx">
+      <DependentUpon>201802060434458_migration2018.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

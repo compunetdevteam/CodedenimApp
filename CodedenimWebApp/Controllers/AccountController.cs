@@ -69,7 +69,7 @@ namespace CodedenimWebApp.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
             // var url = returnUrl;
-            return View(); ;
+            return View(); 
         }
 
         //
@@ -372,7 +372,7 @@ namespace CodedenimWebApp.Controllers
             return View(model);
         }
 
-
+     
         [System.Web.Mvc.HttpGet]
         [System.Web.Mvc.AllowAnonymous]
         public ActionResult TutorRegistration()
@@ -383,7 +383,7 @@ namespace CodedenimWebApp.Controllers
             //PopulateAssignedCourseData(tutor);
             return View();
         }
-
+        
 
         //method to populate the assigned course in the the create view
         //private void PopulateAssignedCourseData(TutorCourses tutor)
@@ -514,7 +514,7 @@ namespace CodedenimWebApp.Controllers
             }
 
             var student = new Student
-            {
+            {   
 
                 //    string _FileName = String.Empty;
                 //    if (FileLocation.ContentLength > 0)
@@ -539,7 +539,8 @@ namespace CodedenimWebApp.Controllers
                 AccountType = "Corper",
                 PhoneNumber = model.MobileNumber,
                 Institution = model.Institution,
-                Discpline = model.Discpline
+                Discpline = model.Discpline,
+                EnrollmentDate = DateTime.Today
 
             };
             _db.Students.Add(student);
@@ -600,7 +601,8 @@ namespace CodedenimWebApp.Controllers
                 AccountType = "UnderGraduate",
                 PhoneNumber = model.MobileNumber,
                 Institution = model.Institution,
-                Discpline = model.Discpline
+                Discpline = model.Discpline,
+                EnrollmentDate = DateTime.Today
 
             };
             _db.Students.Add(student);
@@ -657,13 +659,14 @@ namespace CodedenimWebApp.Controllers
             var student = new Student
             {
 
-
+                StudentId = user.Id,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 DateOfBirth = model.DateOfBirth,
                 Gender = model.Gender,
                 AccountType = "RegularStudent",
                 PhoneNumber = model.MobileNumber,
+                EnrollmentDate = DateTime.Today
 
             };
             _db.Students.Add(student);
@@ -677,7 +680,7 @@ namespace CodedenimWebApp.Controllers
             //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
             string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
             var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "<h3>Please confirm your account by clicking</h3> <a class'btn btn-success' href=\"" + callbackUrl + "\">here</a>");
 
 
 
@@ -698,7 +701,7 @@ namespace CodedenimWebApp.Controllers
             var message = new IdentityMessage
             {
                 Subject = "Confirm Email",
-                Destination = "davidzagi93@gmail.com",
+                Destination = "info.codedenim@gmail.com",
                 Body = "this is to Confirm Password",
 
             };

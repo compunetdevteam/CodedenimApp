@@ -365,6 +365,7 @@ namespace CodedenimWebApp.Controllers.Api
         [System.Web.Http.Route("RegisterCorper")]
         [System.Web.Http.HttpPost]
         public async Task<IHttpActionResult> RegisterCorper(RegisterCorperModel model)
+
         {
             if (!ModelState.IsValid)
             {
@@ -468,7 +469,8 @@ namespace CodedenimWebApp.Controllers.Api
                 AccountType = "UnderGraduate",
                 PhoneNumber = model.MobileNumber,
                 Institution = model.Institution,
-                Discpline = model.Discpline
+                Discpline = model.Discpline,
+                Email = model.Email
 
             };
             _db.Students.Add(student);
@@ -504,10 +506,10 @@ namespace CodedenimWebApp.Controllers.Api
         /// method to register student from the mobile app
         /// </summary>
         /// <param name="model"></param>
-        /// <returns></returns>
+        /// <returns>HttpStatus Code</returns>
         [System.Web.Http.AllowAnonymous]
         [System.Web.Http.Route("OtherStudent")]
-        //[System.Web.Http.HttpPost]
+        [System.Web.Http.HttpPost]
         public async Task<IHttpActionResult> OtherStudent(RegisterOtherStudentModel model)
         {
             if (!ModelState.IsValid)
@@ -531,25 +533,32 @@ namespace CodedenimWebApp.Controllers.Api
             {
                 return GetErrorResult(result);
             }
-
-            var student = new Student()
+            var modelTitle = "";
+            if (model.Gender == "Male" || model.Gender == "male")
             {
-                StudentId = user.Id,
-                Title = model.Title.ToString(),
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                DateOfBirth = model.DateOfBirth,
-                Gender = model.Gender,
-                AccountType = "RegularStudent",
-                PhoneNumber = model.MobileNumber,
-                Email = model.Email
-                
+                modelTitle = "Mr";
+            }
+            else { modelTitle = "Mrs/Miss"; }
+                var student = new Student()
+                {
+                    StudentId = user.Id,
+                    Title = modelTitle,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    DateOfBirth = model.DateOfBirth,
+                    Gender = model.Gender,
+                    AccountType = "RegularStudent",
+                    PhoneNumber = model.MobileNumber,
+                    Email = model.Email,
+                    
 
-            };
+
+                };
+            
             _db.Students.Add(student);
-            _db.SaveChanges();
+           await _db.SaveChangesAsync();
 
-            await this.UserManager.AddToRoleAsync(user.Id, RoleName.RegularStudent);
+           await this.UserManager.AddToRoleAsync(user.Id, RoleName.RegularStudent);
         
        
           
