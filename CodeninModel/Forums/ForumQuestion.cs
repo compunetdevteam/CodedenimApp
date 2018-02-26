@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CodeninModel.Forums
 {
@@ -13,7 +10,7 @@ namespace CodeninModel.Forums
         public int ForumQuestionId { get; set; }
         public string Title { get; set; }
         public string QuestionName { get; set; }
-        public DateTime PostDate { get; set; }
+        public DateTimeOffset PostDate { get; set; }
         public int CourseId { get; set; }
         public string StudentId { get; set; }
 

@@ -11,6 +11,8 @@
 
 
 
+    <link href="~/Content/animate.css" rel="stylesheet" type="text/css" />
+
 
 
 
@@ -86,22 +88,22 @@
 
 <div class="panel-body text-center" id="loadTopicContent">
     <div class="row">
-    @foreach (var material in Model.Materials)
-    {
-                <div class="panel-footer col-md-3" id="topicContents">
-                    <div class="text-left">
+        @foreach (var material in Model.Materials)
+        {
+            <div class="panel-footer col-md-3" id="topicContents">
+                <div class="text-left">
 
-                        <div id="topicContents">
-                            <div onclick="loadContent(@material.TopicMaterialUploadId)">
-                                <button class="btn btn-success btn-lg paper-shadow relative" data-z="1" data-hover-z="2" data-animated>@Html.DisplayFor(model => material.FileType)</button>
-                            </div>
-
+                    <div id="topicContents">
+                        <div onclick="loadContent(@material.TopicMaterialUploadId)">
+                            <button class="btn btn-success btn-lg paper-shadow relative" data-z="1" data-hover-z="2" data-animated>@Html.DisplayFor(model => material.FileType)</button>
                         </div>
+
                     </div>
                 </div>
-     }
-        </div>
-   </div>
+            </div>
+        }
+    </div>
+</div>
 
 <div class="media media-grid media-clearfix-xs">
     <div class="media-body">
@@ -117,20 +119,29 @@
                 </div>
             </div>
             @*<br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />*@
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />*@
 
             <div class="col-md-12">
                 <div class="page-section" id="MaterialContent">
                     <div class="page-section">
-                        <h2 class="text-headline margin-none">Instruction</h2>
+                        <h2 class="text-headline margin-none">Course Introduction</h2>
                         <p class="text-subhead text-light"> </p>
                         <ul class="list-group relative paper-shadow margin-none" data-hover-z="0.5" data-animated>
-
+                           
+                            <li class="list-group-item paper-shadow">
+                                
+                                    <div class="media-body text-body-2">
+                                        <video controls="controls" id="video1" width="600">
+                                            <source src="~/MaterialUpload/@Model.CourseVideo.ToString()" type="video/mp4">
+                                            Your browser does not support HTML5 video.
+                                        </video>       </div>
+                             
+                            </li>
                             <li class="list-group-item paper-shadow">
                                 <div class="media v-middle">
                                     <div class="media-left">
@@ -160,7 +171,7 @@
     </div>
     <div class="media-right">
         <div class="page-section width-270 width-auto-xs">
-   
+
             <!-- .panel -->
             <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated>
                 <div class="panel-body">
@@ -169,21 +180,21 @@
                 <ul class="list-group">
                     @foreach (var item in Model.Modules)
                     {
-                    <li class="list-group-item">
-                        @foreach (var topicContent in item.Topics.Where(x => x.ModuleId.Equals(item.ModuleId)))
-                        {
-                    <div class="media v-middle">
-                        <div class="media-left">
-                            <div class="icon-block s30 bg-grey-400 text-white">
-                                <i class="fa fa-mortar-board"></i>
-                            </div>
-                        </div>
-                        <div class="media-body">
-                            <a onclick="material(@topicContent.TopicId)" class="link-text-color">@item.ModuleName</a>
-                        </div>
-                    </div>
-                        }
-                    </li>
+                        <li class="list-group-item">
+                            @foreach (var topicContent in item.Topics.Where(x => x.ModuleId.Equals(item.ModuleId)))
+                            {
+                                <div class="media v-middle">
+                                    <div class="media-left">
+                                        <div class="icon-block s30 bg-grey-400 text-white">
+                                            <i class="fa fa-mortar-board"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <a onclick="material(@topicContent.TopicId)" class="link-text-color">@item.ModuleName</a>
+                                    </div>
+                                </div>
+                            }
+                        </li>
                     }
                 </ul>
             </div>
@@ -203,14 +214,24 @@
     });
 
     function loadContent(contentId) {
-        $('#MaterialContent').load("/TopicMaterialUploads/DetailsContent/" + contentId);
+        $('#MaterialContent').load("/TopicMaterialUploads/DetailsContent/" + contentId)
+            .addClass('animated fadeInLeft')
+            .delay(1000)
+            .queue(function () {
+                $(this).removeClass('animated fadeInLeft').dequeue()});
     }
     function material(topicId) {
 
-        $('#loadTopicContent').load("/TopicMaterialUploads/SideBarContentForMaterial/" + topicId);
-    }
+        $('#loadTopicContent').load("/TopicMaterialUploads/SideBarContentForMaterial/" + topicId)
+            .addClass('animated fadeInLeft')
+            .delay(1000)
+            .queue(function () {
+            $(this).removeClass('animated fadeInLeft').dequeue()});
+            //$(this).addClass('on').delay(500).queue(function() {
+            //    $(this).removeClass('on').dequeue()});
+            }
 
-
+    
 </script>
 <script>
     var myVideo = document.getElementById("video1");

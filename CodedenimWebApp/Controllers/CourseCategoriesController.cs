@@ -422,6 +422,10 @@ namespace CodedenimWebApp.Controllers
                     result.OrderId = studentPayment.OrderId;
                     result.Rrr = studentPayment.ReferenceNo;
                     result.Status = studentPayment.IsPayed.ToString();
+                    result.PayerName = studentPayment.Student.FullName;
+                    result.Price = studentPayment.Amount;
+                    result.PaymentDate = studentPayment.PaymentDateTime;
+                    result.CourseCategory = studentPayment.CourseCategory.CategoryName;
                     return RedirectToAction("ConfrimRrrPayment", "RemitaServices", result);
                 }
                 var log = await db.RemitaPaymentLogs.AsNoTracking().Where(x => x.OrderId.Equals(studentPayment.OrderId))

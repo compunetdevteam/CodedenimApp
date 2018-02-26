@@ -1,24 +1,22 @@
-﻿	using System;
+﻿using CodedenimWebApp.Models;
+using CodedenimWebApp.ViewModels;
+using CodeninModel;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
-	using System.Web.Hosting;
-	using System.Web.Mvc;
-using CodedenimWebApp.Models;
-	using CodedenimWebApp.Service;
-	using CodedenimWebApp.ViewModels;
-	using CodeninModel;
-	using Microsoft.AspNet.Identity;
-	using Microsoft.WindowsAzure.Storage.Blob;
+using System.Web.Hosting;
+using System.Web.Mvc;
 
 namespace CodedenimWebApp.Controllers
 {
-	public class TopicMaterialUploadsController : Controller
+    public class TopicMaterialUploadsController : Controller
 	{
 		private ApplicationDbContext db = new ApplicationDbContext();
 	    private int moduleId = 0;
@@ -88,6 +86,10 @@ namespace CodedenimWebApp.Controllers
             {
                 return View("NoContent");
             }
+            var introVideo = db.Courses
+                               .Where(x => x.CourseId.Equals((int)courseId))
+                               .Select(x => x.VideoLocation)
+                               .FirstOrDefault();
             var topicContent = db.TopicMaterialUploads.Where(x => x.TopicId.Equals(id)).ToList();
 		    var ModuleName = db.Topics.Where(x => x.TopicId.Equals(id)).Select(x => x.Module.ModuleName).FirstOrDefault();
 		   RedirectToAction("SideBarContentForMaterial",new{topidId = id});
@@ -106,6 +108,7 @@ namespace CodedenimWebApp.Controllers
 		    contents.ModulesName = ModuleName;
 		    contents.Materials = topicContent;
 		    contents.Modules = moduleDetail;
+            contents.CourseVideo = introVideo;
 		    // PartialView(contents);
             return View(contents);
 

@@ -20,7 +20,7 @@ using System.Web.Mvc;
 
 namespace CodedenimWebApp.Controllers
 {
-    public class CoursesController : Controller
+     public class CoursesController : Controller
     {
 
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -456,17 +456,31 @@ namespace CodedenimWebApp.Controllers
         public async Task<ActionResult> Edit(
             [Bind(Include =
                 "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")]
-            Course course, HttpPostedFileBase File)
+            Course course, HttpPostedFileBase File, HttpPostedFileBase video)
         {
             if (ModelState.IsValid)
             {
-                var imageFromDB = db.Courses.Where(x => x.CourseId.Equals(course.CourseId)).Select(x => x.FileLocation).ToString();
-
-                DeletePhoto(course);
+                //var imageFromDB = db.Courses.Where(x => x.CourseId.Equals(course.CourseId)).Select(x => x.FileLocation).ToString();
+             
+               
+                
                 var fp = new UploadedFileProcessor();
+                if (File != null)
+                {
+                    DeletePhoto(course);
+                    var path = fp.ProcessFilePath(File);
+                    course.FileLocation = path.Path;
+                }
+                if (video != null)
+                {
+                    DeleteVideo(course);
+                    var videoPath = fp.ProcessFilePath(video);
 
-                var path = fp.ProcessFilePath(File);
-                course.FileLocation = path.Path;
+
+                    course.VideoLocation = videoPath.Path;
+                }
+               
+               
 
                 db.Entry(course).State = EntityState.Modified;
                 await db.SaveChangesAsync();
@@ -483,16 +497,42 @@ namespace CodedenimWebApp.Controllers
         /// <param name="course"></param>
         private void DeletePhoto(Course course)
         {
-            var photoName = "";
-            photoName = course.FileLocation;
-            string fullPath = Request.MapPath("~/MaterialUpload/" + photoName);
-
-            if (System.IO.File.Exists(fullPath))
+            if (course != null)
             {
-                System.IO.File.Delete(fullPath);
-                //Session["DeleteSuccess"] = "Yes";
+                var photoName = "";
+                photoName = course.FileLocation;
+                string fullPath = Request.MapPath("~/MaterialUpload/" + photoName);
+
+                if (System.IO.File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                    //Session["DeleteSuccess"] = "Yes";
+                }
+            }
+           
+        }
+
+        /// <summary>
+        /// this method delete the video from the file location on the server
+        /// </summary>
+        /// <param name="course"></param>
+        private void DeleteVideo(Course course)
+        {
+
+            if (course != null)
+            {
+                var videoName = "";
+                videoName = course.VideoLocation;
+                string fullPath = Request.MapPath("~/MaterialUpload/" + videoName);
+
+                if (System.IO.File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                    //Session["DeleteSuccess"] = "Yes";
+                }
             }
         }
+
 
 
         /// <summary>

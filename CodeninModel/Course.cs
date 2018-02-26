@@ -1,11 +1,11 @@
-﻿using System;
+﻿using CodeninModel.Assesment;
+using CodeninModel.Forums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Web;
-using CodeninModel.Assesment;
-using CodeninModel.Forums;
 
 namespace CodeninModel
 {
@@ -23,6 +23,7 @@ namespace CodeninModel
         public int Points { get; set; }
         public byte[] CourseImage { get; set; }
         public string FileLocation { get; set; }
+        public string VideoLocation { get; set; }
 
         [Display(Name = "Upload A Passport/Picture")]
         [ValidateFile(ErrorMessage = "Please select a PNG/JPEG image smaller than 20kb")]

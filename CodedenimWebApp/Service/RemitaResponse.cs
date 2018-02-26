@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace CodedenimWebApp.Service
 {
@@ -16,6 +17,18 @@ namespace CodedenimWebApp.Service
 
         [DataMember(Name = "message")]
         public string Message { get; set; }
+
+        [DataMember(Name = "price")]
+        public decimal Price { get; set; }
+
+
+
+
+        [DataMember(Name = "Name")]
+        public string PayerName { get; set; }
+
+        public DateTime PaymentDate { get; set; }
+        public string CourseCategory  { get; set; }
     }
 
 }

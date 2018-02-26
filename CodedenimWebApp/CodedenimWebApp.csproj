@@ -312,6 +312,18 @@
     <Compile Include="Migrations\201802060434458_migration2018.Designer.cs">
       <DependentUpon>201802060434458_migration2018.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802141146411_DateTimeToDateTimeOffset.cs" />
+    <Compile Include="Migrations\201802141146411_DateTimeToDateTimeOffset.Designer.cs">
+      <DependentUpon>201802141146411_DateTimeToDateTimeOffset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802151555140_madeChangesToModel.cs" />
+    <Compile Include="Migrations\201802151555140_madeChangesToModel.Designer.cs">
+      <DependentUpon>201802151555140_madeChangesToModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802191332563_vidoLocationOnCourses.cs" />
+    <Compile Include="Migrations\201802191332563_vidoLocationOnCourses.Designer.cs">
+      <DependentUpon>201802191332563_vidoLocationOnCourses.cs</DependentUpon>
+    </Compile>
     <Compile Include="Services\RemitaHash.cs" />
     <Compile Include="Service\BlobConnection.cs" />
     <Compile Include="Service\BlobService.cs" />
@@ -480,6 +492,7 @@
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="Content\animate.css" />
     <Content Include="Content\Assets1\ajax-load\form-appointment.html" />
     <Content Include="Content\Assets1\ajax-load\login-form.html" />
     <Content Include="Content\Assets1\ajax-load\register-form.html" />
@@ -1052,6 +1065,9 @@
     <Content Include="Content\Assets1\images\testimonials\2.jpg" />
     <Content Include="Content\Assets1\images\testimonials\3.jpg" />
     <Content Include="Content\Assets1\images\testimonials\quote_arrow.png" />
+    <Content Include="Content\Assets1\invoice3\avatar.png" />
+    <Content Include="Content\Assets1\invoice3\custom.css" />
+    <Content Include="Content\Assets1\invoice3\logo.png" />
     <Content Include="Content\Assets1\js\bootstrap.min.js" />
     <Content Include="Content\Assets1\js\calendar-events-data.js" />
     <Content Include="Content\Assets1\js\chart.js" />
@@ -2831,6 +2847,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802060434458_migration2018.resx">
       <DependentUpon>201802060434458_migration2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802141146411_DateTimeToDateTimeOffset.resx">
+      <DependentUpon>201802141146411_DateTimeToDateTimeOffset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802151555140_madeChangesToModel.resx">
+      <DependentUpon>201802151555140_madeChangesToModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802191332563_vidoLocationOnCourses.resx">
+      <DependentUpon>201802191332563_vidoLocationOnCourses.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

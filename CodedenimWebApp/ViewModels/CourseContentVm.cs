@@ -1,13 +1,7 @@
-﻿using System;
+﻿using CodeninModel;
+using CodeninModel.Quiz;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using CodeninModel;
-using CodeninModel.CBTE;
-using CodeninModel.Quiz;
-using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace CodedenimWebApp.ViewModels
 {
@@ -27,6 +21,7 @@ namespace CodedenimWebApp.ViewModels
         public List<Course> Courses { get; set; }
         public int CourseId { get; set; }
         public Course CoursesAD { get; set; }
+        public string CourseVideo { get; set; }
         public int CourseIdentifier { get; set; }
 
         /// <summary>
