@@ -93,7 +93,82 @@ namespace CodedenimWebApp.Controllers
             return View(listOfCourses);
         }
 
-       
+
+        /// <summary>
+        /// using express paypal checkout to make international payment
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult PaypalCheckout(CourseCategoryDetailVm model)
+        {
+            model.amt = GetCurrency(model.amt);
+            if (model.amt != null)
+            {
+                var convertAmount = decimal.Parse(model.amt) / 360;
+                model.amt = convertAmount.ToString();
+            }
+           
+            return View(model);
+        }
+
+        public string GetCurrency(string value)
+        {
+            return value;
+        }
+
+        /// <summary>
+        /// Return Url for paypal
+        /// </summary>
+        /// <param name="pal"></param>
+        /// <returns></returns>
+        public ActionResult PayPalSuccess()
+        {
+
+            var getData = new GetDataPayPal();
+            var order = getData.InformationOrder(getData.GetPayPalResponse(Request.QueryString["tx"]));
+
+            //var newOrder = new StudentPaypalPayment
+            //{
+            //    PayerEmail = order.PayerEmail,
+            //    PayerFirstName = order.PayerFirstName,
+            //    PayerLastName = order.PayerLastName,
+            //    Currency = order.Currency,
+            //    Amount = order.Amount,
+            //    ItemName = order.ItemName,
+            //    TxToken = order.TxToken,
+            //    ReceiverEmail = order.ReceiverEmail,
+            //    PaymentStatus = order.PaymentStatus,
+            //    CourseCategoryId = order.CourseCategoryId,
+            //    PaymentDate = order.PaymentDate,
+            //    PayerId = order.PayerId
+
+
+            //};
+
+            //db.StudentPaypalPayments.Add(newOrder);
+            //db.SaveChanges();
+
+            // ViewBag.Tx = tx;
+            return View(order);
+        }
+
+        public ActionResult PayPalConfirmPayment()
+        {
+            var getData = new GetDataPayPal();
+            var order = getData.InformationOrder(getData.GetPayPalResponse(Request.QueryString["tx"]));
+
+            return View(order);
+        }
+
+        /// <summary>
+        /// method to convert currency
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>decimal of monet</returns>
+        public decimal CurrecyConverter(decimal amount)
+        {
+            return 0;
+        }
+
         //public async Task<ActionResult> StartPayment(int? id)
         //{
 
@@ -297,6 +372,11 @@ namespace CodedenimWebApp.Controllers
             var categories = db.CourseCategories.Find(id);
             var assingeCourses = db.AssignCourseCategories.Where(x => x.CourseCategoryId.Equals(id)).ToList();
 
+
+            var currency = from Currency s in Enum.GetValues(typeof(Currency))
+                select new { Id = (int)s, Name = s.ToString() };
+            ViewBag.Currency = new SelectList(currency.ToList(), "Name", "Name");
+
             courseDetails.CourseCategory = categories;
             courseDetails.AssignedCourses = assingeCourses;
             courseDetails.orderId = milliseconds.ToString();
@@ -306,10 +386,16 @@ namespace CodedenimWebApp.Controllers
             courseDetails.payerName = fullName;
             courseDetails.CourseCategoryId = id;
             courseDetails.payerPhone = student.PhoneNumber;
-
+          
             courseDetails.amt = categories.Amount.ToString();
+
+            RedirectToAction("PaypalCheckout", courseDetails);
+
             return View(courseDetails);
         }
+
+      
+
 
         [HttpPost]
         public async Task<ActionResult> CreatePayment(CourseCategoryDetailVm model)

@@ -53,5 +53,6 @@ namespace CodeninModel
         public virtual ICollection<CourseEnrollment> CourseEnrollement { get; set; }
         public virtual ICollection<StudentPayment> StudentPayments { get; set; }
         public virtual ICollection<EnrollForCourse> EnrollForCourse { get; set; }
+        public virtual ICollection<StudentPaypalPayment> StudentPaypalPayments { get; set; }
     }
 }

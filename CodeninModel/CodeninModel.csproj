@@ -160,10 +160,13 @@
     <Compile Include="Quiz\CourseQuiz.cs" />
     <Compile Include="Quiz\QuizLog.cs" />
     <Compile Include="Quiz\QuizLogVm.cs" />
+    <Compile Include="Quiz\TestAnswer.cs" />
+    <Compile Include="Quiz\TestQuestion.cs" />
     <Compile Include="RemitaPaymentLog.cs" />
     <Compile Include="StudentAssignedCourses.cs" />
     <Compile Include="StudentCourses.cs" />
     <Compile Include="StudentPayment.cs" />
+    <Compile Include="StudentPaypalPayment.cs" />
     <Compile Include="TopicMaterialUpload.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Person.cs" />

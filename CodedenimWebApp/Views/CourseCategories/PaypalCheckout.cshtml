@@ -1,0 +1,37 @@
+﻿@model CodedenimWebApp.ViewModels.CourseCategoryDetailVm
+@using System.Configuration
+@{
+    var customValues = new
+    {
+        Model.CourseCategoryId,
+        Model.StudentId
+    };
+}
+<form id="paypalForm" method="post" action="@ConfigurationManager.AppSettings["PaypalSubmitURL"]">
+    @Html.AntiForgeryToken()
+    @*<input type="hidden" name="upload" value="1" />*@
+    <input type="hidden" name="return" value="@ConfigurationManager.AppSettings["returnURL"]" />
+    <input type="hidden" name="cmd" value="_xclick" />
+    <input type="hidden" name="business" value="@ConfigurationManager.AppSettings["PaypalAccount"]" />
+
+    <input type="hidden" name="item_name" value="@Model.CourseCategory.CategoryName" />
+    <input type="hidden" name="item_number" value="@Model.CourseCategory.CourseCategoryId" />
+    <input type="hidden" name="amount" value="@Model.CourseCategory.Amount" class="exchangeRateValue" readonly/>
+    <input type="hidden" name="custom" value="@Model.StudentId"/>
+    @*<input type="hidden" name="quantity" value="3" />*@
+    @*<INPUT TYPE="hidden" NAME="currency_code" value="EUR">*@
+    <div class="form-group">
+        @Html.Label("Currency", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
+            @Html.DropDownList("currency_code", (SelectList)ViewBag.Currency, "Your Currency", htmlAttributes: new { @class = "control-label col-md-2", @id = "JsChosen" })
+
+        </div>
+    </div>
+    @*<input type="hidden" name="return" value="@ConfigurationManager.AppSettings["returnURL"]" />*@
+
+
+
+
+    <input type="image" src="https://www.paypal.com/en_Us/i/btn/btn_xpressCheckout.gif" />
+</form>
+<div class="exchangedValue"></div>

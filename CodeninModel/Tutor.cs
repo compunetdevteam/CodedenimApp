@@ -20,7 +20,7 @@ namespace CodeninModel
        // public virtual ICollection<Course> Courses { get; set; }
        public virtual  ICollection<TutorCourse> TutorCourses { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
-        //public virtual ICollection<File> Files { get; set; }
+        //public virtual ICollection<File> Files { get; set; }  
         //public virtual ICollection<FilePath> FilePaths { get; set; }
     }
 }

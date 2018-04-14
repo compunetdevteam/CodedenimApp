@@ -13,12 +13,14 @@ namespace CodedenimWebApp.Migrations
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
+            
         }
 
         protected override void Seed(CodedenimWebApp.Models.ApplicationDbContext context)
         {
 
-
+            context.Configuration.LazyLoadingEnabled = false;
+            context.Configuration.ProxyCreationEnabled = false;
             context.Configuration.AutoDetectChangesEnabled = false;
 
             context.Configuration.ValidateOnSaveEnabled = false;

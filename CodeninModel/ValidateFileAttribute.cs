@@ -30,5 +30,14 @@ namespace CodeninModel
             catch { }
             return false;
         }
+        public enum Batch
+        {
+            A, B
+        }
+
+        public enum Title
+        {
+            Mr = 1, Mrs, Arch, Bar, Dr, Engr, Miss, Pharm
+        }
     }
 }

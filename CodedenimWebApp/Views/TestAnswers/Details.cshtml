@@ -1,0 +1,58 @@
+﻿@model CodeninModel.Quiz.TestAnswer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TestAnswer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.MatricNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student.MatricNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TestQuestion.QuestionContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TestQuestion.QuestionContent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TestAnswerContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TestAnswerContent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hasAnswered)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hasAnswered)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateSubmited)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateSubmited)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TestAnswerId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

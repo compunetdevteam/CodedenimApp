@@ -98,6 +98,9 @@ namespace CodedenimWebApp.Models
         public DbSet<RemitaPaymentLog> RemitaPaymentLogs { get; set; }
 
         public System.Data.Entity.DbSet<CodeninModel.EnrollForCourse> EnrollForCourses { get; set; }
+        public DbSet<StudentPaypalPayment> StudentPaypalPayments { get; set; }
+        public DbSet<TestQuestion> TestQuestions { get; set; }
+        public DbSet<TestAnswer> TestAnswers { get; set; }
         //public override int SaveChanges()
         //{
         //    try
