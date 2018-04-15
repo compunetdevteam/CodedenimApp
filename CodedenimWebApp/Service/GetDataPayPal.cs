@@ -1,4 +1,5 @@
-﻿using CodeninModel;
+﻿using CodedenimWebApp.Models;
+using CodeninModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,6 +13,7 @@ namespace CodedenimWebApp.Service
 {
     public class GetDataPayPal
     {
+        private readonly ApplicationDbContext db = new ApplicationDbContext();
         public string GetPayPalResponse(string tx)
         {
 
@@ -89,16 +91,18 @@ namespace CodedenimWebApp.Service
                             order.PaymentDate = value;
                             break;
                         case "item_number":
-                            order.CourseCategoryId = int.Parse(value);
+                            order.CourseCategoryId = 1;
                             break;
                         case "payment_id":
                             order.PayerId = value;
                             break;
                         case "custom":
-                            order.CourseCategoryId = int.Parse(value);
+                            order.StudentId = value;
                             break;
                     }
                 }
+                db.StudentPaypalPayments.Add(order);
+                db.SaveChanges();
             }
             catch (Exception)
             {

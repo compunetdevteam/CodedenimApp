@@ -156,6 +156,70 @@ namespace CodedenimWebApp.Controllers
             var getData = new GetDataPayPal();
             var order = getData.InformationOrder(getData.GetPayPalResponse(Request.QueryString["tx"]));
 
+            //object to save to the studentpayment where the query for showing the paid course is performed
+            var studentPayment = new StudentPayment();
+
+            try
+            {
+                var newOrder = new StudentPaypalPayment
+                {
+                    PayerEmail = order.PayerEmail,
+                    PayerFirstName = order.PayerFirstName,
+                    PayerLastName = order.PayerLastName,
+                    Currency = order.Currency,
+                    Amount = order.Amount,
+                    ItemName = order.ItemName,
+                    TxToken = order.TxToken,
+                    ReceiverEmail = order.ReceiverEmail,
+                    PaymentStatus = order.PaymentStatus,
+                    CourseCategoryId = order.CourseCategoryId,
+                    PaymentDate = order.PaymentDate,
+                    PayerId = order.PayerId
+
+
+                };
+
+                if (order.PaymentStatus == "Completed")
+                {
+
+
+
+
+                    studentPayment.CourseCategoryId = order.CourseCategoryId;
+                    studentPayment.StudentId = order.StudentId;
+                    studentPayment.PaymentDateTime = DateTime.Now;
+                    studentPayment.Amount = Decimal.Parse(order.Amount);
+                    studentPayment.IsPayed = true;
+
+
+
+
+                }
+                else
+                {
+
+                    studentPayment.CourseCategoryId = order.CourseCategoryId;
+                    studentPayment.StudentId = order.StudentId;
+                    studentPayment.PaymentDateTime = DateTime.Now;
+                    studentPayment.Amount = Decimal.Parse(order.Amount);
+                    studentPayment.IsPayed = false;
+
+
+
+
+                };
+                db.StudentPayments.Add(studentPayment);
+                db.StudentPaypalPayments.Add(newOrder);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+          
+
             return View(order);
         }
 
