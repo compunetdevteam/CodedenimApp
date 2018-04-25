@@ -76,6 +76,7 @@ namespace CodedenimWebApp.Controllers
         {
 
             var topicMaterialUpload = db.TopicMaterialUploads.Find(id);
+            
             if (topicMaterialUpload == null)
             {
                 return View("NoContent");
@@ -95,6 +96,7 @@ namespace CodedenimWebApp.Controllers
                     Course = x.Course,
                     Tutor = x.Tutor
                 }).ToList();
+            //var countTopic = topicContent;
             var topicContents = new List<TopicMaterialUpload>();
             foreach (var item in topicContent)
             {

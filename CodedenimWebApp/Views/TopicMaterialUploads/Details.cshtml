@@ -126,14 +126,33 @@
                         </ul>
                     </div>
                 </div>
+
+                @* button for next and previous *@
+                @foreach (var item in Model.Modules)
+                {
+
+                    foreach (var topicContent in item.Topics.Where(x => x.ModuleId.Equals(item.ModuleId)))
+                    {
+            <div class="panel panel-default">
+                <div class="panel-body buttons-spacing-vertical">
+
+                    <button class="btn btn-primary jsPrevious" href="@Url.Action("Details","TopicMaterialUploads", new { @id = topicContent.ModuleId - 1, @courseId = item.CourseId})"><i class="fa fa-chevron-left"></i> <span>Previous</span></button>
+
+                    <button class="btn btn-primary pull-right jsNext" href="@Url.Action("Details","TopicMaterialUploads", new { @id = topicContent.ModuleId + 1, @courseId = item.CourseId})"> <span>Next</span> <i class="fa fa-chevron-right"></i></button>
+
+              
+                </div>
+            </div>
+                    }
+                }
             </div>
         </div>
-        <div class="page-section">
+        @*<div class="page-section">
 
         </div>
         <div class="pull-right">
 
-        </div>
+        </div>*@
 
         <br />
 
@@ -159,16 +178,16 @@
                                         </div>
                                     </div>
                                     <div class="media-body">
-                                  @item.ModuleName
+                                        @item.ModuleName
                                     </div>
-                                </div>  
+                                </div>
 
-                                <div class="panel-body text-center" id="loadTopicContent">
+                                <div id="loadTopicContent">
                                     <div class="row">
 
                                         @foreach (var material in Model.Materials)
                                         {
-                                            <div class="panel-footer col-md-3" id="topicContents">
+                                            <div class="panel-footer" id="topicContents" style="display:inline-block">
                                                 <div class="text-left">
 
                                                     <div id="topicContents">
@@ -195,6 +214,7 @@
         </div>
         <!-- // END .page-section -->
     </div>
+
 </div>
 
 
@@ -209,8 +229,14 @@
     $(document).ready(function () {
 
 
-
     });
+
+    function getButtonId(buttonId) {
+        if (buttonId === 0)
+        {
+            $('.jsPrevious').attr('disabled');
+        }
+    };
 
     function loadContent(contentId) {
         $('#MaterialContent').load("/TopicMaterialUploads/DetailsContent/" + contentId)
