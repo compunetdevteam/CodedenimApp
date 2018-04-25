@@ -78,28 +78,6 @@
 
 
 
-<div class="panel-body text-center" id="loadTopicContent">
-    <div class="row">
-       
-            @foreach (var material in Model.Materials)
-            {
-                <div class="panel-footer col-md-3" id="topicContents">
-                    <div class="text-left">
-
-                        <div id="topicContents">
-                            <div onclick="loadContent(@material.TopicMaterialUploadId)">
-                                <button class="btn btn-success btn-lg paper-shadow relative" data-z="1" data-hover-z="2" data-animated>@material.FileType
-                                </button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            }
-        
-
-    </div>
-</div>
 
 <div class="media media-grid media-clearfix-xs">
     <div class="media-body">
@@ -114,12 +92,12 @@
 
                 </div>
             </div>
-           
+
 
             <div class="col-md-12">
+                <h2 class="text-headline margin-none">Course Introduction</h2>
                 <div class="page-section" id="MaterialContent">
-                    <div class="page-section">
-                        <h2 class="text-headline margin-none">Course Introduction</h2>
+                    <div>
                         <p class="text-subhead text-light"> </p>
                         <ul class="list-group relative paper-shadow margin-none" data-hover-z="0.5" data-animated>
 
@@ -181,7 +159,31 @@
                                         </div>
                                     </div>
                                     <div class="media-body">
-                                        <a onclick="material(@topicContent.TopicId)" class="link-text-color">@item.ModuleName</a>
+                                  @item.ModuleName
+                                    </div>
+                                </div>  
+
+                                <div class="panel-body text-center" id="loadTopicContent">
+                                    <div class="row">
+
+                                        @foreach (var material in Model.Materials)
+                                        {
+                                            <div class="panel-footer col-md-3" id="topicContents">
+                                                <div class="text-left">
+
+                                                    <div id="topicContents">
+                                                        <div onclick="loadContent(@material.TopicMaterialUploadId)">
+                                                            <button class="btn btn-success btn-xs" data-z="1" data-hover-z="2" data-animated>
+                                                                @material.FileType
+                                                            </button>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+
                                     </div>
                                 </div>
                             }
@@ -195,6 +197,12 @@
     </div>
 </div>
 
+
+    <style>
+    #MaterialContent{
+    padding-top:0px;
+    }
+    </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -211,12 +219,13 @@
             .queue(function () {
                 $(this).removeClass('animated fadeInLeft').dequeue()
             });
+
     }
     function material(topicId) {
 
         $('#loadTopicContent').load("/TopicMaterialUploads/SideBarContentForMaterial/" + topicId)
-            .addClass('animated fadeInLeft')
-            .delay(1000)
+
+  
             .queue(function () {
                 $(this).removeClass('animated fadeInLeft').dequeue()
             });

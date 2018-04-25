@@ -41,7 +41,7 @@ namespace CodedenimWebApp.Controllers
         // GET: TestQuestions/Create
         public ActionResult Create()
         {
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode");
+            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName");
             return View();
         }
 

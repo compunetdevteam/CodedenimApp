@@ -6,7 +6,7 @@ namespace CodedenimWebApp.Models
     {
         [Description("U.S. Dollar")]
         USD = 1,
-        [Description("Euro")]
-        EUR
+        //[Description("Euro")]
+        //EUR
     }
 }

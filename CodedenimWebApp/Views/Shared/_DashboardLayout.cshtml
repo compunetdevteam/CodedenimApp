@@ -314,7 +314,7 @@
             </div>
         }
         <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
-        <div class="sidebar left sidebar-size-1 sidebar-mini-reveal sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
+        <div class="sidebar left sidebar-size-3 sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
             <div data-scrollable>
 
                 <div class="sidebar-block">
@@ -400,9 +400,10 @@
                         <li class="hasSubmenu">
                             <a href="#Quiz-menu"><i class="fa fa-quiz"></i><span> Quiz</span></a>
                             <ul id="Quiz-menu">
-                                <li><a href="@Url.Action("Create","QuizRules")"><span>Set Quiz Rules</span></a></li>
-                                <li><a href="@Url.Action("Create", "TopicQuizs")"><span>Create Quiz</span></a></li>
-                                <li><a href="@Url.Action("Index","TopicQuizs")"><span></span></a></li>
+                                @*<li><a href="@Url.Action("Create","QuizRules")"><span>Set Quiz Rules</span></a></li>*@
+                                <li><a href="@Url.Action("Create", "TestQuestions")"><span>Create Quiz</span></a></li>
+                                <li><a href="@Url.Action("Index", "TestQuestions")"><span>Edit Quiz</span></a></li>
+                                <li><a href="@Url.Action("Index","TestAnswers")"><span> Quiz Answers</span></a></li>
                             </ul>
                         </li>
                         <li class="hasSubmenu">

@@ -1,7 +1,11 @@
 @media (min-width: 768px) {
-  .show-sidebar.sidebar-l1 #content {
+
+    .show-sidebar.sidebar-l1 #content {
+        margin-left: 20%;
+    }
+        /*.show-sidebar.sidebar-l1 #content {
     margin-left: 56px;
-  }
+  }*/
   .show-sidebar.sidebar-l2 #content {
     margin-left: 200px;
   }
@@ -244,6 +248,7 @@
   }
   .show-sidebar.sidebar-r3 #content {
     margin-right: 250px;
+    margin-left:20%;
   }
   .show-sidebar.sidebar-r-25pc #content {
     margin-right: 25%;
@@ -8252,4 +8257,11 @@ html.st-layout .st-content {
 }
 .sidebar .sidebar-block-full > .panel:last-child {
   border-bottom: none;
+}
+
+@media (min-width: 768px) {
+    .show-sidebar.sidebar-l1 #content {
+        margin-left: 20%;
+    }
+
 }

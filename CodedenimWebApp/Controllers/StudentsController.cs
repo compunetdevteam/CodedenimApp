@@ -97,7 +97,7 @@ namespace CodedenimWebApp.Controllers
                     .Include(x => x.Courses)
                     .Where(x => x.CourseCategory.StudentType.Equals(RoleName.UnderGraduate))
                     .ToList();
-                return RedirectToAction("MyCoursesAsync", "Courses", student);
+                return RedirectToAction("CorperDashboard", "Students", student);
             }
 
 

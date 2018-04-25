@@ -1,12 +1,13 @@
 ﻿@model CodeninModel.StudentPaypalPayment
 @{
     ViewBag.Title = "PayPalConfirmPayment";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
 <h2>PayPalConfirmPayment</h2>
 
 <h2>Success</h2>
-<ol>
+@*<ol>
     <li>Student id: @Model.StudentId</li>
     <li>Category id: @Model.CourseCategoryId</li>
     <li>Payer Email id: @Model.PayerEmail</li>
@@ -16,4 +17,26 @@
     <li>Amount: @Model.Amount</li>
     <li>itemname: @Model.ItemName</li>
 
-</ol>
+</ol>*@
+
+
+<div class="list-group margin-none">
+    <div class="list-group-item media v-middle">
+        <div class="media-left">
+            <div class="icon-block half img-circle bg-primary">
+                <i class="fa fa-credit-card"></i>
+            </div>
+        </div>
+        <div class="media-body">
+            <h4 class="text-title media-heading">
+                <a href="@Url.Action("MyCoursesAsync", "Courses")"  class="link-text-color">Payment was successful</a>
+            </h4>
+            <div class="text-caption">Your experience begins now. </div>
+        </div>
+        <div class="media-right">
+            <a href="@Url.Action("MyCoursesAsync", "Courses")" class="btn btn-white btn-flat"><i class="fa fa-book fa-fw"></i>My Courses</a>
+            
+        </div>
+    </div>
+
+</div>
