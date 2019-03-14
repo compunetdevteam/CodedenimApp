@@ -3,7 +3,6 @@ using CodedenimWebApp.Services;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
 using Microsoft.AspNet.Identity;
-using OfficeOpenXml;
 using System;
 using System.Data;
 using System.Data.Entity;
@@ -14,9 +13,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
-using PayStack.Net.Apis;
 using System.Collections.Generic;
 using CodedenimWebApp.Service;
+using OfficeOpenXml;
 
 namespace CodedenimWebApp.Controllers
 {
