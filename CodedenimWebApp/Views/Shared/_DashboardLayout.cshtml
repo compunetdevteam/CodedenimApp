@@ -39,6 +39,7 @@
     <link href="~/Content/LMS/css/module-colors-background.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-colors-buttons.min.css" rel="stylesheet" />
     <link href="~/Content/LMS/css/module-colors-text.min.css" rel="stylesheet" />
+    @RenderSection("Styles", false)
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
     WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!-- If you don't need support for Internet Explorer <= 8 you can safely remove these -->
@@ -400,7 +401,7 @@
                         <li class="hasSubmenu">
                             <a href="#Quiz-menu"><i class="fa fa-quiz"></i><span> Quiz</span></a>
                             <ul id="Quiz-menu">
-                                @*<li><a href="@Url.Action("Create","QuizRules")"><span>Set Quiz Rules</span></a></li>*@
+                                <li><a href="@Url.Action("Create","QuizRules")"><span>Set Quiz Rules</span></a></li>
                                 <li><a href="@Url.Action("Create", "TestQuestions")"><span>Create Quiz</span></a></li>
                                 <li><a href="@Url.Action("Index", "TestQuestions")"><span>Edit Quiz</span></a></li>
                                 <li><a href="@Url.Action("Index","TestAnswers")"><span> Quiz Answers</span></a></li>

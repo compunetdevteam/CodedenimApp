@@ -1,4 +1,5 @@
-﻿using CodedenimWebApp.Models;
+﻿using CodedenimWebApp.Controllers.Api.ApiViewModel;
+using CodedenimWebApp.Models;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
 using System.Collections.Generic;
@@ -48,6 +49,29 @@ namespace CodedenimWebApp.Controllers.Api
             //    x.CourseCategoryId,             
 
             //});
+        }
+
+        [HttpGet]
+        [Route("GetACategories")]
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> GetCategories()
+        {
+            var categories =await  _db.CourseCategories.AsNoTracking()
+                                                 .Select(x =>
+                                                            new CourseCategoryVm {
+                                                                Amount = x.Amount,
+                                                                CategoryDescription = x.CategoryDescription,
+                                                                CategoryName = x.CategoryName,
+                                                                CourseCategoryId = x.CourseCategoryId,
+                                                                ImageLocation  = x.ImageLocation,
+                                                                StudentType = x.StudentType
+                                                            })
+                                                 .ToListAsync();
+            if(categories != null)
+            {
+                return Ok(categories);
+            }
+            return BadRequest();
         }
 
         //this method gets the courses based on the categoryId that comes in 

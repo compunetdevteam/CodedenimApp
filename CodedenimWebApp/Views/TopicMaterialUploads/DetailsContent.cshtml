@@ -28,7 +28,7 @@
         <div class="col-md-12">
             @if (@Model.Material != null)
             {
-                if (@Model.Material.FileType == FileType.MP4)
+                if (@Model.Material.FileType == FileType.MP4 || Model.Material.FileType == FileType.Video)
                 {
                     <div style="text-align: center">
                         <button onclick="playPause()" class="btn btn-primary">Play/Pause</button>

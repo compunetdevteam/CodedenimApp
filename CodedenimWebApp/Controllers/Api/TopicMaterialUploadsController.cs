@@ -14,10 +14,13 @@ using CodeninModel;
 
 namespace CodedenimWebApp.Controllers.Api
 {
+    [System.Web.Http.RoutePrefix("api/TopicMaterial")]
     public class TopicMaterialUploadsController : ApiController
     {
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
+
+        [Route("GetTopicMaterials")]
         // GET: api/TopicMaterialUploads
         public IQueryable GetTopicMaterialUploads()
         {
@@ -27,12 +30,14 @@ namespace CodedenimWebApp.Controllers.Api
                                                 x.FileLocation,
                                                 x.Name,
                                                 x.TopicMaterialUploadId,
-                                               
-                                                
-                                            });
+                                                FileType = x.FileType.ToString(),
+                                                x.TextContent
+
+            });
         }
 
         // GET: api/TopicMaterialUploads/5
+        [Route("GetTopicMaterials/{id}")]
         [ResponseType(typeof(TopicMaterialUpload))]
         public async Task<IHttpActionResult> GetTopicMaterialUpload(int id)
         {
@@ -46,8 +51,8 @@ namespace CodedenimWebApp.Controllers.Api
                                                                         x.FileLocation,
                                                                         FileType = x.FileType.ToString(),
                                                                         x.Course.StudentQuestions,
-                                                                      
-                                                                    }).ToListAsync();
+                                                                      x.TextContent
+                                                                  }).ToListAsync();
             if (topicMaterialUpload == null)
             {
                 return NotFound();

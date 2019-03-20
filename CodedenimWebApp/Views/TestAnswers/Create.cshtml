@@ -5,7 +5,17 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    // Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+    if (Request.Browser.ScreenPixelsWidth <= 700)
+    {
+        Layout = "~/Views/Shared/_QuizMobileLayout.cshtml";
+
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    }
 }
 
 <h2>Create</h2>

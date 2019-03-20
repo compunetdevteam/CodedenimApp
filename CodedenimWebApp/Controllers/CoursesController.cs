@@ -353,24 +353,30 @@ namespace CodedenimWebApp.Controllers
         public async Task<ActionResult> Create(
             [Bind(Include =
                 "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")]
-            Course course, HttpPostedFileBase File)
+            Course course, HttpPostedFileBase File, HttpPostedFileBase VideoFile)
         {
             if (ModelState.IsValid)
             {
 
                 string _FileName = String.Empty;
+                string _VideoFileName = String.Empty;
                 if (File.ContentLength > 0)
                 {
                     _FileName = Path.GetFileName(File.FileName);
+                    _VideoFileName = Path.GetFileName(VideoFile.FileName);
                     string path = HostingEnvironment.MapPath("~/MaterialUpload/") + _FileName;
+                    string Videopath = HostingEnvironment.MapPath("~/MaterialUpload/") + _VideoFileName;
                     course.FileLocation = path;
+                    course.VideoLocation = _VideoFileName;
                     var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/MaterialUpload/"));
                     if (directory.Exists == false)
                     {
                         directory.Create();
                     }
                     File.SaveAs(path);
+                    File.SaveAs(Videopath);
                 }
+                course.DateAdded = DateTime.Now;
                 course.FileLocation = _FileName;
 
 

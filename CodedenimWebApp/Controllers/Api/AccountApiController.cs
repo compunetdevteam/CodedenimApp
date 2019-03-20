@@ -1,4 +1,5 @@
-﻿using CodedenimWebApp.Models;
+﻿using CodedenimWebApp.Controllers.Api.ApiViewModel;
+using CodedenimWebApp.Models;
 using CodedenimWebApp.Providers;
 using CodedenimWebApp.Results;
 using CodedenimWebApp.Service;
@@ -12,6 +13,7 @@ using Microsoft.Owin.Security.OAuth;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Net.Http;
 using System.Net.Mail;
 using System.Security.Claims;
@@ -76,6 +78,24 @@ namespace CodedenimWebApp.Controllers.Api
         public IHttpActionResult Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+            return Ok();
+        }
+
+        //login function
+        public async Task<IHttpActionResult> Login(LoginVm model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var user = await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.UserName.Equals(model.UserName)
+                                                                            || x.Email.Equals(model.UserName));
+            if (user == null)
+            {
+                return BadRequest("User Credentials not found");
+            }
+
+
             return Ok();
         }
 
@@ -364,63 +384,76 @@ namespace CodedenimWebApp.Controllers.Api
         [System.Web.Http.AllowAnonymous]
         [System.Web.Http.Route("RegisterCorper")]
         [System.Web.Http.HttpPost]
-        public async Task<IHttpActionResult> RegisterCorper(RegisterCorperModel model)
-
+        public async Task<IHttpActionResult> RegisterCorper(RegistrationVm model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-           
-
-            var user = new ApplicationUser()
+            try
             {
-                //Id = model.CallUpNumber,
-                UserName = model.Email,
-                Email = model.Email,
-                PhoneNumber = model.MobileNumber
-            };
+                    var user = new ApplicationUser()
+                {
+                    //Id = model.CallUpNumber,
+                    UserName = model.Email,
+                    Email = model.Email,
+                    PhoneNumber = model.MobileNumber
+                };
 
    
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
+                if (!result.Succeeded)
+                {
+                    return GetErrorResult(result);
+                }
 
-            //Persisting the  Student Redord 
-            var corper = new Student()
-            {
-                StudentId = user.Id,
-                CallUpNo = model.CallUpNumber,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                DateOfBirth = model.DateOfBirth,
-                Gender = model.Gender,
-                Email = model.Email,
-                PhoneNumber = model.MobileNumber,
-                StateOfService = model.NyscState.ToString(),
-               Institution = model.Institution,
-               AccountType = "Corper",
-               Batch = model.NyscBatch.ToString(),
-               Discpline = model.Discpline
-            };
+                //Persisting the  Student Redord 
+                var corper = new Student()
+                {
+                    StudentId = user.Id,
+                    CallUpNo = model.CallUpNumber,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    DateOfBirth = model.DateOfBirth,
+                    Gender = model.Gender,
+                    Email = model.Email,
+                    PhoneNumber = model.MobileNumber,
+                    StateOfService = model.NyscState.ToString(),
+                   Institution = model.Institution,
+                   AccountType = "Corper",
+                   Batch = model.NyscBatch.ToString(),
+                   Discpline = model.Discpline
+                };
 
-            _db.Students.Add(corper);
-            await _db.SaveChangesAsync();
-            await this.UserManager.AddToRoleAsync(user.Id, RoleName.Corper);
+                _db.Students.Add(corper);
 
-       //    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    await _db.SaveChangesAsync();
+                    await this.UserManager.AddToRoleAsync(user.Id, RoleName.Corper);
+                }
+                catch (Exception e)
+                {
+
+                    throw;
+                }
+            
+           
+
+            //    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
             ////var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
             ////var callbackUrl = EmailLink(user.Id, code);
 
-           // await UserManager.SendEmailAsync(user.Id, "Code-denim Mobile Registration", "Welcome to Code-dedenim...");
+            // await UserManager.SendEmailAsync(user.Id, "Code-denim Mobile Registration", "Welcome to Code-dedenim...");
             ////ViewBag.Link = callbackUrl;
             //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your Tutor account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
             //ViewBag.Link = callbackUrl;
             //  TempData["UserMessage"] = $"Registration is Successful for {user.UserName}, Please Confirm Your Email to Login.";
+            //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            //var callbackUrl = Url.Link(nameof(RegisterCorper), new { userId = user.Id, code = code });
+
+            //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
             return Ok("Registration was successful");
 
         }

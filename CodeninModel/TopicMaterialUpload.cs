@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;
+using System.Web.Mvc;
 using CodeninModel.Quiz;
 
 namespace CodeninModel
@@ -24,6 +25,9 @@ namespace CodeninModel
         [Display(Name = " Short Description")]
         //[Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
+
+        [AllowHtml]
+        public string TextContent { get; set; }
 
         public string FileLocation { get; set; }
 

@@ -9,29 +9,33 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using CodedenimWebApp.Controllers.Api.ApiViewModel;
 using CodedenimWebApp.Models;
 using CodeninModel.Quiz;
 
 namespace CodedenimWebApp.Controllers.Api
 {
+
+    [System.Web.Http.RoutePrefix("api/Quiz")]
     public class TopicQuizsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/TopicQuizs  
-        public  IQueryable GetTopicQuizs()
+        [Route("GetQuiz")]
+        public  IEnumerable<QuizVm> GetTopicQuizs()
         {
-            var topicQuiz = db.TopicQuizs.Select(x => new
+            var topicQuiz = db.TopicQuizs.Select(x => new QuizVm
                                                         {
-                                                               x.TopicQuizId,
-                                                               x.ModuleId,
-                                                                
-                                                               x.Question,
-                                                               x.Option1,
-                                                               x.Option2,
-                                                               x.Option3,
-                                                               x.Option4
-                                                        });
+                                                               TopicQuizId = x.TopicQuizId,
+                                                               ModuleId = x.ModuleId,
+                                                               Question = x.Question,
+                                                               Option1 = x.Option1,
+                                                               Option2 = x.Option2,
+                                                               Option3 = x.Option3,
+                                                               Option4 = x.Option4,
+                                                               Answer = x.Answer
+                                                        }).ToList();
             return topicQuiz;
         }
 

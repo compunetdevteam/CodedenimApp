@@ -104,10 +104,25 @@
                             <li class="list-group-item paper-shadow">
 
                                 <div class="media-body text-body-2">
-                                    <video controls="controls" id="video1" width="600">
-                                        <source src="~/MaterialUpload/@Model.CourseVideo" type="video/mp4">
-                                        Your browser does not support HTML5 video.
-                                    </video>
+                                    @*<video controls="controls" id="video1" width="600">
+            <source src="" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>*@
+                                    @if (Model.CourseVideo != null)
+                                    {
+                                <video controls="controls" id="video1" width="600">
+                                 <source src="~/MaterialUpload/3cd9ca7e-3775-4ffd-8d5b-560419334c4d.mp4" type="video/mp4" />
+                                    </video >
+                                       @*<video controls="controls">
+                                            <source src="~/MaterialUpload/@Model.CourseVideo" type="video/mp4" />
+
+                                        </video>*@
+                                    }
+                                    else
+                                    {
+                                        <p>No Introductory Video</p>
+                                    }
+
                                 </div>
 
                             </li>
