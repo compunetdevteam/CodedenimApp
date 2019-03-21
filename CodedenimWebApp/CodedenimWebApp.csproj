@@ -179,6 +179,9 @@
       <HintPath>..\packages\Paystack.Net.0.7.2\lib\netstandard2.0\PayStack.Net.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="SendGrid, Version=9.10.0.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sendgrid.9.10.0\lib\net452\SendGrid.dll</HintPath>
+    </Reference>
     <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Swashbuckle.Core.5.6.0\lib\net40\Swashbuckle.Core.dll</HintPath>
     </Reference>
@@ -190,12 +193,37 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Net.Http, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.3\lib\net46\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Spatial, Version=5.8.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Spatial.5.8.4\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
@@ -246,8 +274,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http">
-    </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
     <Reference Include="System.Web.Optimization">
@@ -282,14 +308,20 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Api\ApiViewModel\Constant.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountJson.cs" />
     <Compile Include="Controllers\Api\AccountApiController.cs" />
     <Compile Include="Controllers\Api\ApiViewModel\CourseCategoryVm.cs" />
     <Compile Include="Controllers\Api\ApiViewModel\CoursesVm.cs" />
     <Compile Include="Controllers\Api\ApiViewModel\LoginVm.cs" />
+    <Compile Include="Controllers\Api\ApiViewModel\ModuleVm.cs" />
+    <Compile Include="Controllers\Api\ApiViewModel\MyCoursesVm.cs" />
     <Compile Include="Controllers\Api\ApiViewModel\QuizVm.cs" />
     <Compile Include="Controllers\Api\ApiViewModel\RegisterVm.cs" />
+    <Compile Include="Controllers\Api\ApiViewModel\ResponseMessage.cs" />
+    <Compile Include="Controllers\Api\ApiViewModel\TopicMaterialVm.cs" />
+    <Compile Include="Controllers\Api\ApiViewModel\TopicVm.cs" />
     <Compile Include="Controllers\Api\ConvertEmail.cs" />
     <Compile Include="Controllers\Api\Converter.cs" />
     <Compile Include="Controllers\Api\CourseCategoriesController.cs" />
@@ -315,6 +347,7 @@
     <Compile Include="Controllers\RemitaServicesController.cs" />
     <Compile Include="Controllers\TestAnswersController.cs" />
     <Compile Include="Controllers\TestQuestionsController.cs" />
+    <Compile Include="Controllers\UtilityQuery.cs" />
     <Compile Include="Migrations\201903131303156_InitialCreate.cs" />
     <Compile Include="Migrations\201903131303156_InitialCreate.Designer.cs">
       <DependentUpon>201903131303156_InitialCreate.cs</DependentUpon>
@@ -371,6 +404,7 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Services\ExcelValidation.cs" />
     <Compile Include="Service\DeletePhoto.cs" />
+    <Compile Include="Service\EmailSender.cs" />
     <Compile Include="Service\EmailSetupServices.cs" />
     <Compile Include="Service\ExcelUploadProcessor.cs" />
     <Compile Include="Controllers\MultipleButtonAttributeController.cs" />

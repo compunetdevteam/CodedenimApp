@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CodeninModel
 {
     public class StudentPayment
     {
+
         public int StudentPaymentId { get; set; }
         public string OrderId { get; set; }
         public int CourseCategoryId { get; set; }

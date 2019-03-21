@@ -7,10 +7,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Http.Description;
+using CodedenimWebApp.Controllers.Api.ApiViewModel;
 using CodedenimWebApp.Models;
 using CodeninModel;
+using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 
 namespace CodedenimWebApp.Controllers.Api
 {
@@ -18,32 +22,82 @@ namespace CodedenimWebApp.Controllers.Api
     public class EnrollForCoursesController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private ResponseMessage response = new ResponseMessage();
 
         // GET: api/EnrollForCourses
-        public IQueryable<EnrollForCourse> GetEnrollForCourses()
-        {
-            return db.EnrollForCourses;
-        }
-
-
-        // GET: api/EnrollForCourses/5
-        //this method gets the list of courses that the student has enrolled into 
+        //public IQueryable<EnrollForCourse> GetEnrollForCourses()
+        //{
+        //    return db.EnrollForCourses;
+        //}
         [HttpGet]
-        [System.Web.Http.Route("EnrolledForCourses")]
-        [ResponseType(typeof(EnrollForCourse))]
-        public async Task<IHttpActionResult> GetEnrolledForCourses(string email)
+        [Route("Checker")]
+        public async Task<IHttpActionResult> Checker(string email, int categoryId)
         {
-
             var studentEmail = new ConvertEmail1();
             var studentId = studentEmail.ConvertEmailToId(email);
-            var enrollCategoryId = db.EnrollForCourses.AsNoTracking().Where(x => x.StudentId.Equals(studentId))
-                                     .Select(x => x.CourseCategoryId).FirstOrDefault();
+            var enrolledCategory = false;
+            var courses = new Course();
+            if(studentId != null)
+            {
+                //get the list of all enrolled categories
+                enrolledCategory = db.StudentPayments.AsNoTracking().Where(x => x.StudentId.Equals(studentId) && x.IsPayed.Equals(true) && x.CourseCategoryId.Equals(categoryId)).Any();
+                if (enrolledCategory)
+                {
+                    response.Message = "User has paid for category";
+                    response.Status = true;
+                }
+                else
+                {
+                    response.Message = "User has not paid";
+                    response.Status = false;
+                }
+                return Ok(response);
+            }
+           
+            return Ok(response);
+        }
 
-            var PaidCourses = db.EnrollForCourses.AsNoTracking().Where(x => x.StudentId.Equals(studentId))
-                .Select(x => x.CourseCategoryId).FirstOrDefault();
+        // GET: api/EnrollForCourses/5
+        //this method gets the list of courses that the student has enrolled into(payed for)
+        [HttpGet]
+        [System.Web.Http.Route("GetEnrolledCategories")]
+        [ResponseType(typeof(EnrollForCourse))]
+        public async Task<IHttpActionResult> GetEnrolledCategories(string email)
+        {
+            var studentEmail = new ConvertEmail1();
+            var studentId = studentEmail.ConvertEmailToId(email);
+            var enrolledCategory = new List<StudentPayment>();
+            var courses = new Course();
+            if(studentId != null)
+            {
+                //get the list of all enrolled categories
+                 enrolledCategory = db.StudentPayments.AsNoTracking().Where(x => x.StudentId.Equals(studentId) && x.IsPayed.Equals(true))
+                                    .ToList();
+            }
+            var category = new List<MyCoursesVm>();
+            foreach (var item in enrolledCategory.DistinctBy(x => x.CourseCategoryId))
+            {
+                var user = User.Identity.GetUserId();
+                //getting the different courses that was paid for based on the category
+                //TODO: fix the issue : same course return for all different courses
+                var paidCourses = db.AssignCourseCategories.Include(x => x.Courses).Where(x => x.CourseCategoryId.Equals(item.CourseCategoryId))
+                                                                    .Select(x => new MyCoursesVm
+                                                                    {
+                                                                         StudentId = studentId,
+                                                                         CourseCategoryId = x.CourseCategoryId,
+                                                                         CategoryName = x.CourseCategory.CategoryName,
+                                                                        // Courses = x.Courses.Modules.Select()
+                                                                   }).FirstOrDefault();
+               
+                category.Add(paidCourses);
+            }
 
-            var courses = await db.AssignCourseCategories.AsNoTracking()
-                .Where(x => x.CourseCategoryId.Equals(enrollCategoryId)).ToListAsync();
+
+            //var PaidCourses = db.EnrollForCourses.AsNoTracking().Where(x => x.StudentId.Equals(studentId))
+            //    .Select(x => x.CourseCategoryId).FirstOrDefault();
+
+            //var courses = await db.AssignCourseCategories.AsNoTracking()
+            //    .Where(x => x.CourseCategoryId.Equals(enrollCategoryId)).ToListAsync();
             //EnrollForCourse enrollForCourse = await db.EnrollForCourses.FindAsync(email);
             //if (enrollForCourse == null)
             //{
@@ -51,7 +105,7 @@ namespace CodedenimWebApp.Controllers.Api
             //}
 
             //return Ok(enrollForCourse);
-            return Ok(courses);
+            return Ok(category);
         }
         // GET: api/EnrollForCourses/5
         [ResponseType(typeof(EnrollForCourse))]

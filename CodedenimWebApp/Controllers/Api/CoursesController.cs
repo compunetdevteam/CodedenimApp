@@ -10,13 +10,14 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.Results;
+using CodedenimWebApp.Constants;
 using CodedenimWebApp.Controllers.Api.ApiViewModel;
 using CodedenimWebApp.Models;
 using CodeninModel;
 
 namespace CodedenimWebApp.Controllers.Api
 {
-    [Authorize]
+    //[Authorize]
     [System.Web.Http.RoutePrefix("api/Courses")]
     public class CoursesController : ApiController
     {
@@ -29,8 +30,10 @@ namespace CodedenimWebApp.Controllers.Api
         [HttpGet]
         public IHttpActionResult GetCourses()
         {
+           // var courseIds = _db.AssignCourseCategories.Select(x => x.CourseId).ToList();
+           
             var getCourses = _db.AssignCourseCategories.Include(x => x.CourseCategory)
-                .Include(x => x.Courses)
+                .Include(x => x.Courses.Modules)
                 .Select(x => new CoursesVm
                 {
                     CourseId = x.CourseId,
@@ -40,8 +43,18 @@ namespace CodedenimWebApp.Controllers.Api
                     CategoryName = x.CourseCategory.CategoryName,
                     CourseName = x.Courses.CourseName,
                     ExpectedTime = x.Courses.ExpectedTime,
-                    FileLocation =  x.Courses.FileLocation 
+                    FileLocation = Constant.FilePath + x.Courses.FileLocation,
+                    Modules = x.Courses.Modules.Select(c => new ModuleVm
+                        {
+                        ModuleDescription = c.ModuleDescription,
+                        ModuleName = c.ModuleName,
+                         ModuleId =c.ModuleId,
+                         CourseId = c.CourseId,
+                         ExpectedTime = c.ExpectedTime
+                    })
+                   
                 }).ToList();
+            
             if (getCourses != null)
             {
                 return Ok(getCourses);
@@ -49,6 +62,10 @@ namespace CodedenimWebApp.Controllers.Api
             
             return BadRequest("No Courses to display");
         }
+
+
+        
+
 
         // GET: api/Courses/5
         /// <summary>
@@ -58,39 +75,45 @@ namespace CodedenimWebApp.Controllers.Api
         /// <param name="id"></param>
         /// <returns></returns>
         [ResponseType(typeof(Course))]
-        [Route(nameof(GetCourse))]
+        [Route("GetCourse/{id}")]
         public async Task<IHttpActionResult> GetCourse(int id)
         {
-           // Course course = await _db.Courses.FindAsync(id);
+            // Course course = await _db.Courses.FindAsync(id);
+            var modules = _db.Modules.Where(x => x.CourseId.Equals(id)).ToList();
             var course = await _db.Courses.Include(x => x.Modules).Where(x => x.CourseId.Equals(id))
                                         .Select(x => new CoursesVm
                                         {
                                             CourseId = x.CourseId,
                                             CourseCode = x.CourseCode,
                                             CourseDescription = x.CourseDescription,
-                                            FileLocation = x.FileLocation,
+                                            FileLocation = Constant.FilePath + x.FileLocation,
                                             CategoryName = x.CourseName,
+                                            Modules = x.Modules.Select(c => new ModuleVm
+                                            {
+                                                ModuleDescription = c.ModuleDescription,
+                                                ModuleName = c.ModuleName,
+                                                ModuleId = c.ModuleId,
+                                                CourseId = c.CourseId,
+                                                ExpectedTime = c.ExpectedTime
+                                            })
                                         }).ToListAsync();
 
-            //var module = await _db.Modules.Where(c => c.CourseId.Equals(id))
-            //                                     .Select(x => new
+            //var course = await _db.Modules.Where(c => c.CourseId.Equals(id))
+            //                                     .Select(x => new CoursesVm
             //                                     {
-            //                                         x.CourseId,
-            //                                         x.Course.CourseCode,
-            //                                         x.Course.CourseName,
-            //                                         x.Course.CourseDescription,
-            //                                         x.Course.ExpectedTime,
+            //                                         CourseId = x.CourseId,
+            //                                         CourseCode = x.Course.CourseCode,
+            //                                         CategoryName = x.Course.CourseName,
+            //                                          CourseDescription = x.Course.CourseDescription,
+            //                                         ExpectedTime = x.Course.ExpectedTime,
             //                                         //x.Course.CourseCategory.CategoryName,
             //                                         //x.Course.CourseCategoryId,
-            //                                         x.Course.FileLocation
+            //                                         FileLocation = x.Course.FileLocation,
 
-            //                                        //m.ModuleId,
-            //                                        //m.ModuleName,
-            //                                        //m.ModuleDescription,
-            //                                        //m.ExpectedTime,
-            //                                        //m.CourseId,
-            //                                        //m.Course.CourseName
-            //                                    }).ToListAsync();
+
+
+            //                                     }).ToListAsync();
+
             if (course == null)
             {
                 return NotFound();

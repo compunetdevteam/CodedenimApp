@@ -350,37 +350,43 @@ namespace CodedenimWebApp.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(
-            [Bind(Include =
-                "CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")]
-            Course course, HttpPostedFileBase File, HttpPostedFileBase VideoFile)
+        public async Task<ActionResult> Create(CourseVm course, HttpPostedFileBase File, HttpPostedFileBase VideoFile)
         {
             if (ModelState.IsValid)
             {
+                Course mycourse = new Course();
+                //string _FileName = String.Empty;
+                //string _VideoFileName = String.Empty;
+                //if (File.ContentLength > 0)
+                //{
+                //    _FileName = Path.GetFileName(File.FileName);
+                //    _VideoFileName = Path.GetFileName(VideoFile.FileName);
+                //    string path = HostingEnvironment.MapPath("~/MaterialUpload/") + _FileName;
+                //    string Videopath = HostingEnvironment.MapPath("~/MaterialUpload/") + _VideoFileName;
+                //    course.FileLocation = path;
+                //    course.VideoLocation = _VideoFileName;
+                //    var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/MaterialUpload/"));
+                //    if (directory.Exists == false)
+                //    {
+                //        directory.Create();
+                //    }
+                //    File.SaveAs(path);
+                //    File.SaveAs(Videopath);
+                ////}
+                //course.DateAdded = DateTime.Now;
+                mycourse.CourseCode = course.CourseCode;
+                mycourse.CourseName = course.CourseName;
+                mycourse.FileLocation = course.ImageName;
+                mycourse.VideoLocation = course.VideoName;
+                mycourse.ExpectedTime = course.ExpectedTime;
+                mycourse.Points = course.Points;
+                mycourse.CourseDescription = course.CourseDescription;
+                mycourse.DateAdded = DateTime.Now;
 
-                string _FileName = String.Empty;
-                string _VideoFileName = String.Empty;
-                if (File.ContentLength > 0)
-                {
-                    _FileName = Path.GetFileName(File.FileName);
-                    _VideoFileName = Path.GetFileName(VideoFile.FileName);
-                    string path = HostingEnvironment.MapPath("~/MaterialUpload/") + _FileName;
-                    string Videopath = HostingEnvironment.MapPath("~/MaterialUpload/") + _VideoFileName;
-                    course.FileLocation = path;
-                    course.VideoLocation = _VideoFileName;
-                    var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/MaterialUpload/"));
-                    if (directory.Exists == false)
-                    {
-                        directory.Create();
-                    }
-                    File.SaveAs(path);
-                    File.SaveAs(Videopath);
-                }
-                course.DateAdded = DateTime.Now;
-                course.FileLocation = _FileName;
+                //course.FileLocation = _FileName;
 
 
-                db.Courses.Add(course);
+                db.Courses.Add(mycourse);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }

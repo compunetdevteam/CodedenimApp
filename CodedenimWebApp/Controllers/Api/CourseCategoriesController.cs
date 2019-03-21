@@ -1,4 +1,5 @@
-﻿using CodedenimWebApp.Controllers.Api.ApiViewModel;
+﻿using CodedenimWebApp.Constants;
+using CodedenimWebApp.Controllers.Api.ApiViewModel;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
@@ -82,15 +83,15 @@ namespace CodedenimWebApp.Controllers.Api
         public async Task<IHttpActionResult> GetCourseCategory(int id)
         {
             var courseCategory = await _db.AssignCourseCategories.Where(x => x.CourseCategoryId.Equals(id))
-                                                                .Select(x => new
+                                                                .Select(x => new CourseCategoryVm
                                                                 {
-                                                                  x.CourseId,                                                                   
-                                                                  x.Courses.CourseCode,
-                                                                  x.Courses.CourseName,
-                                                                  x.Courses.CourseDescription,
-                                                                  x.Courses.ExpectedTime,
-                                                                  x.Courses.Points,
-                                                                  x.Courses.FileLocation,
+                                                                   CourseId = x.CourseId,                                                                   
+                                                                  CourseCode = x.Courses.CourseCode,
+                                                                  CategoryName = x.Courses.CourseName,
+                                                                  CategoryDescription = x.Courses.CourseDescription,
+                                                                  ExpectedTime = x.Courses.ExpectedTime,
+                                                                  Point = x.Courses.Points,
+                                                                  ImageLocation = Constant.FilePath +  x.Courses.FileLocation,
                                                                     
                                                                 //    //x.CourseCode,
                                                                 //    //x.CourseDescription,

@@ -9,28 +9,38 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using CodedenimWebApp.Controllers.Api.ApiViewModel;
 using CodedenimWebApp.Models;
 using CodeninModel;
 
 namespace CodedenimWebApp.Controllers.Api
 {
+    [System.Web.Http.RoutePrefix("api/Modules")]
     public class ModulesController : ApiController
     {
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         // GET: api/Modules
+        [Route("GetModules")]
         public IQueryable GetModules()
         {
-           // return db.Modules.Include(m => m.Topics).ToList();
-            return _db.Modules.Select(x => new
-                                {
-                                   x.CourseId,
-                                   x.ExpectedTime,
-                                   x.ModuleDescription,
-                                   x.ModuleId,
-                                   x.ModuleName,
-                                });
+            // return db.Modules.Include(m => m.Topics).ToList();
+            var topicVm = new List<TopicVm>();
 
+            return _db.Modules.Include(x => x.Topics).Select(x => new ModuleVm
+            {
+                CourseId = x.CourseId,
+                ExpectedTime = x.ExpectedTime,
+                ModuleDescription = x.ModuleDescription,
+                ModuleId = x.ModuleId,
+                ModuleName = x.ModuleName,
+               Topics = x.Topics.Select(t => new TopicVm {
+                   TopicId = t.TopicId,
+                   ModuleId = t.ModuleId,
+                   TopicName = t.TopicName,
+                   ExpectedTime = t.ExpectedTime
+               })
+                                });
         }
 
 
@@ -46,13 +56,13 @@ namespace CodedenimWebApp.Controllers.Api
         {
             //Module module = await db.Modules.FindAsync(id);
             var module = await _db.Modules.Where(c => c.CourseId.Equals(id))
-                                        .Select(m => new
+                                        .Select(m => new ModuleVm
                                         {
-                                            m.ModuleId,
-                                            m.ModuleName,
-                                            m.ModuleDescription,
-                                            m.ExpectedTime,
-                                            m.CourseId
+                                            ModuleId = m.ModuleId,
+                                            ModuleName = m.ModuleName,
+                                            ModuleDescription = m.ModuleDescription,
+                                            ExpectedTime = m.ExpectedTime,
+                                            CourseId = m.CourseId
                                         }).ToListAsync();
             //var module = await _db.Topics.Where(t => t.ModuleId.Equals(id))
             //                                    .Select(t => new

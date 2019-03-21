@@ -13,5 +13,10 @@ namespace CodedenimWebApp.Controllers.Api.ApiViewModel
         public string StudentType { get; set; }
         public string CategoryDescription { get; set; }
         public string ImageLocation { get; set; }
+        public int CourseId { get; set; }
+        public string CourseCode { get; set; }
+        public int ExpectedTime { get; set; }
+        public int Point { get; set; }
+
     }
 }

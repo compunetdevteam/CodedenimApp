@@ -9,25 +9,38 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using CodedenimWebApp.Constants;
+using CodedenimWebApp.Controllers.Api.ApiViewModel;
 using CodedenimWebApp.Models;
 using CodeninModel.Quiz;
 
 namespace CodedenimWebApp.Controllers.Api
 {
+    [RoutePrefix("api/Topics")]
     public class TopicsController : ApiController
     {
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         // GET: api/Topics
+        [Route("GetTopics")]
         public IQueryable GetTopics()
         {
             //return db.Topics.Include(t => t.MaterialUploads).ToList();
-            return _db.Topics.Select(x => new
+            return _db.Topics.Include(x => x.MaterialUploads).Select(x => new TopicVm
             {
-                x.ExpectedTime,
-                x.ModuleId,
-                x.TopicId,
-                x.TopicName,
+                ExpectedTime = x.ExpectedTime,
+                ModuleId = x.ModuleId,
+                TopicId = x.TopicId,
+                TopicName = x.TopicName,
+                TopicMaterialVm = x.MaterialUploads.Select(t => new TopicMaterialVm {
+                    TopicId = t.TopicId,
+                    TopicMaterialId = t.TopicMaterialUploadId,
+                    Name  = t.Name,
+                    Description =  t.Description,
+                    FileLocation = Constant.FilePath + t.FileLocation,
+                    FileType = t.FileType.ToString(),
+                    TextContent = t.TextContent,
+                })
                
              
             });

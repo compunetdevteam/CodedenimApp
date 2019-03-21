@@ -1,4 +1,5 @@
-﻿using CodedenimWebApp.Controllers.Api.ApiViewModel;
+﻿using CodedenimWebApp.Constants;
+using CodedenimWebApp.Controllers.Api.ApiViewModel;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.Providers;
 using CodedenimWebApp.Results;
@@ -10,10 +11,13 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
+using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
 using System.Security.Claims;
@@ -31,10 +35,12 @@ namespace CodedenimWebApp.Controllers.Api
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
         private readonly ApplicationDbContext _db;
+        private readonly ResponseMessage _response;
 
         public AccountApiController()
         {
             _db = new ApplicationDbContext();
+            _response = new ResponseMessage();
         }
 
         public AccountApiController(ApplicationUserManager userManager,
@@ -343,29 +349,124 @@ namespace CodedenimWebApp.Controllers.Api
             return logins;
         }
 
+        [HttpGet]
+        public async Task<IHttpActionResult> Register()
+        {
+            return Ok();
+        }
 
         // POST api/Account/Register
         [System.Web.Http.AllowAnonymous]
         [System.Web.Http.Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        [HttpPost]
+        public async Task<IHttpActionResult> Register(RegistrationVm model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            try
+            {
+
+           
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+           
 
-            if (!result.Succeeded)
+                if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
 
 
+            var student = new Student();
 
-            return Ok();
+            if (Constant.Corper == model.StudentType.ToUpper())
+            {
+
+                student.StudentId = user.Id;
+                student.CallUpNo = model.CallUpNumber;
+                student.FirstName = model.FirstName;
+                student.LastName = model.LastName;
+                student.DateOfBirth = model.DateOfBirth;
+                student.Gender = model.Gender;
+                student.Email = model.Email;
+                student.PhoneNumber = model.MobileNumber;
+                //student.StateOfService = model.NyscState.ToString();
+                student.Institution = model.Institution;
+                student.AccountType = "Corper";
+                student.Batch = model.NyscBatch;
+                student.Discpline = model.Discpline;
+              
+                await this.UserManager.AddToRoleAsync(user.Id, RoleName.Corper);
+                _db.Students.Add(student);
+            }
+            else if(Constant.Undergraduate == model.StudentType.ToUpper())
+            {
+                student.StudentId = user.Id;
+                //MatricNo = model.MatNumber,
+                student.Title = model.Title.ToString();
+                student.FirstName = model.FirstName;
+                student.LastName = model.LastName;
+                student.DateOfBirth = model.DateOfBirth;
+                student.Gender = model.Gender;
+                student.AccountType = "UnderGraduate";
+                student.PhoneNumber = model.MobileNumber;
+                student.Institution = model.Institution;
+                student.Discpline = model.Discpline;
+                student.Email = model.Email;
+                await this.UserManager.AddToRoleAsync(user.Id, RoleName.UnderGraduate);
+                _db.Students.Add(student);
+            }
+            else if (Constant.Others == model.StudentType.ToUpper())
+            {
+                var modelTitle = "";
+                if (model.Gender == "Male" || model.Gender == "male")
+                {
+                    modelTitle = "Mr";
+                }
+                else { modelTitle = "Mrs/Miss"; }
+
+                student.StudentId = user.Id;
+                student.Title = modelTitle;
+                student.FirstName = model.FirstName;
+                student.LastName = model.LastName;
+                student.DateOfBirth = model.DateOfBirth;
+                student.Gender = model.Gender;
+                student.AccountType = "RegularStudent";
+                student.PhoneNumber = model.MobileNumber;
+                student.Email = model.Email;
+                await this.UserManager.AddToRoleAsync(user.Id, RoleName.RegularStudent);
+                _db.Students.Add(student);
+            }
+            else
+            {
+                    _response.Message = "Invalid Student Type";
+                    _response.Status = false;
+                return BadRequest(_response.ToString());
+            }
+                await _db.SaveChangesAsync();
+                //await UserManager.SendEmailAsync(user.Id, "Code-denim Mobile Registration", "Thank you for creating your account of mobile");
+                var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                var callbackUrl = Url.Link("Default", new { Controller = "Account", Action = "ResetPassword", code = code });
+                /*await UserManager.SendEmailAsync(user.Id, "Reset Password",
+                   "Please reset your password by clicking here : <a href=\""+ callbackUrl +"\">link</a>"); */
+               // await SendEmail(model.Email, $"Click this link to activate your account {callbackUrl}", "Email Confirmation", "");
+
+
+                _response.Message = "Registration was successful. A link has been sent to your email. Use the link to activate your account";
+                _response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                _response.Message = "An error Occured While Registering user";
+                _response.Status = false;
+                return BadRequest(_response.ToString());
+            }
+
+            return Ok(_response);
         }
 
         /// <summary>
@@ -392,15 +493,13 @@ namespace CodedenimWebApp.Controllers.Api
             }
             try
             {
-                    var user = new ApplicationUser()
+                var user = new ApplicationUser()
                 {
                     //Id = model.CallUpNumber,
                     UserName = model.Email,
                     Email = model.Email,
                     PhoneNumber = model.MobileNumber
                 };
-
-   
 
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -628,24 +727,36 @@ namespace CodedenimWebApp.Controllers.Api
         /// <param name="model"></param>
         /// <returns></returns>
 
-        [System.Web.Http.AllowAnonymous]
-        public async Task<IHttpActionResult> SendEmail()
-        {
-            var message = new IdentityMessage
-            {
-                Subject = "Confirm Email",
-                Destination = "davidzagi93@gmail.com",
-                Body = "this is to Confirm Password",
+        //[System.Web.Http.AllowAnonymous]
+        //public async Task<IHttpActionResult> SendEmail(string destination, string body, string subject,string ptext)
+        //{
+        //    var apiKey = ConfigurationManager.AppSettings["ApiKey"];
+        //    var client = new SendGridClient(apiKey);
+        //    //var attachment = ConvertToBase64();
 
-            };
 
-            var send = new EmailService();
-            await send.SendAsync(message);
-           // ViewBag.Success = "Success";
-            return Ok();
 
-            // return await message;
-        }
+        //    var From = new EmailAddress("Codedenim", "Codedenim");
+        //    var Subject = subject;
+        //    var PlainTextContent = ptext;
+        //   // var HtmlContent = GetEmailTemplate();
+        //    var to = new EmailAddress(destination);
+        //    var successMsg = string.Empty;
+        //    var msg = MailHelper.CreateSingleEmail(From, to, Subject, PlainTextContent, "");
+        //   // msg.AddAttachment("my pics.jpg", ConvertToBase64());
+        //    try
+        //    {
+        //        await client.SendEmailAsync(msg);
+               
+        //        successMsg = "Message sent successfully";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        successMsg = ex.Message;
+        //    }
+        //    return Ok();
+
+        //}
 
 
 
@@ -670,6 +781,35 @@ namespace CodedenimWebApp.Controllers.Api
 
                 await mailClient.SendMailAsync(email);
             }
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("ForgotPassword")]
+        public async Task<IHttpActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+           
+                var user = await UserManager.FindByNameAsync(model.Email);
+                //if (user == null ||!(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null)
+                {
+                    return BadRequest("Üser Does Not exist");
+                }
+                var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Link("Default", new { Controller = "Account", Action = "ResetPassword", code = code });
+                /*await UserManager.SendEmailAsync(user.Id, "Reset Password",
+                   "Please reset your password by clicking here : <a href=\""+ callbackUrl +"\">link</a>"); */
+                //await SendEmail(model.Email,$"Click this link to activate your account {callbackUrl}","Reset Password","");
+               // await UserManager.SendEmailAsync(user.Id, "Reset Password", $"{callbackUrl}");
+
+                //var response = Request.CreateResponse(BadRequest());
+                //response.Headers.Location = new Uri("http://www.yourNewDomain.com");
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
         //

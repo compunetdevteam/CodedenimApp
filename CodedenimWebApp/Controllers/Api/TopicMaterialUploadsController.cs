@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using CodedenimWebApp.Controllers.Api.ApiViewModel;
 using CodedenimWebApp.Models;
 using CodeninModel;
 
@@ -24,14 +25,14 @@ namespace CodedenimWebApp.Controllers.Api
         // GET: api/TopicMaterialUploads
         public IQueryable GetTopicMaterialUploads()
         {
-            return _db.TopicMaterialUploads.Select(x => new
+            return _db.TopicMaterialUploads.Select(x => new TopicMaterialVm
                                             {
-                                                x.Description,
-                                                x.FileLocation,
-                                                x.Name,
-                                                x.TopicMaterialUploadId,
+                                                Description = x.Description,
+                                                FileLocation = x.FileLocation,
+                                                Name = x.Name,
+                                                TopicMaterialId = x.TopicMaterialUploadId,
                                                 FileType = x.FileType.ToString(),
-                                                x.TextContent
+                                                TextContent = x.TextContent
 
             });
         }
@@ -43,15 +44,15 @@ namespace CodedenimWebApp.Controllers.Api
         {
           //  TopicMaterialUpload topicMaterialUpload = await _db.TopicMaterialUploads.FindAsync(id);
           var topicMaterialUpload = await _db.TopicMaterialUploads.Where(x => x.TopicId.Equals(id))
-                                                                  .Select( x => new
+                                                                  .Select( x => new TopicMaterialVm
                                                                     {
-                                                                        x.TopicMaterialUploadId,
-                                                                        x.TopicId,
-                                                                        x.Description,
-                                                                        x.FileLocation,
+                                                                        TopicMaterialId = x.TopicMaterialUploadId,
+                                                                        TopicId = x.TopicId,
+                                                                        Description = x.Description,
+                                                                        FileLocation = x.FileLocation,
                                                                         FileType = x.FileType.ToString(),
-                                                                        x.Course.StudentQuestions,
-                                                                      x.TextContent
+                                                                       // x.Course.StudentQuestions,
+                                                                       TextContent = x.TextContent
                                                                   }).ToListAsync();
             if (topicMaterialUpload == null)
             {
@@ -67,13 +68,8 @@ namespace CodedenimWebApp.Controllers.Api
         {
             if (!ModelState.IsValid)
             {
-
-
-
-              
                 return BadRequest(ModelState);
             }
-
             if (id != topicMaterialUpload.TopicMaterialUploadId)
             {
                 return BadRequest();

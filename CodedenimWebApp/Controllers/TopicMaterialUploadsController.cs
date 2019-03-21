@@ -268,17 +268,17 @@ namespace CodedenimWebApp.Controllers
                 var topicId = topicMaterialUpload.TopicId;
                 var moduleId = db.Topics.Where(x => x.TopicId.Equals(topicId)).Select(x => x.ModuleId).FirstOrDefault();
                 string _FileName = String.Empty;
-                if (File.ContentLength > 0)
-                {
-                    _FileName = Path.GetFileName(File.FileName);
-                    string path = HostingEnvironment.MapPath("~/MaterialUpload/") + _FileName;
-                    topicMaterialUpload.FileLocation = path;
-                    var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/MaterialUpload/"));
-                    if (directory.Exists == false)
-                    {
-                        directory.Create();
-                    }
-                    File.SaveAs(path);
+                //if (File.ContentLength > 0 || File.FileName != null)
+                //{
+                    //_FileName = Path.GetFileName(File.FileName);
+                    //string path = HostingEnvironment.MapPath("~/MaterialUpload/") + _FileName;
+                    //topicMaterialUpload.FileLocation = path;
+                    //var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/MaterialUpload/"));
+                    //if (directory.Exists == false)
+                    //{
+                    //    directory.Create();
+                    //}
+                    //File.SaveAs(path);
                     //CloudBlobContainer blobContainer = _blobService.GetCloudBlobContainer();
                     //List<string> blobs = new List<string>();
                     //foreach (var blobItem in blobContainer.ListBlobs())
@@ -305,12 +305,17 @@ namespace CodedenimWebApp.Controllers
                     //     }
                     //// }
                     //return RedirectToAction("Upload");
-                }
+                    topicMaterialUpload.FileLocation = _FileName;
+                //}
+                //else
+                //{
+                    db.TopicMaterialUploads.Add(topicMaterialUpload);
+               // }
+                
+               
 
-                topicMaterialUpload.FileLocation = _FileName;
 
-
-                db.TopicMaterialUploads.Add(topicMaterialUpload);
+                //db.TopicMaterialUploads.Add(topicMaterialUpload);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", "Modules", new { id = moduleId });
             }
