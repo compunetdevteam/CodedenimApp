@@ -372,13 +372,7 @@ namespace CodedenimWebApp.Controllers.Api
            
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
            
-
-                if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
 
 
             var student = new Student();
@@ -447,6 +441,13 @@ namespace CodedenimWebApp.Controllers.Api
                     _response.Status = false;
                 return BadRequest(_response.ToString());
             }
+                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+
+                if (!result.Succeeded)
+                {
+                    return GetErrorResult(result);
+                }
                 await _db.SaveChangesAsync();
                 //await UserManager.SendEmailAsync(user.Id, "Code-denim Mobile Registration", "Thank you for creating your account of mobile");
                 var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -463,7 +464,7 @@ namespace CodedenimWebApp.Controllers.Api
             {
                 _response.Message = "An error Occured While Registering user";
                 _response.Status = false;
-                return BadRequest(_response.ToString());
+                return Ok(_response);
             }
 
             return Ok(_response);

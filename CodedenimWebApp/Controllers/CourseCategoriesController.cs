@@ -692,12 +692,13 @@ namespace CodedenimWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "CourseCategoryId,CategoryName,Amount,StudentType")] CourseCategory courseCategory, HttpPostedFileBase File)
         {
-            var fp = new UploadedFileProcessor();
+            //var fp = new UploadedFileProcessor();
 
-            var path = fp.ProcessFilePath(File);
+            //var path = fp.ProcessFilePath(File);
             if (ModelState.IsValid)
             {
-                courseCategory.ImageLocation = path.Path;
+                // courseCategory.ImageLocation = path.Path;
+             
                 db.CourseCategories.Add(courseCategory);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
