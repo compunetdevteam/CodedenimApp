@@ -375,6 +375,10 @@
     <Compile Include="Migrations\201903212342115_addedPropertiesToEnrolledForCoursed.Designer.cs">
       <DependentUpon>201903212342115_addedPropertiesToEnrolledForCoursed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904021221476_newPublish.cs" />
+    <Compile Include="Migrations\201904021221476_newPublish.Designer.cs">
+      <DependentUpon>201904021221476_newPublish.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Services\RemitaHash.cs" />
     <Compile Include="Service\BlobConnection.cs" />
@@ -2028,6 +2032,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903212342115_addedPropertiesToEnrolledForCoursed.resx">
       <DependentUpon>201903212342115_addedPropertiesToEnrolledForCoursed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904021221476_newPublish.resx">
+      <DependentUpon>201904021221476_newPublish.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

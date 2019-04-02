@@ -93,7 +93,7 @@ namespace CodedenimWebApp.Controllers.Api
                                                                   CategoryDescription = x.Courses.CourseDescription,
                                                                   ExpectedTime = x.Courses.ExpectedTime,
                                                                   Point = x.Courses.Points,
-                                                                  ImageLocation = Constant.FilePath +  x.Courses.FileLocation,
+                                                                  ImageLocation =  x.Courses.FileLocation,
                                                                     
                                                                 //    //x.CourseCode,
                                                                 //    //x.CourseDescription,

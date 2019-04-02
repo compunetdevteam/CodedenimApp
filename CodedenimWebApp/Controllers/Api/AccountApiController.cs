@@ -491,7 +491,7 @@ namespace CodedenimWebApp.Controllers.Api
                     //_response.Status = false;
                     //return Ok(_response);
                 }
-                _response.Message = "The User has been registered";
+                _response.Message = $"This Email {userExist.Email} has been registered";
                 _response.Status = false;
                 return Ok(_response);
             }
@@ -854,7 +854,7 @@ namespace CodedenimWebApp.Controllers.Api
 
             if (user == null)
             {
-                _response.Message = "User Does not exist";
+                _response.Message = "Invalid Login Attempt";
                 _response.Status = false;
                 return Ok(_response);
             }
