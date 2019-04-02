@@ -14,6 +14,7 @@ using CodedenimWebApp.Constants;
 using CodedenimWebApp.Controllers.Api.ApiViewModel;
 using CodedenimWebApp.Models;
 using CodeninModel;
+using Microsoft.Ajax.Utilities;
 
 namespace CodedenimWebApp.Controllers.Api
 {
@@ -33,7 +34,7 @@ namespace CodedenimWebApp.Controllers.Api
            // var courseIds = _db.AssignCourseCategories.Select(x => x.CourseId).ToList();
            
             var getCourses = _db.AssignCourseCategories.Include(x => x.CourseCategory)
-                .Include(x => x.Courses.Modules)
+                .Include(x => x.Courses.Modules).DistinctBy(s => s.CourseId)
                 .Select(x => new CoursesVm
                 {
                     CourseId = x.CourseId,

@@ -787,6 +787,20 @@ namespace CodedenimWebApp.Controllers
         }
 
         //
+        // GET: /Account/ConfirmEmail
+        [System.Web.Mvc.AllowAnonymous]
+        public async Task<ActionResult> ConfirmEmailMobile(string userId, string code)
+        {
+            if (userId == null || code == null)
+            {
+                return View("Error");
+            }
+
+            var result = await UserManager.ConfirmEmailAsync(userId, code);
+            return View(result.Succeeded ? "ConfirmEmailMobile" : "Error");
+        }
+
+        //
         // GET: /Account/ForgotPassword
         [System.Web.Mvc.AllowAnonymous]
         public ActionResult ForgotPassword()

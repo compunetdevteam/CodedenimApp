@@ -443,7 +443,7 @@ namespace CodedenimWebApp.Controllers.Api
                             }
                             else { modelTitle = "Mrs/Miss"; }
 
-                            student.StudentId = user.Id;
+                            student.StudentId = user.Id;    
                             student.Title = modelTitle;
                             student.FirstName = model.FirstName;
                             student.LastName = model.LastName;
@@ -465,6 +465,7 @@ namespace CodedenimWebApp.Controllers.Api
                         await _db.SaveChangesAsync();
                         //await UserManager.SendEmailAsync(user.Id, "Code-denim Mobile Registration", "Thank you for creating your account of mobile");
                         var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        //var callbackUrl = this.Url.Link("Default", new { Controller = "Account", Action = "ConfirmEmailMobile", userId = user.Id, code = code });
                         var callbackUrl = this.Url.Link("Default", new { Controller = "Account", Action = "ConfirmEmailMobile", userId = user.Id, code = code });
 
 
