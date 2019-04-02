@@ -423,7 +423,7 @@ namespace CodedenimWebApp.Controllers
                                                               .FirstOrDefaultAsync();
             var topticId = topicMaterialUpload.TopicId;
             //deleting a file from the folder on ther server
-           deleteFile.Delete(topicMaterialUpload.FileLocation);
+          // deleteFile.Delete(topicMaterialUpload.FileLocation);
 
             db.TopicMaterialUploads.Remove(topicMaterialUpload);
 
