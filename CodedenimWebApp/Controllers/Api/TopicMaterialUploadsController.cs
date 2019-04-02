@@ -29,7 +29,7 @@ namespace CodedenimWebApp.Controllers.Api
             return _db.TopicMaterialUploads.Select(x => new TopicMaterialVm
                                             {
                                                 Description = x.Description,
-                                                FileLocation = Constant.FilePath + x.FileLocation,
+                                                FileLocation = x.FileLocation,
                                                 Name = x.Name,
                                                 TopicId = x.TopicId,                                                
                                                 TopicMaterialId = x.TopicMaterialUploadId,
@@ -52,7 +52,7 @@ namespace CodedenimWebApp.Controllers.Api
                                                                         TopicMaterialId = x.TopicMaterialUploadId,
                                                                         TopicId = x.TopicId,
                                                                         Description = x.Description,
-                                                                        FileLocation = Constant.FilePath + x.FileLocation,
+                                                                        FileLocation =  x.FileLocation,
                                                                         FileType = x.FileType.ToString(),
                                                                        // x.Course.StudentQuestions,
                                                                        TextContent = x.TextContent

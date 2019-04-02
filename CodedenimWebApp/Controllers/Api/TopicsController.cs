@@ -37,7 +37,7 @@ namespace CodedenimWebApp.Controllers.Api
                     TopicMaterialId = t.TopicMaterialUploadId,
                     Name  = t.Name,
                     Description =  t.Description,
-                    FileLocation = Constant.FilePath + t.FileLocation,
+                    FileLocation = t.FileLocation,
                     FileType = t.FileType.ToString(),
                     TextContent = t.TextContent,
                 })
@@ -65,7 +65,7 @@ namespace CodedenimWebApp.Controllers.Api
                                                        TopicMaterialId = t.TopicMaterialUploadId,
                                                        Name = t.Name,
                                                        Description = t.Description,
-                                                       FileLocation = Constant.FilePath + t.FileLocation,
+                                                       FileLocation =  t.FileLocation,
                                                        FileType = t.FileType.ToString(),
                                                        TextContent = t.TextContent,
                                                    })

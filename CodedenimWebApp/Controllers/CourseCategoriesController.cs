@@ -41,7 +41,6 @@ namespace CodedenimWebApp.Controllers
                 courseCategories = db.CourseCategories.Where(x => x.CourseCategoryId.Equals((int) id)).ToList();
                 return PartialView(courseCategories);
             }
-          
             return PartialView(courseCategories);
         }
         /// <summary>
