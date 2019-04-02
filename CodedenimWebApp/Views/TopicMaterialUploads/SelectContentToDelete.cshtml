@@ -1,0 +1,114 @@
+﻿@model CodedenimWebApp.ViewModels.CourseContentVm
+@using CodeninModel
+@{
+    ViewBag.Title = "SelectContentToDelete";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+
+<h2>Select Content To Delete</h2>
+
+
+<div class="row">
+    @if (@Model.Materials != null)
+    {
+        foreach (var content in Model.Materials)
+        {
+            <div class="item col-xs-12 col-sm-6 col-lg-4">
+                <div class="panel panel-default paper-shadow" data-z="0.5">
+
+                    <div class="cover overlay cover-image-full hover">
+
+
+                        @if (content.FileType == FileType.MP4 || content.FileType == FileType.Video)
+                        {
+                            <div style="text-align: center">
+
+                                <video controls="controls" id="video1" width="200" height="200">
+                                    <source src="~/MaterialUpload/@content.FileLocation" type="video/mp4" class="responsive">
+                                    @*<source src="~/MaterialUpload/me.mp4" type="video/mp4">*@
+                                    Your browser does not support HTML5 video.
+                                </video>
+                            </div>
+
+                        }
+                        else if (content.FileType == FileType.PDF || content.FileType == FileType.DOC)
+                        {
+                            @Html.Raw(content.TextContent)
+                        }
+                        else if (content.FileType == FileType.Audio || content.FileType == FileType.MP3)
+                        {
+
+                            <audio controls="controls" id="video1" style="width:100%;">
+                                <source src="~/MaterialUpload/@content.FileLocation" type="audio/mpeg">
+
+                            </audio>
+
+                        }
+
+                    </div>
+
+                    <div class="panel-body">
+                        <h4 class="text-headline margin-v-0-10"><a href="app-student-course.html">@content.Name</a></h4>
+                        <h6> File Type : @content.FileType</h6>
+                        <div>
+                            @using (Html.BeginForm("DeleteConfirmed", "TopicMaterialUploads", new { id = content.TopicMaterialUploadId, fileType = content.FileType }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" id="id" value="@content.TopicMaterialUploadId" />
+                                <input type="hidden" name="fileType" id="fileType" value="@content.FileType" />
+                                <input type="submit" value="Delete Content" class="btn btn-danger btn-flat" />
+
+                            }
+
+                            @*<a href="@Url.Action("DeleteConfirmed","TopicMaterialUploads", new{ id = content.TopicMaterialUploadId , fileType = content.FileType})" class="btn btn-danger btn-flat">Delete Content</a>*@
+                        </div>
+                    </div>
+                    <hr class="margin-none" />
+
+
+                </div>
+            </div>
+
+        }
+    }
+
+    else
+    {
+        <p>This Material has not contents like Videos, Audio and Documents</p>
+    }
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<script type="text/javascript">
+
+    function Delete(){
+        var material = new Object(); 
+        
+        var id = $('#id').val();
+        var fileType = $('#fileType').val();  
+        $.ajax({
+            type: "POST",
+            url: "/TopicMaterialUploads/DeleteConfirmed",
+            data: jQuery.param({ id = id, fileType =fileType }),
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            //dataType: "json",
+            success: function (response) {
+                if (response != null) {
+                    alert("Name : " + response.Name + ", Designation : " + response.Designation + ", Location :" + response.Location);
+                } else {
+                    alert("Something went wrong");
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }  
+        });
+    }
+</script>

@@ -40,7 +40,7 @@ namespace CodedenimWebApp.Controllers.Api
                    TopicName = t.TopicName,
                    ExpectedTime = t.ExpectedTime
                })
-                                });
+            });
         }
 
 
@@ -62,7 +62,14 @@ namespace CodedenimWebApp.Controllers.Api
                                             ModuleName = m.ModuleName,
                                             ModuleDescription = m.ModuleDescription,
                                             ExpectedTime = m.ExpectedTime,
-                                            CourseId = m.CourseId
+                                            CourseId = m.CourseId,
+                                            Topics = m.Topics.Select(t => new TopicVm
+                                            {
+                                                TopicId = t.TopicId,
+                                                ModuleId = t.ModuleId,
+                                                TopicName = t.TopicName,
+                                                ExpectedTime = t.ExpectedTime
+                                            })
                                         }).ToListAsync();
             //var module = await _db.Topics.Where(t => t.ModuleId.Equals(id))
             //                                    .Select(t => new

@@ -3,6 +3,7 @@ using CodedenimWebApp.Controllers.Api.ApiViewModel;
 using CodedenimWebApp.Models;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
+using Microsoft.Ajax.Utilities;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -20,6 +21,7 @@ namespace CodedenimWebApp.Controllers.Api
     {
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
         private ConvertEmail1 email_Id = new ConvertEmail1();
+        private ResponseMessage _response = new ResponseMessage();
         [HttpGet]
         [System.Web.Http.Route("CourseCategorys")]
         [ResponseType(typeof(CourseCategory))]
@@ -175,65 +177,6 @@ namespace CodedenimWebApp.Controllers.Api
 
 
 
-        /// <summary>
-        /// method to check the student account type and display mycourse
-        /// </summary>
-        /// <param name="email"></param>
-        /// <param name="courseCategory"></param>
-        /// <returns>enrolled courses</returns>
-        [HttpGet]
-        [System.Web.Http.Route("MyCourses")]
-        [ResponseType(typeof(CourseCategory))]
-        public async Task<IHttpActionResult> MyCourses(string email)
-        {
-            var student = new ConvertEmail();
-            var studentEmail = student.ConvertEmailToId(email);
-            var studentId = studentEmail;
-            var studentType = _db.Students.Where(x => x.Email.Equals(email)).Select(x => x.AccountType).FirstOrDefault();
-
-           
-            var myCourses = new List<MyCourseCategoryVm>();
-            //if (studentType == RoleName.Corper)
-            //{
-            //    var category = _db.CorperEnrolledCourses.Where(x => x.StudentId.Equals(studentId))
-            //                         .Select(x => x.CorperEnrolledCoursesId).ToList();
-            //    foreach (var categoryId in category)
-            //    {
-            //         myCourses.CorperCourses = await _db.CorperEnrolledCourses.Where(x => x.CourseCategoryId.Equals(categoryId)).ToListAsync();
-            //    }
-            //    //myCourses.CorperCourses = _db.CorperEnrolledCourses.Where(x => x.StudentId.Equals(studentId)).ToList();
-
-            //}
-            //else
-            //{
-                var category = _db.StudentPayments.Where(x => x.StudentId.Equals(studentId) && x.IsPayed.Equals(true))
-                                .Select(x => x.CourseCategoryId).ToList();
-
-
-            foreach (var categoryId in category)
-                {
-                   var couseCategory = await _db.CourseCategories
-                        .Where(x => x.CourseCategoryId.Equals(categoryId))
-                        .FirstOrDefaultAsync();
-
-
-
-
-                    var vm = new MyCourseCategoryVm
-                    {
-                        CourseCategoryId = couseCategory.CourseCategoryId,
-                        CategoryName = couseCategory.CategoryName,
-                        StudentType = couseCategory.StudentType,
-                        ImageLocation = couseCategory.ImageLocation,
-                        CategoryDescription = couseCategory.CategoryDescription,
-                        Amount = couseCategory.Amount
-                    };
-                    myCourses.Add(vm);
-                }
-                //myCourses.StudentCourses = await _db.StudentPayments.Where(x => x.StudentId.Equals(studentId)).ToListAsync();
-            //}
-            return Ok(myCourses);
-        }
         // PUT: api/CourseCategories/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutCourseCategory(int id, CourseCategory courseCategory)

@@ -9,9 +9,11 @@ namespace CodeninModel
     public class EnrollForCourse
     {
         public int EnrollForCourseId { get; set; }
-        public int CourseCategoryId { get; set; }
+        public int CourseId { get; set; }
         public string StudentId { get; set; }
-        public virtual CourseCategory CourseCategory { get; set; }
+        public DateTime DateStarted { get; set; }
+        public bool hasCompleted { get; set; }
+        public Course Course { get; set; }
         public virtual Student Student { get; set; }
     }
 }

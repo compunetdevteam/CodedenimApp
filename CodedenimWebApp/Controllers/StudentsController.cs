@@ -161,13 +161,17 @@ namespace CodedenimWebApp.Controllers
 
             var payedCourses = await _db.StudentPayments.Where(x => x.StudentId.Equals(user) && x.IsPayed.Equals(true)).Select(x => x.CourseCategoryId).ToListAsync();
             var categoryId = new List<AssignCourseCategory>();
-            foreach (var item in payedCourses)
+            if (payedCourses != null)
             {
-                var corperCourses = await _db.AssignCourseCategories.Include(x => x.CourseCategory).Include(x => x.Courses)
-              .Where(x => x.CourseCategoryId.Equals(item))
-              .FirstOrDefaultAsync();
-                categoryId.Add(corperCourses);
+                foreach (var item in payedCourses)
+                {
+                    var corperCourses = await _db.AssignCourseCategories.Include(x => x.CourseCategory).Include(x => x.Courses)
+                  .Where(x => x.CourseCategoryId.Equals(item))
+                  .FirstOrDefaultAsync();
+                    categoryId.Add(corperCourses);
+                }
             }
+          
 
             var quizTaken = _progress;
 

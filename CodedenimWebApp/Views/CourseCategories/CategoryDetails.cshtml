@@ -28,7 +28,6 @@
             </div><!--end .card-head -->
    @if (User.IsInRole(RoleName.OtherStudent) || User.IsInRole(RoleName.Student))
    {
-
         <fieldset>
             <legend class="alert alert-green-300">Pay with PayPal:</legend>
             @Html.Partial("PaypalCheckout")

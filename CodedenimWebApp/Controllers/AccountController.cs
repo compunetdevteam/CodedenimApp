@@ -65,9 +65,20 @@ namespace CodedenimWebApp.Controllers
         //
         // GET: /Account/Login
         [System.Web.Mvc.AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public async Task<ActionResult> Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+
+            //string msgBody = GetEmailTemplate();
+            //msgBody = msgBody.Replace("{STUDENTNAME}", $"David");
+            //msgBody = msgBody.Replace("{Message}", "Please confirm your account by clicking <a href=\"" +   "\">here</a>");
+            //msgBody = msgBody.Replace("{HeaderMessage}", "Registration was Successful");
+
+
+
+            //await UserManager.SendEmailAsync("c61229f9-b360-4414-b70a-140597128de4", "Confirm your account", msgBody);
+            //await UserManager.SendEmailAsync("366e7f95-35ae-4a31-b7cd-b64dceb6095f", "Reset Password",
+            //      "Please reset your password by clicking here : <a href=\"" + "\">link</a>");
             // var url = returnUrl;
             return View(); 
         }
@@ -333,7 +344,7 @@ namespace CodedenimWebApp.Controllers
             {
                 var user = new ApplicationUser
                 {
-                    UserName = model.FirstName + " " + model.LastName,
+                    UserName = model.Email,
                     Email = model.Email,
                 };
 
@@ -358,7 +369,15 @@ namespace CodedenimWebApp.Controllers
 
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    string msgBody = GetEmailTemplate();
+                    msgBody = msgBody.Replace("{STUDENTNAME}", $"{student.FullName}");
+                    msgBody = msgBody.Replace("{Message}",  "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    msgBody = msgBody.Replace("{HeaderMessage}", "Registration was Successful");
+
+
+                   
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", msgBody);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -372,7 +391,17 @@ namespace CodedenimWebApp.Controllers
             return View(model);
         }
 
-     
+        public string GetEmailTemplate()
+        {
+            string body = string.Empty;
+
+            using (StreamReader reader = new StreamReader(System.Web.Hosting.HostingEnvironment.MapPath("~/EmailTemplate.Html")))
+            {
+                body = reader.ReadToEnd();
+            }
+            return body;
+        }
+
         [System.Web.Mvc.HttpGet]
         [System.Web.Mvc.AllowAnonymous]
         public ActionResult TutorRegistration()
@@ -688,7 +717,7 @@ namespace CodedenimWebApp.Controllers
         }
 
 
-
+        
         /// <summary>
         /// Corper Registration
         /// </summary>
@@ -783,9 +812,20 @@ namespace CodedenimWebApp.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                 await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, protocol: Request.Url.Scheme);
+
+                string msgBody = GetEmailTemplate();
+                msgBody = msgBody.Replace("{STUDENTNAME}", $"{model.Email}");
+                msgBody = msgBody.Replace("{Message}", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                msgBody = msgBody.Replace("{HeaderMessage}", "Forget Password");
+                msgBody = msgBody.Replace("{EMAILNAME}", $"{model.Email}");
+
+
+
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", msgBody);
                  return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 

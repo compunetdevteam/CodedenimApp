@@ -44,10 +44,11 @@
                         </video>
                     </div>
                 }
-                else if (@Model.Material.FileType == FileType.PDF)
+                else if (Model.Material.FileType == FileType.PDF || Model.Material.FileType == FileType.DOC)
                 {
 
-                    <iframe src="~/MaterialUpload/@Model.Material.FileLocation" style="width: 100%; height:900px; border: none;" type="application/pdf"> </iframe>
+                    @Html.Raw(Model.Material.TextContent)
+                    @*<iframe src="~/MaterialUpload/@Model.Material.FileLocation" style="width: 100%; height:900px; border: none;" type="application/pdf"> </iframe>*@
 
 
 

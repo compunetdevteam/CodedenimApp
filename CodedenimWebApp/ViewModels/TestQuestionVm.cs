@@ -19,6 +19,7 @@ namespace CodedenimWebApp.ViewModels
 
         public string Instruction { get; set; }
         public string CourseName { get; set; }
+        public string StudentId { get; set; }
     }
 
     public class TestQuestionVm

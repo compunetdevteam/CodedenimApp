@@ -44,6 +44,7 @@ namespace CodedenimWebApp.Controllers.Api
                     CourseName = x.Courses.CourseName,
                     ExpectedTime = x.Courses.ExpectedTime,
                     FileLocation = Constant.FilePath + x.Courses.FileLocation,
+                    VideoLocation = Constant.FilePath + x.Courses.VideoLocation,
                     Modules = x.Courses.Modules.Select(c => new ModuleVm
                         {
                         ModuleDescription = c.ModuleDescription,
@@ -88,6 +89,7 @@ namespace CodedenimWebApp.Controllers.Api
                                             CourseDescription = x.CourseDescription,
                                             FileLocation = Constant.FilePath + x.FileLocation,
                                             CategoryName = x.CourseName,
+                                            VideoLocation = Constant.FilePath + x.VideoLocation,
                                             Modules = x.Modules.Select(c => new ModuleVm
                                             {
                                                 ModuleDescription = c.ModuleDescription,

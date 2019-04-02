@@ -9,14 +9,15 @@ namespace CodedenimWebApp.ViewModels
     {
         public List<Module> Modules { get; set; }
         public List<ModulesVm> Module { get; set; }
-        public Module ModulesAD { get; set; }   
+        public Module ModulesAD { get; set; }
         public string ModulesName { get; set; }
         public List<Topic> Topics { get; set; }
         public Topic TopicsAD { get; set; }
         public List<TopicMaterialUpload> Materials { get; set; }
         public TopicMaterialUpload Material { get; set; }
-        public List<Tutor> Tutors { get; set; } 
+        public List<Tutor> Tutors { get; set; }
         public Stream Blob { get; set; }
+        public List<int> TopicContentInts { get; set; }
 
         public List<Course> Courses { get; set; }
         public int CourseId { get; set; }

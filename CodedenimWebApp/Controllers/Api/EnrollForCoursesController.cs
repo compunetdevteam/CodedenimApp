@@ -30,6 +30,41 @@ namespace CodedenimWebApp.Controllers.Api
         //    return db.EnrollForCourses;
         //}
         [HttpGet]
+        [Route("CheckPayment")]
+        public async Task<IHttpActionResult> CheckPayment(string email)
+        {
+            var studentEmail = new ConvertEmail1();
+            var studentId = studentEmail.ConvertEmailToId(email);
+            var enrolledCategory = false;
+            var courses = new Course();
+            if (studentId != null)
+            {
+                //get the list of all enrolled categories
+                enrolledCategory = db.StudentPayments.AsNoTracking().Where(x => x.StudentId.Equals(studentId) && x.IsPayed.Equals(true)).Any();
+                if (enrolledCategory)
+                {
+                    response.Message = "User has paid for category";
+                    response.Status = true;
+                }
+                else
+                {
+                    response.Message = "User has not paid";
+                    response.Status = false;
+                }
+                return Ok(response);
+            }
+
+            return Ok(response);
+        }
+
+
+
+        // GET: api/EnrollForCourses
+        //public IQueryable<EnrollForCourse> GetEnrollForCourses()
+        //{
+        //    return db.EnrollForCourses;
+        //}
+        [HttpGet]
         [Route("Checker")]
         public async Task<IHttpActionResult> Checker(string email, int categoryId)
         {
@@ -68,29 +103,35 @@ namespace CodedenimWebApp.Controllers.Api
             var studentId = studentEmail.ConvertEmailToId(email);
             var enrolledCategory = new List<StudentPayment>();
             var courses = new Course();
-            if(studentId != null)
+
+            var category = new List<MyCoursesVm>();
+            if (studentId != null)
             {
                 //get the list of all enrolled categories
                  enrolledCategory = db.StudentPayments.AsNoTracking().Where(x => x.StudentId.Equals(studentId) && x.IsPayed.Equals(true))
                                     .ToList();
-            }
-            var category = new List<MyCoursesVm>();
-            foreach (var item in enrolledCategory.DistinctBy(x => x.CourseCategoryId))
-            {
-                var user = User.Identity.GetUserId();
-                //getting the different courses that was paid for based on the category
-                //TODO: fix the issue : same course return for all different courses
-                var paidCourses = db.AssignCourseCategories.Include(x => x.Courses).Where(x => x.CourseCategoryId.Equals(item.CourseCategoryId))
-                                                                    .Select(x => new MyCoursesVm
-                                                                    {
-                                                                         StudentId = studentId,
-                                                                         CourseCategoryId = x.CourseCategoryId,
-                                                                         CategoryName = x.CourseCategory.CategoryName,
-                                                                        // Courses = x.Courses.Modules.Select()
-                                                                   }).FirstOrDefault();
                
-                category.Add(paidCourses);
+                foreach (var item in enrolledCategory.DistinctBy(x => x.CourseCategoryId))
+                {
+                  
+                    //getting the different courses that was paid for based on the category
+                    //TODO: fix the issue : same course return for all different courses
+                    var paidCourses = db.AssignCourseCategories.Include(x => x.Courses).Where(x => x.CourseCategoryId.Equals(item.CourseCategoryId))
+                                                                        .Select(x => new MyCoursesVm
+                                                                        {
+                                                                            StudentId = studentId,
+                                                                            CourseCategoryId = x.CourseCategoryId,
+                                                                            CategoryName = x.CourseCategory.CategoryName,
+                                                                        // Courses = x.Courses.Modules.Select()
+                                                                    }).FirstOrDefault();
+
+                    category.Add(paidCourses);
+                }
+
             }
+
+
+
 
 
             //var PaidCourses = db.EnrollForCourses.AsNoTracking().Where(x => x.StudentId.Equals(studentId))
@@ -103,19 +144,40 @@ namespace CodedenimWebApp.Controllers.Api
             //{
             //    return NotFound();
             //}
-
+            response.Message = "Student has not paid";
+            response.Status = false;
             //return Ok(enrollForCourse);
-            return Ok(category);
+            return Ok(response);
         }
+
         // GET: api/EnrollForCourses/5
+        /// <summary>
+        /// return the courses that the use has started
+        /// </summary>
+        /// <param name="id", name="email">CourseId and Email</param>
+        /// <returns>List<Coureses></returns>
         [ResponseType(typeof(EnrollForCourse))]
-        public async Task<IHttpActionResult> GetEnrollForCourse(int id)
+        public async Task<IHttpActionResult> GetEnrolledCourse(int id, string email)
         {
-            EnrollForCourse enrollForCourse = await db.EnrollForCourses.FindAsync(id);
+            var studentEmail = new ConvertEmail1();
+            var studentId = studentEmail.ConvertEmailToId(email);
+            EnrollForCourse enrollForCourse = await db.EnrollForCourses
+                                                      .Where(x => x.StudentId.Equals(studentId))
+                                                      .FirstOrDefaultAsync();
             if (enrollForCourse == null)
             {
-                return NotFound();
+                var enroll = new EnrollForCourse();
+                enroll.StudentId = studentId;
+                enroll.DateStarted = DateTime.Now;
+                enroll.CourseId = id;
+                db.EnrollForCourses.Add(enroll);
+                db.SaveChanges();
+
+                response.Message = $"you just enrolled for a course";
+                response.Status = false;
+                return Ok(response);
             }
+
 
             return Ok(enrollForCourse);
         }

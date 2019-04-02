@@ -1,5 +1,6 @@
 ﻿
 @using CodeninModel
+@using Microsoft.Ajax.Utilities;
 
 @model CodedenimWebApp.ViewModels.CourseContentVm
 @{
@@ -105,18 +106,18 @@
 
                                 <div class="media-body text-body-2">
                                     @*<video controls="controls" id="video1" width="600">
-            <source src="" type="video/mp4">
-            Your browser does not support HTML5 video.
-        </video>*@
+                            <source src="" type="video/mp4">
+                            Your browser does not support HTML5 video.
+                        </video>*@
                                     @if (Model.CourseVideo != null)
                                     {
-                                <video controls="controls" id="video1" width="600">
-                                 <source src="~/MaterialUpload/3cd9ca7e-3775-4ffd-8d5b-560419334c4d.mp4" type="video/mp4" />
-                                    </video >
-                                       @*<video controls="controls">
+                                        @*<video controls="controls" id="video1" width="600">
+                            <source src="~/MaterialUpload/3cd9ca7e-3775-4ffd-8d5b-560419334c4d.mp4" type="video/mp4" />
+                               </video >*@
+                                        <video controls="controls" id="video1" width="600">
                                             <source src="~/MaterialUpload/@Model.CourseVideo" type="video/mp4" />
 
-                                        </video>*@
+                                        </video>
                                     }
                                     else
                                     {
@@ -143,10 +144,9 @@
                 </div>
 
                 @* button for next and previous *@
-                @foreach (var item in Model.Modules)
-                {
-
-                    foreach (var topicContent in item.Topics.Where(x => x.ModuleId.Equals(item.ModuleId)))
+                @*@foreach (var item in Model.Modules.DistinctBy(x => x.ModuleId))
+                { 
+                    foreach (var topicContent in item.Topics.DistinctBy(x => x.TopicId).Where(x => x.ModuleId.Equals(item.ModuleId)))
                     {
             <div class="panel panel-default">
                 <div class="panel-body buttons-spacing-vertical">
@@ -159,7 +159,7 @@
                 </div>
             </div>
                     }
-                }
+                }*@
             </div>
         </div>
         @*<div class="page-section">
@@ -200,7 +200,7 @@
                                 <div id="loadTopicContent">
                                     <div class="row">
 
-                                        @foreach (var material in Model.Materials)
+                                        @foreach (var material in Model.Materials.Where(x => x.TopicId.Equals(topicContent.TopicId)))
                                         {
                                             <div class="panel-footer" id="topicContents" style="display:inline-block">
                                                 <div class="text-left">
@@ -254,12 +254,15 @@
     };
 
     function loadContent(contentId) {
+ 
         $('#MaterialContent').load("/TopicMaterialUploads/DetailsContent/" + contentId)
+        
             .addClass('animated fadeInLeft')
             .delay(1000)
             .queue(function () {
                 $(this).removeClass('animated fadeInLeft').dequeue()
             });
+        $("#loader").hide();
 
     }
     function material(topicId) {

@@ -5,8 +5,12 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System;
 using System.Configuration;
+using System.IO;
+using System.Linq;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -17,25 +21,59 @@ namespace CodedenimWebApp
     {
         public async Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            string schoolName = ConfigurationManager.AppSettings["CODEDENIM"];
-            string emailsetting = ConfigurationManager.AppSettings["GmailUserName"];
-            MailMessage email = new MailMessage(new MailAddress($"noreply{emailsetting}", "(Codedenin Registration, do not reply)"),
-                new MailAddress(message.Destination));
+            //// Plug in your email service here to send an email.
+            //string schoolName = ConfigurationManager.AppSettings["CODEDENIM"];
+            //string emailsetting = ConfigurationManager.AppSettings["GmailUserName"];
+            //MailMessage email = new MailMessage(new MailAddress($"noreply{emailsetting}", "(Codedenin Registration, do not reply)"),
+            //    new MailAddress(message.Destination));
 
-            email.Subject = message.Subject;
-            email.Body = message.Body;
+            //email.Subject = message.Subject;
+            //email.Body = message.Body;
 
-            email.IsBodyHtml = true;
+            //email.IsBodyHtml = true;
 
-            using (var mailClient = new EmailSetUpServices())
+            //using (var mailClient = new EmailSetUpServices())
+            //{
+            //    //In order to use the original from email address, uncomment this line:
+            //    email.From = new MailAddress(mailClient.UserName, $"(do not reply)@{schoolName}");
+
+            //    await mailClient.SendMailAsync(email);
+            //}
+            // Plug in your email service here to send an email.          
+            using (var db = new ApplicationDbContext())
             {
-                //In order to use the original from email address, uncomment this line:
-                email.From = new MailAddress(mailClient.UserName, $"(do not reply)@{schoolName}");
+                // var query = new QueryCommand(db);
+                var student = db.Students.FirstOrDefault(x => x.Email.Trim().ToUpper().Equals(message.Destination));
 
-                await mailClient.SendMailAsync(email);
+                var username = student?.FullName ?? message.Destination;
+
+                // ***Begin Sendgrid Implementation *******//
+                //var apiKey = "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";
+                var apiKey = "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";
+                var client = new SendGridClient(apiKey);
+                var from = new EmailAddress($"noreply@Codedenim.com", "CODEDENIM");
+                var subject = !string.IsNullOrEmpty(message.Subject) ? message.Subject : "CODEDENIM NOTIFICATION";
+                var to = new EmailAddress(message.Destination, username);
+                var plainTextContent = message.Body;
+                var htmlContent = message.Body;
+                var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+                try
+                {
+                    var response = await client.SendEmailAsync(msg);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+                // ***End Sendgrid Implementation *******//              
+
+
             }
+
         }
+
+       
     }
 
     public class SmsService : IIdentityMessageService

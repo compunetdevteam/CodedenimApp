@@ -53,12 +53,23 @@ namespace CodedenimWebApp.Controllers.Api
         {
             //Topic topic = await db.Topics.FindAsync(id);
             var topic = await _db.Topics.Where(t => t.ModuleId.Equals(id))
-                                                .Select(t => new
-                                                {
-                                                    t.TopicId,
-                                                    t.TopicName,
-                                                    t.ExpectedTime,
-                                                }).ToListAsync();
+                                               .Select(x => new TopicVm
+                                               {
+                                                   ExpectedTime = x.ExpectedTime,
+                                                   ModuleId = x.ModuleId,
+                                                   TopicId = x.TopicId,
+                                                   TopicName = x.TopicName,
+                                                   TopicMaterialVm = x.MaterialUploads.Select(t => new TopicMaterialVm
+                                                   {
+                                                       TopicId = t.TopicId,
+                                                       TopicMaterialId = t.TopicMaterialUploadId,
+                                                       Name = t.Name,
+                                                       Description = t.Description,
+                                                       FileLocation = Constant.FilePath + t.FileLocation,
+                                                       FileType = t.FileType.ToString(),
+                                                       TextContent = t.TextContent,
+                                                   })
+                                               }).FirstOrDefaultAsync();
             if (topic == null)
             {
                 return NotFound();

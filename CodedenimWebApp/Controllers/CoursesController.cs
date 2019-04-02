@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -102,13 +103,10 @@ namespace CodedenimWebApp.Controllers
             var hasEnrolled = db.CorperEnrolledCourses.Any(x => x.CourseCategoryId.Equals(id));
             if (!hasEnrolled == true)
             {
-
-
                 corperEnrollment.StudentId = userId;
                 corperEnrollment.CourseCategoryId = id;
                 db.CorperEnrolledCourses.Add(corperEnrollment);
                 db.SaveChanges();
-
             }
 
             var categoriesPaidFor = db.StudentPayments.Where(x => x.StudentId.Equals(userId))
@@ -615,6 +613,7 @@ namespace CodedenimWebApp.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Course course = await db.Courses.FindAsync(id);
+           
             db.Courses.Remove(course);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
