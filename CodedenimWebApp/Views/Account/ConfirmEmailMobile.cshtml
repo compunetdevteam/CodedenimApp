@@ -1,0 +1,102 @@
+﻿@*@model IEnumerable<CodedenimWebApp.ViewModels.CourseContentVm>*@
+
+@{
+    ViewBag.Title = "Confirm Email";
+    Layout = "~/Views/Shared/_DashboardLayoutMobile.cshtml";
+}
+
+<h2>Email Confirmation.</h2>
+<div>
+    <p>
+        Thank you for confirming your email. Please Login.
+    </p>
+</div>
+
+
+@*<div class="parallax bg-white page-section">
+    <div class="container parallax-layer" data-opacity="true">
+        <div class="media v-middle">
+            <div class="media-body">
+                <h1 class="text-display-2 margin-none">Thank you for confirming your email.</h1>
+                <p class="text-light lead">Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" }).</p>
+            </div>  
+            <div class="media-right">
+                <div class="width-100 text-right">
+                    <div class="btn-group">
+                        <a class="btn btn-grey-900" href="website-directory-grid.html"><i class="fa fa-th"></i></a>
+                        <a class="btn btn-white" href="website-directory-list.html"><i class="fa fa-list"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+<div class="page-section">
+<div class="row">
+
+@foreach (var item in  Model.Courses)
+{
+
+
+    <div class="col-md-9">
+        <div class="row" data-toggle="isotope">
+            <div class="item col-xs-12 col-sm-6 col-lg-4">
+                <div class="panel panel-default paper-shadow" data-z="0.5">
+                    <div class="cover overlay cover-image-full hover">
+                        <span class="img icon-block height-150 bg-default"></span>
+                        <a href="@Url.Action("Content")" class="padding-none overlay overlay-full icon-block bg-default">
+                            <span class="v-center">
+                                <img src="@Url.Content("~/MaterialUpload/" + item.Courses)" style="width: 160px; height: 170px;" />
+                            </span>
+                        </a>
+                        <a href="website-course.html" class="overlay overlay-full overlay-hover overlay-bg-white">
+                            <span class="v-center">
+                                <span class="btn btn-circle btn-white btn-lg"><i class="fa fa-graduation-cap"></i></span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="panel-body">
+                        <h4 class="text-headline margin-v-0-10"><a href="website-course.html">@Html.DisplayFor(modelItem => item.Courses.CourseName)</a></h4>
+                        <p class="small margin-none">
+                            <span class="fa fa-fw fa-star text-yellow-800"></span>
+                            <span class="fa fa-fw fa-star text-yellow-800"></span>
+                            <span class="fa fa-fw fa-star text-yellow-800"></span>
+                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                        </p>
+                    </div>
+                    <hr class="margin-none"/>
+                    <div class="panel-body">
+                        @*<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet commodi delectus, excepturi.</p>*@
+                        @*<div class="media v-middle">
+                            <div class="media-left">
+                                <img src="@Url.Content("~/Profile_Pics/" + item.Tutors.ImageLocation)" alt="People" class="img-circle width-40"/>
+                            </div>
+                            <div class="media-body">
+                                <h4><a href="">@item.Tutors.FullName</a>
+                                    <br/>
+                                </h4>
+                                Instructor
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <ul class="pagination margin-top-none">
+            <li class="disabled"><a href="#">&laquo;</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+        <br/>
+        <br/>
+    </div>
+}
+
+</div>
+</div>
+</div>*@

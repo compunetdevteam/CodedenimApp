@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using CodedenimWebApp.Controllers.Api.ApiViewModel;
 using CodeninModel;
 
 namespace CodedenimWebApp.ViewModels
@@ -20,5 +21,6 @@ namespace CodedenimWebApp.ViewModels
         public string StudentType { get; set; }
         public string ImageLocation { get; set; }
         public string CategoryDescription { get; set; }
+        public IEnumerable<CoursesVm> Courses { get; set; }
     }
 }

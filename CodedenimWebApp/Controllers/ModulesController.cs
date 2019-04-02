@@ -40,15 +40,25 @@ namespace CodedenimWebApp.Controllers
             }
             var moduleInfo = new CourseContentVm();
             Module module = await db.Modules.FindAsync(id);
+
  
             var course = await db.Courses.FindAsync(id);
             var courseId = await db.Modules.Where(x => x.ModuleId.Equals((int)id)).Select(x => x.CourseId).FirstOrDefaultAsync();
-            var modeules = await db.Modules.Where(x => x.CourseId.Equals((int)id)).ToListAsync();
+            var modeules = await db.Modules.Where(x => x.CourseId.Equals((int)id)).ToListAsync(); 
             var topics = await db.Topics.Where(x => x.ModuleId.Equals((int)id)).ToListAsync();
+            var topicContents = new List<int>();
+            foreach (var topic in topics)
+            {
+                var topicContent = db.TopicMaterialUploads.Where(x => x.TopicId.Equals(topic.TopicId))
+                                                          .Select(x => x.TopicMaterialUploadId).ToList();
+                topicContents.AddRange(topicContent);
+            }
+           
             moduleInfo.CoursesAD = course;
             moduleInfo.Modules = modeules;
             moduleInfo.Topics = topics;
             moduleInfo.ModulesAD = module;
+            moduleInfo.TopicContentInts = topicContents;
             moduleInfo.CourseIdentifier = courseId;
 
             if (module == null)
@@ -247,6 +257,13 @@ namespace CodedenimWebApp.Controllers
         public async Task<ActionResult> DeletePartial(int id)
         {
             Module module = await db.Modules.FindAsync(id);
+            var topics = db.Topics.Where(x => x.ModuleId.Equals(module.ModuleId)).ToList();
+            foreach (var topic in topics)
+            {
+                var topicMaterials = db.TopicMaterialUploads.Where(x => x.TopicId.Equals(topic.TopicId)).ToList();
+                db.TopicMaterialUploads.RemoveRange(topicMaterials);
+            }
+            db.Topics.RemoveRange(topics);
             db.Modules.Remove(module);
             await db.SaveChangesAsync();
             return RedirectToAction("Details","Courses", new{id = module.CourseId});

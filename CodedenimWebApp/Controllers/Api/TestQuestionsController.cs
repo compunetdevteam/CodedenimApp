@@ -9,16 +9,20 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using CodedenimWebApp.Controllers.Api.ApiViewModel;
 using CodedenimWebApp.Models;
 using CodeninModel.Quiz;
 
 namespace CodedenimWebApp.Controllers.Api
 {
+    [System.Web.Http.RoutePrefix("api/Quiz")]
     public class TestQuestionsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private ResponseMessage _response = new ResponseMessage();
 
         // GET: api/TestQuestions
+        [Route("GetQuestions")]
         public IQueryable<TestQuestion> GetTestQuestions()
         {
             return db.TestQuestions;
@@ -33,12 +37,28 @@ namespace CodedenimWebApp.Controllers.Api
         /// <returns></returns>
         // GET: api/TestQuestions/5
         [ResponseType(typeof(TestQuestion))]
+        [Route("GetQuestion")]
         public async Task<IHttpActionResult> GetTestQuestion(int id, string email)
         {
-            TestQuestion testQuestion = await db.TestQuestions.FindAsync(id); //finds the question id
-            if (testQuestion == null)
+            QuizQuestionVm testQuestion = await db.TestQuestions.Where(x =>x.CourseId.Equals(id))
+                                                              .Select(q => new QuizQuestionVm {
+                                                                  CourseId = q.CourseId,
+                                                                  QuestionId = q.TestQuestionId,
+                                                                  Question = q.QuestionContent,
+                                                                   QuestionInstruction = q.QuestionInstruction
+                                                              }).FirstOrDefaultAsync(); //finds the question id
+            var studentEmail = new ConvertEmail1();
+            var studentId = studentEmail.ConvertEmailToId(email); //convert email to studentId
+
+            //get if student exist on the student table;
+            var student = db.Students.FirstOrDefault(x => x.StudentId.Equals(studentId));
+
+
+            if (testQuestion == null || student == null)
             {
-                return NotFound();
+                _response.Message = "Quiz or User does not exist";
+                _response.Status = false;
+                return Ok(_response);
             }
 
             return Ok(testQuestion);

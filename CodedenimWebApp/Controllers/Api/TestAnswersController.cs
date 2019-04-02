@@ -14,6 +14,7 @@ using CodeninModel.Quiz;
 
 namespace CodedenimWebApp.Controllers.Api
 {
+    [System.Web.Http.RoutePrefix("api/QuizAnswers")]
     public class TestAnswersController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -74,6 +75,7 @@ namespace CodedenimWebApp.Controllers.Api
 
         // POST: api/TestAnswers
         [ResponseType(typeof(TestAnswer))]
+        [Route("PostAnswer")]
         public async Task<IHttpActionResult> PostTestAnswer(TestAnswer testAnswer)
         {
             if (!ModelState.IsValid)

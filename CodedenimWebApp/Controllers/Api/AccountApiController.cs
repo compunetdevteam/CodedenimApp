@@ -17,6 +17,8 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
@@ -34,6 +36,7 @@ namespace CodedenimWebApp.Controllers.Api
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        private ApplicationSignInManager _signInManager;
         private readonly ApplicationDbContext _db;
         private readonly ResponseMessage _response;
 
@@ -41,14 +44,29 @@ namespace CodedenimWebApp.Controllers.Api
         {
             _db = new ApplicationDbContext();
             _response = new ResponseMessage();
+           
         }
 
         public AccountApiController(ApplicationUserManager userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+            ISecureDataFormat<AuthenticationTicket> accessTokenFormat, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
+            SignInManager = signInManager;
         }
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? Request.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
 
         public ApplicationUserManager UserManager
         {
@@ -350,12 +368,12 @@ namespace CodedenimWebApp.Controllers.Api
         }
 
         [HttpGet]
-        public async Task<IHttpActionResult> Register()
+        public IHttpActionResult Register()
         {
             return Ok();
         }
 
-        // POST api/Account/Register
+        //// POST api/Account/Register
         [System.Web.Http.AllowAnonymous]
         [System.Web.Http.Route("Register")]
         [HttpPost]
@@ -369,106 +387,137 @@ namespace CodedenimWebApp.Controllers.Api
             try
             {
 
-           
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
-           
-
-
-            var student = new Student();
-
-            if (Constant.Corper == model.StudentType.ToUpper())
-            {
-
-                student.StudentId = user.Id;
-                student.CallUpNo = model.CallUpNumber;
-                student.FirstName = model.FirstName;
-                student.LastName = model.LastName;
-                student.DateOfBirth = model.DateOfBirth;
-                student.Gender = model.Gender;
-                student.Email = model.Email;
-                student.PhoneNumber = model.MobileNumber;
-                //student.StateOfService = model.NyscState.ToString();
-                student.Institution = model.Institution;
-                student.AccountType = "Corper";
-                student.Batch = model.NyscBatch;
-                student.Discpline = model.Discpline;
-              
-                await this.UserManager.AddToRoleAsync(user.Id, RoleName.Corper);
-                _db.Students.Add(student);
-            }
-            else if(Constant.Undergraduate == model.StudentType.ToUpper())
-            {
-                student.StudentId = user.Id;
-                //MatricNo = model.MatNumber,
-                student.Title = model.Title.ToString();
-                student.FirstName = model.FirstName;
-                student.LastName = model.LastName;
-                student.DateOfBirth = model.DateOfBirth;
-                student.Gender = model.Gender;
-                student.AccountType = "UnderGraduate";
-                student.PhoneNumber = model.MobileNumber;
-                student.Institution = model.Institution;
-                student.Discpline = model.Discpline;
-                student.Email = model.Email;
-                await this.UserManager.AddToRoleAsync(user.Id, RoleName.UnderGraduate);
-                _db.Students.Add(student);
-            }
-            else if (Constant.Others == model.StudentType.ToUpper())
-            {
-                var modelTitle = "";
-                if (model.Gender == "Male" || model.Gender == "male")
+                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+                var student = new Student();
+                var userExist = UserManager.FindByEmail(model.Email);
+                if (userExist == null)
                 {
-                    modelTitle = "Mr";
+                    IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+
+                        //return GetErrorResult(result);
+                        if (Constant.Corper == model.StudentType.ToUpper())
+                        {
+
+                            student.StudentId = user.Id;
+                            student.CallUpNo = model.CallUpNumber;
+                            student.FirstName = model.FirstName;
+                            student.LastName = model.LastName;
+                            student.DateOfBirth = model.DateOfBirth;
+                            student.Gender = model.Gender;
+                            student.Email = model.Email;
+                            student.PhoneNumber = model.MobileNumber;
+                            //student.StateOfService = model.NyscState.ToString();
+                            student.Institution = model.Institution;
+                            student.AccountType = "Corper";
+                            student.Batch = model.NyscBatch;
+                            student.Discpline = model.Discpline;
+
+                            await this.UserManager.AddToRoleAsync(user.Id, RoleName.Corper);
+                            _db.Students.Add(student);
+                        }
+                        else if (Constant.Undergraduate == model.StudentType.ToUpper())
+                        {
+                            student.StudentId = user.Id;
+                            //MatricNo = model.MatNumber,
+                            student.Title = model.Title.ToString();
+                            student.FirstName = model.FirstName;
+                            student.LastName = model.LastName;
+                            student.DateOfBirth = model.DateOfBirth;
+                            student.Gender = model.Gender;
+                            student.AccountType = "UnderGraduate";
+                            student.PhoneNumber = model.MobileNumber;
+                            student.Institution = model.Institution;
+                            student.Discpline = model.Discpline;
+                            student.Email = model.Email;
+                            await this.UserManager.AddToRoleAsync(user.Id, RoleName.UnderGraduate);
+                            _db.Students.Add(student);
+                        }
+                        else if (Constant.Others == model.StudentType.ToUpper())
+                        {
+                            var modelTitle = "";
+                            if (model.Gender == "Male" || model.Gender == "male")
+                            {
+                                modelTitle = "Mr";
+                            }
+                            else { modelTitle = "Mrs/Miss"; }
+
+                            student.StudentId = user.Id;
+                            student.Title = modelTitle;
+                            student.FirstName = model.FirstName;
+                            student.LastName = model.LastName;
+                            student.DateOfBirth = model.DateOfBirth;
+                            student.Gender = model.Gender;
+                            student.AccountType = "RegularStudent";
+                            student.PhoneNumber = model.MobileNumber;
+                            student.Email = model.Email;
+                            await this.UserManager.AddToRoleAsync(user.Id, RoleName.RegularStudent);
+                            _db.Students.Add(student);
+                        }
+                        else
+                        {
+                            _response.Message = "Invalid Student Type";
+                            _response.Status = false;
+                            return BadRequest(_response.ToString());
+                        }
+
+                        await _db.SaveChangesAsync();
+                        //await UserManager.SendEmailAsync(user.Id, "Code-denim Mobile Registration", "Thank you for creating your account of mobile");
+                        var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        var callbackUrl = this.Url.Link("Default", new { Controller = "Account", Action = "ConfirmEmailMobile", userId = user.Id, code = code });
+
+
+
+                        string msgBody = GetEmailTemplate();
+                        msgBody = msgBody.Replace("{STUDENTNAME}", $"{student.FullName}");
+                        msgBody = msgBody.Replace("{Message}", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                        msgBody = msgBody.Replace("{HeaderMessage}", "Registration was Successful");
+                        msgBody = msgBody.Replace("{EMAILNAME}", $"{student.Email}");
+
+
+
+
+                        // var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code });
+                        await UserManager.SendEmailAsync(user.Id, "Confirm your account", msgBody);
+
+                        // await SendEmail(model.Email, $"Click this link to activate your account {callbackUrl}", "Email Confirmation", "");
+
+
+                        _response.Message = "Registration was successful. A link has been sent to your email. Use the link to activate your account";
+                        _response.Status = true;
+                    }
+                    //_response.Message = "User Already Exist";
+                    //_response.Status = false;
+                    //return Ok(_response);
                 }
-                else { modelTitle = "Mrs/Miss"; }
-
-                student.StudentId = user.Id;
-                student.Title = modelTitle;
-                student.FirstName = model.FirstName;
-                student.LastName = model.LastName;
-                student.DateOfBirth = model.DateOfBirth;
-                student.Gender = model.Gender;
-                student.AccountType = "RegularStudent";
-                student.PhoneNumber = model.MobileNumber;
-                student.Email = model.Email;
-                await this.UserManager.AddToRoleAsync(user.Id, RoleName.RegularStudent);
-                _db.Students.Add(student);
-            }
-            else
-            {
-                    _response.Message = "Invalid Student Type";
-                    _response.Status = false;
-                return BadRequest(_response.ToString());
-            }
-                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
-
-                if (!result.Succeeded)
-                {
-                    return GetErrorResult(result);
-                }
-                await _db.SaveChangesAsync();
-                //await UserManager.SendEmailAsync(user.Id, "Code-denim Mobile Registration", "Thank you for creating your account of mobile");
-                var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                var callbackUrl = Url.Link("Default", new { Controller = "Account", Action = "ResetPassword", code = code });
-                /*await UserManager.SendEmailAsync(user.Id, "Reset Password",
-                   "Please reset your password by clicking here : <a href=\""+ callbackUrl +"\">link</a>"); */
-               // await SendEmail(model.Email, $"Click this link to activate your account {callbackUrl}", "Email Confirmation", "");
-
-
-                _response.Message = "Registration was successful. A link has been sent to your email. Use the link to activate your account";
-                _response.Status = true;
+                _response.Message = "The User has been registered";
+                _response.Status = false;
+                return Ok(_response);
             }
             catch (Exception ex)
             {
-                _response.Message = "An error Occured While Registering user";
+                _response.Message = $"An error Occured While Registering user." +
+                    $"{ex.Message}";
                 _response.Status = false;
                 return Ok(_response);
             }
 
-            return Ok(_response);
+            //return Ok(_response);
         }
+
+        public string GetEmailTemplate()
+        {
+            string body = string.Empty;
+
+            using (StreamReader reader = new StreamReader(System.Web.Hosting.HostingEnvironment.MapPath("~/EmailTemplate.Html")))
+            {
+                body = reader.ReadToEnd();
+            }
+            return body;
+        }
+
+
 
         /// <summary>
         /// 
@@ -482,7 +531,7 @@ namespace CodedenimWebApp.Controllers.Api
         }
 
 
-   // POST api/Account/RegisterStudent
+        // POST api/Account/RegisterStudent
         [System.Web.Http.AllowAnonymous]
         [System.Web.Http.Route("RegisterCorper")]
         [System.Web.Http.HttpPost]
@@ -521,24 +570,24 @@ namespace CodedenimWebApp.Controllers.Api
                     Email = model.Email,
                     PhoneNumber = model.MobileNumber,
                     StateOfService = model.NyscState.ToString(),
-                   Institution = model.Institution,
-                   AccountType = "Corper",
-                   Batch = model.NyscBatch.ToString(),
-                   Discpline = model.Discpline
+                    Institution = model.Institution,
+                    AccountType = "Corper",
+                    Batch = model.NyscBatch.ToString(),
+                    Discpline = model.Discpline
                 };
 
                 _db.Students.Add(corper);
 
-                    await _db.SaveChangesAsync();
-                    await this.UserManager.AddToRoleAsync(user.Id, RoleName.Corper);
-                }
-                catch (Exception e)
-                {
+                await _db.SaveChangesAsync();
+                await this.UserManager.AddToRoleAsync(user.Id, RoleName.Corper);
+            }
+            catch (Exception e)
+            {
 
-                    throw;
-                }
-            
-           
+                throw;
+            }
+
+
 
             //    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
             ////var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
@@ -560,7 +609,7 @@ namespace CodedenimWebApp.Controllers.Api
 
         public string EmailLink(string userId, string code)
         {
-           var url = this.Url.Link("Default", new { Controller = "Account" , Action = "ConfirmEmail", userId, code} );
+            var url = this.Url.Link("Default", new { Controller = "Account", Action = "ConfirmEmail", userId, code });
             return url;
         }
 
@@ -581,7 +630,7 @@ namespace CodedenimWebApp.Controllers.Api
                 Email = model.Email,
                 PhoneNumber = model.MobileNumber
             };
-         
+
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -609,14 +658,14 @@ namespace CodedenimWebApp.Controllers.Api
             _db.Students.Add(student);
 
 
-           await _db.SaveChangesAsync();
-           await this.UserManager.AddToRoleAsync(user.Id, RoleName.UnderGraduate);
+            await _db.SaveChangesAsync();
+            await this.UserManager.AddToRoleAsync(user.Id, RoleName.UnderGraduate);
 
             //var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
             // var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code }/*, protocol: Request.Url.Scheme*/);
             //var callbackUrl = EmailLink(user.Id, code);
 
-           // await UserManager.SendEmailAsync(user.Id, "Code-denim Mobile Registration", "Thank you for creating your account of mobile");
+            // await UserManager.SendEmailAsync(user.Id, "Code-denim Mobile Registration", "Thank you for creating your account of mobile");
 
 
             return Ok("Student Created Successfully ");
@@ -640,65 +689,65 @@ namespace CodedenimWebApp.Controllers.Api
         /// </summary>
         /// <param name="model"></param>
         /// <returns>HttpStatus Code</returns>
-        [System.Web.Http.AllowAnonymous]
-        [System.Web.Http.Route("OtherStudent")]
-        [System.Web.Http.HttpPost]
-        public async Task<IHttpActionResult> OtherStudent(RegisterOtherStudentModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[System.Web.Http.AllowAnonymous]
+        //[System.Web.Http.Route("OtherStudent")]
+        //[System.Web.Http.HttpPost]
+        //public async Task<IHttpActionResult> OtherStudent(RegisterOtherStudentModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var user = new ApplicationUser()
-            {
+        //    var user = new ApplicationUser()
+        //    {
 
-                UserName = model.Email,
-                Email = model.Email,
-                PhoneNumber = model.MobileNumber
-            };
-
-       
-
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
-            var modelTitle = "";
-            if (model.Gender == "Male" || model.Gender == "male")
-            {
-                modelTitle = "Mr";
-            }
-            else { modelTitle = "Mrs/Miss"; }
-                var student = new Student()
-                {
-                    StudentId = user.Id,
-                    Title = modelTitle,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    DateOfBirth = model.DateOfBirth,
-                    Gender = model.Gender,
-                    AccountType = "RegularStudent",
-                    PhoneNumber = model.MobileNumber,
-                    Email = model.Email,
-                    
+        //        UserName = model.Email,
+        //        Email = model.Email,
+        //        PhoneNumber = model.MobileNumber
+        //    };
 
 
-                };
-            
-            _db.Students.Add(student);
-           await _db.SaveChangesAsync();
 
-           await this.UserManager.AddToRoleAsync(user.Id, RoleName.RegularStudent);
-        
-       
-          
+        //    IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
-            return Ok("Student Created Successfully ");
-         
-        }
+        //    if (!result.Succeeded)
+        //    {
+        //        return GetErrorResult(result);
+        //    }
+        //    var modelTitle = "";
+        //    if (model.Gender == "Male" || model.Gender == "male")
+        //    {
+        //        modelTitle = "Mr";
+        //    }
+        //    else { modelTitle = "Mrs/Miss"; }
+        //    var student = new Student()
+        //    {
+        //        StudentId = user.Id,
+        //        Title = modelTitle,
+        //        FirstName = model.FirstName,
+        //        LastName = model.LastName,
+        //        DateOfBirth = model.DateOfBirth,
+        //        Gender = model.Gender,
+        //        AccountType = "RegularStudent",
+        //        PhoneNumber = model.MobileNumber,
+        //        Email = model.Email,
+
+
+
+        //    };
+
+        //    _db.Students.Add(student);
+        //    await _db.SaveChangesAsync();
+
+        //    await this.UserManager.AddToRoleAsync(user.Id, RoleName.RegularStudent);
+
+
+
+
+        //    return Ok("Student Created Successfully ");
+
+        //}
         //my custom Registration controller
         // POST api/Account/InstructorRegister
         [System.Web.Http.AllowAnonymous]
@@ -729,7 +778,7 @@ namespace CodedenimWebApp.Controllers.Api
         /// <returns></returns>
 
         //[System.Web.Http.AllowAnonymous]
-        //public async Task<IHttpActionResult> SendEmail(string destination, string body, string subject,string ptext)
+        //public async Task<IHttpActionResult> SendEmail(string destination, string body, string subject, string ptext)
         //{
         //    var apiKey = ConfigurationManager.AppSettings["ApiKey"];
         //    var client = new SendGridClient(apiKey);
@@ -740,15 +789,15 @@ namespace CodedenimWebApp.Controllers.Api
         //    var From = new EmailAddress("Codedenim", "Codedenim");
         //    var Subject = subject;
         //    var PlainTextContent = ptext;
-        //   // var HtmlContent = GetEmailTemplate();
+        //    // var HtmlContent = GetEmailTemplate();
         //    var to = new EmailAddress(destination);
         //    var successMsg = string.Empty;
         //    var msg = MailHelper.CreateSingleEmail(From, to, Subject, PlainTextContent, "");
-        //   // msg.AddAttachment("my pics.jpg", ConvertToBase64());
+        //    // msg.AddAttachment("my pics.jpg", ConvertToBase64());
         //    try
         //    {
         //        await client.SendEmailAsync(msg);
-               
+
         //        successMsg = "Message sent successfully";
         //    }
         //    catch (Exception ex)
@@ -784,6 +833,74 @@ namespace CodedenimWebApp.Controllers.Api
             }
         }
 
+
+        //
+        // POST: /Account/Login
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("Login")]
+        public async Task<IHttpActionResult> Login(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                _response.Message = "Enter both Username and Password";
+                _response.Status = false;
+                return Ok(_response);
+            }
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, change to shouldLockout: 
+            var user = await _db.Users.AsNoTracking()
+                .FirstOrDefaultAsync(c => c.Email.Trim().ToUpper().Equals(model.Email.Trim().ToUpper()));
+
+            if (user == null)
+            {
+                _response.Message = "User Does not exist";
+                _response.Status = false;
+                return Ok(_response);
+            }
+
+
+            if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+            {
+                var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                var callbackUrl = this.Url.Link("Default", new { Controller = "Account", Action = "ConfirmEmail", userId = user.Id, code = code });
+
+
+                var student = _db.Students.AsNoTracking().FirstOrDefault(x => x.Email.ToUpper().Trim().Equals(user.Email.ToUpper().Trim()));
+                string msgBody = GetEmailTemplate();
+                msgBody = msgBody.Replace("{STUDENTNAME}", $"{student.FullName}");
+                msgBody = msgBody.Replace("{Message}", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                msgBody = msgBody.Replace("{HeaderMessage}", "Registration was Successful");
+                msgBody = msgBody.Replace("{EMAILNAME}", $"{user.Email}");
+
+
+                // var callbackUrl = Url.Link("ConfirmEmail", "Account", new { userId = user.Id, code = code });
+                await UserManager.SendEmailAsync(user.Id, "Confirm your account", msgBody);
+                _response.Message = "Confirmation link was sent again";
+                _response.Status = false;
+            }
+            else
+            {
+
+                var result = await SignInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, shouldLockout: false);
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        return Ok(new ResponseMessage { Status = true, Message = "Login was successful" });
+                    case SignInStatus.LockedOut:
+                        return Ok(new ResponseMessage { Status = true, Message = "Account is Lockout" });
+                    case SignInStatus.RequiresVerification:
+                    case SignInStatus.Failure:
+                    default:
+                        return Ok(new ResponseMessage { Status = true, Message = "Invalid Login Attempt" });
+
+                }
+            }
+
+            return Ok(_response);
+        }
+
+
         [HttpPost]
         [AllowAnonymous]
         [Route("ForgotPassword")]
@@ -791,26 +908,31 @@ namespace CodedenimWebApp.Controllers.Api
         {
             if (ModelState.IsValid)
             {
-           
-                var user = await UserManager.FindByNameAsync(model.Email);
+
+               // var user = await UserManager.FindByNameAsync(model.Email);
+               var user = await _db.Users.AsNoTracking()
+                .FirstOrDefaultAsync(c => c.Email.Trim().ToUpper().Equals(model.Email.Trim().ToUpper()));
                 //if (user == null ||!(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 if (user == null)
                 {
-                    return BadRequest("Üser Does Not exist");
+                    return BadRequest("User Does Not exist");
                 }
                 var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                var callbackUrl = Url.Link("Default", new { Controller = "Account", Action = "ResetPassword", code = code });
-                /*await UserManager.SendEmailAsync(user.Id, "Reset Password",
-                   "Please reset your password by clicking here : <a href=\""+ callbackUrl +"\">link</a>"); */
+                var callbackUrl = Url.Link("Default", new { Controller = "Account", Action = "ResetPasswordMobile", userId = user.Id, code = code });
+                await UserManager.SendEmailAsync(user.Id, "Reset Password",
+                   "Please reset your password by clicking here : <a href=\"" + callbackUrl + "\">link</a>");
                 //await SendEmail(model.Email,$"Click this link to activate your account {callbackUrl}","Reset Password","");
-               // await UserManager.SendEmailAsync(user.Id, "Reset Password", $"{callbackUrl}");
+                // await UserManager.SendEmailAsync(user.Id, "Reset Password", $"{callbackUrl}");
 
                 //var response = Request.CreateResponse(BadRequest());
                 //response.Headers.Location = new Uri("http://www.yourNewDomain.com");
-                return Ok();
+                _response.Message = "Link has been sent to your email";
+                _response.Status = true;
+                return Ok(_response);
             }
-
-            return BadRequest();
+            _response.Message = "Invalid response was encountered";
+            _response.Status = false;
+            return Ok(_response);
         }
 
         //

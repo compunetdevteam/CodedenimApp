@@ -19,103 +19,120 @@
 
 
 
-<div class="container-fluid" style="margin-left: 13%">
+    <div class="container-fluid" style="margin-left: 13%">
 
 
-    @using (Html.BeginForm("Create", "TopicMaterialUploads", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-        <fieldset>
-            <legend><h3><b>Create Topic Materials</b></h3></legend>
-            <div class="form-horizontal">
 
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TopicId, "Select Topic", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-8">
-                        @Html.DropDownList("TopicId", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.TopicId, "", new { @class = "text-danger" })
+        @using (Html.BeginForm("Create", "TopicMaterialUploads", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            if (ViewBag.topicMatial != null)
+            {   
+                <p class="alert alert-danger"> @ViewBag.Duplicate</p>
+            }
+
+            @Html.AntiForgeryToken()
+            <fieldset>
+                <legend><h3><b>Create Topic Materials</b></h3></legend>
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TopicId, "Select Topic", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.DropDownList("TopicId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.TopicId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Tutor, "Tutor", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+
+                            @Html.EditorFor(model => model.Tutor, new { htmlAttributes = new { @class = "form-control", @placeholder = @ViewBag.UserName } })
+                            @Html.ValidationMessageFor(model => model.Tutor, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FileType, "File Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EnumDropDownListFor(model => model.FileType, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.FileType, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, "Material Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, "Short Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FileLocation, "File Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.FileLocation, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FileLocation, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    @*<div class="form-group">
+                        @Html.Label("Upload File", new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            <input class="form-control" type="file" id="File" name="File" />
+                        </div>
+                    </div>*@
+
+                    <div class="form-group">
+                        <textarea id="summernote" name="TextContent"></textarea>
+                    </div>
+                    @*<div class="form-group">
+                        @Html.LabelFor(model => model.TextContent, "File Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(model => model.TextContent, new { htmlAttributes = new { @class = "form-control", @id= "summernote" } })
+                            @Html.ValidationMessageFor(model => model.TextContent, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+
+                    @*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">File Upload</button>*@
+
+                    <div class="form-group"></div>
+                    <div class="clearfix"></div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button class="btn btn-success"><span>Create</span> <i class="fa fa-check-square-o"></i></button>
+                            <button class="btn-inverse btn" type="reset"><span>Reset</span> <i class="fa fa-undo"></i></button>
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Tutor, "Tutor", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-8">
-
-                        @Html.EditorFor(model => model.Tutor, new { htmlAttributes = new { @class = "form-control", @placeholder = @ViewBag.UserName } })
-                        @Html.ValidationMessageFor(model => model.Tutor, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.FileType, "File Type", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-8">
-                        @Html.EnumDropDownListFor(model => model.FileType, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.FileType, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Name, "Material Name", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Description, "Short Description", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.FileLocation, "File Name", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.FileLocation, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.FileLocation, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-
-                @*<div class="form-group">
-            @Html.Label("Upload File", new { @class = "control-label col-md-2" })
-            <div class="col-md-8">
-                <input class="form-control" type="file" id="File" name="File" />
-            </div>
-        </div>*@
-
-                <div class="form-group">
-<textarea id="summernote" name="TextContent"></textarea>
-                </div>
-
-                @*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">File Upload</button>*@
-
-                <div class="form-group"></div>
-                <div class="clearfix"></div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <button class="btn btn-success"><span>Create</span> <i class="fa fa-check-square-o"></i></button>
-                        <button class="btn-inverse btn" type="reset"><span>Reset</span> <i class="fa fa-undo"></i></button>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-    }
+            </fieldset>
+        }
+        @if (ViewBag.topicMatial != null)
+        {
+            <p class="alert alert-danger"> @ViewBag.Duplicate</p>
+        }
 
 
 
 
 
-    <!-- Modal -->
-    @*<div id="myModal" class="modal fade" role="dialog">
+        <!-- Modal -->
+        @*<div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">*@
 
-    <!-- Modal content-->
-    @*<div class="modal-content">
+        <!-- Modal content-->
+        @*<div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Modal Header</h4>
@@ -132,9 +149,9 @@
         </div>*@
 
 
-    @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/jqueryval")
 
-</div>
+    </div>
 
 @section Scripts{
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>

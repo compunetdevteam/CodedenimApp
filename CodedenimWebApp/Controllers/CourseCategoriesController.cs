@@ -1,4 +1,5 @@
-﻿using CodedenimWebApp.Models;
+﻿using CodedenimWebApp.Controllers.Api;
+using CodedenimWebApp.Models;
 using CodedenimWebApp.Service;
 using CodedenimWebApp.Services;
 using CodedenimWebApp.ViewModels;
@@ -24,6 +25,7 @@ namespace CodedenimWebApp.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private RemitaHash myHash = new RemitaHash();
+        private ConvertEmail converter = new ConvertEmail();
 
         // GET: CourseCategories
         public async Task<ActionResult> Index()
@@ -50,8 +52,6 @@ namespace CodedenimWebApp.Controllers
         public async Task<ActionResult> CourseCategoryPayment()
         {
             var userId = User.Identity.GetUserId();
-
-
             var student = await db.Students.FindAsync(userId);
 
             var model = new List<CourseCategory>();
@@ -375,6 +375,100 @@ namespace CodedenimWebApp.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [AllowAnonymous]
+        public async Task<ActionResult> CategoryDetailsMobile(int id, string email)
+        {
+            var courseDetails = new CourseCategoryDetailVm();
+            if (email != null)
+            {
+                var userId = converter.ConvertEmailToId(email);
+
+                var hasPayed = await db.StudentPayments
+                                        .AsNoTracking()
+                                         .Where(x => x.StudentId.Equals(userId)
+                                         &&
+                                           x.CourseCategoryId.Equals((int)id) && x.IsPayed.Equals(true))
+                                           .FirstOrDefaultAsync();
+                if (hasPayed != null)
+                {
+                    if (hasPayed.IsPayed.Equals(false))
+                    {
+                        string serviceTypeId = string.Empty;
+
+
+                        var hashed = myHash.HashRemitedValidate(hasPayed.OrderId, RemitaConfigParams.APIKEY, RemitaConfigParams.MERCHANTID);
+                        string checkurl = RemitaConfigParams.CHECKSTATUSURL + "/" + RemitaConfigParams.MERCHANTID + "/" + hasPayed.OrderId + "/" + hashed + "/" + "orderstatus.reg";
+                        string jsondata = new WebClient().DownloadString(checkurl);
+                        var result = JsonConvert.DeserializeObject<RemitaResponse>(jsondata);
+                        if (string.IsNullOrEmpty(result.Rrr))
+                        {
+                            var entry = db.Entry(hasPayed);
+                            if (entry.State == EntityState.Detached)
+                                db.StudentPayments.Attach(hasPayed);
+                            db.StudentPayments.Remove(hasPayed);
+                            await db.SaveChangesAsync();
+                        }
+                        else
+                        {
+                            return RedirectToAction("ConfrimPayment", new { orderID = hasPayed.OrderId });
+                        }
+
+
+
+                    }
+                    else
+                    {
+                        //return to the receipt page
+                    }
+                }
+
+                System.Threading.Thread.Sleep(1);
+                long milliseconds = DateTime.Now.Ticks;
+                var url = Url.Action("ConfrimPayment", "CourseCategories", new { }, protocol: Request.Url.Scheme);
+
+
+                var student = db.Students.Where(x => x.StudentId.Equals(userId)).Select(s => new {
+                    s.AccountType,
+                    s.Email,
+                    s.PhoneNumber,
+                    s.FirstName,
+                    s.LastName,
+                    s.MiddleName
+                }).SingleOrDefault();
+                var fullName = $"{student.LastName} {student.FirstName} {student.MiddleName}";
+
+                var model = new List<CourseCategory>();
+
+                var assignedCourse = db.AssignCourseCategories.Include(i => i.CourseCategory).Include(i => i.Courses)
+                    .AsNoTracking().Where(x => x.CourseCategory.StudentType.Equals(student.AccountType) && x.CourseCategoryId.Equals(id)).ToList();
+
+                var categories = db.CourseCategories.Find(id);
+                var assingeCourses = db.AssignCourseCategories.Where(x => x.CourseCategoryId.Equals(id)).ToList();
+
+
+                var currency = from Currency s in Enum.GetValues(typeof(Currency))
+                               select new { Id = (int)s, Name = s.ToString() };
+                ViewBag.Currency = new SelectList(currency.ToList(), "Name", "Name");
+
+                courseDetails.CourseCategory = categories;
+                courseDetails.AssignedCourses = assingeCourses;
+                courseDetails.orderId = milliseconds.ToString();
+                courseDetails.responseurl = url;
+                courseDetails.StudentId = userId;
+                courseDetails.payerEmail = student.Email;
+                courseDetails.payerName = fullName;
+                courseDetails.CourseCategoryId = id;
+                courseDetails.payerPhone = student.PhoneNumber;
+
+                courseDetails.amt = categories.Amount.ToString();
+
+                RedirectToAction("PaypalCheckout", courseDetails);
+
+            }
+
+            return View(courseDetails);
+        }
+
         [Authorize]
         public async Task<ActionResult> CategoryDetails(int id)
         {
@@ -382,7 +476,7 @@ namespace CodedenimWebApp.Controllers
 
             var hasPayed = await db.StudentPayments
                                     .AsNoTracking()
-                                     .Where(x => x.StudentId.Equals(userId) 
+                                     .Where(x => x.StudentId.Equals(userId)
                                      &&
                                        x.CourseCategoryId.Equals((int)id) && x.IsPayed.Equals(true))
                                        .FirstOrDefaultAsync();
@@ -423,9 +517,15 @@ namespace CodedenimWebApp.Controllers
             long milliseconds = DateTime.Now.Ticks;
             var url = Url.Action("ConfrimPayment", "CourseCategories", new { }, protocol: Request.Url.Scheme);
 
-        
-            var student = db.Students.Where(x => x.StudentId.Equals(userId)).Select(s => new { s.AccountType,
-                s.Email, s.PhoneNumber, s.FirstName, s.LastName, s.MiddleName }).SingleOrDefault();
+
+            var student = db.Students.Where(x => x.StudentId.Equals(userId)).Select(s => new {
+                s.AccountType,
+                s.Email,
+                s.PhoneNumber,
+                s.FirstName,
+                s.LastName,
+                s.MiddleName
+            }).SingleOrDefault();
             var fullName = $"{student.LastName} {student.FirstName} {student.MiddleName}";
 
             var model = new List<CourseCategory>();
@@ -438,7 +538,7 @@ namespace CodedenimWebApp.Controllers
 
 
             var currency = from Currency s in Enum.GetValues(typeof(Currency))
-                select new { Id = (int)s, Name = s.ToString() };
+                           select new { Id = (int)s, Name = s.ToString() };
             ViewBag.Currency = new SelectList(currency.ToList(), "Name", "Name");
 
             courseDetails.CourseCategory = categories;
@@ -450,7 +550,7 @@ namespace CodedenimWebApp.Controllers
             courseDetails.payerName = fullName;
             courseDetails.CourseCategoryId = id;
             courseDetails.payerPhone = student.PhoneNumber;
-          
+
             courseDetails.amt = categories.Amount.ToString();
 
             RedirectToAction("PaypalCheckout", courseDetails);
@@ -458,7 +558,7 @@ namespace CodedenimWebApp.Controllers
             return View(courseDetails);
         }
 
-      
+
 
 
         [HttpPost]

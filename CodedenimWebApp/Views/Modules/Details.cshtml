@@ -1,6 +1,7 @@
 ﻿@*@model CodeninModel.Module*@
 @using System.Security.AccessControl
 @using System.Web.UI.WebControls
+@using Microsoft.Ajax.Utilities;
 @model CodedenimWebApp.ViewModels.CourseContentVm
 @{
     ViewBag.Title = "Module Details";
@@ -90,30 +91,37 @@
             <ul class="nestable-list">
                 @foreach (var topics in Model.Topics)
                 {
+                 
                  @Html.HiddenFor(x => x.ModulesAD.ModuleId)
-                    <li class="nestable-item nestable-item-handle" data-id="2">
-                        <a href="@Url.Action("Create","TopicMaterialUploads",new{id = topics.TopicId})" class="btn btn-white btn-flat">Add Content</a>
-                        <div class="nestable-content">  
-                            <div class="media v-middle">
-                                <div class="media-left">
-                                    <div class="icon-block half bg-blue-400 text-white">
-                                        <i class="fa fa-css3"></i>
-                                    </div>
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="text-title media-heading margin-none">
-                                        <a href="@Url.Action("Details","TopicMaterialUploads",new{id = topics.TopicId, courseId = Model.CourseIdentifier})" class="link-text-color">@topics.TopicName</a>
-                                    </h4>
-                                    @*<div class="text-caption">@topics.</div>*@
-                                </div>
-                                <div class="media-right">
-                                    <a href="#CreateTopics" onclick="EditTopics(@topics.TopicId)" data-toggle="modal" class="btn btn-white btn-flat"><i class="fa fa-pencil fa-fw"></i> Edit</a>
-                                    <a href="#CreateTopics" onclick="DeleteTopics(@topics.TopicId)" data-toggle="modal" class="btn btn-white btn-flat"><i class="fa fa-times btn-danger"></i> Delete</a>
-                               
+                <li class="nestable-item nestable-item-handle" data-id="2">
+                    <a href="@Url.Action("Create","TopicMaterialUploads",new{id = topics.TopicId})" class="btn btn-white btn-flat">Add Content</a>
+                    @foreach (var topicContent in Model.TopicContentInts)
+                    {
+                        <a href="@Url.Action("Edit","TopicMaterialUploads",new{id = topicContent})" class="btn btn-primary btn-flat">Edit Content</a>
+                    }
+                    <a href="@Url.Action("SelectContentToDelete","TopicMaterialUploads",new{id = topics.TopicId})" class="btn btn-primary btn-flat">Delete Content</a>
+
+                    <div class="nestable-content">
+                        <div class="media v-middle">
+                            <div class="media-left">
+                                <div class="icon-block half bg-blue-400 text-white">
+                                    <i class="fa fa-css3"></i>
                                 </div>
                             </div>
+                            <div class="media-body">
+                                <h4 class="text-title media-heading margin-none">
+                                    <a href="@Url.Action("Details","TopicMaterialUploads",new{id = topics.TopicId, courseId = Model.CourseIdentifier})" class="link-text-color">@topics.TopicName</a>
+                                </h4>
+                                @*<div class="text-caption">@topics.</div>*@
+                            </div>
+                            <div class="media-right">
+                                <a href="#CreateTopics" onclick="EditTopics(@topics.TopicId)" data-toggle="modal" class="btn btn-white btn-flat"><i class="fa fa-pencil fa-fw"></i> Edit</a>
+                                <a href="#CreateTopics" onclick="DeleteTopics(@topics.TopicId)" data-toggle="modal" class="btn btn-white btn-flat"><i class="fa fa-times btn-danger"></i> Delete</a>
+
+                            </div>
                         </div>
-                    </li>
+                    </div>
+                </li>
                 }
 
 

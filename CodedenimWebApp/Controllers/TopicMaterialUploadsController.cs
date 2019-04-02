@@ -1,4 +1,5 @@
 ﻿using CodedenimWebApp.Models;
+using CodedenimWebApp.Service;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
 using Microsoft.AspNet.Identity;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace CodedenimWebApp.Controllers
 {
@@ -20,12 +22,12 @@ namespace CodedenimWebApp.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private int moduleId = 0;
+        private DeleteFile deleteFile = new DeleteFile();
         //BlobService _blobService = new BlobService();
 
         // GET: TopicMaterialUploads
         public async Task<ActionResult> Index()
         {
-
             var topicMaterialUploads = db.TopicMaterialUploads.Include(t => t.Course);
             return View(await topicMaterialUploads.ToListAsync());
         }
@@ -40,7 +42,6 @@ namespace CodedenimWebApp.Controllers
             {
                 Modules = db.Modules.Where(x => x.ModuleId.Equals(id)).ToList(),
                 Topics = db.Topics.Include(x => x.MaterialUploads).ToList(),
-
             };
             return PartialView(viewModel);
         }
@@ -75,9 +76,9 @@ namespace CodedenimWebApp.Controllers
         public ActionResult Details(int id, int? courseId)
         {
 
-            var topicMaterialUpload = db.TopicMaterialUploads.Find(id);
+            var topicMaterialUpload = db.TopicMaterialUploads.Where(x => x.TopicId.Equals(id)).ToList();
             
-            if (topicMaterialUpload == null)
+            if (topicMaterialUpload == null)    
             {
                 return View("NoContent");
             }
@@ -109,7 +110,8 @@ namespace CodedenimWebApp.Controllers
                     FileType = item.FileType,
                     Course = item.Course,
                     Tutor = item.Tutor,
-                    Description = item.Description
+                    Description = item.Description,
+                   
                 };
                 topicContents.Add(topicMt);
             }
@@ -248,10 +250,10 @@ namespace CodedenimWebApp.Controllers
             // var user = User.Identity.GetUserName();
             var topicMaterial = db.Topics.Find(id);
 
-
+            
             ViewBag.TopicId = new SelectList(db.Topics.Where(x => x.TopicId.Equals(id)), "TopicId", "TopicName");
             ViewBag.UserName = User.Identity.GetUserName();
-
+          
             return View();
         }
 
@@ -260,6 +262,7 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public async Task<ActionResult> Create(TopicMaterialUpload topicMaterialUpload, HttpPostedFileBase File)
         {
             if (ModelState.IsValid)
@@ -267,54 +270,61 @@ namespace CodedenimWebApp.Controllers
                 // var tutorId = User.Identity.GetUserId();
                 var topicId = topicMaterialUpload.TopicId;
                 var moduleId = db.Topics.Where(x => x.TopicId.Equals(topicId)).Select(x => x.ModuleId).FirstOrDefault();
-                string _FileName = String.Empty;
+                var topicMaterial = db.TopicMaterialUploads
+                                      .Where(x => x.TopicId == topicMaterialUpload.TopicId && x.FileType == topicMaterialUpload.FileType)
+                                       .FirstOrDefault();
+                // string _FileName = String.Empty;
                 //if (File.ContentLength > 0 || File.FileName != null)
                 //{
-                    //_FileName = Path.GetFileName(File.FileName);
-                    //string path = HostingEnvironment.MapPath("~/MaterialUpload/") + _FileName;
-                    //topicMaterialUpload.FileLocation = path;
-                    //var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/MaterialUpload/"));
-                    //if (directory.Exists == false)
-                    //{
-                    //    directory.Create();
-                    //}
-                    //File.SaveAs(path);
-                    //CloudBlobContainer blobContainer = _blobService.GetCloudBlobContainer();
-                    //List<string> blobs = new List<string>();
-                    //foreach (var blobItem in blobContainer.ListBlobs())
-                    //{
-                    //    blobs.Add(blobItem.Uri.ToString());
+                //_FileName = Path.GetFileName(File.FileName);
+                //string path = HostingEnvironment.MapPath("~/MaterialUpload/") + _FileName;
+                //topicMaterialUpload.FileLocation = path;
+                //var directory = new DirectoryInfo(HostingEnvironment.MapPath("~/MaterialUpload/"));
+                //if (directory.Exists == false)
+                //{
+                //    directory.Create();
+                //}
+                //File.SaveAs(path);
+                //CloudBlobContainer blobContainer = _blobService.GetCloudBlobContainer();
+                //List<string> blobs = new List<string>();
+                //foreach (var blobItem in blobContainer.ListBlobs())
+                //{
+                //    blobs.Add(blobItem.Uri.ToString());
 
-                    //}
-                    //foreach (string item in Request.Files)
-                    //{
+                //}
+                //foreach (string item in Request.Files)
+                //{
 
-                    // if (File.ContentLength == 0)
-                    // {
-                    //     ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", topicMaterialUpload.TopicId);
-                    //     return View(topicMaterialUpload);
-                    // }
+                // if (File.ContentLength == 0)
+                // {
+                //     ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", topicMaterialUpload.TopicId);
+                //     return View(topicMaterialUpload);
+                // }
 
 
-                    //     if (File.ContentLength > 0)
-                    //     {
+                //     if (File.ContentLength > 0)
+                //     {
 
-                    //         CloudBlobContainer blobContainer = _blobService.GetCloudBlobContainer();
-                    //         CloudBlockBlob blob = blobContainer.GetBlockBlobReference(File.FileName);
-                    //         blob.UploadFromStream(File.InputStream);
-                    //     }
-                    //// }
-                    //return RedirectToAction("Upload");
-                    topicMaterialUpload.FileLocation = _FileName;
+                //         CloudBlobContainer blobContainer = _blobService.GetCloudBlobContainer();
+                //         CloudBlockBlob blob = blobContainer.GetBlockBlobReference(File.FileName);
+                //         blob.UploadFromStream(File.InputStream);
+                //     }
+                //// }
+                //return RedirectToAction("Upload");
+                // topicMaterialUpload.FileLocation = _FileName;
                 //}
                 //else
-                //{
+                //{ 
+         
+                if (topicMaterial != null)
+                {
+                    ViewBag.topicMatial = topicMaterial;
+                    ViewBag.TopicId = new SelectList(db.Topics.Where(x => x.TopicId.Equals(topicMaterial.TopicId)), "TopicId", "TopicName", topicMaterialUpload.TopicId);
+                    ViewBag.Duplicate = "This is a Duplicate Entry";
+                    return View(nameof(Create));
+                }
                     db.TopicMaterialUploads.Add(topicMaterialUpload);
                // }
-                
-               
-
-
                 //db.TopicMaterialUploads.Add(topicMaterialUpload);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", "Modules", new { id = moduleId });
@@ -331,12 +341,12 @@ namespace CodedenimWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TopicMaterialUpload topicMaterialUpload = await db.TopicMaterialUploads.FindAsync(id);
+            TopicMaterialUpload topicMaterialUpload = await db.TopicMaterialUploads.FindAsync((int)id);
             if (topicMaterialUpload == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.TopicId = new SelectList(db.Topics, "TopicId", "TopicName", topicMaterialUpload.TopicId);
+            ViewBag.TopicId = new SelectList(db.Topics.Where(x => x.TopicId.Equals(topicMaterialUpload.TopicId)), "TopicId", "TopicName", topicMaterialUpload.TopicId);
             return View(topicMaterialUpload);
         }
 
@@ -345,7 +355,7 @@ namespace CodedenimWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "TopicMaterialUploadId,TopicId,Tutor,FileType,Name,Description,FileLocation")] TopicMaterialUpload topicMaterialUpload)
+        public async Task<ActionResult> Edit(TopicMaterialUpload topicMaterialUpload)
         {
             if (ModelState.IsValid)
             {
@@ -358,18 +368,41 @@ namespace CodedenimWebApp.Controllers
         }
 
         // GET: TopicMaterialUploads/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public async Task<ActionResult> Delete(int? id, int fileType)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TopicMaterialUpload topicMaterialUpload = await db.TopicMaterialUploads.FindAsync(id);
+            TopicMaterialUpload topicMaterialUpload = await db.TopicMaterialUploads
+                                                              .Where(x => x.TopicMaterialUploadId
+                                                              .Equals((int)id) && x.FileType.Equals(fileType))
+                                                              .FirstOrDefaultAsync();
             if (topicMaterialUpload == null)
             {
                 return HttpNotFound();
             }
             return View(topicMaterialUpload);
+        }
+
+        // GET: TopicMaterialUploads/Delete/5
+        public async Task<ActionResult> SelectContentToDelete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var topicMaterialUpload = await db.TopicMaterialUploads
+                                              .Where(x => x.TopicId.Equals((int)id))
+                                              .ToListAsync();
+            
+            if (topicMaterialUpload == null)
+            {
+                return HttpNotFound();
+            }
+            var courseContentVm = new CourseContentVm();
+            courseContentVm.Materials = topicMaterialUpload;
+            return View(courseContentVm);
         }
 
         // POST: TopicMaterialUploads/Delete/5
@@ -379,23 +412,25 @@ namespace CodedenimWebApp.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            TopicMaterialUpload topicMaterialUpload = await db.TopicMaterialUploads.FindAsync(id);
+        [ValidateInput(false)]
+        public async Task<ActionResult> DeleteConfirmed(int id, string fileType)
+        {   
+            TopicMaterialUpload topicMaterialUpload = await db.TopicMaterialUploads
+                                                              .Where(x => x.TopicMaterialUploadId
+                                                              .Equals((int)id) && x.FileType.ToString().Equals(fileType))
+                                                              .FirstOrDefaultAsync();
+            var topticId = topicMaterialUpload.TopicId;
+            //deleting a file from the folder on ther server
+           deleteFile.Delete(topicMaterialUpload.FileLocation);
+
             db.TopicMaterialUploads.Remove(topicMaterialUpload);
-            //var Name = db.TopicMaterialUploads.Where(x => x.TopicMaterialUploadId.Equals(id)).Select(x => x.FileLocation).FirstOrDefault();
-            //Uri uri = new Uri(BlobService.BlobUri +"/" + Name);
-            //string filename = Path.GetFileName(uri.LocalPath);
-            //CloudBlobContainer blobContainer = _blobService.GetCloudBlobContainer();
-            //CloudBlockBlob blob = blobContainer.GetBlockBlobReference(filename);
-            //blob.Delete();
 
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+                await db.SaveChangesAsync();
+                return RedirectToAction("SelectContentToDelete", new RouteValueDictionary(
+                    new { controller = "TopicMaterialUploads", action = "SelectContentToDelete", Id = topticId }));
         }
-
 
         protected override void Dispose(bool disposing)
         {

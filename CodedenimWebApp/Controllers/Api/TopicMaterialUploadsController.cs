@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using CodedenimWebApp.Constants;
 using CodedenimWebApp.Controllers.Api.ApiViewModel;
 using CodedenimWebApp.Models;
 using CodeninModel;
@@ -28,11 +29,13 @@ namespace CodedenimWebApp.Controllers.Api
             return _db.TopicMaterialUploads.Select(x => new TopicMaterialVm
                                             {
                                                 Description = x.Description,
-                                                FileLocation = x.FileLocation,
+                                                FileLocation = Constant.FilePath + x.FileLocation,
                                                 Name = x.Name,
+                                                TopicId = x.TopicId,                                                
                                                 TopicMaterialId = x.TopicMaterialUploadId,
                                                 FileType = x.FileType.ToString(),
-                                                TextContent = x.TextContent
+                                                TextContent = x.TextContent,
+                                                
 
             });
         }
@@ -49,7 +52,7 @@ namespace CodedenimWebApp.Controllers.Api
                                                                         TopicMaterialId = x.TopicMaterialUploadId,
                                                                         TopicId = x.TopicId,
                                                                         Description = x.Description,
-                                                                        FileLocation = x.FileLocation,
+                                                                        FileLocation = Constant.FilePath + x.FileLocation,
                                                                         FileType = x.FileType.ToString(),
                                                                        // x.Course.StudentQuestions,
                                                                        TextContent = x.TextContent

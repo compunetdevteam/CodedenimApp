@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace CodeninModel.Abstractions
 {
-    public interface IDeletePhoto
+    public interface IDeleteFile
     {
+        bool Delete(string fileName);
+     
     }
 }

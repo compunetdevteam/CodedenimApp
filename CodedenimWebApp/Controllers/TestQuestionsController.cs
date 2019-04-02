@@ -45,6 +45,7 @@ namespace CodedenimWebApp.Controllers
             return View();
         }
 
+
         // POST: TestQuestions/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -62,6 +63,7 @@ namespace CodedenimWebApp.Controllers
             ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode", testQuestion.CourseId);
             return View(testQuestion);
         }
+
 
         // GET: TestQuestions/Edit/5
         public async Task<ActionResult> Edit(int? id)

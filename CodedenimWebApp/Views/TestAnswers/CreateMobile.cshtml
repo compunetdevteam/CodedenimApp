@@ -1,0 +1,217 @@
+﻿@*@model CodeninModel.Quiz.TestAnswer*@
+
+@model CodedenimWebApp.ViewModels.TestVm
+    @using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "Create";
+    // Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+    //if (Request.Browser.ScreenPixelsWidth <= 700)
+    //{
+    //    Layout = "~/Views/Shared/_QuizMobileLayout.cshtml";
+
+    //}
+    //else
+    //{
+    Layout = "~/Views/Shared/_DashboardLayoutMobile.cshtml";
+    //}
+}
+
+@{
+    int counter = 0;
+
+    var disabled = "";
+    bool hasAnswered = false;
+    foreach (var answers in Model.TestAnswers)
+    {
+        foreach (var item in Model.TestQuestion)
+        {
+            var userId = User.Identity.GetUserId();
+            if (answers.hasAnswered == true && answers.StudentId == userId && answers.QuestionId == item.QuestionId)
+            {
+                disabled = "disabled";
+                hasAnswered = true;
+            }
+            else
+            {
+                hasAnswered = false;
+                disabled = "";
+            }
+        }
+
+    }
+}
+
+
+
+@*@using (Html.BeginForm())
+    {
+       @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>TestAnswer</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.TestAnswerContent, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TestAnswerContent, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TestAnswerContent, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TestQuestionId, "TestQuestionId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("TestQuestionId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TestQuestionId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+<div class="container-fluid">
+    <input type="hidden" name="StudentId" value="@Model.StudentId" id="StudentId" />
+
+
+    <br />
+    <h6>Instructions</h6>
+    <p class="alert alert-warning">Once you submit you answers you cannot submit again</p>
+    <p class="text-body-2">@Model.Instruction (s)</p>
+    <h5 class="text-subhead-2 text-light"></h5>
+
+    @foreach (var item in Model.TestQuestion)
+    {
+        if (item == null)
+        {
+            <h2>No Quiz for this course yet</h2>
+        }
+        else
+        {
+
+
+            <div class="panel panel-default curriculum paper-shadow" data-z="0.5">
+                <div class="panel-heading panel-heading-gray" data-toggle="collapse" data-target="#curriculum-@item.QuestionId">
+                    <div class="media">
+                        <div class="media-left">
+                            <span class="icon-block half img-circle bg-orange-300 text-white"><i class="fa fa-graduation-cap"></i></span>
+                        </div>
+                        <div class="media-body">
+
+                            <h4 class="text-headline">Question @(++counter) </h4>
+                            <p>@item.Question</p>
+                        </div>
+                    </div>
+                    <span class="collapse-status collapse-open">Open</span>
+                    <span class="collapse-status collapse-close">Close</span>
+                </div>
+                <div class="list-group collapse" id="curriculum-@item.QuestionId">
+                    <div class="form-group">
+                        <label for="comment">Answer:</label>
+
+                        <textarea class="form-control" rows="5" id="@item.QuestionId" maxlength="200" placeholder="your answer goes here. max of 200 words" @disabled></textarea>
+                    </div>
+
+                    <button class="btn btn-success" id="@item.QuestionId" onclick="SubmitAnswer(@item.QuestionId)" data-questionId="@item.QuestionId"><i class="fa fa-save fa-fw"></i> Save Answer</button>
+
+                </div>
+            </div>
+        }
+
+
+    }
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    var studentId = $("#StudentId").val();
+    function SubmitAnswer(questionId)
+    {   
+        var studentId = $("#StudentId").val();
+        var questionAnswer = $("#" + questionId).val();
+        var url = '/TestAnswers/SubmitAnswerMobile?questionId=' + questionId + "&questionAnswer=" + questionAnswer + "&studentId=" + studentId;
+        $.ajax({
+            url: url,
+            //  data: JSON.stringify({ questionId: questionId, questionAnswer: answer, status: "" }),
+            type: "POST",
+            async: false,
+            dataType: "json",
+
+        }).done(function () {
+            
+            $("button#" + questionId).removeClass("btn btn-success").addClass("btn btn-primary").attr("disabled");
+                swal("Answer was submited success");
+            }).fail(function () {
+
+                swal("Once you submit you answers you cannot submit again");
+            }
+            );
+        alert(questionId + "   " + answer );
+    };
+    //$(function () {
+    //    $("button#2").removeClass("btn btn-success").addClass("btn btn-primary").attr("disabled");
+    //        $('#submitTest').click(function () {
+    //            console.log("i was clicked");
+    //            alert("i was clicked");
+                @*var questionAnswers = {
+                    questionId: this.getAttribute('data-questionId'),
+                    questionAnswer: $("textarea#answer").val()
+                };
+
+                console.log(questionId, questionAnswer);
+                //var questionId = this.getAttribute('data-questionId');
+                //var questionAnswer = $("textarea#answer").val();
+                $.ajax({
+                    url: "@Url.Action("SubmitAnswer", "TestAnswers")",
+                    data: JSON.stringify({ questionId: questionAnswers.questionId, questionAnswer: questionAnswers.questionAnswer,status : "" }),
+                    type: "POST",
+                    async: false,
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    //success: function (data) {
+                    //    if (data.success) {
+                    //        $("button#submitTest").removeClass("btn btn-success").addClass("btn btn-primary").attr("disabled");
+                    //          $("textarea#answer").attr("disabled");
+
+                    //       }
+                    //}
+                }).done(function (data) {
+                    console.log(data.status);
+                    if (data.status === "success") {
+                        $("button#submitTest").removeClass("btn btn-success").addClass("btn btn-primary").attr("disabled");
+                        $("textarea#answer").attr("disabled");
+
+                    }
+
+
+                    }).fail(function () {
+
+                        if (data.status === "fail") {
+                            $("button#submitTest").removeClass("btn btn-success").addClass("btn btn-primary").attr("disabled");
+                            $("textarea#answer").attr("disabled");
+
+                        }
+                    });
+                alert("button clicked " + data);*@
+        //    });
+        //});
+</script>
+@section scripts{
+
+}

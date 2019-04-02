@@ -317,9 +317,12 @@
     <Compile Include="Controllers\Api\ApiViewModel\LoginVm.cs" />
     <Compile Include="Controllers\Api\ApiViewModel\ModuleVm.cs" />
     <Compile Include="Controllers\Api\ApiViewModel\MyCoursesVm.cs" />
+    <Compile Include="Controllers\Api\ApiViewModel\QuizAnswerVm.cs" />
+    <Compile Include="Controllers\Api\ApiViewModel\QuizQuestionVm.cs" />
     <Compile Include="Controllers\Api\ApiViewModel\QuizVm.cs" />
     <Compile Include="Controllers\Api\ApiViewModel\RegisterVm.cs" />
     <Compile Include="Controllers\Api\ApiViewModel\ResponseMessage.cs" />
+    <Compile Include="Controllers\Api\ApiViewModel\StudentVm.cs" />
     <Compile Include="Controllers\Api\ApiViewModel\TopicMaterialVm.cs" />
     <Compile Include="Controllers\Api\ApiViewModel\TopicVm.cs" />
     <Compile Include="Controllers\Api\ConvertEmail.cs" />
@@ -359,6 +362,18 @@
     <Compile Include="Migrations\201903191024590_AllowHtmlattribute.cs" />
     <Compile Include="Migrations\201903191024590_AllowHtmlattribute.Designer.cs">
       <DependentUpon>201903191024590_AllowHtmlattribute.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903212245369_removedCategoryFromEnrollForCoursesTable.cs" />
+    <Compile Include="Migrations\201903212245369_removedCategoryFromEnrollForCoursesTable.Designer.cs">
+      <DependentUpon>201903212245369_removedCategoryFromEnrollForCoursesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903212248224_addedCoursesTotheEnrollCourseTable.cs" />
+    <Compile Include="Migrations\201903212248224_addedCoursesTotheEnrollCourseTable.Designer.cs">
+      <DependentUpon>201903212248224_addedCoursesTotheEnrollCourseTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903212342115_addedPropertiesToEnrolledForCoursed.cs" />
+    <Compile Include="Migrations\201903212342115_addedPropertiesToEnrolledForCoursed.Designer.cs">
+      <DependentUpon>201903212342115_addedPropertiesToEnrolledForCoursed.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Services\RemitaHash.cs" />
@@ -1393,6 +1408,7 @@
     <Content Include="Content\img\overlays\08.png" />
     <Content Include="Content\img\overlays\09.png" />
     <Content Include="Content\img\Sebig.png" />
+    <Content Include="EmailTemplate.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
@@ -1632,6 +1648,8 @@
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <None Include="Properties\PublishProfiles\Codedenim - Web Deploy1.pubxml" />
+    <None Include="Properties\PublishProfiles\CodedenimWebApp20190402113351 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
@@ -1956,6 +1974,12 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Shared\_QuizMobileLayout.cshtml" />
+    <Content Include="Views\CourseCategories\CategoryDetailsMobile.cshtml" />
+    <Content Include="Views\Shared\_DashboardLayoutMobile.cshtml" />
+    <Content Include="Views\TestAnswers\CreateMobile.cshtml" />
+    <Content Include="Views\Account\ResetPasswordMobile.cshtml" />
+    <Content Include="Views\Account\ConfirmEmailMobile.cshtml" />
+    <Content Include="Views\TopicMaterialUploads\SelectContentToDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1966,6 +1990,7 @@
     <Folder Include="Controllers\Api\ForumApi\" />
     <Folder Include="MaterialUpload\" />
     <Folder Include="ProfilePics\" />
+    <Folder Include="Service\NewFolder1\" />
     <Folder Include="uploads\" />
     <Folder Include="Views\CourseCategories\BlobConnection\" />
     <Folder Include="Views\MultipleButtonAttribute\" />
@@ -1994,6 +2019,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903191024590_AllowHtmlattribute.resx">
       <DependentUpon>201903191024590_AllowHtmlattribute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903212245369_removedCategoryFromEnrollForCoursesTable.resx">
+      <DependentUpon>201903212245369_removedCategoryFromEnrollForCoursesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903212248224_addedCoursesTotheEnrollCourseTable.resx">
+      <DependentUpon>201903212248224_addedCoursesTotheEnrollCourseTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903212342115_addedPropertiesToEnrolledForCoursed.resx">
+      <DependentUpon>201903212342115_addedPropertiesToEnrolledForCoursed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

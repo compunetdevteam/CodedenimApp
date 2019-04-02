@@ -10,8 +10,12 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using CodedenimWebApp.Constants;
+using CodedenimWebApp.Controllers.Api.ApiViewModel;
 using CodedenimWebApp.Models;
+using CodedenimWebApp.ViewModels;
 using CodeninModel;
+using Microsoft.Ajax.Utilities;
 using PagedList;
 
 namespace CodedenimWebApp.Controllers.Api
@@ -20,6 +24,7 @@ namespace CodedenimWebApp.Controllers.Api
     public class StudentsController : ApiController
     {
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
+        private readonly ResponseMessage _response = new ResponseMessage();
 
         // GET: api/Students
         public IEnumerable<Student> GetStudents()
@@ -32,33 +37,110 @@ namespace CodedenimWebApp.Controllers.Api
 
 
         // GET: api/Students/5
-        [ResponseType(typeof(Student))]
-        public async Task<IHttpActionResult> GetStudent(string id)
+        //[ResponseType(typeof(Student))]
+        [HttpGet]
+        [Route("GetStudent")]
+        public async Task<IHttpActionResult> GetStudent(string email)
         {
-            // Student student = await db.Students.FindAsync(id);
-            //  var email = new ConvertEmail();
+            //TODO
+            Student student =  _db.Students.FirstOrDefault(x => x.Email.ToUpper().Equals(email.ToUpper()));
+            var studentDetaills = new ApiViewModel.StudentVm();
+            if (student != null)
+            {
+                var studentEmail = new ConvertEmail1();
+                var studentId = studentEmail.ConvertEmailToId(email);
+                var model = await _db.Students.Where(x => x.StudentId.Equals(studentId)).ToListAsync();
+                studentDetaills = model.Select(x => new ApiViewModel.StudentVm
+                {
+                    AccountType = x.AccountType,
+                    Title = x.Title,
+                    Name = x.FullName,
+                    Discpline = x.Discpline,
+                    Institution = x.Institution,
+                    MatricNo = x.MatricNo,
+                    Email = x.Email,
+                    Gender = x.Gender,
+                    PhoneNumber = x.PhoneNumber,
+                    Picture = Constant.FilePath + x.FileLocation
+                }).FirstOrDefault();
 
-            //var studentCourses = _db.StudentAssignedCourses.Include(x => x.Courses).Where(x => x.Student.Email.Equals(id))
-            //                                                                     .Select(x =>new {
-            //                                                                        x.CourseId,
-            //                                                                        x.Courses.CourseCode,
-            //                                                                        x.Courses.CourseName,
-            //                                                                         x.Courses.CourseDescription,
-            //                                                                         x.Courses.ExpectedTime,
-            //                                                                         x.Courses.CourseCategory.CategoryName,
-            //                                                                         x.Courses.CourseCategoryId,
-            //                                                                         x.Courses.FileLocation
 
 
-            //                                                                     }).ToList();
-            ////var studentCourses = db.StudentAssignedCourses.Where(x => x.StudentId.Equals(student.StudentId))
-            ////                                              .Select(s => s.Courses);
-            ////if (student == null)
-            ////{
-            ////    return NotFound();
-            ////}
+              return  Ok(studentDetaills);
+            }
+          
+            //var studentCourses = db.StudentAssignedCourses.Where(x => x.StudentId.Equals(student.StudentId))
+            //                                              .Select(s => s.Courses);
+            //if (student == null)
+            //{
+            //    return NotFound();
+            //}
 
-            return Ok(/*studentCourses*/);
+            return Ok(studentDetaills);
+        }
+
+
+        /// <summary>
+        /// method to check the student account type and display mycourse
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="courseCategory"></param>
+        /// <returns>enrolled courses</returns>
+        [HttpGet]
+        [System.Web.Http.Route("MyCourses")]
+        [ResponseType(typeof(CourseCategory))]
+        public async Task<IHttpActionResult> MyCourses(string email)
+        {
+            var student = new ConvertEmail();
+            var studentEmail = student.ConvertEmailToId(email);
+            var studentId = studentEmail;
+            var studentType = _db.Students.Where(x => x.Email.Equals(email)).Select(x => x.AccountType).FirstOrDefault();
+
+
+            var myCourses = new List<MyCourseCategoryVm>();
+            var category = _db.StudentPayments.DistinctBy(x => x.CourseCategoryId).Where(x => x.StudentId.Equals(studentId) && x.IsPayed.Equals(true))
+                            .Select(x => x.CourseCategoryId).ToList();
+
+            if (category != null)
+            {
+                foreach (var categoryId in category)
+                {
+                    var couseCategory = await _db.AssignCourseCategories
+                                        .Where(x => x.CourseCategoryId.Equals(categoryId))
+                         .FirstOrDefaultAsync();
+                    var vm = new MyCourseCategoryVm
+                    {
+                        CourseCategoryId = couseCategory.CourseCategoryId,
+                        CategoryName = couseCategory.CourseCategory.CategoryName,
+                        StudentType = couseCategory.CourseCategory.StudentType,
+                        ImageLocation = couseCategory.CourseCategory.ImageLocation,
+                        CategoryDescription = couseCategory.CourseCategory.CategoryDescription,
+                        Amount = couseCategory.CourseCategory.Amount,
+                        Courses = _db.AssignCourseCategories.Include(x => x.Courses)
+                                        .Where(x => x.CourseCategoryId.Equals(categoryId))
+                                    .Select(x => new CoursesVm
+                                    {
+                                        CourseId = x.CourseId,
+                                        CourseName = x.Courses.CourseName,
+                                        CourseDescription = x.Courses.CourseDescription,
+                                        FileLocation = x.Courses.FileLocation,
+
+                                    }).ToList()
+
+                    };
+                    myCourses.Add(vm);
+                }
+                return Ok(myCourses);
+            }
+
+            //myCourses.StudentCourses = await _db.StudentPayments.Where(x => x.StudentId.Equals(studentId)).ToListAsync();
+            //}
+            else
+            {
+                _response.Message = "No courses to display";
+                _response.Status = false;
+                return Ok(_response);
+            }
         }
 
         /// <summary>

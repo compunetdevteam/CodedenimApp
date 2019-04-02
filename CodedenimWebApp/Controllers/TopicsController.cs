@@ -92,8 +92,6 @@ namespace CodedenimWebApp.Controllers
             
         //}
 
- 
-
         // GET: Topics/Details/5
         public async Task<ActionResult> Details(int? id)
         {

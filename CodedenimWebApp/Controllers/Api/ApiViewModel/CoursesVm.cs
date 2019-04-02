@@ -16,6 +16,7 @@ namespace CodedenimWebApp.Controllers.Api.ApiViewModel
         public int ExpectedTime { get; set; }
         public string FileLocation { get; set; }
         public int ProgressCount { get; set; }
+        public string VideoLocation { get; set; }
         public IEnumerable<ModuleVm> Modules { get; set; }
     }
 }
