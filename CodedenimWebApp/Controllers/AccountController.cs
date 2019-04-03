@@ -785,7 +785,7 @@ namespace CodedenimWebApp.Controllers
             var result = await UserManager.ConfirmEmailAsync(userId, code);
             if (result.Succeeded)
             {
-                UpdateStudentIsActive(userId);
+               // UpdateStudentIsActive(userId);
                 return View("ConfirmEmailMobile");
             }
             else
@@ -807,7 +807,7 @@ namespace CodedenimWebApp.Controllers
             var result = await UserManager.ConfirmEmailAsync(userId, code);
             if (result.Succeeded)
             {
-                UpdateStudentIsActive(userId);
+                //UpdateStudentIsActive(userId);
                 return View("ConfirmEmailMobile");
             }
             else
@@ -817,13 +817,13 @@ namespace CodedenimWebApp.Controllers
           
         }
 
-        private async void UpdateStudentIsActive(string userId)
-        {
-            var student = _db.Students.Find(userId);
-            student.Active = true;
-            _db.Entry(student).State = EntityState.Modified;
-            await _db.SaveChangesAsync();
-        }
+        //private async void UpdateStudentIsActive(string userId)
+        //{
+        //    var student = _db.Students.Find(userId);
+        //    student.Active = true;
+        //    _db.Entry(student).State = EntityState.Modified;
+        //    await _db.SaveChangesAsync();
+        //}
 
         //
         // GET: /Account/ForgotPassword
