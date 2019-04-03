@@ -43,7 +43,7 @@ namespace CodedenimWebApp.Controllers.Api
                                                 x.CourseCategoryId,
                                                 x.CategoryDescription,
                                                 x.StudentType,
-                                                x.ImageLocation})
+                                                 x.ImageLocation})
                                             .ToListAsync();
             return Ok(assignedCourses);
             //return _db.CourseCategories.Select(x => new
@@ -172,78 +172,74 @@ namespace CodedenimWebApp.Controllers.Api
             return Json("SomeThing went wrong with the request");
         }
 
-      
 
-
-
-
-        // PUT: api/CourseCategories/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutCourseCategory(int id, CourseCategory courseCategory)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// PUT: api/CourseCategories/5
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutCourseCategory(int id, CourseCategory courseCategory)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
   
 
-            if (id != courseCategory.CourseCategoryId)
-            {
-                return BadRequest();
-            }
+        //    if (id != courseCategory.CourseCategoryId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _db.Entry(courseCategory).State = EntityState.Modified;
+        //    _db.Entry(courseCategory).State = EntityState.Modified;
 
-            try
-            {
-                await _db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CourseCategoryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _db.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!CourseCategoryExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
-        // POST: api/CourseCategories
-        [ResponseType(typeof(CourseCategory))]
-        public async Task<IHttpActionResult> PostCourseCategory(CourseCategory courseCategory)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// POST: api/CourseCategories
+        //[ResponseType(typeof(CourseCategory))]
+        //public async Task<IHttpActionResult> PostCourseCategory(CourseCategory courseCategory)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            _db.CourseCategories.Add(courseCategory);
-            await _db.SaveChangesAsync();
+        //    _db.CourseCategories.Add(courseCategory);
+        //    await _db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = courseCategory.CourseCategoryId }, courseCategory);
-        }
+        //    return CreatedAtRoute("DefaultApi", new { id = courseCategory.CourseCategoryId }, courseCategory);
+        //}
 
-        // DELETE: api/CourseCategories/5
-        [ResponseType(typeof(CourseCategory))]
-        public async Task<IHttpActionResult> DeleteCourseCategory(int id)
-        {
-            CourseCategory courseCategory = await _db.CourseCategories.FindAsync(id);
-            if (courseCategory == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/CourseCategories/5
+        //[ResponseType(typeof(CourseCategory))]
+        //public async Task<IHttpActionResult> DeleteCourseCategory(int id)
+        //{
+        //    CourseCategory courseCategory = await _db.CourseCategories.FindAsync(id);
+        //    if (courseCategory == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _db.CourseCategories.Remove(courseCategory);
-            await _db.SaveChangesAsync();
+        //    _db.CourseCategories.Remove(courseCategory);
+        //    await _db.SaveChangesAsync();
 
-            return Ok(courseCategory);
-        }
+        //    return Ok(courseCategory);
+        //}
 
         protected override void Dispose(bool disposing)
         {

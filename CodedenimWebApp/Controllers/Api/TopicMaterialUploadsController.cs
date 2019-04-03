@@ -29,7 +29,7 @@ namespace CodedenimWebApp.Controllers.Api
             return _db.TopicMaterialUploads.Select(x => new TopicMaterialVm
                                             {
                                                 Description = x.Description,
-                                                FileLocation = x.FileLocation,
+                                                FileLocation = Constant.FilePath + x.FileLocation,
                                                 Name = x.Name,
                                                 TopicId = x.TopicId,                                                
                                                 TopicMaterialId = x.TopicMaterialUploadId,
@@ -52,7 +52,7 @@ namespace CodedenimWebApp.Controllers.Api
                                                                         TopicMaterialId = x.TopicMaterialUploadId,
                                                                         TopicId = x.TopicId,
                                                                         Description = x.Description,
-                                                                        FileLocation =  x.FileLocation,
+                                                                        FileLocation = Constant.FilePath + x.FileLocation,
                                                                         FileType = x.FileType.ToString(),
                                                                        // x.Course.StudentQuestions,
                                                                        TextContent = x.TextContent
@@ -65,70 +65,70 @@ namespace CodedenimWebApp.Controllers.Api
             return Ok(topicMaterialUpload);
         }
 
-        // PUT: api/TopicMaterialUploads/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutTopicMaterialUpload(int id, TopicMaterialUpload topicMaterialUpload)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            if (id != topicMaterialUpload.TopicMaterialUploadId)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/TopicMaterialUploads/5
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutTopicMaterialUpload(int id, TopicMaterialUpload topicMaterialUpload)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+        //    if (id != topicMaterialUpload.TopicMaterialUploadId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _db.Entry(topicMaterialUpload).State = EntityState.Modified;
+        //    _db.Entry(topicMaterialUpload).State = EntityState.Modified;
 
-            try
-            {
-                await _db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TopicMaterialUploadExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _db.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!TopicMaterialUploadExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
-        // POST: api/TopicMaterialUploads
-        [ResponseType(typeof(TopicMaterialUpload))]
-        public async Task<IHttpActionResult> PostTopicMaterialUpload(TopicMaterialUpload topicMaterialUpload)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// POST: api/TopicMaterialUploads
+        //[ResponseType(typeof(TopicMaterialUpload))]
+        //public async Task<IHttpActionResult> PostTopicMaterialUpload(TopicMaterialUpload topicMaterialUpload)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            _db.TopicMaterialUploads.Add(topicMaterialUpload);
-            await _db.SaveChangesAsync();
+        //    _db.TopicMaterialUploads.Add(topicMaterialUpload);
+        //    await _db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = topicMaterialUpload.TopicMaterialUploadId }, topicMaterialUpload);
-        }
+        //    return CreatedAtRoute("DefaultApi", new { id = topicMaterialUpload.TopicMaterialUploadId }, topicMaterialUpload);
+        //}
 
-        // DELETE: api/TopicMaterialUploads/5
-        [ResponseType(typeof(TopicMaterialUpload))]
-        public async Task<IHttpActionResult> DeleteTopicMaterialUpload(int id)
-        {
-            TopicMaterialUpload topicMaterialUpload = await _db.TopicMaterialUploads.FindAsync(id);
-            if (topicMaterialUpload == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/TopicMaterialUploads/5
+        //[ResponseType(typeof(TopicMaterialUpload))]
+        //public async Task<IHttpActionResult> DeleteTopicMaterialUpload(int id)
+        //{
+        //    TopicMaterialUpload topicMaterialUpload = await _db.TopicMaterialUploads.FindAsync(id);
+        //    if (topicMaterialUpload == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _db.TopicMaterialUploads.Remove(topicMaterialUpload);
-            await _db.SaveChangesAsync();
+        //    _db.TopicMaterialUploads.Remove(topicMaterialUpload);
+        //    await _db.SaveChangesAsync();
 
-            return Ok(topicMaterialUpload);
-        }
+        //    return Ok(topicMaterialUpload);
+        //}
 
         protected override void Dispose(bool disposing)
         {

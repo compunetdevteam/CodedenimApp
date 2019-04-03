@@ -92,71 +92,71 @@ namespace CodedenimWebApp.Controllers.Api
 
 
 
-        // PUT: api/Modules/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutModule(int id, Module module)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// PUT: api/Modules/5
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutModule(int id, Module module)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            if (id != module.ModuleId)
-            {
-                return BadRequest();
-            }
+        //    if (id != module.ModuleId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _db.Entry(module).State = EntityState.Modified;
+        //    _db.Entry(module).State = EntityState.Modified;
 
-            try
-            {
-                await _db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ModuleExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _db.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!ModuleExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
-        // POST: api/Modules
-        [ResponseType(typeof(Module))]
-        public async Task<IHttpActionResult> PostModule(Module module)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// POST: api/Modules
+        //[ResponseType(typeof(Module))]
+        //public async Task<IHttpActionResult> PostModule(Module module)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            _db.Modules.Add(module);
-            await _db.SaveChangesAsync();
+        //    _db.Modules.Add(module);
+        //    await _db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = module.ModuleId }, module);
-        }
+        //    return CreatedAtRoute("DefaultApi", new { id = module.ModuleId }, module);
+        //}
 
-        // DELETE: api/Modules/5
-        [ResponseType(typeof(Module))]
-        public async Task<IHttpActionResult> DeleteModule(int id)
-        {
-            Module module = await _db.Modules.FindAsync(id);
-            if (module == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Modules/5
+        //[ResponseType(typeof(Module))]
+        //public async Task<IHttpActionResult> DeleteModule(int id)
+        //{
+        //    Module module = await _db.Modules.FindAsync(id);
+        //    if (module == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _db.Modules.Remove(module);
-            await _db.SaveChangesAsync();
+        //    _db.Modules.Remove(module);
+        //    await _db.SaveChangesAsync();
 
-            return Ok(module);
-        }
+        //    return Ok(module);
+        //}
 
         protected override void Dispose(bool disposing)
         {

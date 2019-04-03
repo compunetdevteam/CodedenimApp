@@ -182,74 +182,74 @@ namespace CodedenimWebApp.Controllers.Api
             return Ok(enrollForCourse);
         }
 
-        // PUT: api/EnrollForCourses/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutEnrollForCourse(int id, EnrollForCourse enrollForCourse)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// PUT: api/EnrollForCourses/5
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutEnrollForCourse(int id, EnrollForCourse enrollForCourse)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            if (id != enrollForCourse.EnrollForCourseId)
-            {
-                return BadRequest();
-            }
+        //    if (id != enrollForCourse.EnrollForCourseId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            db.Entry(enrollForCourse).State = EntityState.Modified;
+        //    db.Entry(enrollForCourse).State = EntityState.Modified;
 
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EnrollForCourseExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await db.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!EnrollForCourseExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
-        [HttpPost]
-        // POST: api/EnrollForCourses
-        [ResponseType(typeof(EnrollForCourse))]
-        public async Task<IHttpActionResult> PostEnrollForCourse(EnrollForCourse enrollForCourse)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var studentEmail = new ConvertEmail();
-            var studentId = studentEmail.ConvertEmailToId(enrollForCourse.StudentId);
-            enrollForCourse.StudentId = studentId;
-            db.EnrollForCourses.Add(enrollForCourse);
-            await db.SaveChangesAsync();
+        //[HttpPost]
+        //// POST: api/EnrollForCourses
+        //[ResponseType(typeof(EnrollForCourse))]
+        //public async Task<IHttpActionResult> PostEnrollForCourse(EnrollForCourse enrollForCourse)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+        //    var studentEmail = new ConvertEmail();
+        //    var studentId = studentEmail.ConvertEmailToId(enrollForCourse.StudentId);
+        //    enrollForCourse.StudentId = studentId;
+        //    db.EnrollForCourses.Add(enrollForCourse);
+        //    await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = enrollForCourse.EnrollForCourseId }, enrollForCourse);
-        }
+        //    return CreatedAtRoute("DefaultApi", new { id = enrollForCourse.EnrollForCourseId }, enrollForCourse);
+        //}
 
-        // DELETE: api/EnrollForCourses/5
-        [ResponseType(typeof(EnrollForCourse))]
-        public async Task<IHttpActionResult> DeleteEnrollForCourse(int id)
-        {
-            EnrollForCourse enrollForCourse = await db.EnrollForCourses.FindAsync(id);
-            if (enrollForCourse == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/EnrollForCourses/5
+        //[ResponseType(typeof(EnrollForCourse))]
+        //public async Task<IHttpActionResult> DeleteEnrollForCourse(int id)
+        //{
+        //    EnrollForCourse enrollForCourse = await db.EnrollForCourses.FindAsync(id);
+        //    if (enrollForCourse == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            db.EnrollForCourses.Remove(enrollForCourse);
-            await db.SaveChangesAsync();
+        //    db.EnrollForCourses.Remove(enrollForCourse);
+        //    await db.SaveChangesAsync();
 
-            return Ok(enrollForCourse);
-        }
+        //    return Ok(enrollForCourse);
+        //}
 
         protected override void Dispose(bool disposing)
         {

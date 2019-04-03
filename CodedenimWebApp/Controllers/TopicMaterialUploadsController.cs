@@ -1,4 +1,5 @@
-﻿using CodedenimWebApp.Models;
+﻿using CodedenimWebApp.Constants;
+using CodedenimWebApp.Models;
 using CodedenimWebApp.Service;
 using CodedenimWebApp.ViewModels;
 using CodeninModel;
@@ -89,7 +90,7 @@ namespace CodedenimWebApp.Controllers
                 {
                     Name = x.Course.TopicName,
                     Description = x.Description,
-                    FileLocation = x.FileLocation,
+                    FileLocation =  x.FileLocation,
                     TopicMaterialName = x.Name,
                     UploadId = x.TopicMaterialUploadId,
                     TopicId = x.TopicId,

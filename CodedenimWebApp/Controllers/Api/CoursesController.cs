@@ -44,7 +44,7 @@ namespace CodedenimWebApp.Controllers.Api
                     CategoryName = x.CourseCategory.CategoryName,
                     CourseName = x.Courses.CourseName,
                     ExpectedTime = x.Courses.ExpectedTime,
-                    FileLocation =  x.Courses.FileLocation,
+                    FileLocation = Constant.FilePath + x.Courses.FileLocation,
                     VideoLocation =  x.Courses.VideoLocation,
                     Modules = x.Courses.Modules.Select(c => new ModuleVm
                         {
@@ -88,7 +88,7 @@ namespace CodedenimWebApp.Controllers.Api
                                             CourseId = x.CourseId,
                                             CourseCode = x.CourseCode,
                                             CourseDescription = x.CourseDescription,
-                                            FileLocation =  x.FileLocation,
+                                            FileLocation = Constant.FilePath + x.FileLocation,
                                             CategoryName = x.CourseName,
                                             VideoLocation =  x.VideoLocation,
                                             Modules = x.Modules.Select(c => new ModuleVm
@@ -125,71 +125,71 @@ namespace CodedenimWebApp.Controllers.Api
             return Ok(course);
         }
 
-        // PUT: api/Courses/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutCourse(int id, Course course)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// PUT: api/Courses/5
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutCourse(int id, Course course)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            if (id != course.CourseId)
-            {
-                return BadRequest();
-            }
+        //    if (id != course.CourseId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _db.Entry(course).State = EntityState.Modified;
+        //    _db.Entry(course).State = EntityState.Modified;
 
-            try
-            {
-                await _db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CourseExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _db.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!CourseExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
-        // POST: api/Courses
-        [ResponseType(typeof(Course))]
-        public async Task<IHttpActionResult> PostCourse(Course course)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// POST: api/Courses
+        //[ResponseType(typeof(Course))]
+        //public async Task<IHttpActionResult> PostCourse(Course course)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            _db.Courses.Add(course);
-            await _db.SaveChangesAsync();
+        //    _db.Courses.Add(course);
+        //    await _db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = course.CourseId }, course);
-        }
+        //    return CreatedAtRoute("DefaultApi", new { id = course.CourseId }, course);
+        //}
 
-        // DELETE: api/Courses/5
-        [ResponseType(typeof(Course))]
-        public async Task<IHttpActionResult> DeleteCourse(int id)
-        {
-            Course course = await _db.Courses.FindAsync(id);
-            if (course == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Courses/5
+        //[ResponseType(typeof(Course))]
+        //public async Task<IHttpActionResult> DeleteCourse(int id)
+        //{
+        //    Course course = await _db.Courses.FindAsync(id);
+        //    if (course == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _db.Courses.Remove(course);
-            await _db.SaveChangesAsync();
+        //    _db.Courses.Remove(course);
+        //    await _db.SaveChangesAsync();
 
-            return Ok(course);
-        }
+        //    return Ok(course);
+        //}
 
         protected override void Dispose(bool disposing)
         {

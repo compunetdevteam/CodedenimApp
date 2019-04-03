@@ -35,7 +35,7 @@
     <div class="width-350 width-300-md width-100pc-xs paragraph-inline">
         <div class="embed-responsive embed-responsive-16by9">
             
-            <img  class="embed-responsive-item" src="~/MaterialUpload/@Model.CoursesAD.FileLocation">
+            <img  class="embed-responsive-item" src="https://codedenimstorage.blob.core.windows.net/codedenimcontainer/@Model.CoursesAD.FileLocation">
         </div>
     </div>
     <p>
@@ -78,7 +78,7 @@
                 </p> 
             </div>
             <ul class="list-group relative paper-shadow" data-hover-z="0.5" data-animated>
-                @foreach(var course in Model.Modules)
+                @foreach(var course in Model.Modules.OrderBy(x => x.ModuleName))
                 {
                     <li class="list-group-item">
                         <a href="@Url.Action("Details","Modules", new{id = course.ModuleId})" class="clearfix">

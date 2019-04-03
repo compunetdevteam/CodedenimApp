@@ -8,8 +8,10 @@ using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using OfficeOpenXml;
+using PayStack.Net;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -264,8 +266,8 @@ namespace CodedenimWebApp.Controllers
         //        {
         //            //Reference = "SwifKampus",
         //            AmountInKobo = convertedamount,
-        //            //CallbackUrl = "http://localhost:64301/CourseCategories/ConfrimPayment",
-        //            CallbackUrl = "http://codedenim.azurewebsites.net/CourseCategories/ConfrimPayment",
+        //            CallbackUrl = "http://localhost:64301/CourseCategories/ConfrimPayment",
+        //           // CallbackUrl = "http://codedenim.azurewebsites.net/CourseCategories/ConfrimPayment",
         //            Email = student.Email,
         //            Bearer = "Application fee",
 

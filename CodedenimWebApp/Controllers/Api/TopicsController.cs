@@ -78,71 +78,71 @@ namespace CodedenimWebApp.Controllers.Api
             return Ok(topic);
         }
 
-        // PUT: api/Topics/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutTopic(int id, Topic topic)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// PUT: api/Topics/5
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutTopic(int id, Topic topic)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            if (id != topic.TopicId)
-            {
-                return BadRequest();
-            }
+        //    if (id != topic.TopicId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _db.Entry(topic).State = EntityState.Modified;
+        //    _db.Entry(topic).State = EntityState.Modified;
 
-            try
-            {
-                await _db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TopicExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _db.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!TopicExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
-        // POST: api/Topics
-        [ResponseType(typeof(Topic))]
-        public async Task<IHttpActionResult> PostTopic(Topic topic)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// POST: api/Topics
+        //[ResponseType(typeof(Topic))]
+        //public async Task<IHttpActionResult> PostTopic(Topic topic)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            _db.Topics.Add(topic);
-            await _db.SaveChangesAsync();
+        //    _db.Topics.Add(topic);
+        //    await _db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = topic.TopicId }, topic);
-        }
+        //    return CreatedAtRoute("DefaultApi", new { id = topic.TopicId }, topic);
+        //}
 
-        // DELETE: api/Topics/5
-        [ResponseType(typeof(Topic))]
-        public async Task<IHttpActionResult> DeleteTopic(int id)
-        {
-            Topic topic = await _db.Topics.FindAsync(id);
-            if (topic == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Topics/5
+        //[ResponseType(typeof(Topic))]
+        //public async Task<IHttpActionResult> DeleteTopic(int id)
+        //{
+        //    Topic topic = await _db.Topics.FindAsync(id);
+        //    if (topic == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _db.Topics.Remove(topic);
-            await _db.SaveChangesAsync();
+        //    _db.Topics.Remove(topic);
+        //    await _db.SaveChangesAsync();
 
-            return Ok(topic);
-        }
+        //    return Ok(topic);
+        //}
 
         protected override void Dispose(bool disposing)
         {

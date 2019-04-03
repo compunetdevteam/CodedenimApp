@@ -231,86 +231,86 @@ namespace CodedenimWebApp.Controllers.Api
             return Ok(location);
         }
 
-        // PUT: api/Students/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutStudent(string id, Student student)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// PUT: api/Students/5
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutStudent(string id, Student student)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            if (id != student.StudentId)
-            {
-                return BadRequest();
-            }
+        //    if (id != student.StudentId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _db.Entry(student).State = EntityState.Modified;
+        //    _db.Entry(student).State = EntityState.Modified;
 
-            try
-            {
-                await _db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StudentExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _db.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!StudentExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
-        // POST: api/Students
-        [ResponseType(typeof(Student))]
-        public async Task<IHttpActionResult> PostStudent(Student student)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// POST: api/Students
+        //[ResponseType(typeof(Student))]
+        //public async Task<IHttpActionResult> PostStudent(Student student)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            _db.Students.Add(student);
+        //    _db.Students.Add(student);
 
-            try
-            {
-                await _db.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (StudentExists(student.StudentId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _db.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateException)
+        //    {
+        //        if (StudentExists(student.StudentId))
+        //        {
+        //            return Conflict();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return CreatedAtRoute("DefaultApi", new { id = student.StudentId }, student);
-        }
+        //    return CreatedAtRoute("DefaultApi", new { id = student.StudentId }, student);
+        //}
 
-        // DELETE: api/Students/5
-        [ResponseType(typeof(Student))]
-        public async Task<IHttpActionResult> DeleteStudent(string id)
-        {
-            Student student = await _db.Students.FindAsync(id);
-            if (student == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Students/5
+        //[ResponseType(typeof(Student))]
+        //public async Task<IHttpActionResult> DeleteStudent(string id)
+        //{
+        //    Student student = await _db.Students.FindAsync(id);
+        //    if (student == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _db.Students.Remove(student);
-            await _db.SaveChangesAsync();
+        //    _db.Students.Remove(student);
+        //    await _db.SaveChangesAsync();
 
-            return Ok(student);
-        }
+        //    return Ok(student);
+        //}
 
         protected override void Dispose(bool disposing)
         {

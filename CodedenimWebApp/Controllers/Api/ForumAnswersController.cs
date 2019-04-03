@@ -59,73 +59,73 @@ namespace CodedenimWebApp.Controllers.Api
             return Ok(forumAnswer);
         }
 
-        // PUT: api/ForumAnswers/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutForumAnswer(int id, ForumAnswer forumAnswer)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// PUT: api/ForumAnswers/5
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutForumAnswer(int id, ForumAnswer forumAnswer)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            if (id != forumAnswer.ForumAnswerId)
-            {
-                return BadRequest();
-            }
+        //    if (id != forumAnswer.ForumAnswerId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            db.Entry(forumAnswer).State = EntityState.Modified;
+        //    db.Entry(forumAnswer).State = EntityState.Modified;
 
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ForumAnswerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await db.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!ForumAnswerExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
-        // POST: api/ForumAnswers
-        [ResponseType(typeof(ForumAnswer))]
-        public async Task<IHttpActionResult> PostForumAnswer(string email,ForumAnswer forumAnswer)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            ConvertEmail convertEmail = new ConvertEmail();
-            forumAnswer.UserId = convertEmail.ConvertEmailToId(email);
-            forumAnswer.ReplyDate = DateTime.Now;
-            db.ForumAnswers.Add(forumAnswer);
-            await db.SaveChangesAsync();
+        //// POST: api/ForumAnswers
+        //[ResponseType(typeof(ForumAnswer))]
+        //public async Task<IHttpActionResult> PostForumAnswer(string email,ForumAnswer forumAnswer)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+        //    ConvertEmail convertEmail = new ConvertEmail();
+        //    forumAnswer.UserId = convertEmail.ConvertEmailToId(email);
+        //    forumAnswer.ReplyDate = DateTime.Now;
+        //    db.ForumAnswers.Add(forumAnswer);
+        //    await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = forumAnswer.ForumAnswerId }, forumAnswer);
-        }
+        //    return CreatedAtRoute("DefaultApi", new { id = forumAnswer.ForumAnswerId }, forumAnswer);
+        //}
 
-        // DELETE: api/ForumAnswers/5
-        [ResponseType(typeof(ForumAnswer))]
-        public async Task<IHttpActionResult> DeleteForumAnswer(int id)
-        {
-            ForumAnswer forumAnswer = await db.ForumAnswers.FindAsync(id);
-            if (forumAnswer == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/ForumAnswers/5
+        //[ResponseType(typeof(ForumAnswer))]
+        //public async Task<IHttpActionResult> DeleteForumAnswer(int id)
+        //{
+        //    ForumAnswer forumAnswer = await db.ForumAnswers.FindAsync(id);
+        //    if (forumAnswer == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            db.ForumAnswers.Remove(forumAnswer);
-            await db.SaveChangesAsync();
+        //    db.ForumAnswers.Remove(forumAnswer);
+        //    await db.SaveChangesAsync();
 
-            return Ok(forumAnswer);
-        }
+        //    return Ok(forumAnswer);
+        //}
 
         protected override void Dispose(bool disposing)
         {
