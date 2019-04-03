@@ -266,8 +266,8 @@ namespace CodedenimWebApp.Controllers
         //        {
         //            //Reference = "SwifKampus",
         //            AmountInKobo = convertedamount,
-        //            CallbackUrl = "http://localhost:64301/CourseCategories/ConfrimPayment",
-        //           // CallbackUrl = "http://codedenim.azurewebsites.net/CourseCategories/ConfrimPayment",
+        //            CallbackUrl = "http://localhost:64301/CourseCategories/ConfirmPaystackPayment",
+        //            // CallbackUrl = "http://codedenim.azurewebsites.net/CourseCategories/ConfrimPayment",
         //            Email = student.Email,
         //            Bearer = "Application fee",
 
@@ -292,6 +292,11 @@ namespace CodedenimWebApp.Controllers
         //    return RedirectToAction("Login", "Account");
 
         //}
+
+        public async Task<ActionResult> ConfirmPaystackPayment(object values)
+        {
+            return RedirectToAction("ConfrimRrrPayment", "RemitaServices");
+        }
 
         //public async Task<ActionResult> ConfrimPayment(string reference)
         //{
