@@ -2040,6 +2040,7 @@
     <Content Include="Views\Account\ResetPasswordMobile.cshtml" />
     <Content Include="Views\Account\ConfirmEmailMobile.cshtml" />
     <Content Include="Views\TopicMaterialUploads\SelectContentToDelete.cshtml" />
+    <Content Include="Views\CourseCategories\ConfirmPaystackPayment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,244 @@
+﻿
+@model CodedenimWebApp.Service.RemitaResponse
+
+@{
+    ViewBag.Title = "Confirm Paystack Payment";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+
+}
+<link href="~/Content/Assets1/invoice3/custom.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12 brandSection">
+        <div class="row">
+            <div class="col-md-12 col-sm-12" style="color:black;">
+                <div class="col-md-3 col-sm-3 headerLeft">
+                    <img src="~/Content/Assets1/invoice3/logo.png" style="width: 50%;">
+                </div>
+                <div class="col-md-9 col-sm-9 headerRight">
+                    <p>www.codedenim.com</p>
+                    <p>info@codedenim.com</p>
+                    <p>(000)555 555 55</p>
+                </div>
+            </div>
+            @Model.
+            <div class="col-md-12 col-sm-12 content">
+                
+                <p>@Model.PaymentDate</p>
+                @*<span>Payment due by 25 November 2012</span>*@
+            </div>
+            <div class="col-md-12 col-sm-12 panelPart">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 panelPart">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                From
+                            </div>
+                            <div class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                        <img src="~/Content/Assets1/invoice3/logo.png" style="width: 50%;">
+                                    </div>
+                                    <div class="col-md-8 col-sm-6 col-xs-6">
+                                        <p>Codedenim</p>
+                                        <p>Remita Payment</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 panelPart">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                To
+                            </div>
+                            <div class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                        <img src="~/Content/Assets1/invoice3/avatar.png" style="width: 50%;">
+                                    </div>
+                                    <div class="col-md-8 col-sm-6 col-xs-6">
+                                        <p>Payer Name</p>
+                                        <p>Remita Payment</p>
+                                        <p>Status: @Model.Status</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 tableSection">
+                <h1>Items</h1>
+                <table class="table text-center">
+                    <thead>
+                        <tr class="tableHead">
+                            <th>id</th>
+                            <th>Description</th>
+                            <th style="width:100px;">Price</th>
+                            <th style="width:100px;text-align:center;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>@Model.CourseCategory</td>
+                            <td>@Model.Price</td>
+                            @*@if(Model.CourseCategory.Count() > 0)
+                                {
+                                    <td>@Model.CourseCategory.Count()</td>
+                                }*@
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            @*<div class="col-md-12 col-sm-12 lastSectionleft ">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 Sectionleft">
+                            <p><small>Comment</small></p>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="panel panel-default">
+                                <div class="panel-body lastPanel">
+                                    Amount Due
+                                </div>
+                                <div class="panel-footer lastFooter">
+                                    <div class="row">
+                                        <div class="col-md-5 col-sm-6 col-xs-6 panelLastLeft">
+                                            <p>Subtotal</p>
+                                            <p>Tax</p>
+                                            <p>Shipping</p>
+                                            <p>Total</p>
+                                        </div>
+                                        <div class="col-md-7 col-sm-6 col-xs-6 panelLastRight">
+                                            <p>$90</p>
+                                            <p>$90</p>
+                                            <p>$90</p>
+                                            <p><strong>$270</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+
+@*<div class="card">
+        <div class="card-head style-primary">
+            <header>
+                <h3>
+                    Payment Information
+                </h3>
+            </header>
+
+        </div>
+        <div class="card-body">
+
+
+
+             </div>
+    </div>
+
+    <div class="invoice-box">
+        <table cellpadding="0" cellspacing="0">
+            <tr class="top">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td class="title">
+                                <img src="~/Content/img/CodeDemin.png" style="width:20%; max-width:200px;" />
+                             </td>
+
+                            <td>
+
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+
+        </table>
+    </div>*@
+
+
+
+<div class="text-center">
+    <a onclick="print()" class="btn btn-primary">Print</a>
+</div>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.5.1/jQuery.print.min.js"></script>
+
+<script type='text/javascript'>
+
+
+    $(function print() {
+
+
+
+        $.print("#printable");
+        $("#printable").print({
+
+
+
+
+
+            globalStyles: false,
+
+            // Add link with attrbute media=print
+
+            mediaPrint: false,
+
+            //Custom stylesheet
+            stylesheet: "http://fonts.googleapis.com/css?family=Inconsolata",
+
+            //Print in a hidden iframe
+
+            iframe: false,
+
+
+            // Don't print this
+
+            noPrintSelector: ".invoice-box",
+
+            append: "Free jQuery Plugins<br/>",
+
+
+            prepend: "<br/>jQueryScript.net",
+
+
+
+            manuallyCopyFormValues: true,
+
+
+
+            deferred: $.Deferred(),
+
+
+
+            timeout: 250,
+
+            title: null,
+
+            doctype: '<!doctype html>'
+
+        });
+        $.print("#printable");
+
+
+
+    });
+
+
+
+
+</script>
