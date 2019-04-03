@@ -61,7 +61,9 @@ namespace CodedenimWebApp.Controllers.Api
                     Email = x.Email,
                     Gender = x.Gender,
                     PhoneNumber = x.PhoneNumber,
-                    Picture = Constant.FilePath + x.FileLocation
+                    Picture = Constant.FilePath + x.FileLocation,
+                    DateOfBirth = x.DateOfBirth,
+                    Nationality = x.Nationality 
                 }).FirstOrDefault();
 
 

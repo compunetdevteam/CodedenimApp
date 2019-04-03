@@ -22,5 +22,8 @@ namespace CodedenimWebApp.Controllers.Api.ApiViewModel
         public string Discpline { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        public string Nationality { get; set; }
+        public DateTime? DateOfBirth { get; set; }   
+
     }
 }

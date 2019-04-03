@@ -99,7 +99,7 @@
 
         <div class="item col-xs-12 col-sm-6 col-lg-4">
             <div class="panel panel-default paper-shadow" data-z="0.5">
-                @if (Model.AssignCourseCategory.Any())
+@if (Model.AssignCourseCategory.Any() && Model.Payment.Any())
     {
             <div class="cover overlay cover-image-full hover">
                 @*<span class="img icon-block height-150 bg-primary"></span>
