@@ -497,9 +497,12 @@ namespace CodedenimWebApp.Controllers.Api
                     //_response.Status = false;
                     //return Ok(_response);
                 }
-                _response.Message = $"This Email {userExist.Email} has been registered";
-                _response.Status = false;
-                return Ok(_response);
+                else
+                {
+                    _response.Message = $"This Email {userExist.Email} has been registered";
+                    _response.Status = false;
+                    return Ok(_response);
+                }
             }
             catch (Exception ex)
             {
@@ -509,7 +512,7 @@ namespace CodedenimWebApp.Controllers.Api
                 return Ok(_response);
             }
 
-            //return Ok(_response);
+            return Ok(_response);
         }
 
         public string GetEmailTemplate()
