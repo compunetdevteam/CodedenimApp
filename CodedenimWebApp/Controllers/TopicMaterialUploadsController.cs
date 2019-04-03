@@ -387,6 +387,44 @@ namespace CodedenimWebApp.Controllers
         }
 
         // GET: TopicMaterialUploads/Delete/5
+        public async Task<ActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TopicMaterialUpload topicMaterialUpload = await db.TopicMaterialUploads
+                                                              .Where(x => x.TopicMaterialUploadId
+                                                              .Equals((int)id))
+                                                              .FirstOrDefaultAsync();
+            if (topicMaterialUpload == null)
+            {
+                return HttpNotFound();
+            }
+            return View(topicMaterialUpload);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            TopicMaterialUpload topicMaterialUpload = await db.TopicMaterialUploads
+                                                              .Where(x => x.TopicMaterialUploadId
+                                                              .Equals((int)id))
+                                                              .FirstOrDefaultAsync();
+            var topticId = topicMaterialUpload.TopicId;
+            //deleting a file from the folder on ther server
+            // deleteFile.Delete(topicMaterialUpload.FileLocation);
+
+            db.TopicMaterialUploads.Remove(topicMaterialUpload);
+
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+
+        // GET: TopicMaterialUploads/Delete/5
         public async Task<ActionResult> SelectContentToDelete(int? id)
         {
             if (id == null)

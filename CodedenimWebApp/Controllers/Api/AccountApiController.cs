@@ -399,9 +399,12 @@ namespace CodedenimWebApp.Controllers.Api
                         //return GetErrorResult(result);
                         if (Constant.Corper == model.StudentType.ToUpper())
                         {
-
+                            student.EnrollmentDate = DateTime.Now;
+                            student.Title = model.Title.ToString();
                             student.StudentId = user.Id;
                             student.CallUpNo = model.CallUpNumber;
+                            student.StateOfService = model.NyscState;
+                            student.MatricNo = model.MatricNumber;
                             student.FirstName = model.FirstName;
                             student.LastName = model.LastName;
                             student.DateOfBirth = model.DateOfBirth;
@@ -431,6 +434,7 @@ namespace CodedenimWebApp.Controllers.Api
                             student.Institution = model.Institution;
                             student.Discpline = model.Discpline;
                             student.Email = model.Email;
+                            student.EnrollmentDate = DateTime.Now;
                             await this.UserManager.AddToRoleAsync(user.Id, RoleName.UnderGraduate);
                             _db.Students.Add(student);
                         }
@@ -452,6 +456,7 @@ namespace CodedenimWebApp.Controllers.Api
                             student.AccountType = "RegularStudent";
                             student.PhoneNumber = model.MobileNumber;
                             student.Email = model.Email;
+                            student.EnrollmentDate = DateTime.Now;
                             await this.UserManager.AddToRoleAsync(user.Id, RoleName.RegularStudent);
                             _db.Students.Add(student);
                         }

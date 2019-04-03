@@ -21,6 +21,7 @@ namespace CodedenimWebApp.Controllers.Api.ApiViewModel
         public string CallUpNumber { get; set; }
         public string Institution { get; set; }
         public string Discpline { get; set; }
+        public string MatricNumber { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
     }

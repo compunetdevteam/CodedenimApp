@@ -783,7 +783,15 @@ namespace CodedenimWebApp.Controllers
             }
 
             var result = await UserManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            if (result.Succeeded)
+            {
+                UpdateStudentIsActive(userId);
+                return View("ConfirmEmailMobile");
+            }
+            else
+            {
+                return View("Error");
+            }
         }
 
         //
@@ -797,7 +805,24 @@ namespace CodedenimWebApp.Controllers
             }
 
             var result = await UserManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmailMobile" : "Error");
+            if (result.Succeeded)
+            {
+                UpdateStudentIsActive(userId);
+                return View("ConfirmEmailMobile");
+            }
+            else
+            {
+                return View("Error");
+            }
+          
+        }
+
+        private async void UpdateStudentIsActive(string userId)
+        {
+            var student = _db.Students.Find(userId);
+            student.Active = true;
+            _db.Entry(student).State = EntityState.Modified;
+            await _db.SaveChangesAsync();
         }
 
         //

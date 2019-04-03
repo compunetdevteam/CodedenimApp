@@ -63,7 +63,8 @@ namespace CodedenimWebApp.Controllers.Api
                     PhoneNumber = x.PhoneNumber,
                     Picture = Constant.FilePath + x.FileLocation,
                     DateOfBirth = x.DateOfBirth,
-                    Nationality = x.Nationality 
+                    Nationality = x.Nationality,
+                    Active = x.Active
                 }).FirstOrDefault();
 
 
