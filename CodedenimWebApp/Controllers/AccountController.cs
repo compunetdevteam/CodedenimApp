@@ -395,7 +395,7 @@ namespace CodedenimWebApp.Controllers
         {
             string body = string.Empty;
 
-            using (StreamReader reader = new StreamReader(System.Web.Hosting.HostingEnvironment.MapPath("~/EmailTemplate.Html")))
+            using (StreamReader reader = new StreamReader(HostingEnvironment.MapPath("~/EmailTemplate.Html")))
             {
                 body = reader.ReadToEnd();
             }
