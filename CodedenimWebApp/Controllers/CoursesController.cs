@@ -380,6 +380,7 @@ namespace CodedenimWebApp.Controllers
                 mycourse.Points = course.Points;
                 mycourse.CourseDescription = course.CourseDescription;
                 mycourse.DateAdded = DateTime.Now;
+                mycourse.CourseNumber = course.CourseNumber;
 
                 //course.FileLocation = _FileName;
 
@@ -577,8 +578,7 @@ namespace CodedenimWebApp.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditPartial([Bind(Include ="CourseId,CourseCategoryId,CourseCode,CourseName,CourseDescription,ExpectedTime,DateAdded,Points")]
-            Course course)
+        public async Task<ActionResult> EditPartial(Course course)
         {
             if (ModelState.IsValid)
             {

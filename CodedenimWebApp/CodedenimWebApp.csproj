@@ -379,6 +379,10 @@
     <Compile Include="Migrations\201904021221476_newPublish.Designer.cs">
       <DependentUpon>201904021221476_newPublish.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904041820499_CourseNumberAdded.cs" />
+    <Compile Include="Migrations\201904041820499_CourseNumberAdded.Designer.cs">
+      <DependentUpon>201904041820499_CourseNumberAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Services\RemitaHash.cs" />
     <Compile Include="Service\BlobConnection.cs" />
@@ -2092,6 +2096,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904021221476_newPublish.resx">
       <DependentUpon>201904021221476_newPublish.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904041820499_CourseNumberAdded.resx">
+      <DependentUpon>201904041820499_CourseNumberAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

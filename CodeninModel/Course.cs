@@ -12,7 +12,7 @@ namespace CodeninModel
     public class Course
     {
         public int CourseId { get; set; }
-        //public int CourseCategoryId { get; set; }
+        public int CourseNumber { get; set; }
         public string CourseCode { get; set; }
         public string CourseName { get; set; }
         public string CourseDescription { get; set; }
