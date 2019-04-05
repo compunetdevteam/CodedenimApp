@@ -43,14 +43,9 @@ namespace CodedenimWebApp.Controllers.Api
         }
 
 
-        /// <summary>
-        /// these method takes the id of a course from the android app
-        /// and select the specific modules connected to that course
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+    
         // GET: api/Modules/5
-        [ResponseType(typeof(Module))]
+        [Route("GetModule")]
         public async Task<IHttpActionResult> GetModule(int id, string email)
         {
             var access = await CourseAvailability(id, email);
@@ -77,7 +72,7 @@ namespace CodedenimWebApp.Controllers.Api
             else
             {
                 module.ModuleVms = null;
-                module.Message = "Access not granted yet";
+                module.Message = "Access not granted yet because you have to finish prerequisite course";
             }          
 
             return Ok(module);
@@ -103,25 +98,29 @@ namespace CodedenimWebApp.Controllers.Api
                 }
 
                 var track = _db.StudentCourseTracks.Include(i => i.Course).AsNoTracking().FirstOrDefault(x => x.StudentId.Equals(studentId));
-
-                if (course.CourseNumber < track.Course.CourseNumber)
+                if(track != null)
                 {
-                    return true;
-                }
+                    if (course.CourseNumber < track.Course.CourseNumber)
+                    {
+                        return true;
+                    }                    
 
-                int nextCourse = track.Course.CourseNumber + 1;
-                var endDate = Convert.ToDateTime(track.EndDate);
-                int dateCompare1 = DateTime.Compare(DateTime.Now.Date, endDate);
+                    int nextCourse = track.Course.CourseNumber + 1;
+                    var endDate = Convert.ToDateTime(track.EndDate);
+                    int dateCompare1 = DateTime.Compare(DateTime.Now.Date, endDate);
 
-                if (course.CourseNumber.Equals(nextCourse) && dateCompare1 > 0)
-                {
-                    track.CourseId = course.CourseId;
-                    track.StartDate = DateTime.Now.Date;
-                    _db.Entry(track).State = EntityState.Modified;
-                    await _db.SaveChangesAsync();
-                    return true;
+                    if (course.CourseNumber.Equals(nextCourse) && dateCompare1 > 0)
+                    {
+                        track.CourseId = course.CourseId;
+                        track.StartDate = DateTime.Now.Date;
+                        _db.Entry(track).State = EntityState.Modified;
+                        await _db.SaveChangesAsync();
+                        return true;
+                    }
+                    return false;
                 }
                 return false;
+              
             }
             return false;
         }
