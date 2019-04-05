@@ -31,13 +31,14 @@ namespace CodedenimWebApp.Controllers.Api
         [HttpGet]
         public IHttpActionResult GetCourses()
         {
-           // var courseIds = _db.AssignCourseCategories.Select(x => x.CourseId).ToList();
-           
+            // var courseIds = _db.AssignCourseCategories.Select(x => x.CourseId).ToList();
+
             var getCourses = _db.AssignCourseCategories.Include(x => x.CourseCategory)
                 .Include(x => x.Courses.Modules).DistinctBy(s => s.CourseId)
                 .Select(x => new CoursesVm
                 {
                     CourseId = x.CourseId,
+                    CourseNumber = x.Courses.CourseNumber,
                     CourseCategoryId = x.CourseCategoryId,  
                     CourseCode = x.Courses.CourseCode,
                     CourseDescription = x.Courses.CourseDescription,
@@ -55,7 +56,7 @@ namespace CodedenimWebApp.Controllers.Api
                          ExpectedTime = c.ExpectedTime
                     })
                    
-                }).ToList();
+                }).OrderBy(x => x.CourseNumber).ToList();
             
             if (getCourses != null)
             {
@@ -86,6 +87,7 @@ namespace CodedenimWebApp.Controllers.Api
                                         .Select(x => new CoursesVm
                                         {
                                             CourseId = x.CourseId,
+                                            CourseNumber = x.CourseNumber,
                                             CourseCode = x.CourseCode,
                                             CourseDescription = x.CourseDescription,
                                             FileLocation = Constant.FilePath + x.FileLocation,
@@ -99,7 +101,7 @@ namespace CodedenimWebApp.Controllers.Api
                                                 CourseId = c.CourseId,
                                                 ExpectedTime = c.ExpectedTime
                                             })
-                                        }).ToListAsync();
+                                        }).OrderBy(x => x.CourseNumber).ToListAsync();
 
             //var course = await _db.Modules.Where(c => c.CourseId.Equals(id))
             //                                     .Select(x => new CoursesVm

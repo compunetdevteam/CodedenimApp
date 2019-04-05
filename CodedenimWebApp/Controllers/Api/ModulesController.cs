@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -19,6 +16,7 @@ namespace CodedenimWebApp.Controllers.Api
     public class ModulesController : ApiController
     {
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
+        private readonly ConvertEmail _convert = new ConvertEmail();
 
         // GET: api/Modules
         [Route("GetModules")]
@@ -34,60 +32,98 @@ namespace CodedenimWebApp.Controllers.Api
                 ModuleDescription = x.ModuleDescription,
                 ModuleId = x.ModuleId,
                 ModuleName = x.ModuleName,
-               Topics = x.Topics.Select(t => new TopicVm {
-                   TopicId = t.TopicId,
-                   ModuleId = t.ModuleId,
-                   TopicName = t.TopicName,
-                   ExpectedTime = t.ExpectedTime
-               })
+                Topics = x.Topics.Select(t => new TopicVm
+                {
+                    TopicId = t.TopicId,
+                    ModuleId = t.ModuleId,
+                    TopicName = t.TopicName,
+                    ExpectedTime = t.ExpectedTime
+                })
             });
         }
 
 
-/// <summary>
-/// these method takes the id of a course from the android app
-/// and select the specific modules connected to that course
-/// </summary>
-/// <param name="id"></param>
-/// <returns></returns>
+        /// <summary>
+        /// these method takes the id of a course from the android app
+        /// and select the specific modules connected to that course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/Modules/5
         [ResponseType(typeof(Module))]
-        public async Task<IHttpActionResult> GetModule(int id)
+        public async Task<IHttpActionResult> GetModule(int id, string email)
         {
-            //Module module = await db.Modules.FindAsync(id);
-            var module = await _db.Modules.Where(c => c.CourseId.Equals(id))
-                                        .Select(m => new ModuleVm
-                                        {
-                                            ModuleId = m.ModuleId,
-                                            ModuleName = m.ModuleName,
-                                            ModuleDescription = m.ModuleDescription,
-                                            ExpectedTime = m.ExpectedTime,
-                                            CourseId = m.CourseId,
-                                            Topics = m.Topics.Select(t => new TopicVm
-                                            {
-                                                TopicId = t.TopicId,
-                                                ModuleId = t.ModuleId,
-                                                TopicName = t.TopicName,
-                                                ExpectedTime = t.ExpectedTime
-                                            })
-                                        }).ToListAsync();
-            //var module = await _db.Topics.Where(t => t.ModuleId.Equals(id))
-            //                                    .Select(t => new
-            //                                    {
-            //                                        t.ModuleId,
-            //                                        t.Module.ModuleName,
-            //                                        t.TopicId,
-            //                                        t.TopicName,
-            //                                        t.ExpectedTime,
-            //                                        t.StudentQuestions.Count
-            //                                    }).ToListAsync();
-            //                            }).ToListAsync();
-            if (module == null)
+            var access = await CourseAvailability(id, email);
+            var module = new ModuleTrackVm();
+            if (access)
             {
-                return NotFound();
+                module.ModuleVms = await _db.Modules.Where(c => c.CourseId.Equals(id))
+                                       .Select(m => new ModuleVm
+                                       {
+                                           ModuleId = m.ModuleId,
+                                           ModuleName = m.ModuleName,
+                                           ModuleDescription = m.ModuleDescription,
+                                           ExpectedTime = m.ExpectedTime,
+                                           CourseId = m.CourseId,
+                                           Topics = m.Topics.Select(t => new TopicVm
+                                           {
+                                               TopicId = t.TopicId,
+                                               ModuleId = t.ModuleId,
+                                               TopicName = t.TopicName,
+                                               ExpectedTime = t.ExpectedTime
+                                           })
+                                       }).ToListAsync();
             }
+            else
+            {
+                module.ModuleVms = null;
+                module.Message = "Access not granted yet";
+            }          
 
             return Ok(module);
+        }
+
+        async Task<bool> CourseAvailability(int courseId, string email)
+        {
+            var course = await _db.Courses.FindAsync(courseId);
+            var studentId = _convert.ConvertEmailToId(email);
+            if (!string.IsNullOrEmpty(studentId) && course != null)
+            {
+                if (course.CourseNumber == 1)
+                {
+                    var newTrack = new StudentCourseTrack
+                    {
+                        CourseId = courseId,
+                        StudentId = studentId,
+                        StartDate = DateTime.Now.Date
+                    };
+                    _db.StudentCourseTracks.Add(newTrack);
+                    await _db.SaveChangesAsync();
+                    return true;
+                }
+
+                var track = _db.StudentCourseTracks.Include(i => i.Course).AsNoTracking().FirstOrDefault(x => x.StudentId.Equals(studentId));
+
+                if (course.CourseNumber < track.Course.CourseNumber)
+                {
+                    return true;
+                }
+
+                int nextCourse = track.Course.CourseNumber + 1;
+                var endDate = Convert.ToDateTime(track.EndDate);
+                int dateCompare1 = DateTime.Compare(DateTime.Now.Date, endDate);
+
+                if (course.CourseNumber.Equals(nextCourse) && dateCompare1 > 0)
+                {
+                    track.CourseId = course.CourseId;
+                    track.StartDate = DateTime.Now.Date;
+                    _db.Entry(track).State = EntityState.Modified;
+                    await _db.SaveChangesAsync();
+                    return true;
+                }
+                return false;
+            }
+            return false;
         }
 
 

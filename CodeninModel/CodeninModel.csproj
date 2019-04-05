@@ -168,6 +168,7 @@
     <Compile Include="RemitaPaymentLog.cs" />
     <Compile Include="StudentAssignedCourses.cs" />
     <Compile Include="StudentCourses.cs" />
+    <Compile Include="StudentCourseTrack.cs" />
     <Compile Include="StudentPayment.cs" />
     <Compile Include="StudentPaypalPayment.cs" />
     <Compile Include="TopicMaterialUpload.cs" />

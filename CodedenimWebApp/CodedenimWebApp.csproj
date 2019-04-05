@@ -383,6 +383,10 @@
     <Compile Include="Migrations\201904041820499_CourseNumberAdded.Designer.cs">
       <DependentUpon>201904041820499_CourseNumberAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904050941257_StudentCourseTrack.cs" />
+    <Compile Include="Migrations\201904050941257_StudentCourseTrack.Designer.cs">
+      <DependentUpon>201904050941257_StudentCourseTrack.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Services\RemitaHash.cs" />
     <Compile Include="Service\BlobConnection.cs" />
@@ -2099,6 +2103,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904041820499_CourseNumberAdded.resx">
       <DependentUpon>201904041820499_CourseNumberAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904050941257_StudentCourseTrack.resx">
+      <DependentUpon>201904050941257_StudentCourseTrack.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

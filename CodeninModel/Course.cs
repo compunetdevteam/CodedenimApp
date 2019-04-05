@@ -2,6 +2,7 @@
 using CodeninModel.Forums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -12,7 +13,13 @@ namespace CodeninModel
     public class Course
     {
         public int CourseId { get; set; }
+
+        [DisplayName("Course Order Number")]
         public int CourseNumber { get; set; }
+
+
+        [DisplayName("Day Interval")]
+        public int NoOfDays { get; set; }
         public string CourseCode { get; set; }
         public string CourseName { get; set; }
         public string CourseDescription { get; set; }

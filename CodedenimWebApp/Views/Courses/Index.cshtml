@@ -28,21 +28,23 @@
     <div class="table-responsive">
         <table class="table v-middle">
             <thead>
-            <tr>
-                <th width="20">
-                    <div class="checkbox checkbox-single margin-none">
-                        <input id="checkAll" data-toggle="check-all" data-target="#responsive-table-body" type="checkbox" checked>
-                        <label for="checkAll">Check All</label>
-                    </div>
-                </th>
-                <th>Course Name</th>
-                @*<th>Course Description</th>*@
-                <th>Expected Time</th>
-                <th>Number Of Modules</th>
-                <th>Points</th>
-                <th>Action</th>
-           
-            </tr>
+                <tr>
+                    <th width="20">
+                        <div class="checkbox checkbox-single margin-none">
+                            <input id="checkAll" data-toggle="check-all" data-target="#responsive-table-body" type="checkbox" checked>
+                            <label for="checkAll">Check All</label>
+                        </div>
+                    </th>
+                    <th>Course Name</th>
+                    <th>Order No</th>
+                    <th>Day Interval</th>
+                    <th>Expected Time</th>
+                    <th>Modules</th>
+
+                    <th>Points</th>
+                    <th>Action</th>
+
+                </tr>
             </thead>
             <tbody id="responsive-table-body">
             @foreach (var item in Model.OrderBy(x => x.CourseNumber))
@@ -60,6 +62,8 @@
                 <td>
                     <a href="@Url.Action("Details","Courses",new{id = item.CourseId})"><span class="label label-default" data-toggle="tooltip" data-placement="top" title="View Course Detail">@item.CourseName</span></a>
                 </td>
+                    <td>@item.CourseNumber</td>
+                    <td>@item.NoOfDays</td>
 
                                        <td><i class="fa fa-clock-o"> @item.ExpectedTime</i> </td>
                     <td>@item.Modules.Count</td>

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace CodedenimWebApp.Controllers.Api.ApiViewModel
 {
@@ -9,6 +6,7 @@ namespace CodedenimWebApp.Controllers.Api.ApiViewModel
     {
         public int CourseId { get; set; }
         public int CourseCategoryId { get; set; }
+        public int CourseNumber { get; set; }
         public string CourseCode { get; set; }
         public string CourseName { get; set; }
         public string CategoryName { get; set; }

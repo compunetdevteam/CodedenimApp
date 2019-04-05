@@ -71,36 +71,37 @@ namespace CodedenimWebApp.Models
         public System.Data.Entity.DbSet<StudentTopicQuiz> StudentTopicQuizs { get; set; }
         public DbSet<QuizLog> QuizLogs { get; set; }
 
-        public System.Data.Entity.DbSet<CodeninModel.StudentAssignedCourse> StudentAssignedCourses { get; set; }
+        public DbSet<CodeninModel.StudentAssignedCourse> StudentAssignedCourses { get; set; }
 
-        public System.Data.Entity.DbSet<CodeninModel.Forums.Forum> Fora { get; set; }
+        public DbSet<CodeninModel.Forums.Forum> Fora { get; set; }
 
-        public System.Data.Entity.DbSet<CodeninModel.Forums.ForumView> ForumViews { get; set; }
+        public DbSet<CodeninModel.Forums.ForumView> ForumViews { get; set; }
 
-        public System.Data.Entity.DbSet<CodeninModel.Forums.ForumQuestion> ForumQuestions { get; set; }
+        public DbSet<CodeninModel.Forums.ForumQuestion> ForumQuestions { get; set; }
 
-        public System.Data.Entity.DbSet<CodeninModel.Forums.ForumQuestionView> ForumQuestionViews { get; set; }
+        public DbSet<CodeninModel.Forums.ForumQuestionView> ForumQuestionViews { get; set; }
 
-        public System.Data.Entity.DbSet<CodeninModel.Forums.ForumAnswer> ForumAnswers { get; set; }
+        public DbSet<CodeninModel.Forums.ForumAnswer> ForumAnswers { get; set; }
 
-        public System.Data.Entity.DbSet<CodeninModel.CourseRating> CourseRatings { get; set; }
+        public DbSet<CodeninModel.CourseRating> CourseRatings { get; set; }
 
         public System.Data.Entity.DbSet<CodedenimWebApp.ViewModels.RegularStudentVm> RegularStudentVms { get; set; }
         public DbSet<PaymentType> PaymentTypes { get; set; }
         public DbSet<ProfessionalPayment> ProfessionalPayments { get; set; }
 
-        public System.Data.Entity.DbSet<CodedenimWebApp.ViewModels.UserCourseDetail> UserCourseDetails { get; set; }
+        public DbSet<ViewModels.UserCourseDetail> UserCourseDetails { get; set; }
         public DbSet<CorperEnrolledCourses> CorperEnrolledCourses { get; set; }
 
-        public System.Data.Entity.DbSet<CodeninModel.AssignCourseCategory> AssignCourseCategories { get; set; }
+        public DbSet<CodeninModel.AssignCourseCategory> AssignCourseCategories { get; set; }
         public DbSet<StudentPayment> StudentPayments { get; set; }
 
         public DbSet<RemitaPaymentLog> RemitaPaymentLogs { get; set; }
 
-        public System.Data.Entity.DbSet<CodeninModel.EnrollForCourse> EnrollForCourses { get; set; }
+        public DbSet<CodeninModel.EnrollForCourse> EnrollForCourses { get; set; }
         public DbSet<StudentPaypalPayment> StudentPaypalPayments { get; set; }
         public DbSet<TestQuestion> TestQuestions { get; set; }
         public DbSet<TestAnswer> TestAnswers { get; set; }
+        public DbSet<StudentCourseTrack> StudentCourseTracks { get; set; }
         //public override int SaveChanges()
         //{
         //    try

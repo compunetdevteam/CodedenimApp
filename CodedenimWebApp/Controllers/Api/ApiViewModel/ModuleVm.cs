@@ -1,11 +1,13 @@
-﻿using CodeninModel.Quiz;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace CodedenimWebApp.Controllers.Api.ApiViewModel
 {
+    public class ModuleTrackVm
+    {
+        public string Message { get; set; }
+        public List<ModuleVm> ModuleVms { get; set; }
+    }
+
     public class ModuleVm
     {
         public int ModuleId { get; set; }
