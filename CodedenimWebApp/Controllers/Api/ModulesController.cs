@@ -50,7 +50,7 @@ namespace CodedenimWebApp.Controllers.Api
         {
             var access = await CourseAvailability(id, email);
             var module = new ModuleTrackVm();
-            if (access)
+            if (access.Item1)
             {
                 module.ModuleVms = await _db.Modules.Where(c => c.CourseId.Equals(id))
                                        .Select(m => new ModuleVm
@@ -72,13 +72,13 @@ namespace CodedenimWebApp.Controllers.Api
             else
             {
                 module.ModuleVms = null;
-                module.Message = "Access not granted yet because you have to finish prerequisite course";
+                module.Message = access.Item2;
             }          
 
             return Ok(module);
         }
 
-        async Task<bool> CourseAvailability(int courseId, string email)
+        async Task<Tuple<bool, string>> CourseAvailability(int courseId, string email)
         {
             var course = await _db.Courses.FindAsync(courseId);
             var studentId = _convert.ConvertEmailToId(email);
@@ -94,7 +94,7 @@ namespace CodedenimWebApp.Controllers.Api
                     };
                     _db.StudentCourseTracks.Add(newTrack);
                     await _db.SaveChangesAsync();
-                    return true;
+                    return new Tuple<bool, string>(true, "");
                 }
 
                 var track = _db.StudentCourseTracks.Include(i => i.Course).AsNoTracking().FirstOrDefault(x => x.StudentId.Equals(studentId));
@@ -102,7 +102,7 @@ namespace CodedenimWebApp.Controllers.Api
                 {
                     if (course.CourseNumber < track.Course.CourseNumber)
                     {
-                        return true;
+                        return new Tuple<bool, string>(true, "");
                     }                    
 
                     int nextCourse = track.Course.CourseNumber + 1;
@@ -115,14 +115,28 @@ namespace CodedenimWebApp.Controllers.Api
                         track.StartDate = DateTime.Now.Date;
                         _db.Entry(track).State = EntityState.Modified;
                         await _db.SaveChangesAsync();
-                        return true;
+                        return new Tuple<bool, string>(true, "");
                     }
-                    return false;
+                    else if(course.CourseNumber > nextCourse)
+                    {
+                        var studentQuiz = _db.TestAnswers.AsNoTracking().FirstOrDefault(x => x.StudentId.Equals(studentId));
+                        if(studentQuiz == null)
+                        {
+                            return new Tuple<bool, string>(false, $"You have to finish the prerequisite course ({track.Course.CourseName}) before you can take this course");
+                        }
+                        else
+                        {
+                            var remainingDays = endDate.Subtract(DateTime.Now.Date);
+                            return new Tuple<bool, string>(false, $"You have {remainingDays} day(s) to start the selected course ({course.CourseName})");
+                        }
+                      
+                    }
+                  
                 }
-                return false;
-              
+                var firstCourse = _db.Courses.AsNoTracking().FirstOrDefault(x => x.CourseNumber.Equals(1));
+                return new Tuple<bool, string>(false, $"You have to start the first course ({firstCourse?.CourseName}) before you can take this course");
             }
-            return false;
+            return new Tuple<bool, string>(false, "Course selected doesn't exist yet for this category of student");
         }
 
 
