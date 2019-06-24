@@ -49,7 +49,9 @@ namespace CodedenimWebApp
 
                 // ***Begin Sendgrid Implementation *******//
                 //var apiKey = "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";
-                var apiKey = "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";
+                //var apiKey = "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";
+                var apiKey = "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";
+               // SG.XOQxQhkjRUGFoAuAjD5uNA.YQEnj5IcunxyM - QaWxmqtc - zraP4EZbO_d6AYQp9R - 4
                 var client = new SendGridClient(apiKey);
                 var from = new EmailAddress($"noreply@Codedenim.com", "CODEDENIM");
                 var subject = !string.IsNullOrEmpty(message.Subject) ? message.Subject : "CODEDENIM NOTIFICATION";

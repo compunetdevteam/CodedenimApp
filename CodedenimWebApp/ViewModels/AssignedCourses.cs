@@ -23,5 +23,11 @@ namespace CodedenimWebApp.ViewModels
         public int CourseCategoryId { get; set; }
         public int[] CourseId { get; set; }
     }
+    public class AssignCourseCategoryPaymentVm
+    {
+        public int CourseCategoryId { get; set; }
+        public int[] CourseId { get; set; }
+        public string PaymentTypeName { get; set; }
+    }
         
  }

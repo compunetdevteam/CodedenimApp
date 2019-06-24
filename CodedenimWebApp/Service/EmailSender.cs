@@ -12,7 +12,7 @@ namespace CodedenimWebApp.Service
     {
         public async Task SendEmailAsync(string email, string subject, string message)
         {
-            var apiKey = "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";
+            var apiKey = "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";
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress($"noreply@Codedenim.com", "Codedenim");
             var to = new EmailAddress(email, email);

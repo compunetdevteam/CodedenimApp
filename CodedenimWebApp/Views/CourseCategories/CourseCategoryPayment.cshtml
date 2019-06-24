@@ -2,8 +2,10 @@
 @*@model IEnumerable<CodeninModel.CourseCategory>*@
 @model CodedenimWebApp.ViewModels.LearningPathVm
 @{
-    ViewBag.Title = "Corper Dashboard";
-    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+                /**/
+
+                ViewBag.Title = "Corper Dashboard";
+                Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
 <br />
@@ -12,11 +14,11 @@
 
 
 
-    @*//foreach (var assignedCourseItem in Model.AssignCourseCategory)
+@*//foreach (var assignedCourseItem in Model.AssignCourseCategory)
     //{*@
 
-    
-    @*<div class="item col-xs-12 col-sm-6 col-lg-4">
+
+@*<div class="item col-xs-12 col-sm-6 col-lg-4">
         <div class="panel panel-default paper-shadow" data-z="0.5">
             <div class="cover overlay cover-image-full hover">
                 <span class="img icon-block height-150 bg-primary"></span>
@@ -50,47 +52,85 @@
     </div>*@
 
 
-    @*foreach (var courseItem in Model.Courses)
-        {
+@*foreach (var courseItem in Model.Courses)
+    {
 
-                <div class="item col-xs-12 col-sm-6 col-lg-4">
-                    <div class="panel panel-default paper-shadow" data-z="0.5">
-                        <div class="cover overlay cover-image-full hover">
-                            <span class="img icon-block height-150 bg-primary"></span>
-                            <a href="website-course.html" class="padding-none overlay overlay-full icon-block bg-primary">
-                                <span class="v-center">
-                                    <i class="fa fa-css3"></i>
-                                </span>
-                            </a>
-                            <a href="website-course.html" class="overlay overlay-full overlay-hover overlay-bg-white">
-                                <span class="v-center">
-                                    <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
-                                </span>
-                            </a>
-                        </div>
-                        <div class="panel-body">
-                            <h4 class="text-headline margin-v-0-10"><a href="@Url.Action("CategoryDetails", "CourseCategories", new { id = assignedCourseItem.CourseId })"> @courseItem.CourseName</a></h4>
-                            <p class="small margin-none">
-                                <span class="fa fa-fw fa-star text-yellow-800"></span>
-                                <span class="fa fa-fw fa-star text-yellow-800"></span>
-                                <span class="fa fa-fw fa-star text-yellow-800"></span>
-                                <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                                <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                            </p>
-                        </div>
-                        <hr class="margin-none" />
-                        <div class="panel-body">
-                            <p>@item.Amount</p>
-                            <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("CategoryDetails", "CourseCategories", new { id = item.CourseCategoryId })">Pay for courses</a>
-                        </div>
+            <div class="item col-xs-12 col-sm-6 col-lg-4">
+                <div class="panel panel-default paper-shadow" data-z="0.5">
+                    <div class="cover overlay cover-image-full hover">
+                        <span class="img icon-block height-150 bg-primary"></span>
+                        <a href="website-course.html" class="padding-none overlay overlay-full icon-block bg-primary">
+                            <span class="v-center">
+                                <i class="fa fa-css3"></i>
+                            </span>
+                        </a>
+                        <a href="website-course.html" class="overlay overlay-full overlay-hover overlay-bg-white">
+                            <span class="v-center">
+                                <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="panel-body">
+                        <h4 class="text-headline margin-v-0-10"><a href="@Url.Action("CategoryDetails", "CourseCategories", new { id = assignedCourseItem.CourseId })"> @courseItem.CourseName</a></h4>
+                        <p class="small margin-none">
+                            <span class="fa fa-fw fa-star text-yellow-800"></span>
+                            <span class="fa fa-fw fa-star text-yellow-800"></span>
+                            <span class="fa fa-fw fa-star text-yellow-800"></span>
+                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                        </p>
+                    </div>
+                    <hr class="margin-none" />
+                    <div class="panel-body">
+                        <p>@item.Amount</p>
+                        <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("CategoryDetails", "CourseCategories", new { id = item.CourseCategoryId })">Pay for courses</a>
                     </div>
                 </div>
-            }*@
+            </div>
+        }*@
 
 
 
 
+@foreach (var freeCourse in Model.Courses.Where(x => x.CourseNumber.Equals(1)).ToList())
+{
+    <div class="cover overlay cover-image-full hover">
+        @*<span class="img icon-block height-150 bg-primary"></span>
+            <a href="website-course.html" class="padding-none overlay overlay-full icon-block bg-primary">
+                <span class="v-center">
 
+                    @*<i class="fa fa-css3"></i>*@
+        @*</span>
+            </a>*@
+        <img src="~/MaterialUpload/@freeCourse.FileLocation" />
+        <a href="@Url.Action("MyCoursesAsync", "Courses")" class="overlay overlay-full overlay-hover overlay-bg-white">
+            <span class="v-center">
+                <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
+            </span>
+        </a>
+    </div>
+    <div class="panel-body">
+        <h6 class=""> @freeCourse.CourseName.ToUpper()</h6>
+        <p class="small margin-none">
+            <span class="fa fa-fw fa-star text-yellow-800"></span>
+            <span class="fa fa-fw fa-star text-yellow-800"></span>
+            <span class="fa fa-fw fa-star text-yellow-800"></span>
+            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+
+        </p>
+        @*Category Name : <h6 class="pull-right">@item.CategoryName</h6>*@
+    </div>
+    <hr class="margin-none" />
+    <div class="panel-body">
+        No of Modules
+        <p>@freeCourse.Modules.Count</p>
+        @*@foreach (var item in Model.CourseCategory)
+            {*@
+        <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("MyCoursesAsync", "Courses")">free</a>
+        @*}*@
+    </div>
+}
 
 <div class="row" data-toggle="isotope">
 
@@ -99,101 +139,101 @@
 
         <div class="item col-xs-12 col-sm-6 col-lg-4">
             <div class="panel panel-default paper-shadow" data-z="0.5">
-@if (Model.AssignCourseCategory.Any() && Model.Payment.Any())
-    {
-            <div class="cover overlay cover-image-full hover">
-                @*<span class="img icon-block height-150 bg-primary"></span>
-        <a href="website-course.html" class="padding-none overlay overlay-full icon-block bg-primary">
-            <span class="v-center">
+                @if (Model.AssignCourseCategory.Any() && Model.Payment.Any())
+                {
+                    <div class="cover overlay cover-image-full hover">
+                        @*<span class="img icon-block height-150 bg-primary"></span>
+                            <a href="website-course.html" class="padding-none overlay overlay-full icon-block bg-primary">
+                                <span class="v-center">
 
-                @*<i class="fa fa-css3"></i>*@
-                @*</span>
-        </a>*@
-                <img src="~/MaterialUpload/@courseItem.Courses.FileLocation" />
-                <a href="@Url.Action("MyCoursesAsync", "Courses")" class="overlay overlay-full overlay-hover overlay-bg-white">
-                    <span class="v-center">
-                        <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
-                    </span>
-                </a>
-            </div>
-            <div class="panel-body">
-                <h6 class=""> @courseItem.Courses.CourseName.ToUpper()</h6>
-                <p class="small margin-none">
-                    <span class="fa fa-fw fa-star text-yellow-800"></span>
-                    <span class="fa fa-fw fa-star text-yellow-800"></span>
-                    <span class="fa fa-fw fa-star text-yellow-800"></span>
-                    <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                    <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                                    @*<i class="fa fa-css3"></i>*@
+                        @*</span>
+                            </a>*@
+                        <img src="~/MaterialUpload/@courseItem.Courses.FileLocation" />
+                        <a href="@Url.Action("MyCoursesAsync", "Courses")" class="overlay overlay-full overlay-hover overlay-bg-white">
+                            <span class="v-center">
+                                <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="panel-body">
+                        <h6 class=""> @courseItem.Courses.CourseName.ToUpper()</h6>
+                        <p class="small margin-none">
+                            <span class="fa fa-fw fa-star text-yellow-800"></span>
+                            <span class="fa fa-fw fa-star text-yellow-800"></span>
+                            <span class="fa fa-fw fa-star text-yellow-800"></span>
+                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
 
-                </p>
-                @*Category Name : <h6 class="pull-right">@item.CategoryName</h6>*@
-            </div>
-            <hr class="margin-none" />
-            <div class="panel-body">
-                No of Modules
-                <p>@courseItem.Courses.Modules.Count</p>
-                @*@foreach (var item in Model.CourseCategory)
-        {*@
-                <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("MyCoursesAsync", "Courses")">Paid</a>
-                @*}*@
-            </div>
-}
-else
-{
-            <div class="cover overlay cover-image-full hover">
-                @*<span class="img icon-block height-150 bg-primary"></span>
-        <a href="website-course.html" class="padding-none overlay overlay-full icon-block bg-primary">
-            <span class="v-center">
+                        </p>
+                        @*Category Name : <h6 class="pull-right">@item.CategoryName</h6>*@
+                    </div>
+                    <hr class="margin-none" />
+                    <div class="panel-body">
+                        No of Modules
+                        <p>@courseItem.Courses.Modules.Count</p>
+                        @*@foreach (var item in Model.CourseCategory)
+                            {*@
+                        <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("MyCoursesAsync", "Courses")">Paid</a>
+                        @*}*@
+                    </div>
+                }
+                else
+                {
+                    <div class="cover overlay cover-image-full hover">
+                        @*<span class="img icon-block height-150 bg-primary"></span>
+                            <a href="website-course.html" class="padding-none overlay overlay-full icon-block bg-primary">
+                                <span class="v-center">
 
-                @*<i class="fa fa-css3"></i>*@
-                @*</span>
-        </a>*@
-                <img src="~/MaterialUpload/@courseItem.Courses.FileLocation" />
-                <a href="@Url.Action("CategoryDetails", "CourseCategories", new {id = courseItem.CourseCategoryId})" class="overlay overlay-full overlay-hover overlay-bg-white">
-                    <span class="v-center">
-                        <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
-                    </span>
-                </a>
-            </div>
-            <div class="panel-body">
-                <h6 class=""> @courseItem.Courses.CourseName.ToUpper()</h6>
-                <p class="small margin-none">
-                    <span class="fa fa-fw fa-star text-yellow-800"></span>
-                    <span class="fa fa-fw fa-star text-yellow-800"></span>
-                    <span class="fa fa-fw fa-star text-yellow-800"></span>
-                    <span class="fa fa-fw fa-star-o text-yellow-800"></span>
-                    <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                                    @*<i class="fa fa-css3"></i>*@
+                        @*</span>
+                            </a>*@
+                        <img src="~/MaterialUpload/@courseItem.Courses.FileLocation" />
+                        <a href="@Url.Action("CategoryDetails", "CourseCategories", new {id = courseItem.CourseCategoryId})" class="overlay overlay-full overlay-hover overlay-bg-white">
+                            <span class="v-center">
+                                <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="panel-body">
+                        <h6 class=""> @courseItem.Courses.CourseName.ToUpper()</h6>
+                        <p class="small margin-none">
+                            <span class="fa fa-fw fa-star text-yellow-800"></span>
+                            <span class="fa fa-fw fa-star text-yellow-800"></span>
+                            <span class="fa fa-fw fa-star text-yellow-800"></span>
+                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+                            <span class="fa fa-fw fa-star-o text-yellow-800"></span>
 
-                </p>
-                @*Category Name : <h6 class="pull-right">@item.CategoryName</h6>*@
-            </div>
-            <hr class="margin-none" />
-            <div class="panel-body">
-                No of Modules
-                <p>@courseItem.Courses.Modules.Count</p>
-                @*@foreach (var item in Model.CourseCategory)
-        {*@
-                <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("CategoryDetails", "CourseCategories", new {id = courseItem.CourseCategoryId})">Pay for courses</a>
-                @*}*@
-            </div>
-}
+                        </p>
+                        @*Category Name : <h6 class="pull-right">@item.CategoryName</h6>*@
+                    </div>
+                    <hr class="margin-none" />
+                    <div class="panel-body">
+                        No of Modules
+                        <p>@courseItem.Courses.Modules.Count</p>
+                        @*@foreach (var item in Model.CourseCategory)
+                            {*@
+                        <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated href="@Url.Action("CategoryDetails", "CourseCategories", new {id = courseItem.CourseCategoryId})">Pay for courses</a>
+                        @*}*@
+                    </div>
+                }
             </div>
         </div>
 
     }
-    </div>
+</div>
 
 
-    @*@if (Model.Any())
-        {
-            <a href="@Url.Action("StartPayment", "CourseCategories")" class="btn btn-success">Pay For All</a>
+@*@if (Model.Any())
+    {
+        <a href="@Url.Action("StartPayment", "CourseCategories")" class="btn btn-success">Pay For All</a>
 
-        }*@
-
-
-
+    }*@
 
 
 
-    @* /////////////////////////////////////////////////////////////////////////////////// *@
+
+
+
+@* /////////////////////////////////////////////////////////////////////////////////// *@
 
