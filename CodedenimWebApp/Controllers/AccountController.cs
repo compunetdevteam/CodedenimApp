@@ -880,6 +880,13 @@ namespace CodedenimWebApp.Controllers
             return View();
         }
 
+        // GET: /Account/ResetPassword
+        [System.Web.Mvc.AllowAnonymous]
+        public ActionResult ResetPasswordMobile(string code)
+        {
+            return code == null ? View("Error") : View();
+        }
+
         //
         // GET: /Account/ResetPassword
         [System.Web.Mvc.AllowAnonymous]
@@ -887,6 +894,7 @@ namespace CodedenimWebApp.Controllers
         {
             return code == null ? View("Error") : View();
         }
+
 
         //
         // POST: /Account/ResetPassword
